@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水循环失衡辨识</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy-block">
+          <p class="eyebrow" data-i18n="heroEyebrow">WaterGAP / Global Diagnostics</p>
+          <h1 data-i18n="heroTitle">水循环失衡辨识</h1>
+          <p class="hero-copy" data-i18n="heroCopy">对比近 20 年和近 30 年相对于历史长期基线的偏离程度，以标准差倍数识别潜在失衡区域。</p>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="panel controls-panel">
+          <div class="panel-header">
+            <h2 data-i18n="controlsTitle">参数控制</h2>
+            <p data-i18n="controlsDesc">切换变量、时间窗口、阈值和语言。</p>
+          </div>
+
+          <label class="control">
+            <span data-i18n="language">语言</span>
+            <select id="languageSelect">
+              <option value="zh">中文</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="variable">变量</span>
+            <select id="variableSelect"></select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="window">时间窗口</span>
+            <select id="windowSelect">
+              <option value="20" data-window="20">近 20 年</option>
+              <option value="30" data-window="30">近 30 年</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="threshold">判定阈值</span>
+            <input id="thresholdRange" type="range" min="0.5" max="3" step="0.5" value="1" />
+            <strong id="thresholdValue">1.0σ</strong>
+          </label>
+        </section>
+
+        <section class="panel map-panel">
+          <div class="panel-header map-header">
+            <div>
+              <h2 id="mapTitle">全球热力图</h2>
+              <p id="mapSubtitle"></p>
+            </div>
+            <div class="legend">
+              <div><span class="swatch cool"></span><span data-i18n="legendLow">低于基线</span></div>
+              <div><span class="swatch neutral"></span><span data-i18n="legendNeutral">接近基线</span></div>
+              <div><span class="swatch warm"></span><span data-i18n="legendHigh">高于基线</span></div>
+            </div>
+          </div>
+
+          <div class="map-frame">
+            <div class="map-stage">
+              <canvas id="mapCanvas" width="1080" height="540"></canvas>
+              <button id="expandMapButton" class="expand-map" type="button" aria-label="Expand map"></button>
+              <button id="resetViewButton" class="reset-view hidden" type="button" aria-label="Reset view"></button>
+              <div id="loadingOverlay" class="loading-overlay hidden">Loading variable data...</div>
+              <div id="tooltip" class="tooltip hidden"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel info-panel">
+          <div class="period-card" id="periodCard"></div>
+          <div class="summary-grid" id="summaryGrid"></div>
+          <div id="methodBox" class="method-box compact-method"></div>
+        </aside>
+      </main>
+    </div>
+
+    <div id="mapModal" class="map-modal hidden" aria-hidden="true">
+      <div class="map-modal-backdrop"></div>
+      <div class="map-modal-panel">
+        <div class="modal-map-stage">
+          <button id="closeMapModalButton" class="close-map-modal" type="button" aria-label="Close expanded map"></button>
+          <canvas id="modalMapCanvas" width="1440" height="720"></canvas>
+          <button id="modalResetViewButton" class="reset-view hidden modal-reset-view" type="button" aria-label="Reset view"></button>
+          <div id="modalTooltip" class="tooltip hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./analysis-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

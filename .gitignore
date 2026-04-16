@@ -1,0 +1,14 @@
+# 忽略数据文件夹
+datasets/
+
+# 但保留空文件夹（关键）
+!datasets/.gitkeep
+
+# 忽略 vscode
+.vscode/
+
+# 可选：忽略大文件类型
+*.tab
+*.csv
+*.nc
+*.tif
