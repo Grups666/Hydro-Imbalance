@@ -16,6 +16,7 @@ DATA_DIR = WEB_DIR / "data"
 MANIFEST_PATH = WEB_DIR / "analysis-data.js"
 MISSING_VALUE = 1e20
 WINDOWS = (20, 30)
+BASELINE_START_YEAR = 1950
 SKIP_PREFIXES = ("lat", "lon", "time")
 
 VARIABLE_INFO = {
@@ -195,8 +196,11 @@ def discover_variables() -> tuple[list[VariableRecord], list[dict[str, str]]]:
 
 
 def build_window_result(yearly_means: np.ndarray, years: np.ndarray, window: int) -> dict[str, object]:
-    baseline = yearly_means[:-window]
-    recent = yearly_means[-window:]
+    recent_mask = years >= years[-window]
+    baseline_mask = (years >= BASELINE_START_YEAR) & (years < years[-window])
+
+    baseline = yearly_means[baseline_mask]
+    recent = yearly_means[recent_mask]
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", category=RuntimeWarning)
@@ -221,7 +225,7 @@ def build_window_result(yearly_means: np.ndarray, years: np.ndarray, window: int
     return {
         "windowYears": window,
         "recentPeriod": [int(years[-window]), int(years[-1])],
-        "baselinePeriod": [int(years[0]), int(years[-window - 1])],
+        "baselinePeriod": [int(years[baseline_mask][0]), int(years[baseline_mask][-1])],
         "difference": to_serializable_grid(difference),
         "zScore": to_serializable_grid(z_score),
         "summary": {
