@@ -1,0 +1,8 @@
+{
+  "ANTHROPIC_API_KEY": "replace-with-your-local-key",
+  "ANTHROPIC_BASE_URL": "https://api.example.com",
+  "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5.1",
+  "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1",
+  "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.1",
+  "ANTHROPIC_MODEL": "glm-5.1"
+}

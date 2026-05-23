@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>科研空间图谱</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="geo-app">
+      <canvas id="mapCanvas" aria-label="全球流域科研地图"></canvas>
+
+      <section class="top-bar">
+        <div>
+          <p class="eyebrow">科研空间图谱</p>
+          <h1>基于地理空间的科研知识探索系统</h1>
+        </div>
+        <div class="status-stack">
+          <span id="basinCount">正在加载流域...</span>
+          <span id="interactionHint">点击任意流域查看详情</span>
+          <span id="llmStatus">模型：检查中</span>
+        </div>
+      </section>
+
+      <section class="tool-rail" aria-label="地图工具">
+        <button id="zoomInButton" type="button" title="放大">+</button>
+        <button id="zoomOutButton" type="button" title="缩小">-</button>
+        <button id="resetButton" type="button" title="重置视图">⌂</button>
+      </section>
+
+      <section class="legend-panel">
+        <h2>水文循环模式</h2>
+        <p class="legend-note">色块表示推断的水文循环模式；未配置文献档案的流域会以更低透明度显示。</p>
+        <div id="legendList"></div>
+      </section>
+
+      <section id="basinPanel" class="basin-panel">
+        <button id="closePanelButton" class="close-panel" type="button" aria-label="关闭">x</button>
+        <div id="basinProfile"></div>
+      </section>
+
+      <section id="researchPanel" class="research-panel hidden">
+        <div class="research-header">
+          <div>
+            <p class="eyebrow">智能研究综述</p>
+            <h2 id="researchTitle">研究请求</h2>
+          </div>
+          <button id="closeResearchButton" type="button">关闭</button>
+        </div>
+        <div id="researchContent" class="research-content"></div>
+      </section>
+
+      <section id="referencePanel" class="reference-panel hidden">
+        <div class="reference-header">
+          <div>
+            <p class="eyebrow">参考文献</p>
+            <h2 id="referenceTitle">文献详情</h2>
+          </div>
+          <button id="closeReferenceButton" type="button">关闭</button>
+        </div>
+        <div id="referenceContent" class="reference-content"></div>
+      </section>
+
+      <section class="voice-dock">
+        <button id="micButton" class="mic-button" type="button" aria-label="语音输入">
+          <span class="mic-core"></span>
+        </button>
+        <form id="queryForm" class="query-form">
+          <input id="queryInput" type="text" placeholder="选择流域后输入研究需求，例如：查询该流域关于蝗灾的研究" />
+          <button id="askButton" type="submit">发送</button>
+        </form>
+      </section>
+
+      <div id="toast" class="toast hidden"></div>
+    </main>
+
+    <script src="./world-land.js"></script>
+    <script src="/basin-data.js"></script>
+    <script>
+      if (!window.BASIN_DATA) {
+        document.write('<script src="../../../projects/basin-data.js"><\/script>');
+      }
+    </script>
+    <script src="./reference-catalog.js"></script>
+    <script src="./basin-profiles.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
