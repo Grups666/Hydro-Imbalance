@@ -64,8 +64,10 @@ Foundation.ModuleLoader = class ModuleLoader {
     });
 
     try {
-      // Instantiate module
-      module.instance = new module.class(foundation);
+      // Instantiate module. The manifest is passed so a module can resolve its
+      // own ontology, data, and entry-relative assets without Foundation knowing
+      // domain-specific paths.
+      module.instance = new module.class(foundation, module.manifest);
 
       // Call onLoad lifecycle hook
       if (module.instance.onLoad) {

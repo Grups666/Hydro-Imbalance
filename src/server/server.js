@@ -16,6 +16,7 @@ const mime = {
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
+  ".csv": "text/csv; charset=utf-8",
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -86,7 +87,9 @@ function discoverModules() {
             id: manifest.id,
             name: manifest.name,
             version: manifest.version,
-            description: manifest.description
+            description: manifest.description,
+            importKind: manifest.importKind || "module-manifest",
+            defaultLoad: Boolean(manifest.defaultLoad)
           });
         } catch (e) {
           console.warn(`Failed to parse module.json for ${entry.name}:`, e.message);
@@ -108,7 +111,11 @@ function getModuleManifest(moduleId) {
   if (!fs.existsSync(moduleJsonPath)) return null;
 
   try {
-    return JSON.parse(fs.readFileSync(moduleJsonPath, "utf8"));
+    const manifest = JSON.parse(fs.readFileSync(moduleJsonPath, "utf8"));
+    return {
+      ...manifest,
+      basePath: `/modules/${moduleId}/`
+    };
   } catch {
     return null;
   }

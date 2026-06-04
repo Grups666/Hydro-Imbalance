@@ -480,13 +480,13 @@
           <div class="import-section">
             <div class="import-section-title">1. Select Source</div>
             <div class="source-tabs">
-              <button class="source-tab active" data-source="file">File (CSV)</button>
+              <button class="source-tab active" data-source="csv">CSV</button>
+              <button class="source-tab" data-source="module">Module Manifest</button>
               <button class="source-tab disabled" data-source="url">URL</button>
-              <button class="source-tab disabled" data-source="database">Database</button>
             </div>
             <div class="import-dropzone" id="importDropzone">
               Drag file here or click to browse<br>
-              <span style="color:#94a3b8;font-size:11px">Supports: CSV</span>
+              <span id="importSupportText" style="color:#94a3b8;font-size:11px">Supports: CSV</span>
             </div>
             <input type="file" id="importFile" accept=".csv" style="display:none">
           </div>
@@ -514,10 +514,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/basin-data.js"></script>
-    <script src="/land-50m.js"></script>
-    <script src="/catalog/literature/reference-catalog.js"></script>
-    <script src="/catalog/regions/basin-profiles.js"></script>
+    <script src="./assets/basin-data.js"></script>
+    <script src="./assets/land-50m.js"></script>
 
     <script src="./foundation/core/event-bus.js"></script>
     <script src="./foundation/core/module-loader.js"></script>
@@ -538,6 +536,17 @@
       selectedLayer: null,
       hoveredFeatureId: null,
       hoveredLayer: null,
+      currentImportSource: 'csv',
+      staticModules: [
+        {
+          id: 'water-imbalance',
+          name: 'Water Imbalance Ontology',
+          version: '0.1.0',
+          description: 'Ontology-driven basin water-cycle imbalance module',
+          importKind: 'module-manifest',
+          defaultLoad: true
+        }
+      ],
 
       // Viewport state
       viewport: { width: 0, height: 0, scale: 1, offsetX: 0, offsetY: 0 },
@@ -593,6 +602,7 @@
 
         // Initial render
         this.resize();
+        await this.loadDefaultModules();
         window.addEventListener('resize', () => this.resize());
       },
 
@@ -732,6 +742,7 @@
         const importModal = document.getElementById('importModal');
         const importDropzone = document.getElementById('importDropzone');
         const importFileInput = document.getElementById('importFile');
+        const importSupportText = document.getElementById('importSupportText');
 
         document.getElementById('btnAddModule').onclick = () => {
           importModal.classList.add('visible');
@@ -745,10 +756,27 @@
           this.resetImportForm();
         };
 
+        document.querySelectorAll('.source-tab').forEach(tab => {
+          tab.onclick = () => {
+            if (tab.classList.contains('disabled')) {
+              this.toast('This import source is planned but not enabled yet');
+              return;
+            }
+            document.querySelectorAll('.source-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            this.currentImportSource = tab.dataset.source;
+            importFileInput.accept = this.currentImportSource === 'module' ? '.json' : '.csv';
+            importSupportText.textContent = this.currentImportSource === 'module'
+              ? 'Supports: module.json manifest'
+              : 'Supports: CSV';
+            this.resetImportForm();
+          };
+        });
+
         importDropzone.onclick = () => importFileInput.click();
         importFileInput.onchange = (e) => {
           const file = e.target.files[0];
-          if (file) this.parseCSVFile(file);
+          if (file) this.handleImportFile(file);
         };
 
         // Drag and drop
@@ -766,11 +794,7 @@
           importDropzone.style.borderColor = '#e2e8f0';
           importDropzone.style.background = '';
           const file = e.dataTransfer.files[0];
-          if (file && file.name.endsWith('.csv')) {
-            this.parseCSVFile(file);
-          } else {
-            this.toast('Please select a CSV file');
-          }
+          if (file) this.handleImportFile(file);
         };
       },
 
@@ -783,6 +807,82 @@
       },
 
       importData: null,
+
+      handleImportFile(file) {
+        if (this.currentImportSource === 'module') {
+          if (!file.name.endsWith('.json')) {
+            this.toast('Please select a module manifest JSON file');
+            return;
+          }
+          this.parseModuleManifestFile(file);
+          return;
+        }
+
+        if (!file.name.endsWith('.csv')) {
+          this.toast('Please select a CSV file');
+          return;
+        }
+        this.parseCSVFile(file);
+      },
+
+      async parseModuleManifestFile(file) {
+        try {
+          const manifest = JSON.parse(await file.text());
+          if (!manifest.id || !manifest.entry || !manifest.className) {
+            this.toast('Manifest requires id, entry, and className');
+            return;
+          }
+
+          this.importData = { manifest };
+          document.getElementById('previewSection').style.display = 'block';
+          document.getElementById('previewHead').innerHTML = '<tr><th>Field</th><th>Value</th></tr>';
+          document.getElementById('previewBody').innerHTML = [
+            ['id', manifest.id],
+            ['name', manifest.name || ''],
+            ['version', manifest.version || ''],
+            ['entry', manifest.entry],
+            ['className', manifest.className],
+            ['ontology', manifest.ontology || ''],
+            ['knowledgeGraph', manifest.knowledgeGraph || '']
+          ].map(([k, v]) => `<tr><td>${this.escape(k)}</td><td>${this.escape(v)}</td></tr>`).join('');
+
+          document.getElementById('mappingSection').style.display = 'block';
+          document.getElementById('fieldMapping').innerHTML = `
+            <p style="font-size:12px;color:#64748b;line-height:1.5">
+              The module will be loaded through its manifest. Relative entry and data paths resolve from /modules/${this.escape(manifest.id)}/.
+            </p>
+          `;
+          document.getElementById('btnSubmitImport').classList.remove('disabled');
+          document.getElementById('btnSubmitImport').onclick = async () => {
+            await this.importModuleManifest(manifest);
+            document.getElementById('importModal').classList.remove('visible');
+            this.resetImportForm();
+          };
+        } catch (e) {
+          console.error(e);
+          this.toast('Failed to parse module manifest');
+        }
+      },
+
+      async importModuleManifest(manifest) {
+        try {
+          await this.loadModuleFromManifest(manifest);
+          if (!this.modules.some(m => m.id === manifest.id)) {
+            this.modules.push({
+              id: manifest.id,
+              name: manifest.name || manifest.id,
+              version: manifest.version || '',
+              description: manifest.description || ''
+            });
+          }
+          this.updateModuleList();
+          this.draw();
+          this.toast(`Module imported: ${manifest.name || manifest.id}`);
+        } catch (e) {
+          console.error(e);
+          this.toast('Module import failed: ' + e.message);
+        }
+      },
 
       async parseCSVFile(file) {
         try {
@@ -1198,9 +1298,29 @@
       async fetchModules() {
         try {
           const res = await fetch('/api/modules');
-          this.modules = (await res.json()).modules || [];
-          this.updateModuleList();
-        } catch (e) { console.error(e); }
+          if (!res.ok) throw new Error(`Module API unavailable: ${res.status}`);
+          const payload = await res.json();
+          this.modules = payload.modules || this.staticModules;
+        } catch (e) {
+          this.modules = this.staticModules;
+        }
+        this.updateModuleList();
+      },
+
+      async loadDefaultModules() {
+        const defaults = this.modules.filter(module => module.defaultLoad);
+        for (const module of defaults) {
+          if (this.moduleLoader.isLoaded(module.id)) continue;
+          try {
+            const manifest = await this.fetchModuleManifest(module.id);
+            await this.loadModuleFromManifest(manifest);
+          } catch (error) {
+            console.error(`Default module "${module.id}" failed to load`, error);
+            this.toast(`Default module failed: ${module.name || module.id}`);
+          }
+        }
+        this.updateModuleList();
+        this.draw();
       },
 
       updateModuleList() {
@@ -1228,16 +1348,73 @@
           }
           this.toast('Module unloaded');
         } else {
-          const manifest = this.modules.find(m => m.id === id);
-          if (!manifest) return;
           try {
-            this.moduleLoader.register(manifest, window.HydrologyModule);
-            await this.moduleLoader.load(id, this);
+            const manifest = await this.fetchModuleManifest(id);
+            await this.loadModuleFromManifest(manifest);
             this.toast('Module loaded');
           } catch (e) { this.toast('Failed: ' + e.message); }
         }
         this.updateModuleList();
         this.draw();
+      },
+
+      async fetchModuleManifest(id) {
+        try {
+          const response = await fetch(`/api/modules/${encodeURIComponent(id)}`);
+          if (!response.ok) throw new Error(`Module API unavailable: ${response.status}`);
+          return response.json();
+        } catch {
+          const response = await fetch(`./modules/${encodeURIComponent(id)}/module.json`);
+          if (!response.ok) throw new Error(`Module manifest not found: ${id}`);
+          return {
+            ...(await response.json()),
+            basePath: `./modules/${id}/`
+          };
+        }
+      },
+
+      async loadModuleFromManifest(manifest) {
+        const normalized = this.normalizeModuleManifest(manifest);
+        if (!this.moduleLoader.getManifest(normalized.id)) {
+          await this.loadModuleScript(normalized);
+          const moduleClass = window[normalized.className];
+          if (!moduleClass) throw new Error(`Module class not found: ${normalized.className}`);
+          this.moduleLoader.register(normalized, moduleClass);
+        }
+        await this.moduleLoader.load(normalized.id, this);
+      },
+
+      normalizeModuleManifest(manifest) {
+        const basePath = manifest.basePath || `./modules/${manifest.id}/`;
+        return {
+          ...manifest,
+          basePath,
+          entry: manifest.entry || './index.js',
+          className: manifest.className
+        };
+      },
+
+      loadModuleScript(manifest) {
+        return new Promise((resolve, reject) => {
+          if (!manifest.className) {
+            reject(new Error('Module manifest requires className'));
+            return;
+          }
+          if (window[manifest.className]) {
+            resolve();
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = this.resolveModuleAsset(manifest, manifest.entry);
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error(`Failed to load module entry: ${script.src}`));
+          document.body.appendChild(script);
+        });
+      },
+
+      resolveModuleAsset(manifest, relativePath) {
+        if (/^https?:\/\//i.test(relativePath) || relativePath.startsWith('/')) return relativePath;
+        return manifest.basePath + relativePath.replace(/^\.\//, '');
       },
 
       updateLayerList() {
@@ -1356,6 +1533,5 @@
     App.init();
     </script>
 
-    <script src="./modules/hydrology/index.js"></script>
   </body>
 </html>

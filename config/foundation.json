@@ -25,7 +25,7 @@
   "modules": {
     "directory": "public/modules",
     "autoDiscover": true,
-    "defaultModule": "hydrology"
+    "defaultModule": "water-imbalance"
   },
 
   "catalogs": {

@@ -1,0 +1,106 @@
+{
+  "id": "water-imbalance-ontology",
+  "version": "0.1.0",
+  "label": "Water Cycle Imbalance Ontology",
+  "description": "Domain ontology for representing basin water-cycle imbalance as concepts, spatial contexts, evidence, literature, datasets, and derived results.",
+
+  "entities": {
+    "Basin": {
+      "description": "A spatial catchment feature supplied by the Foundation base map.",
+      "requiredProperties": ["id", "name", "bbox", "areaKm2", "region"]
+    },
+    "RegionContext": {
+      "description": "A named spatial research context such as a case-study basin, aquifer, delta, or transboundary region.",
+      "requiredProperties": ["id", "name", "match"]
+    },
+    "ImbalanceMode": {
+      "description": "A reusable water-cycle pattern or imbalance diagnosis, such as groundwater depletion, reservoir regulation, monsoon recharge, or snow/glacier melt control.",
+      "requiredProperties": ["id", "label", "summary", "cycle"]
+    },
+    "HydrologicalProcess": {
+      "description": "A physical or human process that explains water-cycle behavior.",
+      "examples": ["groundwater depletion", "reservoir regulation", "snowmelt runoff", "floodplain recharge", "evapotranspiration shift"]
+    },
+    "Literature": {
+      "description": "A paper, report, or scholarly record used as evidence.",
+      "requiredProperties": ["id", "title", "authors", "abstract"]
+    },
+    "Dataset": {
+      "description": "A dataset pointer or local dataset descriptor used by a module.",
+      "requiredProperties": ["id", "name", "provider", "url"]
+    },
+    "BasinTimeSeries": {
+      "description": "A time-indexed set of observations joined to a Foundation basin by basin_id.",
+      "requiredProperties": ["basin_id", "year"]
+    },
+    "HydrologicalVariable": {
+      "description": "A measured or modeled hydrological flux or storage state with a unit and temporal resolution."
+    },
+    "AnalysisResult": {
+      "description": "A derived result produced from imported data, scripts, or module logic and attachable to a basin, mode, or region."
+    }
+  },
+
+  "relations": {
+    "basin_has_mode": {
+      "domain": "Basin",
+      "range": "ImbalanceMode",
+      "description": "Assigns a basin to a water imbalance mode by spatial rules, model output, or imported evidence."
+    },
+    "basin_matches_region": {
+      "domain": "Basin",
+      "range": "RegionContext",
+      "description": "Links a foundation basin feature to a named module region using spatial matching."
+    },
+    "mode_has_process": {
+      "domain": "ImbalanceMode",
+      "range": "HydrologicalProcess",
+      "description": "States which processes define a mode."
+    },
+    "paper_evidences_mode": {
+      "domain": "Literature",
+      "range": "ImbalanceMode",
+      "description": "Links literature to an imbalance mode after semantic audit."
+    },
+    "paper_studies_region": {
+      "domain": "Literature",
+      "range": "RegionContext",
+      "description": "Links literature to a specific research region when the abstract or metadata identifies the study area."
+    },
+    "dataset_supports_process": {
+      "domain": "Dataset",
+      "range": "HydrologicalProcess",
+      "description": "States which hydrological process can be measured or constrained by a dataset."
+    },
+    "time_series_describes_basin": {
+      "domain": "BasinTimeSeries",
+      "range": "Basin",
+      "description": "Joins a module-owned time series to a Foundation basin using an exact basin_id match."
+    },
+    "time_series_observes_variable": {
+      "domain": "BasinTimeSeries",
+      "range": "HydrologicalVariable",
+      "description": "States which hydrological variables are represented by a basin time series."
+    },
+    "result_attaches_to_basin": {
+      "domain": "AnalysisResult",
+      "range": "Basin",
+      "description": "Attaches a user-generated or module-generated result to a foundation basin."
+    }
+  },
+
+  "importContracts": {
+    "moduleManifest": {
+      "description": "A JSON manifest that declares entry script, class name, ontology, knowledge graph, layers, panels, and data products."
+    },
+    "knowledgeGraph": {
+      "description": "A JSON object containing concepts, spatial contexts, literature records, and typed relations."
+    },
+    "tabularEvidence": {
+      "description": "CSV rows that can become point layers, basin attributes, time series, or relation tables after field mapping. Spatial joins may use entity identifiers such as basin_id and do not require latitude/longitude."
+    },
+    "scriptResult": {
+      "description": "A script-generated JSON result that can register new layers, panels, charts, or basin attachments."
+    }
+  }
+}

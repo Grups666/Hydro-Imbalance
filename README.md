@@ -1,209 +1,303 @@
-# Spatial Research Operating System
+# Hydro-Imbalance
 
-**从地图出发的科研知识探索系统**
+An ontology-driven spatial research foundation for exploring basin-scale water-cycle imbalance, hydrological time series, and scientific literature.
 
-Spatial Research OS 是一套以地理空间为统一索引的科研基础设施。它将文献、数据、模型与科研写作重新组织到同一个空间交互界面中，使研究者可以从"选择一个区域"开始，自动获得该区域相关的科学知识、可用数据和研究上下文。
+**Online demo:** [https://grups666.github.io/Hydro-Imbalance/](https://grups666.github.io/Hydro-Imbalance/)
 
-## 功能特性
+## Overview
 
-- 🗺️ **地图原生交互**：全屏世界地图，点击流域建立研究上下文
-- 📚 **文献聚合**：自动关联区域相关文献，支持详情查看和 PDF 访问
-- 🤖 **AI 辅助综述**：基于区域上下文生成可追溯引用的研究综述
-- 🌊 **水文模式分类**：7 种水文循环模式，帮助理解区域特征
-- 🔗 **数据入口**：关联数据集元数据和下载链接（规划中）
-- 📄 **报告导出**：支持 Markdown/PDF 导出（规划中）
+Hydro-Imbalance separates a generic spatial research foundation from domain-specific research modules.
 
-## 快速开始
+The **Foundation** provides:
 
-### 环境要求
+- Global interactive map and reusable basin geometry.
+- Layer management, feature selection, hover, and inspection.
+- Dynamic module loading through module manifests.
+- Generic CSV and module-manifest import entry points.
+- A shared interface for attaching datasets, literature, analysis results, and panels to spatial entities.
 
-- Node.js 18+
-- 现代浏览器（Chrome、Firefox、Safari、Edge）
+The **Water Imbalance Ontology module** provides:
 
-### 安装与运行
+- Basin water-cycle imbalance classifications.
+- Named regional research contexts.
+- Basin-linked annual hydrological time series.
+- Literature evidence linked to regions and hydrological modes.
+- Ontology relations connecting basins, processes, modes, datasets, and literature.
 
-```bash
-# 克隆仓库
-git clone https://github.com/your-org/Spatial_Research_Operating_System.git
-cd Spatial_Research_Operating_System
+The Foundation does not contain hard-coded water-imbalance concepts. The complete domain implementation is loaded from:
 
-# 初始化环境
-node scripts/setup/init.js
-
-# 启动服务
-node src/server/server.js
-
-# 访问
-# http://127.0.0.1:8791
+```text
+public/modules/water-imbalance/
 ```
 
-### 配置 AI 模型
+## Current Interface
 
-系统支持 Anthropic Messages API 兼容的模型服务。
+The default Water Imbalance module adds a thematic basin layer to the Foundation.
 
-**方式一：环境变量**
+Selecting a basin opens a module-specific inspector containing:
 
-```bash
-export ANTHROPIC_API_KEY="your-api-key"
-export ANTHROPIC_BASE_URL="https://api.example.com"
-export ANTHROPIC_MODEL="glm-5.1"
-node src/server/server.js
+- Basin metadata and matched imbalance mode.
+- Ontology relations.
+- Hydrological-process summary.
+- Linked literature evidence.
+- A four-variable time-series preview.
+
+The preview expands into four vertically aligned charts with a shared annual cursor:
+
+1. Actual evapotranspiration.
+2. Potential groundwater withdrawal.
+3. Groundwater storage.
+4. Glacier storage.
+
+Moving the pointer horizontally synchronizes the selected year across all four charts. Each chart shows its corresponding value and horizontal crosshair.
+
+## Foundation and Module Architecture
+
+```text
+Foundation
+├── global map
+├── base outlines
+├── basin geometry and basin IDs
+├── layer manager
+├── inspector
+├── import interface
+└── module loader
+
+Water Imbalance module
+├── module.json
+├── ontology.json
+├── index.js
+└── data/
+    ├── knowledge-graph.json
+    ├── basin-time-series-metadata.json
+    └── basin-four-variable-timeseries-1962-2016.csv
 ```
 
-**方式二：配置文件**
+The module connects its records to the Foundation using basin identifiers:
 
-复制 `config/atlas.local.example.json` 为 `config/atlas.local.json`：
+```text
+Foundation Basin.id
+        ↕ exact identifier join
+Module TimeSeries.basin_id
+```
+
+Latitude and longitude are not required for the time-series dataset because spatial geometry already belongs to the Foundation basin entity.
+
+## Water Imbalance Ontology
+
+The module ontology defines reusable entities including:
+
+- `Basin`
+- `RegionContext`
+- `ImbalanceMode`
+- `HydrologicalProcess`
+- `Literature`
+- `Dataset`
+- `BasinTimeSeries`
+- `HydrologicalVariable`
+- `AnalysisResult`
+
+Example relations:
+
+```text
+BasinTimeSeries -> time_series_describes_basin -> Basin
+Basin -> basin_has_mode -> ImbalanceMode
+Basin -> basin_matches_region -> RegionContext
+Literature -> paper_evidences_mode -> ImbalanceMode
+Literature -> paper_studies_region -> RegionContext
+Dataset -> dataset_supports_process -> HydrologicalProcess
+AnalysisResult -> result_attaches_to_basin -> Basin
+```
+
+The current knowledge graph contains:
+
+```text
+11 water-cycle modes
+11 named regional contexts
+2,851 literature records
+3,618 typed relations
+```
+
+## Basin Time-Series Dataset
+
+The module includes a unified annual catchment-scale dataset covering **1962-2016**:
+
+```text
+70,125 catchment-year records
+1,275 source catchments
+55 annual records per catchment
+1,096 exact matches with current Foundation basins
+97.77% coverage of Foundation basins
+```
+
+### Variables
+
+| Variable | Meaning | Unit |
+|---|---|---|
+| `aet_mm_yr` | Annual actual evapotranspiration | mm yr-1 |
+| `potential_groundwater_withdrawal_mm_yr` | Annual potential groundwater withdrawal | mm yr-1 |
+| `groundwater_storage_mm` | Annual mean groundwater storage | mm |
+| `glacier_storage_mm_we` | Reconstructed absolute glacier storage | mm water equivalent |
+
+All variables are normalized by catchment area.
+
+### WaterGAP Processing
+
+The WaterGAP-derived variables use WaterGAP 2.2d monthly output.
+
+Actual evapotranspiration and potential groundwater withdrawal are supplied as monthly fluxes in `kg m-2 s-1`. They are integrated using the number of days in each calendar month:
+
+```text
+monthly depth (mm) = flux (kg m-2 s-1) × days in month × 86,400
+```
+
+Monthly depths are summed to annual values and averaged across WaterGAP cells assigned to each catchment.
+
+Monthly groundwater storage in `kg m-2` is directly equivalent to millimetres of water. A day-weighted annual mean is calculated and then averaged across assigned catchment grid cells.
+
+Two source catchments contain no valid WaterGAP grid values. Their WaterGAP-derived variables remain missing rather than being fabricated.
+
+### Glacier Water-Equivalent Storage
+
+Glacier storage is an absolute water-equivalent storage reconstruction, not glacier area or annual loss alone.
+
+The reconstruction combines:
+
+- Farinotti et al. (2019) global glacier-volume estimates as an around-2000 absolute reference.
+- RGI 6.0 glacier outlines for catchment assignment.
+- Zemp et al. (2019) regional annual glacier mass-balance series.
+
+Ice volume is converted to water-equivalent volume using:
+
+```text
+water-equivalent volume = ice volume × 0.9
+```
+
+Annual regional mass balance is distributed according to glacier area within each catchment:
+
+```text
+annual balance km3 we =
+0.001 × sum(regional annual balance m we × catchment glacier area km2)
+```
+
+Annual storage is reconstructed forward and backward from the around-2000 reference. Negative reconstructed storage is clipped to zero. Absolute catchment storage is converted to catchment-normalized depth:
+
+```text
+glacier_storage_mm_we =
+glacier_storage_km3_we / catchment_area_km2 × 1,000,000
+```
+
+## Literature Collection and Semantic Review
+
+The literature catalog was assembled from manually curated foundational studies and OpenAlex discovery queries covering basin hydrology, water-cycle modes, groundwater depletion, storage change, reservoir regulation, monsoon recharge, snow and glacier processes, and low-human-impact basins.
+
+Each record may include:
+
+- Title, authors, affiliations, year, and venue.
+- DOI or external link.
+- Abstract and keywords.
+- Candidate water-cycle mode and regional context.
+- Semantic-review status, confidence, and explanation.
+
+An LLM semantic-audit workflow reviewed all **2,851 records** using titles and abstracts rather than simple keyword matching.
+
+Current review results:
+
+```text
+Approved: 1,859
+Review required: 366
+Rejected: 626
+```
+
+Rejected records are excluded from the module's displayed evidence. Approved and review-required records are linked to modes or named regional contexts through typed knowledge-graph relations.
+
+## Module Import Model
+
+Modules are described by a manifest:
 
 ```json
 {
-  "ANTHROPIC_API_KEY": "your-api-key",
-  "ANTHROPIC_BASE_URL": "https://api.example.com",
-  "ANTHROPIC_MODEL": "glm-5.1"
+  "id": "water-imbalance",
+  "entry": "./index.js",
+  "className": "WaterImbalanceModule",
+  "ontology": "./ontology.json",
+  "knowledgeGraph": "./data/knowledge-graph.json",
+  "defaultLoad": true
 }
 ```
 
-无 API 配置时，系统将返回离线示例综述。
+The same module can run through the local Node server or as a static GitHub Pages deployment. On GitHub Pages, the Foundation falls back from the module API to static module manifests.
 
-## 目录结构
+The current import interface supports:
 
-```
-Spatial_Research_Operating_System/
-├─ README.md                 # 项目入口文档
-├─ ROADMAP.md                # 版本路线图
-├─ CHANGELOG.md              # 变更日志
-├─ docs/
-│  ├─ WHITEPAPER.md          # 白皮书（长期愿景）
-│  ├─ ARCHITECTURE.md        # 技术架构
-│  ├─ MVP_PLAN.md            # MVP 计划
-│  ├─ PRODUCT_SPEC.md        # 产品规格
-│  └─ research-notes/        # 研究笔记
-├─ public/                   # 前端静态文件
-│  ├─ index.html
-│  ├─ app.js
-│  ├─ styles.css
-│  └─ assets/
-├─ src/
-│  ├─ server/                # 服务端代码
-│  ├─ data/                  # 示例数据
-│  ├─ services/              # 服务模块
-│  └─ schemas/               # 数据 schema
-├─ catalog/                  # 知识库目录
-│  ├─ literature/            # 文献元数据
-│  ├─ regions/               # 区域知识包
-│  ├─ datasets/              # 数据集元数据
-│  └─ models/                # 模型元数据
-├─ scripts/                  # 脚本工具
-│  ├─ setup/                 # 初始化脚本
-│  ├─ ingest/                # 数据导入
-│  ├─ validate/              # 数据验证
-│  ├─ export/                # 报告导出
-│  └─ maintenance/           # 维护脚本
-├─ examples/                 # 示例文件
-│  ├─ hydrology-demo/
-│  └─ reports/
-├─ config/                   # 配置文件
-│  ├─ atlas.local.example.json
-│  └─ atlas.local.json       # 本地配置（不提交）
-└─ tests/                    # 测试文件
+- CSV point-data import using latitude and longitude fields.
+- Module-manifest import for modules already available under `public/modules/`.
+
+Future import contracts can support basin-ID time series, GeoJSON, remote datasets, script results, and packaged module archives.
+
+## Run Locally
+
+Requirements:
+
+- Node.js 18 or newer.
+
+```bash
+git clone https://github.com/Grups666/Hydro-Imbalance.git
+cd Hydro-Imbalance
+npm install
+npm start
 ```
 
-## 已配置流域
+Open:
 
-当前版本内置 11 个重点水文区域：
-
-| 区域 | 水文模式 | 核心特征 |
-|------|----------|----------|
-| High Plains / Ogallala | 干旱区灌溉 | 地下水支撑的半干旱农业灌溉 |
-| California Central Valley | 干旱区灌溉 | 地表水短缺下的地下水替代抽采 |
-| Indus / Northwest India | 干旱区灌溉 | 灌溉抽采驱动的地下水亏损 |
-| Ganges-Brahmaputra Plain | 季风洪泛 | 季风补给抵消的洪泛平原系统 |
-| North China Plain | 治理恢复 | 强人类干预下的治理恢复系统 |
-| Yellow River Basin | 水库调节 | 人类调控主导的径流特征变化 |
-| Tigris-Euphrates | 干旱区灌溉 | 干旱区抽采与水库压力叠加 |
-| Aral Sea | 水库调节 | 端流湖泊引水与灌溉损失 |
-| Lower Mekong | 水库调节 | 水电调度改变洪泛脉冲 |
-| Nile Basin | 水库调节 | 大型水库与跨境分配控制 |
-| Murray-Darling Basin | 水库调节 | 干旱河流管理与生态流量调控 |
-
-## 版本历史
-
-- **v0.1.0** (2025-05): 地图 + 流域点击 + 本地文献 + AI 综述
-
-详见 [CHANGELOG.md](CHANGELOG.md)
-
-## 开发路线
-
-详见 [ROADMAP.md](ROADMAP.md)
-
-- v0.2: 数据入口 catalog
-- v0.3: AI 区域综述增强
-- v0.4: 报告导出
-- v0.5: OpenAlex / Crossref 文献接入
-- v1.0: Hydrology-first Spatial Research OS
-
-## 技术架构
-
-详见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-
-- 前端：纯 JavaScript + Canvas 2D（无框架依赖）
-- 后端：Node.js + Express
-- 数据：JSON/JS 文件存储（未来可迁移至数据库）
-- AI：Anthropic Messages API 兼容接口
-
-## 知识库贡献
-
-### 添加新流域
-
-编辑 `catalog/regions/basin-profiles.js`，添加流域档案：
-
-```javascript
-{
-  id: "new-basin",
-  name: "New Basin Name",
-  match: { lon: [min, max], lat: [min, max] },
-  mode: "dryIrrigation",
-  label: "模式描述",
-  summary: "研究摘要...",
-  cycle: ["特征1", "特征2"],
-  pattern: ["格局1", "格局2"],
-  references: ["ref-id-1", "ref-id-2"]
-}
+```text
+http://127.0.0.1:8791/
 ```
 
-### 添加新文献
+Run validation:
 
-编辑 `catalog/literature/reference-catalog.js`，添加文献元数据：
-
-```javascript
-{
-  id: "author2024",
-  title: "Paper Title",
-  authors: "Author, A., et al.",
-  year: "2024",
-  venue: "Journal Name",
-  doi: "10.xxxx/xxxx",
-  abstract: "摘要内容..."
-}
+```bash
+npm test
 ```
 
-## 许可证
+## GitHub Pages
 
-MIT License
+The repository includes a GitHub Actions workflow that deploys the `public/` directory to GitHub Pages.
 
-## 引用
+After Pages is enabled with **GitHub Actions** as its source, pushes to `main` deploy automatically to:
 
-如果本项目对您的研究有帮助，请引用：
+[https://grups666.github.io/Hydro-Imbalance/](https://grups666.github.io/Hydro-Imbalance/)
+
+## Important Directories
+
+```text
+public/foundation/                 Generic map, layer, UI, and module-loading runtime
+public/modules/water-imbalance/    Domain module, ontology, knowledge graph, and time series
+public/assets/                     Foundation basin and land geometry
+catalog/literature/                Source literature catalog
+data/literature/                   Harvest and semantic-audit outputs
+scripts/                           Data ingestion, processing, validation, and export tools
+docs/                              Architecture, product, and research documentation
+```
+
+## Limitations
+
+- Basin time-series coverage is based on exact `basin_id` matching and currently covers 97.77% of Foundation basins.
+- The current imbalance-mode assignment combines named regional contexts and broad spatial rules. It is a research-screening layer, not a definitive causal diagnosis.
+- GitHub Pages is static. Server-side LLM research endpoints are available only when running the local Node server.
+- Literature semantic review improves alignment but does not replace expert verification.
+
+## Version
+
+Current release: **V0.1.0**
+
+## Citation
 
 ```bibtex
-@software{spatial_research_os_2025,
-  title = {Spatial Research Operating System},
-  author = {Your Name},
-  year = {2025},
-  url = {https://github.com/your-org/Spatial_Research_Operating_System}
+@software{hydro_imbalance_2026,
+  title  = {Hydro-Imbalance: An Ontology-Driven Spatial Research Foundation},
+  author = {Grups666},
+  year   = {2026},
+  url    = {https://github.com/Grups666/Hydro-Imbalance}
 }
 ```
-
-## 联系与反馈
-
-- 问题反馈：GitHub Issues
-- 邮件：your-email@example.com
