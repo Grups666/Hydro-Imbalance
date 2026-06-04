@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Literature Catalog Entry",
+  "description": "文献元数据条目结构",
+  "type": "object",
+  "required": ["id", "title", "authors", "year", "venue"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "唯一标识符，格式：第一作者姓氏+年份（如 scanlon2012）",
+      "pattern": "^[a-z]+[0-9]{4}[a-z]?$"
+    },
+    "title": {
+      "type": "string",
+      "description": "论文标题"
+    },
+    "authors": {
+      "type": "string",
+      "description": "作者列表（简写格式）"
+    },
+    "affiliations": {
+      "type": "string",
+      "description": "作者单位或主要机构（可为简写）"
+    },
+    "year": {
+      "type": "string",
+      "pattern": "^[0-9]{4}$",
+      "description": "发表年份"
+    },
+    "venue": {
+      "type": "string",
+      "description": "期刊或会议名称"
+    },
+    "journal_quartile": {
+      "type": "string",
+      "description": "期刊分区或质量标记，例如 Q1"
+    },
+    "doi": {
+      "type": "string",
+      "pattern": "^10\\.[0-9]{4,}/.*$",
+      "description": "DOI 标识符"
+    },
+    "file": {
+      "type": "string",
+      "description": "本地 PDF 文件名（相对于 literature 目录）"
+    },
+    "external_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "外部链接（如期刊页面）"
+    },
+    "abstract": {
+      "type": "string",
+      "description": "摘要"
+    },
+    "relevance": {
+      "type": "string",
+      "description": "该论文与流域水循环模式或水循环失衡的关系"
+    },
+    "water_cycle_mode": {
+      "type": "string",
+      "description": "对应水循环模式"
+    },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "关键词"
+    },
+    "study_regions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "研究区域 ID 列表"
+    },
+    "variables": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "研究变量"
+    },
+    "methods": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "研究方法"
+    },
+    "datasets_used": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "使用的数据集 ID"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "statement": { "type": "string" },
+          "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+        }
+      },
+      "description": "主要结论"
+    }
+  }
+}

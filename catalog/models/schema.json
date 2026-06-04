@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Model Catalog Entry",
+  "description": "模型元数据结构",
+  "type": "object",
+  "required": ["id", "name", "domain"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "唯一标识符（kebab-case）",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "模型名称"
+    },
+    "domain": {
+      "type": "string",
+      "description": "应用领域（如 hydrology, climate, ecology）"
+    },
+    "description": {
+      "type": "string",
+      "description": "模型描述"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "required": { "type": "boolean" }
+        }
+      },
+      "description": "输入变量"
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      },
+      "description": "输出变量"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "default": { "type": ["string", "number"] },
+          "range": { "type": "string" }
+        }
+      },
+      "description": "可配置参数"
+    },
+    "supported_regions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "已验证区域 ID"
+    },
+    "supported_scales": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "支持的空间尺度"
+    },
+    "runtime": {
+      "type": "string",
+      "enum": ["local", "docker", "api", "cloud"],
+      "description": "运行方式"
+    },
+    "source_code": {
+      "type": "string",
+      "format": "uri",
+      "description": "源代码链接"
+    },
+    "documentation": {
+      "type": "string",
+      "format": "uri",
+      "description": "文档链接"
+    },
+    "license": {
+      "type": "string",
+      "description": "使用许可"
+    },
+    "citation": {
+      "type": "string",
+      "description": "引用格式"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Spatial Research Foundation",
+  "version": "0.2.0",
+  "description": "Generic spatial research platform with pluggable domain modules",
+
+  "features": {
+    "modularArchitecture": true,
+    "legacyMode": false
+  },
+
+  "map": {
+    "projection": "equirectangular",
+    "center": [0, 0],
+    "zoom": 1,
+    "minZoom": 1,
+    "maxZoom": 12
+  },
+
+  "ui": {
+    "workbenchLayout": true,
+    "enableVoice": true,
+    "enableTimeline": false
+  },
+
+  "modules": {
+    "directory": "public/modules",
+    "autoDiscover": true,
+    "defaultModule": "hydrology"
+  },
+
+  "catalogs": {
+    "foundation": {
+      "datasets": "catalog/foundation/datasets",
+      "models": "catalog/foundation/models"
+    },
+    "modules": "catalog/modules"
+  },
+
+  "api": {
+    "baseUrl": "",
+    "modulesEndpoint": "/api/modules",
+    "catalogEndpoint": "/api/catalog"
+  }
+}

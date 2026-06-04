@@ -1,0 +1,1379 @@
+{
+  "generated_at": "2026-05-24T05:21:30.969Z",
+  "summary": {
+    "managed": {
+      "high": 2,
+      "medium": 4,
+      "low": 1,
+      "total": 7
+    },
+    "reservoir": {
+      "high": 423,
+      "medium": 75,
+      "low": 6,
+      "total": 504
+    },
+    "dryIrrigation": {
+      "high": 709,
+      "medium": 42,
+      "low": 0,
+      "total": 751
+    },
+    "monsoon": {
+      "high": 320,
+      "medium": 0,
+      "low": 0,
+      "total": 320
+    },
+    "snow": {
+      "high": 141,
+      "medium": 13,
+      "low": 0,
+      "total": 154
+    },
+    "mixed": {
+      "high": 70,
+      "medium": 25,
+      "low": 9,
+      "total": 104
+    },
+    "humid": {
+      "high": 184,
+      "medium": 0,
+      "low": 0,
+      "total": 184
+    },
+    "boreal": {
+      "high": 189,
+      "medium": 0,
+      "low": 0,
+      "total": 189
+    },
+    "tropical": {
+      "high": 209,
+      "medium": 1,
+      "low": 0,
+      "total": 210
+    },
+    "dryNatural": {
+      "high": 201,
+      "medium": 21,
+      "low": 0,
+      "total": 222
+    },
+    "mountain": {
+      "high": 116,
+      "medium": 0,
+      "low": 0,
+      "total": 116
+    },
+    "lowHumanImpact": {
+      "high": 27,
+      "medium": 63,
+      "low": 0,
+      "total": 90
+    }
+  },
+  "low_count": 16,
+  "medium_count": 244,
+  "low": [
+    {
+      "id": "best2019Anthropocene",
+      "mode": "mixed",
+      "score": 3,
+      "title": "Anthropogenic stresses on the world's big rivers"
+    },
+    {
+      "id": "chiew2011MDBDrought",
+      "mode": "reservoir",
+      "score": 3,
+      "title": "Observed hydrologic non-stationarity in far south-eastern Australia: implications for modelling and prediction"
+    },
+    {
+      "id": "cretaux2013Aral",
+      "mode": "reservoir",
+      "score": 2,
+      "title": "Absolute calibration or validation of the altimeters on the Sentinel-3A and Jason-2 over the Aral Sea and Lake Issyk-Kul"
+    },
+    {
+      "id": "feng2013NorthChina",
+      "mode": "managed",
+      "score": 4,
+      "title": "Groundwater storage changes in China from satellite gravity: an overview"
+    },
+    {
+      "id": "kong2020YellowRiver500y",
+      "mode": "reservoir",
+      "score": 4,
+      "title": "Recent anthropogenic curtailing of Yellow River runoff and sediment load is unprecedented over the past 500 y"
+    },
+    {
+      "id": "leblanc2009MurrayDarling",
+      "mode": "reservoir",
+      "score": 3,
+      "title": "Basin-scale, integrated observations of the early 21st century multiyear drought in southeast Australia"
+    },
+    {
+      "id": "li2019YellowTWS",
+      "mode": "reservoir",
+      "score": 3,
+      "title": "Influences of climatic variability and human activities on terrestrial water storage variations across the Yellow River basin in the recent decade"
+    },
+    {
+      "id": "milly2008Stationarity",
+      "mode": "mixed",
+      "score": 4,
+      "title": "Stationarity is dead: Whither water management?"
+    },
+    {
+      "id": "oa_10_1017_rdc_2020_41",
+      "mode": "mixed",
+      "score": 4,
+      "title": "The IntCal20 Northern Hemisphere Radiocarbon Age Calibration Curve (0–55 cal kBP)"
+    },
+    {
+      "id": "oa_10_1021_es503610r",
+      "mode": "mixed",
+      "score": 4,
+      "title": "Microplastic is an Abundant and Distinct Microbial Habitat in an Urban River"
+    },
+    {
+      "id": "oa_10_1155_2019_5794869",
+      "mode": "mixed",
+      "score": 4,
+      "title": "The Role of Soil pH in Plant Nutrition and Soil Remediation"
+    },
+    {
+      "id": "oa_10_1175_1520_0477_2001_082_2415_fantts_2_3_co_2",
+      "mode": "mixed",
+      "score": 4,
+      "title": "FLUXNET: A New Tool to Study the Temporal and Spatial Variability of Ecosystem–Scale Carbon Dioxide, Water Vapor, and Energy Flux Densities"
+    },
+    {
+      "id": "oa_10_1175_bams_d_13_00164_1",
+      "mode": "mixed",
+      "score": 4,
+      "title": "The Global Precipitation Measurement Mission"
+    },
+    {
+      "id": "oa_10_5194_acp_6_1777_2006",
+      "mode": "mixed",
+      "score": 4,
+      "title": "Analysis and quantification of the diversities of aerosol life cycles within AeroCom"
+    },
+    {
+      "id": "vorosmarty2010GlobalThreats",
+      "mode": "mixed",
+      "score": 4,
+      "title": "Global threats to human water security and river biodiversity"
+    },
+    {
+      "id": "wang2020YellowRiver",
+      "mode": "reservoir",
+      "score": 4,
+      "title": "Impact assessment of climate change and human activities on streamflow signatures in the Yellow River Basin using the Budyko hypothesis and derived differential equation"
+    }
+  ],
+  "medium_sample": [
+    {
+      "id": "alam2021CentralValleyRecovery",
+      "mode": "managed",
+      "score": 7,
+      "title": "Post-drought groundwater storage recovery in California's Central Valley"
+    },
+    {
+      "id": "cai2008MDBClimate",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Evidence of impacts from rising temperature on inflows to the Murray-Darling Basin"
+    },
+    {
+      "id": "cao2013NorthChinaRecharge",
+      "mode": "managed",
+      "score": 5,
+      "title": "Groundwater depletion and water scarcity in the North China Plain"
+    },
+    {
+      "id": "chen2019NorthChinaAcceleration",
+      "mode": "managed",
+      "score": 7,
+      "title": "Geodetic and hydrological measurements reveal the recent acceleration of groundwater depletion in North China Plain"
+    },
+    {
+      "id": "davidson2012Amazon",
+      "mode": "tropical",
+      "score": 6,
+      "title": "The Amazon basin in transition"
+    },
+    {
+      "id": "deGraaf2019EnvironmentalFlow",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Environmental flow limits to global groundwater pumping"
+    },
+    {
+      "id": "doll2012IrrigationGroundwater",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Impact of water withdrawals from groundwater and surface water on continental water storage variations"
+    },
+    {
+      "id": "gaybullaev2012AralBalance",
+      "mode": "reservoir",
+      "score": 5,
+      "title": "Large-scale desiccation of the Aral Sea due to over-exploitation after 1960"
+    },
+    {
+      "id": "kondolf2018MekongSediment",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Changing sediment budget of the Mekong: cumulative threats and management strategies for a large river basin"
+    },
+    {
+      "id": "leng2014NorthChina",
+      "mode": "managed",
+      "score": 5,
+      "title": "A comparative analysis of the impacts of climate change and irrigation on land surface and subsurface hydrology in the North China Plain"
+    },
+    {
+      "id": "micklin2007Aral",
+      "mode": "reservoir",
+      "score": 4,
+      "title": "The Aral Sea disaster"
+    },
+    {
+      "id": "oa_10_1002_2015wr017065",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Detection and attribution of urbanization effect on flood extremes using nonstationary flood‐frequency models"
+    },
+    {
+      "id": "oa_10_1002_2015wr017498",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Accelerating advances in continental domain hydrologic modeling"
+    },
+    {
+      "id": "oa_10_1002_2016wr019638",
+      "mode": "snow",
+      "score": 7,
+      "title": "The twenty‐first century Colorado River hot drought and implications for the future"
+    },
+    {
+      "id": "oa_10_1002_2017wr020723",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Land use change impacts on floods at the catchment scale: Challenges and opportunities for future research"
+    },
+    {
+      "id": "oa_10_1002_aqc_2709",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Wetlands: conservation's poor cousins"
+    },
+    {
+      "id": "oa_10_1002_wat2_1488",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "The benefits and negative impacts of citizen science applications to water as experienced by participants and communities"
+    },
+    {
+      "id": "oa_10_1002_wcc_479",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Mitigation and adaptation in polycentric systems: sources of power in the pursuit of collective goals"
+    },
+    {
+      "id": "oa_10_1007_s00027_012_0278_z",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Current state of knowledge regarding the world’s wetlands and their future under global climate change: a synthesis"
+    },
+    {
+      "id": "oa_10_1007_s002679900184",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "ENVIRONMENTAL AUDITING: Assessing Biotic Integrity of Streams: Effects of Scale in Measuring the Influence of Land Use/Cover and Habitat Structure on Fish and Macroinvertebrates"
+    },
+    {
+      "id": "oa_10_1007_s00374_019_01430_2",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Exploring phosphorus fertilizers and fertilization strategies for improved human and environmental health"
+    },
+    {
+      "id": "oa_10_1007_s10021_006_0017_1",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Loss of Resilience, Crisis, and Institutional Change: Lessons from an Intensive Agricultural System in Southeastern Australia"
+    },
+    {
+      "id": "oa_10_1007_s10021_011_9517_8",
+      "mode": "mixed",
+      "score": 7,
+      "title": "A Global Assessment of the Water Footprint of Farm Animal Products"
+    },
+    {
+      "id": "oa_10_1007_s10533_014_0029_4",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Origins and bioavailability of dissolved organic matter in groundwater"
+    },
+    {
+      "id": "oa_10_1007_s10596_014_9443_x",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Reactive transport codes for subsurface environmental simulation"
+    },
+    {
+      "id": "oa_10_1007_s10661_006_1505_7",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Leachate Characterization and Assessment of Groundwater Pollution Near Municipal Solid Waste Landfill Site"
+    },
+    {
+      "id": "oa_10_1007_s10712_016_9362_6",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Lake Volume Monitoring from Space"
+    },
+    {
+      "id": "oa_10_1007_s10750_007_0616_7",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Shallow lakes theory revisited: various alternative regimes driven by climate, nutrients, depth and lake size"
+    },
+    {
+      "id": "oa_10_1007_s10750_012_1039_7",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Increasing jellyfish populations: trends in Large Marine Ecosystems"
+    },
+    {
+      "id": "oa_10_1007_s10980_015_0337_7",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "The impact of land use/land cover scale on modelling urban ecosystem services"
+    },
+    {
+      "id": "oa_10_1007_s11069_012_0234_1",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "A flood vulnerability index for coastal cities and its use in assessing climate change impacts"
+    },
+    {
+      "id": "oa_10_1007_s11104_013_1591_6",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Plant-soil interactions in Mediterranean forest and shrublands: impacts of climatic change"
+    },
+    {
+      "id": "oa_10_1007_s11104_019_04229_0",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Preserving the nutritional quality of crop plants under a changing climate: importance and strategies"
+    },
+    {
+      "id": "oa_10_1007_s11252_016_0574_9",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Dynamic heterogeneity: a framework to promote ecological integration and hypothesis generation in urban systems"
+    },
+    {
+      "id": "oa_10_1007_s11269_011_9913_z",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Trend Analysis in Reference Evapotranspiration Using Mann-Kendall and Spearman’s Rho Tests in Arid Regions of Iran"
+    },
+    {
+      "id": "oa_10_1007_s11367_017_1333_8",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "The WULCA consensus characterization model for water scarcity footprints: assessing impacts of water consumption based on available water remaining (AWARE)"
+    },
+    {
+      "id": "oa_10_1007_s11434_012_5093_3",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Mapping wetland changes in China between 1978 and 2008"
+    },
+    {
+      "id": "oa_10_1007_s13280_011_0212_y",
+      "mode": "mixed",
+      "score": 5,
+      "title": "The Changing Face of Arctic Snow Cover: A Synthesis of Observed and Projected Changes"
+    },
+    {
+      "id": "oa_10_1007_s13280_014_0613_9",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Phosphorus management in Europe in a changing world"
+    },
+    {
+      "id": "oa_10_1007_s13280_017_1011_x",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Modulators of mercury risk to wildlife and humans in the context of rapid global change"
+    },
+    {
+      "id": "oa_10_1007_s42452_021_04521_8",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Fertilizers and nitrate pollution of surface and ground water: an increasingly pervasive global problem"
+    },
+    {
+      "id": "oa_10_1016_j_apgeochem_2004_02_001",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Natural organic matter in sedimentary basins and its relation to arsenic in anoxic ground water: the example of West Bengal and its worldwide implications"
+    },
+    {
+      "id": "oa_10_1016_j_earscirev_2008_07_002",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Late Paleocene–early Eocene Tethyan carbonate platform evolution — A response to long- and short-term paleoclimatic change"
+    },
+    {
+      "id": "oa_10_1016_j_earscirev_2019_103043",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Review of snow cover variation over the Tibetan Plateau and its influence on the broad climate system"
+    },
+    {
+      "id": "oa_10_1016_j_envsci_2016_11_007",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "An integrative research framework for enabling transformative adaptation"
+    },
+    {
+      "id": "oa_10_1016_j_geomorph_2008_05_035",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Patterns of anabranching channels: The ultimate end-member adjustment of mega rivers"
+    },
+    {
+      "id": "oa_10_1016_j_jglr_2014_02_004",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Assessing and addressing the re-eutrophication of Lake Erie: Central basin hypoxia"
+    },
+    {
+      "id": "oa_10_1016_j_jhydrol_2009_06_019",
+      "mode": "snow",
+      "score": 6,
+      "title": "A comparison of performance of several artificial intelligence methods for forecasting monthly discharge time series"
+    },
+    {
+      "id": "oa_10_1016_j_jhydrol_2014_12_042",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Modeling water scarcity and droughts for policy adaptation to climate change in arid and semiarid regions"
+    },
+    {
+      "id": "oa_10_1016_j_jhydrol_2018_09_019",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Fluvial sediment transfer in the Changjiang (Yangtze) river-estuary depositional system"
+    },
+    {
+      "id": "oa_10_1016_j_margeo_2014_03_012",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Autonomous Underwater Vehicles (AUVs): Their past, present and future contributions to the advancement of marine geoscience"
+    },
+    {
+      "id": "oa_10_1016_j_marpolbul_2016_05_077",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Microplastic contamination in the San Francisco Bay, California, USA"
+    },
+    {
+      "id": "oa_10_1016_j_pecon_2019_07_002",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Why Brazil needs its Legal Reserves"
+    },
+    {
+      "id": "oa_10_1016_j_resconrec_2022_106767",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Spatial-temporal heterogeneity of ecosystem service interactions and their social-ecological drivers: Implications for spatial planning and management"
+    },
+    {
+      "id": "oa_10_1016_j_resconrec_2024_107578",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Microplastics in freshwater systems: Dynamic behaviour and transport processes"
+    },
+    {
+      "id": "oa_10_1016_j_rse_2017_01_021",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Validation of SMAP surface soil moisture products with core validation sites"
+    },
+    {
+      "id": "oa_10_1016_j_scitotenv_2016_10_122",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Eurasian beaver activity increases water storage, attenuates flow and mitigates diffuse pollution from intensively-managed grasslands"
+    },
+    {
+      "id": "oa_10_1016_j_scitotenv_2018_10_021",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Occurrence of antibiotics, estrogenic hormones, and UV-filters in water, sediment, and oyster tissue from the Chesapeake Bay"
+    },
+    {
+      "id": "oa_10_1016_j_still_2011_05_001",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Long-term effect of tillage, nitrogen fertilization and cover crops on soil organic carbon and total nitrogen content"
+    },
+    {
+      "id": "oa_10_1016_j_techfore_2006_05_021",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Climate change impacts on irrigation water requirements: Effects of mitigation, 1990–2080"
+    },
+    {
+      "id": "oa_10_1016_j_toxrep_2019_05_012",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Bioaccumulation and potential sources of heavy metal contamination in fish species in River Ganga basin: Possible human health risks evaluation"
+    },
+    {
+      "id": "oa_10_1016_s0167_8809_98_00129_7",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Research on nutrient flows and balances in west Africa: state-of-the-art1Paper contributes to EC INCO-DC project IC18-CT96-0092 (Spatial and temporal variation of soil nutrient stocks and management in sub-Saharan African farming systems).1"
+    },
+    {
+      "id": "oa_10_1016_s1001_6279_14_60013_5",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Sediment fingerprinting in fluvial systems: review of tracers, sediment sources and mixing models"
+    },
+    {
+      "id": "oa_10_1029_1999gb001254",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "High‐resolution fields of global runoff combining observed river discharge and simulated water balances"
+    },
+    {
+      "id": "oa_10_1029_2000jc000583",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Tracer studies of pathways and rates of meltwater transport through Arctic summer sea ice"
+    },
+    {
+      "id": "oa_10_1029_2002jd002347",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Global frequency and distribution of lightning as observed from space by the Optical Transient Detector"
+    },
+    {
+      "id": "oa_10_1029_2003rg000139",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Present‐day sea level change: Observations and causes"
+    },
+    {
+      "id": "oa_10_1029_2005gb002537",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Riverine nitrogen export from the continents to the coasts"
+    },
+    {
+      "id": "oa_10_1029_2005jd006338",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Multimodel ensemble simulations of present‐day and near‐future tropospheric ozone"
+    },
+    {
+      "id": "oa_10_1029_2006jf000493",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Water chemistry of the Zhujiang (Pearl River): Natural processes and anthropogenic influences"
+    },
+    {
+      "id": "oa_10_1029_2006jg000218",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Landscape‐scale variability of acidity and dissolved organic carbon during spring flood in a boreal stream network"
+    },
+    {
+      "id": "oa_10_1029_2009jd012882",
+      "mode": "snow",
+      "score": 7,
+      "title": "Bias correction of monthly precipitation and temperature fields from Intergovernmental Panel on Climate Change AR4 models using equidistant quantile matching"
+    },
+    {
+      "id": "oa_10_1029_2009rg000301",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Tropospheric water vapor, convection, and climate"
+    },
+    {
+      "id": "oa_10_1029_2009wr007706",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "On the calibration of hydrological models in ungauged basins: A framework for integrating hard and soft hydrological information"
+    },
+    {
+      "id": "oa_10_1029_2010wr009568",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Functional model of water balance variability at the catchment scale: 1. Evidence of hydrologic similarity and space‐time symmetry"
+    },
+    {
+      "id": "oa_10_1029_2011wr011721",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Crash testing hydrological models in contrasted climate conditions: An experiment on 216 Australian catchments"
+    },
+    {
+      "id": "oa_10_1029_2018rg000604",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "The Weddell Gyre, Southern Ocean: Present Knowledge and Future Challenges"
+    },
+    {
+      "id": "oa_10_1029_2018wr022913",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "A Quantitative Hydrological Climate Classification Evaluated With Independent Streamflow Data"
+    },
+    {
+      "id": "oa_10_1029_2019wr025286",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Many Commonly Used Rainfall‐Runoff Models Lack Long, Slow Dynamics: Implications for Runoff Projections"
+    },
+    {
+      "id": "oa_10_1029_2020gl088306",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Extending the Global Mass Change Data Record: GRACE Follow‐On Instrument and Science Data Performance"
+    },
+    {
+      "id": "oa_10_1029_2021rg000762",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Climate Change and Weather Extremes in the Eastern Mediterranean and Middle East"
+    },
+    {
+      "id": "oa_10_1029_2022rg000777",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Satellite Remote Sensing of Global Land Surface Temperature: Definition, Methods, Products, and Applications"
+    },
+    {
+      "id": "oa_10_1029_98wr01282",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Effect of groundwater springs on NO<sub>3</sub><sup>−</sup> concentrations during summer in Catskill Mountain streams"
+    },
+    {
+      "id": "oa_10_1038_ismej_2011_41",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Transitions in bacterial communities along the 2000 km salinity gradient of the Baltic Sea"
+    },
+    {
+      "id": "oa_10_1038_nclimate3004",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Greening of the Earth and its drivers"
+    },
+    {
+      "id": "oa_10_1038_ncomms15900",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Reconciling irrigated food production with environmental flows for Sustainable Development Goals implementation"
+    },
+    {
+      "id": "oa_10_1038_ncomms2328",
+      "mode": "mixed",
+      "score": 5,
+      "title": "Higher levels of multiple ecosystem services are found in forests with more tree species"
+    },
+    {
+      "id": "oa_10_1038_ncomms6918",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Global pattern for the effect of climate and land cover on water yield"
+    },
+    {
+      "id": "oa_10_1038_ngeo2602",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Reduced sediment transport in the Yellow River due to anthropogenic changes"
+    },
+    {
+      "id": "oa_10_1038_s41467_017_02810_8",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "The mark of vegetation change on Earth’s surface energy balance"
+    },
+    {
+      "id": "oa_10_1038_s41467_018_05252_y",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "North China Plain threatened by deadly heatwaves due to climate change and irrigation"
+    },
+    {
+      "id": "oa_10_1038_s41467_020_17337_8",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Environmental DNA allows upscaling spatial patterns of biodiversity in freshwater ecosystems"
+    },
+    {
+      "id": "oa_10_1038_s41467_021_21926_6",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Substantial decrease in CO2 emissions from Chinese inland waters due to global change"
+    },
+    {
+      "id": "oa_10_1038_s41467_021_24016_9",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Observed increasing water constraint on vegetation growth over the last three decades"
+    },
+    {
+      "id": "oa_10_1038_s41467_021_26907_3",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Global predictions of primary soil salinization under changing climate in the 21st century"
+    },
+    {
+      "id": "oa_10_1038_s41467_022_35531_8",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Global droughts connected by linkages between drought hubs"
+    },
+    {
+      "id": "oa_10_1038_s41467_024_44947_3",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "A triple increase in global river basins with water scarcity due to future pollution"
+    },
+    {
+      "id": "oa_10_1038_s41586_019_0889_9",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Global environmental consequences of twenty-first-century ice-sheet melt"
+    },
+    {
+      "id": "oa_10_1038_s41586_024_08375_z",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "One-quarter of freshwater fauna threatened with extinction"
+    },
+    {
+      "id": "oa_10_1038_s41598_017_08481_1",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Global assessment of flood and storm extremes with increased temperatures"
+    },
+    {
+      "id": "oa_10_1038_s41598_017_18285_y",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Water quality assessment based on the water quality index method in Lake Poyang: The largest freshwater lake in China"
+    },
+    {
+      "id": "oa_10_1038_s41598_018_27464_4",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Revisiting the recent European droughts from a long-term perspective"
+    },
+    {
+      "id": "oa_10_1038_s41598_019_57150_y",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Climate change or irrigated agriculture – what drives the water level decline of Lake Urmia"
+    },
+    {
+      "id": "oa_10_1038_s41598_020_68872_9",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Increased future occurrences of the exceptional 2018–2019 Central European drought under global warming"
+    },
+    {
+      "id": "oa_10_1038_s41598_020_70816_2",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Climate change impact on flood and extreme precipitation increases with water availability"
+    },
+    {
+      "id": "oa_10_1038_s41612_020_0130_4",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Increased rainfall stimulates permafrost thaw across a variety of Interior Alaskan boreal ecosystems"
+    },
+    {
+      "id": "oa_10_1046_j_1365_2745_2003_00827_x",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Interactive effects of soil moisture, vegetation canopy, plant litter and seed addition on plant diversity in a wetland community"
+    },
+    {
+      "id": "oa_10_1051_agro_19980501",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "STICS: a generic model for the simulation of crops and their water and nitrogen balances. I. Theory and parameterization applied to wheat and corn"
+    },
+    {
+      "id": "oa_10_1071_cp11303",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Plant adaptation to climate change—opportunities and priorities in breeding"
+    },
+    {
+      "id": "oa_10_1071_fp09191",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Drought-induced changes in development and function of grapevine (Vitis spp.) organs and in their hydraulic and non-hydraulic interactions at the whole-plant level: a physiological and molecular update"
+    },
+    {
+      "id": "oa_10_1071_mf10302",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Projected climate change in Australian marine and freshwater environments"
+    },
+    {
+      "id": "oa_10_1073_pnas_1116619109",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Global climate evolution during the last deglaciation"
+    },
+    {
+      "id": "oa_10_1073_pnas_1203176109",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Evolution of the global virtual water trade network"
+    },
+    {
+      "id": "oa_10_1073_pnas_1221638110",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Centennial-scale analysis of the creation and fate of reactive nitrogen in China (1910–2010)"
+    },
+    {
+      "id": "oa_10_1073_pnas_1222460110",
+      "mode": "snow",
+      "score": 7,
+      "title": "Multimodel assessment of water scarcity under climate change"
+    },
+    {
+      "id": "oa_10_1073_pnas_1222474110",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Constraints and potentials of future irrigation water availability on agricultural production under climate change"
+    },
+    {
+      "id": "oa_10_1073_pnas_1607171113",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Impact of anthropogenic climate change on wildfire across western US forests"
+    },
+    {
+      "id": "oa_10_1073_pnas_1909902117",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Deceleration of China’s human water use and its key drivers"
+    },
+    {
+      "id": "oa_10_1073_pnas_2001403117",
+      "mode": "mixed",
+      "score": 7,
+      "title": "Land use and climate change impacts on global soil erosion by water (2015-2070)"
+    },
+    {
+      "id": "oa_10_1080_02626667_2013_857411",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Flood risk and climate change: global and regional perspectives"
+    },
+    {
+      "id": "oa_10_1080_10643389_2010_534706",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Climate Change Impact Assessment of Food- and Waterborne Diseases"
+    },
+    {
+      "id": "oa_10_1093_biosci_bit027",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Intermittent Rivers: A Challenge for Freshwater Ecology"
+    },
+    {
+      "id": "oa_10_1093_icesjms_fsp047",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Global change and eutrophication of coastal waters"
+    },
+    {
+      "id": "oa_10_1093_jxb_erj108",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "World salinization with emphasis on Australia"
+    },
+    {
+      "id": "oa_10_1109_access_2019_2932609",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Internet-of-Things (IoT)-Based Smart Agriculture: Toward Making the Fields Talk"
+    },
+    {
+      "id": "oa_10_1111_eva_12484",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Severe consequences of habitat fragmentation on genetic diversity of an endangered Australian freshwater fish: A call for assisted gene flow"
+    },
+    {
+      "id": "oa_10_1111_j_1365_2427_2004_01293_x",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Are alien fish a reliable indicator of river health?"
+    },
+    {
+      "id": "oa_10_1111_j_1365_2664_2005_01009_x",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Predicting plant species’ responses to river regulation: the role of water level fluctuations"
+    },
+    {
+      "id": "oa_10_1111_j_1365_2664_2005_01082_x",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Adapting to climate change: is there scope for ecological management in the face of a global threat?"
+    },
+    {
+      "id": "oa_10_1111_j_1469_8137_2004_01003_x",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Complex spatiotemporal phenological shifts as a response to rainfall changes"
+    },
+    {
+      "id": "oa_10_1111_j_1752_1688_2007_00002_x",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Hydrologic Connectivity and the Contribution of Stream Headwaters to Ecological Integrity at Regional Scales<sup>1</sup>"
+    },
+    {
+      "id": "oa_10_1126_sciadv_aax0255",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Summer soil drying exacerbated by earlier spring greening of northern vegetation"
+    },
+    {
+      "id": "oa_10_1126_sciadv_aaz5803",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "More than 1000 rivers account for 80% of global riverine plastic emissions into the ocean"
+    },
+    {
+      "id": "oa_10_1126_science_aad3488",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Saving freshwater from salts"
+    },
+    {
+      "id": "oa_10_1126_science_aan2506",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Changing climate shifts timing of European floods"
+    },
+    {
+      "id": "oa_10_1126_science_abo2812",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Satellites reveal widespread decline in global lake water storage"
+    },
+    {
+      "id": "oa_10_1130_ges00647_1",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "History of Cenozoic North American drainage basin evolution, sediment yield, and accumulation in the Gulf of Mexico basin"
+    },
+    {
+      "id": "oa_10_1139_f10_069",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Incorporating lakes within the river discontinuum: longitudinal changes in ecological characteristics in stream–lake networks"
+    },
+    {
+      "id": "oa_10_1146_annurev_ecolsys_110316_022803",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "The Potential Impacts of Climate Change on Biodiversity in Flowing Freshwater Systems"
+    },
+    {
+      "id": "oa_10_1155_2012_794061",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Standard Precipitation Index Drought Forecasting Using Neural Networks, Wavelet Neural Networks, and Support Vector Regression"
+    },
+    {
+      "id": "oa_10_1175_1520_0442_1998_011_3128_mdaert_2_0_co_2",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Mesoscale Disturbance and Ecological Response to Decadal Climatic Variability in the American Southwest"
+    },
+    {
+      "id": "oa_10_1175_1520_0477_1993_074_1335_tpfiol_2_0_co_2",
+      "mode": "snow",
+      "score": 6,
+      "title": "The Project for Intercomparison of Land-surface Parameterization Schemes"
+    },
+    {
+      "id": "oa_10_1175_1520_0477_1998_079_0815_ddasva_2_0_co_2",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Desertification, Drought, and Surface Vegetation: An Example from the West African Sahel"
+    },
+    {
+      "id": "oa_10_1175_1520_0477_83_8_1167",
+      "mode": "snow",
+      "score": 7,
+      "title": "The Quantification of Drought: An Evaluation of Drought Indices"
+    },
+    {
+      "id": "oa_10_1175_2007jcli1600_1",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "The Drought of Amazonia in 2005"
+    },
+    {
+      "id": "oa_10_1175_2008jcli2592_1",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Changes in Continental Freshwater Discharge from 1948 to 2004"
+    },
+    {
+      "id": "oa_10_1175_2009jpo4236_1",
+      "mode": "mixed",
+      "score": 7,
+      "title": "An Eddy-Permitting Southern Ocean State Estimate"
+    },
+    {
+      "id": "oa_10_1175_2010jcli3475_1",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Indian and Pacific Ocean Influences on Southeast Australian Drought and Soil Moisture"
+    },
+    {
+      "id": "oa_10_1175_2010jcli3812_1",
+      "mode": "snow",
+      "score": 7,
+      "title": "Evaluation of Drought Indices Based on Thermal Remote Sensing of Evapotranspiration over the Continental United States"
+    },
+    {
+      "id": "oa_10_1175_bams_84_8_1013",
+      "mode": "snow",
+      "score": 7,
+      "title": "The Common Land Model"
+    },
+    {
+      "id": "oa_10_1175_jcli_d_10_05033_1",
+      "mode": "snow",
+      "score": 6,
+      "title": "Assessment and Enhancement of MERRA Land Surface Hydrology Estimates"
+    },
+    {
+      "id": "oa_10_1175_jcli_d_11_00296_1",
+      "mode": "mixed",
+      "score": 5,
+      "title": "On the Increased Frequency of Mediterranean Drought"
+    },
+    {
+      "id": "oa_10_1175_jcli_d_12_00282_1",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Assessing the Risk of Persistent Drought Using Climate Model Simulations and Paleoclimate Data"
+    },
+    {
+      "id": "oa_10_1175_jcli_d_12_00508_1",
+      "mode": "snow",
+      "score": 6,
+      "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States: Update and Extensions"
+    },
+    {
+      "id": "oa_10_1186_s40066_021_00318_5",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Impact of climate change on biodiversity and food security: a global perspective—a review article"
+    },
+    {
+      "id": "oa_10_1186_s40068_019_0145_1",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Soil erosion mapping and severity analysis based on RUSLE model and local perception in the Beshillo Catchment of the Blue Nile Basin, Ethiopia"
+    },
+    {
+      "id": "oa_10_13031_2013_21739",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "MODELING BACTERIA FATE AND TRANSPORT IN WATERSHEDS TO SUPPORT TMDLS"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0008320",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Applied Climate-Change Analysis: The Climate Wizard Tool"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0012576",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Evidence for a Novel Marine Harmful Algal Bloom: Cyanotoxin (Microcystin) Transfer from Land to Sea Otters"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0016893",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Seasonal Rainfall and Runoff Promote Coral Disease on an Inshore Reef"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0088786",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Transport Distance of Invertebrate Environmental DNA in a Natural River"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0158394",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Hydrological Impacts of Land Use Change and Climate Variability in the Headwater Region of the Heihe River Basin, Northwest China"
+    },
+    {
+      "id": "oa_10_1371_journal_pone_0217018",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "The effects of chemical and organic fertilizer usage on rhizosphere soil in tea orchards"
+    },
+    {
+      "id": "oa_10_1631_jzus_b0710626",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Mechanisms and assessment of water eutrophication"
+    },
+    {
+      "id": "oa_10_1641_0006_3568_2000_050_0783_aorecb_2_0_co_2",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Alterations of Riparian Ecosystems Caused by River Regulation"
+    },
+    {
+      "id": "oa_10_1641_b571005",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Green Roofs as Urban Ecosystems: Ecological Structures, Functions, and Services"
+    },
+    {
+      "id": "oa_10_1641_b580908",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Consequences of More Extreme Precipitation Regimes for Terrestrial Ecosystems"
+    },
+    {
+      "id": "oa_10_1659_mrd_journal_d_11_00019_1",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Water Management in the Indus Basin in Pakistan: Challenges and Opportunities"
+    },
+    {
+      "id": "oa_10_1890_0012_9615_2002_072_0579_siornt_2_0_co_2",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "SUMMER INPUTS OF RIVERINE NUTRIENTS TO THE BALTIC SEA: BIOAVAILABILITY AND EUTROPHICATION RELEVANCE"
+    },
+    {
+      "id": "oa_10_1890_04_0889",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "FLOOD-PULSE AND RIVERSCAPE DYNAMICS IN A BRAIDED GLACIAL RIVER"
+    },
+    {
+      "id": "oa_10_21273_hortsci_41_5_1276",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "The Role of Extensive Green Roofs in Sustainable Development"
+    },
+    {
+      "id": "oa_10_2166_hydro_2008_015",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Data-driven modelling: some past experiences and new approaches"
+    },
+    {
+      "id": "oa_10_22004_ag_econ_61108",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "World water demand and supply, 1990 to 2025: scenarios and issues"
+    },
+    {
+      "id": "oa_10_2307_1941848",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Biological Integrity: A Long‐Neglected Aspect of Water Resource Management"
+    },
+    {
+      "id": "oa_10_2475_ajs_301_2_182",
+      "mode": "mixed",
+      "score": 5,
+      "title": "GEOCARB III: A revised model of atmospheric CO2 over Phanerozoic time"
+    },
+    {
+      "id": "oa_10_2489_jswc_70_3_55a",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Sequestering carbon and increasing productivity by conservation agriculture"
+    },
+    {
+      "id": "oa_10_3133_cir1133",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Contaminants in the Mississippi River, 1987-92"
+    },
+    {
+      "id": "oa_10_3354_cr00797",
+      "mode": "dryIrrigation",
+      "score": 7,
+      "title": "Climate change and drought: a risk assessment of crop-yield impacts"
+    },
+    {
+      "id": "oa_10_3354_meps210223",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Our evolving conceptual model of the coastal eutrophication problem"
+    },
+    {
+      "id": "oa_10_3354_meps266273",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Disease and immunity in Caribbean and Indo-Pacific zooxanthellate corals"
+    },
+    {
+      "id": "oa_10_3354_meps303001",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Eutrophication of Chesapeake Bay: historical trends and ecological interactions"
+    },
+    {
+      "id": "oa_10_3389_fclim_2019_00008",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Soil C Sequestration as a Biological Negative Emission Strategy"
+    },
+    {
+      "id": "oa_10_3389_feart_2016_00032",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "How Deep Can Surface Signals Be Traced in the Critical Zone? Merging Biodiversity with Biogeochemistry Research in a Central German Muschelkalk Landscape"
+    },
+    {
+      "id": "oa_10_3389_feart_2021_698876",
+      "mode": "mixed",
+      "score": 7,
+      "title": "The Copernicus Global 1/12° Oceanic and Sea Ice GLORYS12 Reanalysis"
+    },
+    {
+      "id": "oa_10_3389_fenvs_2016_00014",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Stream Biofilm Responses to Flow Intermittency: From Cells to Ecosystems"
+    },
+    {
+      "id": "oa_10_3389_fenvs_2023_1146052",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Insects as bioindicator: A hidden gem for environmental monitoring"
+    },
+    {
+      "id": "oa_10_3389_fmars_2019_00678",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "Pathogenesis of a Tissue Loss Disease Affecting Multiple Species of Corals Along the Florida Reef Tract"
+    },
+    {
+      "id": "oa_10_3389_fmars_2020_00670",
+      "mode": "reservoir",
+      "score": 6,
+      "title": "The Globalization of Cultural Eutrophication in the Coastal Ocean: Causes and Consequences"
+    },
+    {
+      "id": "oa_10_3389_fphys_2013_00035",
+      "mode": "dryIrrigation",
+      "score": 6,
+      "title": "Phenotyping common beans for adaptation to drought"
+    },
+    {
+      "id": "oa_10_3389_fpls_2013_00268",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Sulfide as a soil phytotoxin—a review"
+    },
+    {
+      "id": "oa_10_3389_fpls_2017_02204",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Improving Crop Yield and Nutrient Use Efficiency via Biofertilization—A Global Meta-analysis"
+    },
+    {
+      "id": "oa_10_3390_d14030172",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Riparian Buffers as a Critical Landscape Feature: Insights for Riverscape Conservation and Policy Renovations"
+    },
+    {
+      "id": "oa_10_3390_su11051485",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Soil and Crop Management Strategies to Ensure Higher Crop Productivity within Sustainable Environments"
+    },
+    {
+      "id": "oa_10_3390_su7010988",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "Understanding and Enhancing Soil Biological Health: The Solution for Reversing Soil Degradation"
+    },
+    {
+      "id": "oa_10_3390_su7066523",
+      "mode": "dryNatural",
+      "score": 7,
+      "title": "The State of Soil Degradation in Sub-Saharan Africa: Baselines, Trajectories, and Solutions"
+    },
+    {
+      "id": "oa_10_3390_w12010169",
+      "mode": "lowHumanImpact",
+      "score": 7,
+      "title": "Research Trends in the Use of Remote Sensing for Inland Water Quality Science: Moving Towards Multidisciplinary Applications"
+    },
+    {
+      "id": "oa_10_3390_w12092347",
+      "mode": "dryIrrigation",
+      "score": 5,
+      "title": "Water Supply and Water Scarcity"
+    },
+    {
+      "id": "oa_10_3390_w3020445",
+      "mode": "snow",
+      "score": 6,
+      "title": "Atmospheric Rivers, Floods and the Water Resources of California"
+    },
+    {
+      "id": "oa_10_3390_w9020140",
+      "mode": "reservoir",
+      "score": 7,
+      "title": "Soil Moisture for Hydrological Applications: Open Questions and New Opportunities"
+    },
+    {
+      "id": "oa_10_4002_040_058_0209",
+      "mode": "lowHumanImpact",
+      "score": 6,
+      "title": "Insights from an Integrated View of the Biology of Apple Snails (Caenogastropoda: Ampullariidae)"
+    }
+  ]
+}

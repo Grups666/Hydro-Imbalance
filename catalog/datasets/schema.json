@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dataset Catalog Entry",
+  "description": "数据集元数据结构",
+  "type": "object",
+  "required": ["id", "name", "provider", "url"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "唯一标识符（kebab-case）",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "description": "数据集名称"
+    },
+    "provider": {
+      "type": "string",
+      "description": "数据提供方"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "数据集主页或下载入口"
+    },
+    "api_endpoint": {
+      "type": "string",
+      "format": "uri",
+      "description": "API 入口（如适用）"
+    },
+    "description": {
+      "type": "string",
+      "description": "数据集描述"
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "unit": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      },
+      "description": "数据变量"
+    },
+    "temporal_coverage": {
+      "type": "object",
+      "properties": {
+        "start": { "type": "string" },
+        "end": { "type": "string" },
+        "resolution": { "type": "string" }
+      },
+      "description": "时间覆盖范围"
+    },
+    "spatial_coverage": {
+      "type": "string",
+      "description": "空间覆盖范围（如 'Global', 'North China Plain'）"
+    },
+    "spatial_resolution": {
+      "type": "string",
+      "description": "空间分辨率"
+    },
+    "format": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "数据格式（如 GeoTIFF, NetCDF, CSV）"
+    },
+    "license": {
+      "type": "string",
+      "description": "使用许可"
+    },
+    "citation": {
+      "type": "string",
+      "description": "引用格式"
+    },
+    "access_method": {
+      "type": "string",
+      "enum": ["download", "api", "cloud", "request"],
+      "description": "访问方式"
+    },
+    "related_regions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "相关区域 ID"
+    }
+  }
+}

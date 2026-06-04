@@ -1,0 +1,3345 @@
+{
+  "generated_at": "2026-05-24T12:58:57.919Z",
+  "audited_records_used": 3609,
+  "modes": {
+    "dryIrrigation": {
+      "total": 628,
+      "processes": {
+        "groundwater depletion": 169,
+        "irrigation water use": 53,
+        "water scarcity": 52,
+        "drought": 32,
+        "groundwater recharge": 30,
+        "evapotranspiration": 29,
+        "climate change impacts": 29,
+        "irrigation": 25,
+        "irrigation water demand": 19,
+        "groundwater-surface water interaction": 18,
+        "irrigation impacts": 18,
+        "groundwater quality": 17,
+        "land subsidence": 15,
+        "virtual water trade": 14,
+        "water balance": 13,
+        "groundwater pumping": 12,
+        "groundwater storage changes": 12,
+        "agricultural water use": 11,
+        "reservoir regulation": 11,
+        "groundwater use": 10,
+        "water resources management": 10,
+        "water management": 9,
+        "water availability": 9,
+        "groundwater sustainability": 9,
+        "irrigation efficiency": 9,
+        "irrigation pumping": 8,
+        "terrestrial water storage decline": 8,
+        "terrestrial water storage": 8,
+        "groundwater management": 8,
+        "water use": 8
+      },
+      "study_area_types": {
+        "specific_basin": 190,
+        "named_region": 93,
+        "country_or_multi_country": 108,
+        "global": 176,
+        "conceptual": 51,
+        "unclear": 6,
+        "multi_basin": 1,
+        "multi_region": 1,
+        "multi_country": 2
+      },
+      "regions": {
+        "Global": 121,
+        "India": 29,
+        "California Central Valley": 17,
+        "China": 17,
+        "Indus Basin": 17,
+        "United States": 14,
+        "Central Valley": 13,
+        "High Plains Aquifer": 12,
+        "North China Plain": 12,
+        "High Plains": 11,
+        "Ogallala Aquifer": 10,
+        "California": 9,
+        "Iran": 9,
+        "Northwest India": 7,
+        "Conterminous United States": 7,
+        "Tigris River": 6,
+        "Central Asia": 6,
+        "Punjab": 5,
+        "Ganges Basin": 5,
+        "Bangladesh": 5,
+        "Kansas": 5,
+        "Indus River Basin": 5,
+        "Great Plains": 5,
+        "Euphrates River": 5,
+        "Tigris-Euphrates basin": 4,
+        "Northern India": 4,
+        "Global aquifers": 4,
+        "Middle East": 4,
+        "Colorado River Basin": 4,
+        "Africa": 4
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1126_sciadv_1500323",
+          "title": "Four billion people facing severe water scarcity",
+          "venue": "Science Advances",
+          "year": "2016",
+          "cited_by_count": 5232,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_s41545_019_0039_9",
+          "title": "Reassessing the projections of the World Water Development Report",
+          "venue": "npj Clean Water",
+          "year": "2019",
+          "cited_by_count": 2453,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_5194_hess_15_1577_2011",
+          "title": "The green, blue and grey water footprint of crops and derived crop products",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 2321,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2018ms001583",
+          "title": "The Community Land Model Version 5: Description of New Features, Benchmarking, and Impact of Forcing Uncertainty",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2019",
+          "cited_by_count": 2104,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_14_1863_2010",
+          "title": "Groundwater use for irrigation – a global inventory",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2010",
+          "cited_by_count": 1875,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2002_015_3237_althbd_2_0_co_2",
+          "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States*",
+          "venue": "Journal of Climate",
+          "year": "2002",
+          "cited_by_count": 1458,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1111_j_1365_2486_2006_01305_x",
+          "title": "Modelling the role of agriculture for the 20th century global terrestrial carbon balance",
+          "venue": "Global Change Biology",
+          "year": "2006",
+          "cited_by_count": 1397,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1073_pnas_1422385112",
+          "title": "Anthropogenic warming has increased drought risk in California",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2015",
+          "cited_by_count": 1395,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1007_s10021_011_9517_8",
+          "title": "A Global Assessment of the Water Footprint of Farm Animal Products",
+          "venue": "Ecosystems",
+          "year": "2012",
+          "cited_by_count": 1349,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1073_pnas_1421533112",
+          "title": "Climate change in the Fertile Crescent and implications of the recent Syrian drought",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2015",
+          "cited_by_count": 1348,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1108_09504120710728879",
+          "title": "Kirk‐Othmer Encyclopedia of Chemical Technology",
+          "venue": "Reference Reviews",
+          "year": "2007",
+          "cited_by_count": 1164,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1073_pnas_1222474110",
+          "title": "Constraints and potentials of future irrigation water availability on agricultural production under climate change",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2013",
+          "cited_by_count": 1156,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5751_es_09595_220408",
+          "title": "Agriculture production as a major driver of the Earth system exceeding planetary boundaries",
+          "venue": "Ecology and Society",
+          "year": "2017",
+          "cited_by_count": 1143,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1080_02626667_2019_1620507",
+          "title": "Twenty-three unsolved problems in hydrology (UPH) – a community perspective",
+          "venue": "Hydrological Sciences Journal",
+          "year": "2019",
+          "cited_by_count": 1117,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016ef000518",
+          "title": "Water scarcity assessments in the past, present, and future",
+          "venue": "Earth s Future",
+          "year": "2017",
+          "cited_by_count": 1095,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_2136_vzj2016_04_0033",
+          "title": "Recent Developments and Applications of the HYDRUS Computer Software Packages",
+          "venue": "Vadose Zone Journal",
+          "year": "2016",
+          "cited_by_count": 1036,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1371_journal_pone_0032688",
+          "title": "Global Monthly Water Scarcity: Blue Water Footprints versus Blue Water Availability",
+          "venue": "PLoS ONE",
+          "year": "2012",
+          "cited_by_count": 1027,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_3390_w3020445",
+          "title": "Atmospheric Rivers, Floods and the Water Resources of California",
+          "venue": "Water",
+          "year": "2011",
+          "cited_by_count": 986,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016wr020175",
+          "title": "The future of evapotranspiration: Global requirements for ecosystem functioning, carbon and climate feedbacks, agricultural management, and water resources",
+          "venue": "Water Resources Research",
+          "year": "2017",
+          "cited_by_count": 961,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_srep38495",
+          "title": "The world’s road to water scarcity: shortage and stress in the 20th century and pathways towards sustainability",
+          "venue": "Scientific Reports",
+          "year": "2016",
+          "cited_by_count": 941,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1890_es14_00534_1",
+          "title": "A global perspective on wetland salinization: ecological consequences of a growing threat to freshwater wetlands",
+          "venue": "Ecosphere",
+          "year": "2015",
+          "cited_by_count": 929,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1007_s13280_020_01318_8",
+          "title": "Scientists’ warning to humanity on the freshwater biodiversity crisis",
+          "venue": "AMBIO",
+          "year": "2020",
+          "cited_by_count": 873,
+          "confidence": 0.5
+        },
+        {
+          "id": "oa_10_5194_esd_5_15_2014",
+          "title": "Global modeling of withdrawal, allocation and consumptive use of surface water and groundwater resources",
+          "venue": "Earth System Dynamics",
+          "year": "2014",
+          "cited_by_count": 873,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2001wr000355",
+          "title": "Global modeling of irrigation water requirements",
+          "venue": "Water Resources Research",
+          "year": "2002",
+          "cited_by_count": 840,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_wrcr_20192",
+          "title": "Evaluation of groundwater depletion in North China using the Gravity Recovery and Climate Experiment (GRACE) data and ground‐based measurements",
+          "venue": "Water Resources Research",
+          "year": "2013",
+          "cited_by_count": 839,
+          "confidence": 0.98
+        }
+      ]
+    },
+    "managed": {
+      "total": 468,
+      "processes": {
+        "groundwater depletion": 46,
+        "reservoir regulation": 29,
+        "water scarcity": 28,
+        "irrigation water use": 19,
+        "evapotranspiration": 18,
+        "environmental flows": 15,
+        "climate change impacts": 14,
+        "water resources management": 13,
+        "groundwater-surface water interaction": 12,
+        "water allocation": 12,
+        "irrigation": 11,
+        "river regulation": 10,
+        "terrestrial water storage": 10,
+        "water management": 10,
+        "virtual water trade": 10,
+        "reservoir operation": 9,
+        "drought": 9,
+        "hydrological modeling": 9,
+        "land use change impacts": 8,
+        "water availability": 8,
+        "land surface modeling": 8,
+        "groundwater quality": 8,
+        "land subsidence": 8,
+        "groundwater storage": 7,
+        "socio-hydrology": 7,
+        "irrigation water demand": 7,
+        "water stress": 7,
+        "water use": 7,
+        "groundwater sustainability": 7,
+        "water quality": 7
+      },
+      "study_area_types": {
+        "specific_basin": 87,
+        "global": 197,
+        "country_or_multi_country": 72,
+        "conceptual": 74,
+        "named_region": 34,
+        "unclear": 1,
+        "multi_region": 1,
+        "multi_country": 2
+      },
+      "regions": {
+        "Global": 130,
+        "China": 25,
+        "North China Plain": 20,
+        "Europe": 12,
+        "United States": 11,
+        "India": 11,
+        "Yellow River Basin": 8,
+        "Yangtze River Basin": 5,
+        "Global river basins": 5,
+        "Loess Plateau": 4,
+        "Global rivers": 4,
+        "Three Gorges Dam": 4,
+        "Murray-Darling Basin": 3,
+        "Conterminous United States": 3,
+        "Global wetlands": 3,
+        "Beijing": 3,
+        "Central Valley": 3,
+        "Global land areas": 3,
+        "Canada": 3,
+        "South Asia": 3,
+        "Continental United States": 3,
+        "Yangtze River": 3,
+        "California Central Valley": 3,
+        "Germany": 3,
+        "Sacramento-San Joaquin Delta": 3,
+        "California": 3,
+        "Northeast China": 3,
+        "Bangladesh": 3,
+        "Global aquifers": 2,
+        "Colorado River": 2
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1126_sciadv_1500323",
+          "title": "Four billion people facing severe water scarcity",
+          "venue": "Science Advances",
+          "year": "2016",
+          "cited_by_count": 5232,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_4319_lo_2009_54_6_part_2_2298",
+          "title": "Lakes and reservoirs as regulators of carbon cycling and climate",
+          "venue": "Limnology and Oceanography",
+          "year": "2009",
+          "cited_by_count": 2710,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41545_019_0039_9",
+          "title": "Reassessing the projections of the World Water Development Report",
+          "venue": "npj Clean Water",
+          "year": "2019",
+          "cited_by_count": 2453,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_5194_hess_15_1577_2011",
+          "title": "The green, blue and grey water footprint of crops and derived crop products",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 2321,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_hess_14_1863_2010",
+          "title": "Groundwater use for irrigation – a global inventory",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2010",
+          "cited_by_count": 1875,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1073_pnas_1222460110",
+          "title": "Multimodel assessment of water scarcity under climate change",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2013",
+          "cited_by_count": 1841,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1111_j_1365_2427_2009_02204_x",
+          "title": "The ecological limits of hydrologic alteration (ELOHA): a new framework for developing regional environmental flow standards",
+          "venue": "Freshwater Biology",
+          "year": "2009",
+          "cited_by_count": 1593,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1073_pnas_1222475110",
+          "title": "Global water resources affected by human interventions and climate change",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2013",
+          "cited_by_count": 1427,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_jcli_3318_1",
+          "title": "Trends in Total Precipitation and Frequency of Daily Precipitation Extremes over China",
+          "venue": "Journal of Climate",
+          "year": "2005",
+          "cited_by_count": 1415,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1111_j_1365_2486_2006_01305_x",
+          "title": "Modelling the role of agriculture for the 20th century global terrestrial carbon balance",
+          "venue": "Global Change Biology",
+          "year": "2006",
+          "cited_by_count": 1397,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2011ms00045",
+          "title": "Parameterization improvements and functional and structural advances in Version 4 of the Community Land Model",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2011",
+          "cited_by_count": 1356,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2003jd003823",
+          "title": "The multi‐institution North American Land Data Assimilation System (NLDAS): Utilizing multiple GCIP products and partners in a continental distributed hydrological modeling system",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2004",
+          "cited_by_count": 1341,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_s41586_023_06083_8",
+          "title": "Safe and just Earth system boundaries",
+          "venue": "Nature",
+          "year": "2023",
+          "cited_by_count": 1216,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1073_pnas_1222474110",
+          "title": "Constraints and potentials of future irrigation water availability on agricultural production under climate change",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2013",
+          "cited_by_count": 1156,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5751_es_09595_220408",
+          "title": "Agriculture production as a major driver of the Earth system exceeding planetary boundaries",
+          "venue": "Ecology and Society",
+          "year": "2017",
+          "cited_by_count": 1143,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1093_biosci_biaa002",
+          "title": "Bending the Curve of Global Freshwater Biodiversity Loss: An Emergency Recovery Plan",
+          "venue": "BioScience",
+          "year": "2020",
+          "cited_by_count": 1139,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016ef000518",
+          "title": "Water scarcity assessments in the past, present, and future",
+          "venue": "Earth s Future",
+          "year": "2017",
+          "cited_by_count": 1095,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1029_2010wr010090",
+          "title": "Hyperresolution global land surface modeling: Meeting a grand challenge for monitoring Earth's terrestrial water",
+          "venue": "Water Resources Research",
+          "year": "2011",
+          "cited_by_count": 1035,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1146_annurev_earth_063016_020552",
+          "title": "Hydrogeomorphic Ecosystem Responses to Natural and Anthropogenic Changes in the Loess Plateau of China",
+          "venue": "Annual Review of Earth and Planetary Sciences",
+          "year": "2017",
+          "cited_by_count": 1020,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1641_0006_3568_2000_050_0783_aorecb_2_0_co_2",
+          "title": "Alterations of Riparian Ecosystems Caused by River Regulation",
+          "venue": "BioScience",
+          "year": "2000",
+          "cited_by_count": 969,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2016wr020175",
+          "title": "The future of evapotranspiration: Global requirements for ecosystem functioning, carbon and climate feedbacks, agricultural management, and water resources",
+          "venue": "Water Resources Research",
+          "year": "2017",
+          "cited_by_count": 961,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_2008jcli2592_1",
+          "title": "Changes in Continental Freshwater Discharge from 1948 to 2004",
+          "venue": "Journal of Climate",
+          "year": "2008",
+          "cited_by_count": 956,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_srep38495",
+          "title": "The world’s road to water scarcity: shortage and stress in the 20th century and pathways towards sustainability",
+          "venue": "Scientific Reports",
+          "year": "2016",
+          "cited_by_count": 941,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1890_es14_00534_1",
+          "title": "A global perspective on wetland salinization: ecological consequences of a growing threat to freshwater wetlands",
+          "venue": "Ecosphere",
+          "year": "2015",
+          "cited_by_count": 929,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1086_509246",
+          "title": "Geology, Geography, and Humans Battle for Dominance over the Delivery of Fluvial Sediment to the Coastal Ocean",
+          "venue": "The Journal of Geology",
+          "year": "2006",
+          "cited_by_count": 927,
+          "confidence": 0.95
+        }
+      ]
+    },
+    "reservoir": {
+      "total": 443,
+      "processes": {
+        "reservoir regulation": 92,
+        "climate change impacts": 28,
+        "environmental flows": 24,
+        "water scarcity": 23,
+        "reservoir operation": 22,
+        "dam impacts": 18,
+        "transboundary water allocation": 14,
+        "river regulation": 14,
+        "drought": 12,
+        "transboundary water management": 12,
+        "sediment transport": 11,
+        "flow regime alteration": 11,
+        "water allocation": 11,
+        "river fragmentation": 9,
+        "water management": 9,
+        "water resource management": 9,
+        "land use change impacts": 8,
+        "groundwater depletion": 8,
+        "evapotranspiration": 7,
+        "river connectivity": 6,
+        "drought impacts": 6,
+        "hydrological modeling": 6,
+        "water resources management": 6,
+        "flow regulation": 6,
+        "hydropower impacts": 6,
+        "river flow alteration": 6,
+        "water balance": 6,
+        "rainfall-runoff modeling": 5,
+        "runoff generation": 5,
+        "flood control": 5
+      },
+      "study_area_types": {
+        "named_region": 41,
+        "specific_basin": 203,
+        "global": 111,
+        "conceptual": 33,
+        "country_or_multi_country": 49,
+        "multi_basin": 1,
+        "unclear": 2,
+        "multi_country": 2,
+        "Country_or_multi_country": 1
+      },
+      "regions": {
+        "Global": 65,
+        "Murray-Darling Basin": 19,
+        "Nile Basin": 18,
+        "Mekong River Basin": 12,
+        "Europe": 11,
+        "Yellow River Basin": 10,
+        "Central Asia": 9,
+        "Australia": 9,
+        "Mekong Delta": 8,
+        "Nile River Basin": 8,
+        "Aral Sea": 7,
+        "Amu Darya": 6,
+        "Syr Darya": 6,
+        "Colorado River Basin": 6,
+        "India": 6,
+        "Grand Ethiopian Renaissance Dam (GERD)": 6,
+        "Global rivers": 5,
+        "Blue Nile": 5,
+        "Southeast Australia": 5,
+        "Mekong Basin": 5,
+        "Tigris River": 5,
+        "Mekong River": 5,
+        "California": 5,
+        "Amazon Basin": 4,
+        "Yangtze River Basin": 4,
+        "Nile River": 4,
+        "Three Gorges Dam": 4,
+        "Yangtze River": 4,
+        "Lake Nasser": 4,
+        "Central Valley": 4
+      },
+      "top_references": [
+        {
+          "id": "oa_10_4319_lo_2009_54_6_part_2_2298",
+          "title": "Lakes and reservoirs as regulators of carbon cycling and climate",
+          "venue": "Limnology and Oceanography",
+          "year": "2009",
+          "cited_by_count": 2710,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_gmd_10_1903_2017",
+          "title": "GLEAM v3: satellite-based land evaporation and root-zone soil moisture",
+          "venue": "Geoscientific model development",
+          "year": "2017",
+          "cited_by_count": 2490,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1017_s037689290200022x",
+          "title": "Riverine flood plains: present state and future trends",
+          "venue": "Environmental Conservation",
+          "year": "2002",
+          "cited_by_count": 2089,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1111_j_1365_2427_2009_02204_x",
+          "title": "The ecological limits of hydrologic alteration (ELOHA): a new framework for developing regional environmental flow standards",
+          "venue": "Freshwater Biology",
+          "year": "2009",
+          "cited_by_count": 1593,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1126_science_aac7082",
+          "title": "Balancing hydropower and biodiversity in the Amazon, Congo, and Mekong",
+          "venue": "Science",
+          "year": "2016",
+          "cited_by_count": 1504,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2002_015_3237_althbd_2_0_co_2",
+          "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States*",
+          "venue": "Journal of Climate",
+          "year": "2002",
+          "cited_by_count": 1458,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_ngeo2602",
+          "title": "Reduced sediment transport in the Yellow River due to anthropogenic changes",
+          "venue": "Nature Geoscience",
+          "year": "2015",
+          "cited_by_count": 1404,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1093_biosci_biaa002",
+          "title": "Bending the Curve of Global Freshwater Biodiversity Loss: An Emergency Recovery Plan",
+          "venue": "BioScience",
+          "year": "2020",
+          "cited_by_count": 1139,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_3133_pp1286",
+          "title": "Downstream effects of dams on alluvial rivers",
+          "venue": "USGS professional paper",
+          "year": "1984",
+          "cited_by_count": 1121,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2010wr010090",
+          "title": "Hyperresolution global land surface modeling: Meeting a grand challenge for monitoring Earth's terrestrial water",
+          "venue": "Water Resources Research",
+          "year": "2011",
+          "cited_by_count": 1035,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1371_journal_pone_0032688",
+          "title": "Global Monthly Water Scarcity: Blue Water Footprints versus Blue Water Availability",
+          "venue": "PLoS ONE",
+          "year": "2012",
+          "cited_by_count": 1027,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1146_annurev_earth_063016_020552",
+          "title": "Hydrogeomorphic Ecosystem Responses to Natural and Anthropogenic Changes in the Loess Plateau of China",
+          "venue": "Annual Review of Earth and Planetary Sciences",
+          "year": "2017",
+          "cited_by_count": 1020,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_3390_w3020445",
+          "title": "Atmospheric Rivers, Floods and the Water Resources of California",
+          "venue": "Water",
+          "year": "2011",
+          "cited_by_count": 986,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1641_0006_3568_2000_050_0783_aorecb_2_0_co_2",
+          "title": "Alterations of Riparian Ecosystems Caused by River Regulation",
+          "venue": "BioScience",
+          "year": "2000",
+          "cited_by_count": 969,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_2008jcli2592_1",
+          "title": "Changes in Continental Freshwater Discharge from 1948 to 2004",
+          "venue": "Journal of Climate",
+          "year": "2008",
+          "cited_by_count": 956,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1093_biosci_biw117",
+          "title": "Greenhouse Gas Emissions from Reservoir Water Surfaces: A New Global Synthesis",
+          "venue": "BioScience",
+          "year": "2016",
+          "cited_by_count": 932,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1086_509246",
+          "title": "Geology, Geography, and Humans Battle for Dominance over the Delivery of Fluvial Sediment to the Coastal Ocean",
+          "venue": "The Journal of Geology",
+          "year": "2006",
+          "cited_by_count": 927,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_wrcr_20156",
+          "title": "Macropores and water flow in soils revisited",
+          "venue": "Water Resources Research",
+          "year": "2013",
+          "cited_by_count": 903,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1038_nature22333",
+          "title": "Damming the rivers of the Amazon basin",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 807,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_2166_wp_2006_054",
+          "title": "Hydro-hegemony – a framework for analysis of trans-boundary water conflicts",
+          "venue": "Water Policy",
+          "year": "2006",
+          "cited_by_count": 735,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1073_pnas_1809426115",
+          "title": "Sustainable hydropower in the 21st century",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2018",
+          "cited_by_count": 678,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5751_es_02014_120112",
+          "title": "Restoring Environmental Flows by Modifying Dam Operations",
+          "venue": "Ecology and Society",
+          "year": "2007",
+          "cited_by_count": 670,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1038_s41586_020_3005_2",
+          "title": "More than one million barriers fragment Europe’s rivers",
+          "venue": "Nature",
+          "year": "2020",
+          "cited_by_count": 666,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_gmd_10_4321_2017",
+          "title": "Assessing the impacts of 1.5 °C global warming – simulation protocol of the Inter-Sectoral Impact Model Intercomparison Project (ISIMIP2b)",
+          "venue": "Geoscientific model development",
+          "year": "2017",
+          "cited_by_count": 664,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_5194_hess_12_1007_2008",
+          "title": "An integrated model for the assessment of global water resources – Part 1: Model description and input meteorological forcing",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2008",
+          "cited_by_count": 651,
+          "confidence": 0.95
+        }
+      ]
+    },
+    "monsoon": {
+      "total": 300,
+      "processes": {
+        "groundwater depletion": 32,
+        "groundwater recharge": 20,
+        "climate change impacts": 17,
+        "hydrological modeling": 12,
+        "snowmelt runoff": 11,
+        "groundwater quality": 10,
+        "glacier melt": 10,
+        "terrestrial water storage": 9,
+        "land subsidence": 8,
+        "drought": 8,
+        "evapotranspiration": 8,
+        "monsoon rainfall": 7,
+        "wetland hydrology": 6,
+        "hydrogeochemistry": 6,
+        "irrigation": 6,
+        "runoff generation": 5,
+        "irrigation water use": 5,
+        "arsenic contamination": 5,
+        "monsoon precipitation": 5,
+        "monsoon hydrology": 5,
+        "sea level rise": 5,
+        "irrigation pumping": 5,
+        "floods": 5,
+        "groundwater pumping": 4,
+        "groundwater storage": 4,
+        "precipitation extremes": 4,
+        "groundwater geochemistry": 4,
+        "river discharge": 4,
+        "surface water storage": 4,
+        "soil erosion": 4
+      },
+      "study_area_types": {
+        "country_or_multi_country": 60,
+        "named_region": 57,
+        "specific_basin": 129,
+        "global": 37,
+        "conceptual": 9,
+        "unclear": 6,
+        "multi_basin": 1,
+        "multi_continent": 1
+      },
+      "regions": {
+        "India": 34,
+        "Global": 20,
+        "Bangladesh": 19,
+        "Ganges Basin": 9,
+        "Ganges-Brahmaputra Delta": 8,
+        "Indus Basin": 7,
+        "Tibetan Plateau": 7,
+        "Bengal Basin": 7,
+        "Brahmaputra Basin": 6,
+        "Ganges-Brahmaputra-Meghna Delta": 6,
+        "Nile Basin": 5,
+        "West Africa": 5,
+        "Indo-Gangetic Plain": 4,
+        "West Bengal": 4,
+        "South Asia": 4,
+        "Bengal Delta": 4,
+        "Mekong Delta": 4,
+        "Northern India": 3,
+        "Himalayan region": 3,
+        "Punjab": 3,
+        "Sahel": 3,
+        "Niger River Basin": 3,
+        "Europe": 3,
+        "South America": 3,
+        "Ganges-Brahmaputra-Meghna Basin": 3,
+        "Upper Nile Basin": 3,
+        "Mekong River Basin": 3,
+        "Ganges-Brahmaputra Basin": 2,
+        "Bengal basin": 2,
+        "Amazon Basin": 2
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1175_2009jcli2909_1",
+          "title": "A Multiscalar Drought Index Sensitive to Global Warming: The Standardized Precipitation Evapotranspiration Index",
+          "venue": "Journal of Climate",
+          "year": "2009",
+          "cited_by_count": 8952,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1017_s037689290200022x",
+          "title": "Riverine flood plains: present state and future trends",
+          "venue": "Environmental Conservation",
+          "year": "2002",
+          "cited_by_count": 2089,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1002_2014rg000464",
+          "title": "Future changes to the intensity and frequency of short-duration extreme rainfall",
+          "venue": "Reviews of Geophysics",
+          "year": "2014",
+          "cited_by_count": 1478,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41598_020_70816_2",
+          "title": "Climate change impact on flood and extreme precipitation increases with water availability",
+          "venue": "Scientific Reports",
+          "year": "2020",
+          "cited_by_count": 1470,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1175_jcli_3318_1",
+          "title": "Trends in Total Precipitation and Frequency of Daily Precipitation Extremes over China",
+          "venue": "Journal of Climate",
+          "year": "2005",
+          "cited_by_count": 1415,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1007_s00382_011_1259_y",
+          "title": "The CNRM-CM5.1 global climate model: description and basic evaluation",
+          "venue": "Climate Dynamics",
+          "year": "2012",
+          "cited_by_count": 1391,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1029_2009jf001426",
+          "title": "Toward a complete Himalayan hydrological budget: Spatiotemporal distribution of snowmelt and rainfall and their impact on river discharge",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 1363,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_bams_d_17_0057_1",
+          "title": "Recent Third Pole’s Rapid Warming Accompanies Cryospheric Melt and Water Cycle Intensification and Interactions between Monsoon and Environment: Multidisciplinary Approach with Observations, Modeling, and Analysis",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2018",
+          "cited_by_count": 1117,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_jcli3896_1",
+          "title": "Toward a Unified View of the American Monsoon Systems",
+          "venue": "Journal of Climate",
+          "year": "2006",
+          "cited_by_count": 903,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016ef000485",
+          "title": "Global projections of river flood risk in a warmer world",
+          "venue": "Earth s Future",
+          "year": "2016",
+          "cited_by_count": 879,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2016rg000544",
+          "title": "Climate and climatic variability of rainfall over eastern Africa",
+          "venue": "Reviews of Geophysics",
+          "year": "2017",
+          "cited_by_count": 772,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2001_014_3192_saasm_2_0_co_2",
+          "title": "Subtropical Anticyclones and Summer Monsoons",
+          "venue": "Journal of Climate",
+          "year": "2001",
+          "cited_by_count": 755,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_hess_17_379_2013",
+          "title": "Urbanization and climate change impacts on future urban flooding in Can Tho city, Vietnam",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2013",
+          "cited_by_count": 610,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2006jd007847",
+          "title": "Global inundation dynamics inferred from multiple satellite observations, 1993–2000",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2007",
+          "cited_by_count": 531,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1016_j_scitotenv_2016_09_019",
+          "title": "Comprehensive assessment of soil erosion risk for better land use planning in river basins: Case study of the Upper Blue Nile River",
+          "venue": "The Science of The Total Environment",
+          "year": "2016",
+          "cited_by_count": 498,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1002_2015rg000512",
+          "title": "Stable isotopes in atmospheric water vapor and applications to the hydrologic cycle",
+          "venue": "Reviews of Geophysics",
+          "year": "2016",
+          "cited_by_count": 493,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1155_2015_431860",
+          "title": "Precipitation Trends over Time Using Mann-Kendall and Spearman’s rho Tests in Swat River Basin, Pakistan",
+          "venue": "Advances in Meteorology",
+          "year": "2015",
+          "cited_by_count": 445,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1002_2014wr015809",
+          "title": "The pronounced seasonality of global groundwater recharge",
+          "venue": "Water Resources Research",
+          "year": "2014",
+          "cited_by_count": 429,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1016_j_epsl_2010_11_043",
+          "title": "Mineralogical and chemical variability of fluvial sediments 2. Suspended-load silt (Ganga–Brahmaputra, Bangladesh)",
+          "venue": "Earth and Planetary Science Letters",
+          "year": "2010",
+          "cited_by_count": 401,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_1525_7541_2000_001_0289_gcosfs_2_0_co_2",
+          "title": "Global Characteristics of Stream Flow Seasonality and Variability",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2000",
+          "cited_by_count": 393,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_s41893_019_0305_3",
+          "title": "Importance of snow and glacier meltwater for agriculture on the Indo-Gangetic Plain",
+          "venue": "Nature Sustainability",
+          "year": "2019",
+          "cited_by_count": 389,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_5194_essd_11_1655_2019",
+          "title": "GRUN: an observation-based global gridded runoff dataset from 1902 to 2014",
+          "venue": "Earth system science data",
+          "year": "2019",
+          "cited_by_count": 383,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_jgrd_50665",
+          "title": "Discharge regime and simulation for the upstream of major rivers over Tibetan Plateau",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2013",
+          "cited_by_count": 362,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_acp_11_1929_2011",
+          "title": "Sensitivity studies on the impacts of Tibetan Plateau snowpack pollution on the Asian hydrological cycle and monsoon climate",
+          "venue": "Atmospheric chemistry and physics",
+          "year": "2011",
+          "cited_by_count": 362,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_16_4603_2012",
+          "title": "Future changes in Mekong River hydrology: impact of climate change and reservoir operation on discharge",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2012",
+          "cited_by_count": 358,
+          "confidence": 0.95
+        }
+      ]
+    },
+    "snow": {
+      "total": 301,
+      "processes": {
+        "snowmelt runoff": 110,
+        "glacier melt": 48,
+        "glacier mass balance": 28,
+        "snowmelt": 24,
+        "climate change impacts": 15,
+        "evapotranspiration": 12,
+        "soil moisture": 11,
+        "glacier retreat": 10,
+        "glacier runoff": 9,
+        "hydrological modeling": 9,
+        "snow water equivalent": 8,
+        "river discharge": 7,
+        "snow cover": 7,
+        "snow cover dynamics": 6,
+        "snow hydrology": 6,
+        "snow accumulation": 6,
+        "glacier recession": 6,
+        "runoff": 6,
+        "glacier melt runoff": 6,
+        "permafrost hydrology": 5,
+        "cryosphere hydrology": 5,
+        "climate change impacts on hydrology": 5,
+        "soil moisture dynamics": 5,
+        "streamflow": 5,
+        "climate warming impacts": 5,
+        "sea level rise": 5,
+        "mountain hydrology": 4,
+        "permafrost thaw": 4,
+        "alpine hydrology": 4,
+        "climate change": 4
+      },
+      "study_area_types": {
+        "global": 74,
+        "named_region": 97,
+        "specific_basin": 89,
+        "country_or_multi_country": 19,
+        "conceptual": 17,
+        "unclear": 4,
+        "Country_or_multi_country": 1
+      },
+      "regions": {
+        "Tibetan Plateau": 24,
+        "Global": 23,
+        "High Mountain Asia": 17,
+        "Arctic": 12,
+        "Western United States": 12,
+        "Upper Indus Basin": 8,
+        "Karakoram": 7,
+        "Himalaya": 6,
+        "Rocky Mountains": 5,
+        "Europe": 5,
+        "Third Pole": 5,
+        "Ganges": 4,
+        "Brahmaputra": 4,
+        "Indus Basin": 4,
+        "North America": 4,
+        "European Alps": 4,
+        "Indus": 3,
+        "Andes": 3,
+        "Ganges Basin": 3,
+        "Switzerland": 3,
+        "Contiguous United States": 3,
+        "Colorado": 3,
+        "Langtang catchment": 3,
+        "Himalayas": 3,
+        "Swiss Alps": 3,
+        "Alaska": 3,
+        "Everest region": 3,
+        "Tien Shan": 3,
+        "Pamir": 3,
+        "Greenland ice sheet": 3
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1038_sdata_2017_191",
+          "title": "TerraClimate, a high-resolution global dataset of monthly climate and climatic water balance from 1958–2015",
+          "venue": "Scientific Data",
+          "year": "2018",
+          "cited_by_count": 3124,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1038_nclimate2563",
+          "title": "Elevation-dependent warming in mountain regions of the world",
+          "venue": "Nature Climate Change",
+          "year": "2015",
+          "cited_by_count": 2860,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1029_2018ms001583",
+          "title": "The Community Land Model Version 5: Description of New Features, Benchmarking, and Impact of Forcing Uncertainty",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2019",
+          "cited_by_count": 2104,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_jhm_386_1",
+          "title": "A Global Dataset of Palmer Drought Severity Index for 1870–2002: Relationship with Soil Moisture and Effects of Surface Warming",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2004",
+          "cited_by_count": 2064,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_22_6005_2018",
+          "title": "Rainfall–runoff modelling using Long Short-Term Memory (LSTM) networks",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2018",
+          "cited_by_count": 1761,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2002_015_3237_althbd_2_0_co_2",
+          "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States*",
+          "venue": "Journal of Climate",
+          "year": "2002",
+          "cited_by_count": 1458,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2009jf001426",
+          "title": "Toward a complete Himalayan hydrological budget: Spatiotemporal distribution of snowmelt and rainfall and their impact on river discharge",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 1363,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2011ms00045",
+          "title": "Parameterization improvements and functional and structural advances in Version 4 of the Community Land Model",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2011",
+          "cited_by_count": 1356,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2003jd003823",
+          "title": "The multi‐institution North American Land Data Assimilation System (NLDAS): Utilizing multiple GCIP products and partners in a continental distributed hydrological modeling system",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2004",
+          "cited_by_count": 1341,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_bams_84_8_1013",
+          "title": "The Common Land Model",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2003",
+          "cited_by_count": 1332,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_bams_d_17_0138_1",
+          "title": "MSWEP V2 Global 3-Hourly 0.1° Precipitation: Methodology and Quantitative Assessment",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2018",
+          "cited_by_count": 1331,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_1520_0477_83_8_1167",
+          "title": "The Quantification of Drought: An Evaluation of Drought Indices",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2002",
+          "cited_by_count": 1273,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_nclimate2237",
+          "title": "Consistent increase in High Asia's runoff due to increasing glacier melt and precipitation",
+          "venue": "Nature Climate Change",
+          "year": "2014",
+          "cited_by_count": 1203,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1088_1748_9326_5_1_015101",
+          "title": "Review of climate and cryospheric change in the Tibetan Plateau",
+          "venue": "Environmental Research Letters",
+          "year": "2010",
+          "cited_by_count": 1153,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_2008jhm1068_1",
+          "title": "A Revised Hydrology for the ECMWF Model: Verification from Field Site to Terrestrial Water Storage and Impact in the Integrated Forecast System",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2008",
+          "cited_by_count": 1118,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_bams_d_17_0057_1",
+          "title": "Recent Third Pole’s Rapid Warming Accompanies Cryospheric Melt and Water Cycle Intensification and Interactions between Monsoon and Environment: Multidisciplinary Approach with Observations, Modeling, and Analysis",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2018",
+          "cited_by_count": 1117,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_gmd_12_1909_2019",
+          "title": "The Met Office Unified Model Global Atmosphere 7.0/7.1 and JULES Global Land 7.0 configurations",
+          "venue": "Geoscientific model development",
+          "year": "2019",
+          "cited_by_count": 1117,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1126_science_aan2506",
+          "title": "Changing climate shifts timing of European floods",
+          "venue": "Science",
+          "year": "2017",
+          "cited_by_count": 1026,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_jcli3850_1",
+          "title": "Trends in Snowfall versus Rainfall in the Western United States",
+          "venue": "Journal of Climate",
+          "year": "2006",
+          "cited_by_count": 949,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2009jd012882",
+          "title": "Bias correction of monthly precipitation and temperature fields from Intergovernmental Panel on Climate Change AR4 models using equidistant quantile matching",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 919,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_nclimate2246",
+          "title": "A precipitation shift from snow towards rain leads to a decrease in streamflow",
+          "venue": "Nature Climate Change",
+          "year": "2014",
+          "cited_by_count": 891,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1038_s41561_019_0300_3",
+          "title": "A consensus estimate for the ice thickness distribution of all glaciers on Earth",
+          "venue": "Nature Geoscience",
+          "year": "2019",
+          "cited_by_count": 879,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_nature23878",
+          "title": "Impact of a global temperature rise of 1.5 degrees Celsius on Asia’s glaciers",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 875,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1088_1748_9326_aafc1b",
+          "title": "Key indicators of Arctic climate change: 1971–2017",
+          "venue": "Environmental Research Letters",
+          "year": "2019",
+          "cited_by_count": 874,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1073_pnas_1008162107",
+          "title": "Contribution potential of glaciers to water availability in different climate regimes",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2010",
+          "cited_by_count": 817,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "mountain": {
+      "total": 303,
+      "processes": {
+        "snowmelt runoff": 83,
+        "glacier melt": 53,
+        "glacier mass balance": 30,
+        "climate change impacts": 16,
+        "snowmelt": 15,
+        "glacier retreat": 13,
+        "runoff generation": 12,
+        "hydrological modeling": 11,
+        "mountain hydrology": 9,
+        "glacier runoff": 8,
+        "orographic precipitation": 8,
+        "snow water equivalent": 7,
+        "glacier recession": 7,
+        "snow accumulation": 6,
+        "glacier melt runoff": 6,
+        "cryosphere hydrology": 5,
+        "streamflow generation": 5,
+        "land use change impacts": 5,
+        "climate warming impacts": 5,
+        "sediment transport": 5,
+        "evapotranspiration": 5,
+        "climate change impacts on hydrology": 4,
+        "precipitation variability": 4,
+        "alpine hydrology": 4,
+        "snow hydrology": 4,
+        "streamflow": 4,
+        "snow cover": 4,
+        "climate change": 4,
+        "permafrost degradation": 4,
+        "energy balance": 4
+      },
+      "study_area_types": {
+        "global": 40,
+        "named_region": 117,
+        "specific_basin": 112,
+        "country_or_multi_country": 16,
+        "conceptual": 16,
+        "unclear": 2
+      },
+      "regions": {
+        "Tibetan Plateau": 34,
+        "High Mountain Asia": 20,
+        "Western United States": 13,
+        "Global": 12,
+        "Andes": 10,
+        "Karakoram": 8,
+        "Upper Indus Basin": 8,
+        "Tropical Andes": 7,
+        "Rocky Mountains": 6,
+        "Himalaya": 6,
+        "Himalayas": 5,
+        "Third Pole": 5,
+        "Switzerland": 4,
+        "Colorado": 4,
+        "Pamir": 4,
+        "Swiss Alps": 4,
+        "Qinghai-Tibet Plateau": 4,
+        "Sierra Nevada": 4,
+        "Tenderfoot Creek Experimental Forest": 4,
+        "Global mountain regions": 4,
+        "European Alps": 4,
+        "Indus": 3,
+        "Ganges": 3,
+        "Brahmaputra": 3,
+        "Ganges Basin": 3,
+        "Himalayan region": 3,
+        "Andes Mountains": 3,
+        "Cordillera Blanca": 3,
+        "Langtang catchment": 3,
+        "Central Asia": 3
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1038_nclimate2563",
+          "title": "Elevation-dependent warming in mountain regions of the world",
+          "venue": "Nature Climate Change",
+          "year": "2015",
+          "cited_by_count": 2860,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1641_b580507",
+          "title": "Freshwater Ecoregions of the World: A New Map of Biogeographic Units for Freshwater Biodiversity Conservation",
+          "venue": "BioScience",
+          "year": "2008",
+          "cited_by_count": 2007,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1038_s41586_019_1822_y",
+          "title": "Importance and vulnerability of the world’s water towers",
+          "venue": "Nature",
+          "year": "2019",
+          "cited_by_count": 1979,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1029_2009jf001426",
+          "title": "Toward a complete Himalayan hydrological budget: Spatiotemporal distribution of snowmelt and rainfall and their impact on river discharge",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 1363,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_bams_84_8_1013",
+          "title": "The Common Land Model",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2003",
+          "cited_by_count": 1332,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_nclimate2237",
+          "title": "Consistent increase in High Asia's runoff due to increasing glacier melt and precipitation",
+          "venue": "Nature Climate Change",
+          "year": "2014",
+          "cited_by_count": 1203,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_1520_0434_1996_011_0560_fffaib_2_0_co_2",
+          "title": "Flash Flood Forecasting: An Ingredients-Based Methodology",
+          "venue": "Weather and Forecasting",
+          "year": "1996",
+          "cited_by_count": 1164,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1088_1748_9326_5_1_015101",
+          "title": "Review of climate and cryospheric change in the Tibetan Plateau",
+          "venue": "Environmental Research Letters",
+          "year": "2010",
+          "cited_by_count": 1153,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_bams_d_17_0057_1",
+          "title": "Recent Third Pole’s Rapid Warming Accompanies Cryospheric Melt and Water Cycle Intensification and Interactions between Monsoon and Environment: Multidisciplinary Approach with Observations, Modeling, and Analysis",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2018",
+          "cited_by_count": 1117,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_jcli3850_1",
+          "title": "Trends in Snowfall versus Rainfall in the Western United States",
+          "venue": "Journal of Climate",
+          "year": "2006",
+          "cited_by_count": 949,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2006jf000631",
+          "title": "Responses of permafrost to climate change and their environmental significance, Qinghai‐Tibet Plateau",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2007",
+          "cited_by_count": 945,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2018rg000626",
+          "title": "Earthquake‐Induced Chains of Geologic Hazards: Patterns, Mechanisms, and Impacts",
+          "venue": "Reviews of Geophysics",
+          "year": "2019",
+          "cited_by_count": 937,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41561_019_0300_3",
+          "title": "A consensus estimate for the ice thickness distribution of all glaciers on Earth",
+          "venue": "Nature Geoscience",
+          "year": "2019",
+          "cited_by_count": 879,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_nature23878",
+          "title": "Impact of a global temperature rise of 1.5 degrees Celsius on Asia’s glaciers",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 875,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1073_pnas_1008162107",
+          "title": "Contribution potential of glaciers to water availability in different climate regimes",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2010",
+          "cited_by_count": 817,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_3189_2015jog15j017",
+          "title": "Historically unprecedented global glacier decline in the early 21st century",
+          "venue": "Journal of Glaciology",
+          "year": "2015",
+          "cited_by_count": 794,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2000jb000044",
+          "title": "Implications of sediment‐flux‐dependent river incision models for landscape evolution",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2002",
+          "cited_by_count": 711,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1073_pnas_1619807114",
+          "title": "Glacier shrinkage driving global changes in downstream systems",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2017",
+          "cited_by_count": 703,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_15_471_2011",
+          "title": "Climate change and mountain water resources: overview and recommendations for research, management and policy",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 694,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_tc_7_81_2013",
+          "title": "Current state of glaciers in the tropical Andes: a multi-century perspective on glacier evolution and climate change",
+          "venue": "The cryosphere",
+          "year": "2013",
+          "cited_by_count": 660,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1111_j_1752_1688_2007_00005_x",
+          "title": "The Role of Headwater Streams in Downstream Water Quality<sup>1</sup>",
+          "venue": "JAWRA Journal of the American Water Resources Association",
+          "year": "2007",
+          "cited_by_count": 651,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1016_j_earscirev_2012_03_008",
+          "title": "Response of debris-covered glaciers in the Mount Everest region to recent warming, and implications for outburst flood hazards",
+          "venue": "Earth-Science Reviews",
+          "year": "2012",
+          "cited_by_count": 648,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_jhm548_1",
+          "title": "A Distributed Snow-Evolution Modeling System (SnowModel)",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2006",
+          "cited_by_count": 647,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2008wr007225",
+          "title": "Hydrologic connectivity between landscapes and streams: Transferring reach‐ and plot‐scale understanding to the catchment scale",
+          "venue": "Water Resources Research",
+          "year": "2009",
+          "cited_by_count": 642,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2020rg000730",
+          "title": "Climate Changes and Their Elevational Patterns in the Mountains of the World",
+          "venue": "Reviews of Geophysics",
+          "year": "2022",
+          "cited_by_count": 630,
+          "confidence": 0.9
+        }
+      ]
+    },
+    "lowHumanImpact": {
+      "total": 80,
+      "processes": {
+        "runoff generation": 6,
+        "snowmelt runoff": 5,
+        "river restoration": 4,
+        "wetland hydrology": 4,
+        "groundwater-surface water interaction": 4,
+        "hydrological connectivity": 4,
+        "catchment hydrology": 3,
+        "hydrological modeling": 3,
+        "evapotranspiration": 3,
+        "land use change impacts": 2,
+        "snowmelt": 2,
+        "river discharge": 2,
+        "streamflow characteristics": 2,
+        "dam removal": 2,
+        "baseflow": 2,
+        "rainfall-runoff modeling": 2,
+        "freshwater biodiversity": 2,
+        "permafrost thaw": 2,
+        "river connectivity": 2,
+        "snowpack storage decline": 1,
+        "runoff timing shift": 1,
+        "seasonal water availability": 1,
+        "river regulation": 1,
+        "sediment transport": 1,
+        "channel modification": 1,
+        "permafrost hydrology": 1,
+        "wetland dynamics": 1,
+        "base flow index": 1,
+        "base flow recession": 1,
+        "lake expansion": 1
+      },
+      "study_area_types": {
+        "global": 22,
+        "named_region": 6,
+        "conceptual": 19,
+        "country_or_multi_country": 8,
+        "specific_basin": 23,
+        "Country_or_multi_country": 1,
+        "unclear": 1
+      },
+      "regions": {
+        "Global": 6,
+        "Europe": 4,
+        "Arctic": 2,
+        "United States": 2,
+        "Arctic Ocean": 2,
+        "Congo River Basin": 2,
+        "Global rivers": 2,
+        "Global river basins": 2,
+        "Snow-dominated regions": 1,
+        "World's large rivers": 1,
+        "Global (3394 catchments)": 1,
+        "Tibetan Plateau": 1,
+        "Synthesis of observational records": 1,
+        "Alpine headwater stream": 1,
+        "hyporheic zone": 1,
+        "Great Vasyugan Bog": 1,
+        "Siberia": 1,
+        "Carolina slate belt": 1,
+        "Mega rivers": 1,
+        "Global core validation sites": 1,
+        "First order tributary, United Kingdom": 1,
+        "Chukchi Sea": 1,
+        "Lena River Basin": 1,
+        "Vilui Valley": 1,
+        "Krycklan": 1,
+        "Ungauged basins (generic)": 1,
+        "Continental United States": 1,
+        "MOPEX catchments": 1,
+        "Tenderfoot Creek Experimental Forest": 1,
+        "Rocky Mountains": 1
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1093_jxb_erj108",
+          "title": "World salinization with emphasis on Australia",
+          "venue": "Journal of Experimental Botany",
+          "year": "2006",
+          "cited_by_count": 1646,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1111_j_1365_2664_2005_01004_x",
+          "title": "Standards for ecologically successful river restoration",
+          "venue": "Journal of Applied Ecology",
+          "year": "2005",
+          "cited_by_count": 1552,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_2307_1941848",
+          "title": "Biological Integrity: A Long‐Neglected Aspect of Water Resource Management",
+          "venue": "Ecological Applications",
+          "year": "1991",
+          "cited_by_count": 1525,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1080_02626667_2013_803183",
+          "title": "A decade of Predictions in Ungauged Basins (PUB)—a review",
+          "venue": "Hydrological Sciences Journal",
+          "year": "2013",
+          "cited_by_count": 1318,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1093_biosci_biaa002",
+          "title": "Bending the Curve of Global Freshwater Biodiversity Loss: An Emergency Recovery Plan",
+          "venue": "BioScience",
+          "year": "2020",
+          "cited_by_count": 1139,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1126_science_aan2506",
+          "title": "Changing climate shifts timing of European floods",
+          "venue": "Science",
+          "year": "2017",
+          "cited_by_count": 1026,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_21_5293_2017",
+          "title": "The CAMELS data set: catchment attributes and meteorology for large-sample studies",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2017",
+          "cited_by_count": 864,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_2007jcli1600_1",
+          "title": "The Drought of Amazonia in 2005",
+          "venue": "Journal of Climate",
+          "year": "2008",
+          "cited_by_count": 733,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1016_j_rse_2017_01_021",
+          "title": "Validation of SMAP surface soil moisture products with core validation sites",
+          "venue": "Remote Sensing of Environment",
+          "year": "2017",
+          "cited_by_count": 732,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_2166_hydro_2008_015",
+          "title": "Data-driven modelling: some past experiences and new approaches",
+          "venue": "Journal of Hydroinformatics",
+          "year": "2007",
+          "cited_by_count": 719,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1371_journal_pone_0088786",
+          "title": "Transport Distance of Invertebrate Environmental DNA in a Natural River",
+          "venue": "PLoS ONE",
+          "year": "2014",
+          "cited_by_count": 709,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_5194_hess_16_4079_2012",
+          "title": "COSMOS: the COsmic-ray Soil Moisture Observing System",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2012",
+          "cited_by_count": 612,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_bg_12_7129_2015",
+          "title": "Reviews and syntheses: Effects of permafrost thaw on Arctic aquatic ecosystems",
+          "venue": "Biogeosciences",
+          "year": "2015",
+          "cited_by_count": 594,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_hess_20_2483_2016",
+          "title": "From meteorological to hydrological drought using standardised indicators",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2016",
+          "cited_by_count": 573,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1111_j_1752_1688_2007_00002_x",
+          "title": "Hydrologic Connectivity and the Contribution of Stream Headwaters to Ecological Integrity at Regional Scales<sup>1</sup>",
+          "venue": "JAWRA Journal of the American Water Resources Association",
+          "year": "2007",
+          "cited_by_count": 567,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_hess_11_983_2007",
+          "title": "On the importance of including vegetation dynamics in Budyko's hydrological model",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2007",
+          "cited_by_count": 553,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_5751_es_01747_110205",
+          "title": "Process-Based Ecological River Restoration: Visualizing Three-Dimensional Connectivity and Dynamic Vectors to Recover Lost Linkages",
+          "venue": "Ecology and Society",
+          "year": "2006",
+          "cited_by_count": 528,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2011wr011721",
+          "title": "Crash testing hydrological models in contrasted climate conditions: An experiment on 216 Australian catchments",
+          "venue": "Water Resources Research",
+          "year": "2012",
+          "cited_by_count": 485,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_hess_14_2367_2010",
+          "title": "Streamflow trends in Europe: evidence from a dataset of near-natural catchments",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2010",
+          "cited_by_count": 483,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_5194_hess_15_2245_2011",
+          "title": "Land use and climate change impacts on the hydrology of the upper Mara River Basin, Kenya: results of a modeling study to support better resource management",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 467,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1016_j_geomorph_2008_05_035",
+          "title": "Patterns of anabranching channels: The ultimate end-member adjustment of mega rivers",
+          "venue": "Geomorphology",
+          "year": "2008",
+          "cited_by_count": 458,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_bams_d_11_00213_1",
+          "title": "A Remotely Sensed Global Terrestrial Drought Severity Index",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2012",
+          "cited_by_count": 439,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2013wr013918",
+          "title": "Global patterns in base flow index and recession based on streamflow observations from 3394 catchments",
+          "venue": "Water Resources Research",
+          "year": "2013",
+          "cited_by_count": 361,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_hyp_7796",
+          "title": "How old is streamwater? Open questions in catchment transit time conceptualization, modelling and analysis",
+          "venue": "Hydrological Processes",
+          "year": "2010",
+          "cited_by_count": 355,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2011wr010666",
+          "title": "Hierarchical controls on runoff generation: Topographically driven hydrologic connectivity, geology, and vegetation",
+          "venue": "Water Resources Research",
+          "year": "2011",
+          "cited_by_count": 351,
+          "confidence": 0.85
+        }
+      ]
+    },
+    "mixed": {
+      "total": 219,
+      "processes": {
+        "evapotranspiration": 27,
+        "drought": 11,
+        "hydrological modeling": 11,
+        "runoff": 9,
+        "land use change impacts": 8,
+        "terrestrial water storage": 8,
+        "land surface modeling": 8,
+        "soil moisture dynamics": 6,
+        "precipitation": 6,
+        "groundwater recharge": 5,
+        "hydrologic modeling": 5,
+        "rainfall-runoff modeling": 5,
+        "floods": 5,
+        "streamflow": 5,
+        "groundwater depletion": 4,
+        "socio-hydrology": 4,
+        "snowmelt runoff": 4,
+        "water quality": 4,
+        "catchment hydrology": 4,
+        "groundwater-surface water interaction": 4,
+        "streamflow simulation": 4,
+        "climate change impacts": 4,
+        "runoff generation": 4,
+        "evaporation": 4,
+        "moisture recycling": 4,
+        "water cycle": 4,
+        "aquifer management": 3,
+        "coupled human-water systems": 3,
+        "water availability": 3,
+        "flooding": 3
+      },
+      "study_area_types": {
+        "global": 115,
+        "named_region": 10,
+        "country_or_multi_country": 35,
+        "conceptual": 42,
+        "specific_basin": 15,
+        "multi_region": 1,
+        "unclear": 1
+      },
+      "regions": {
+        "Global": 65,
+        "Europe": 10,
+        "China": 6,
+        "United States": 5,
+        "Global land surface": 5,
+        "Contiguous United States": 4,
+        "Australia": 4,
+        "Continental United States": 3,
+        "France": 3,
+        "Conterminous United States": 3,
+        "Tibetan Plateau": 2,
+        "Global terrestrial ecosystems": 2,
+        "Canada": 2,
+        "California": 2,
+        "Chile": 2,
+        "Global river basins": 2,
+        "World's large rivers": 1,
+        "Global (3394 catchments)": 1,
+        "South Central United States": 1,
+        "Global (50°N–50°S)": 1,
+        "Global (300 diverse catchments)": 1,
+        "Global (54 distributed sites)": 1,
+        "Continental domain": 1,
+        "Mongolian Plateau": 1,
+        "Natural and managed ecosystems": 1,
+        "Inner Tibetan Plateau": 1,
+        "Continental United States (CONUS)": 1,
+        "Catchment scale (generic)": 1,
+        "Western Pampas": 1,
+        "Rhône River": 1
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1038_sdata_2015_66",
+          "title": "The climate hazards infrared precipitation with stations—a new environmental record for monitoring extremes",
+          "venue": "Scientific Data",
+          "year": "2015",
+          "cited_by_count": 5937,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_essd_13_4349_2021",
+          "title": "ERA5-Land: a state-of-the-art global reanalysis dataset for land applications",
+          "venue": "Earth system science data",
+          "year": "2021",
+          "cited_by_count": 4446,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_soil_and_water_assessment_tool_theoretical_documentation_version_2009",
+          "title": "Soil and Water Assessment Tool Theoretical Documentation Version 2009",
+          "venue": "OakTrust (Texas A&M University Libraries)",
+          "year": "2011",
+          "cited_by_count": 4057,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_1520_0477_2001_082_2415_fantts_2_3_co_2",
+          "title": "FLUXNET: A New Tool to Study the Temporal and Spatial Variability of Ecosystem–Scale Carbon Dioxide, Water Vapor, and Energy Flux Densities",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2001",
+          "cited_by_count": 3950,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_3354_cr00953",
+          "title": "Changes in precipitation with climate change",
+          "venue": "Climate Research",
+          "year": "2010",
+          "cited_by_count": 3754,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_13031_2013_42256",
+          "title": "SWAT: Model Use, Calibration, and Validation",
+          "venue": "Transactions of the ASABE",
+          "year": "2012",
+          "cited_by_count": 3319,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_bams_84_9_1205",
+          "title": "The Changing Character of Precipitation",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2003",
+          "cited_by_count": 3189,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_bams_d_13_00164_1",
+          "title": "The Global Precipitation Measurement Mission",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2013",
+          "cited_by_count": 2768,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1029_2018ms001583",
+          "title": "The Community Land Model Version 5: Description of New Features, Benchmarking, and Impact of Forcing Uncertainty",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2019",
+          "cited_by_count": 2104,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_jhm_386_1",
+          "title": "A Global Dataset of Palmer Drought Severity Index for 1870–2002: Relationship with Soil Moisture and Effects of Surface Warming",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2004",
+          "cited_by_count": 2064,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_22_6005_2018",
+          "title": "Rainfall–runoff modelling using Long Short-Term Memory (LSTM) networks",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2018",
+          "cited_by_count": 1761,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2002_015_3237_althbd_2_0_co_2",
+          "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States*",
+          "venue": "Journal of Climate",
+          "year": "2002",
+          "cited_by_count": 1458,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1021_es503610r",
+          "title": "Microplastic is an Abundant and Distinct Microbial Habitat in an Urban River",
+          "venue": "Environmental Science & Technology",
+          "year": "2014",
+          "cited_by_count": 1453,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1073_pnas_1222475110",
+          "title": "Global water resources affected by human interventions and climate change",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2013",
+          "cited_by_count": 1427,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2005jd006338",
+          "title": "Multimodel ensemble simulations of present‐day and near‐future tropospheric ozone",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2006",
+          "cited_by_count": 1380,
+          "confidence": null
+        },
+        {
+          "id": "oa_10_1029_2005gb002672",
+          "title": "Nitrogen and sulfur deposition on regional and global scales: A multimodel evaluation",
+          "venue": "Global Biogeochemical Cycles",
+          "year": "2006",
+          "cited_by_count": 1367,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1073_pnas_2001403117",
+          "title": "Land use and climate change impacts on global soil erosion by water (2015-2070)",
+          "venue": "Proceedings of the National Academy of Sciences",
+          "year": "2020",
+          "cited_by_count": 1367,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2011ms00045",
+          "title": "Parameterization improvements and functional and structural advances in Version 4 of the Community Land Model",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2011",
+          "cited_by_count": 1356,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1007_s10021_011_9517_8",
+          "title": "A Global Assessment of the Water Footprint of Farm Animal Products",
+          "venue": "Ecosystems",
+          "year": "2012",
+          "cited_by_count": 1349,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1080_02626667_2013_803183",
+          "title": "A decade of Predictions in Ungauged Basins (PUB)—a review",
+          "venue": "Hydrological Sciences Journal",
+          "year": "2013",
+          "cited_by_count": 1318,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_nhess_10_1697_2010",
+          "title": "Review article &amp;quot;Assessment of economic flood damage&amp;quot;",
+          "venue": "Natural hazards and earth system sciences",
+          "year": "2010",
+          "cited_by_count": 1285,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1641_b580908",
+          "title": "Consequences of More Extreme Precipitation Regimes for Terrestrial Ecosystems",
+          "venue": "BioScience",
+          "year": "2008",
+          "cited_by_count": 1240,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41586_023_06083_8",
+          "title": "Safe and just Earth system boundaries",
+          "venue": "Nature",
+          "year": "2023",
+          "cited_by_count": 1216,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2010wr010090",
+          "title": "Hyperresolution global land surface modeling: Meeting a grand challenge for monitoring Earth's terrestrial water",
+          "venue": "Water Resources Research",
+          "year": "2011",
+          "cited_by_count": 1035,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016wr020175",
+          "title": "The future of evapotranspiration: Global requirements for ecosystem functioning, carbon and climate feedbacks, agricultural management, and water resources",
+          "venue": "Water Resources Research",
+          "year": "2017",
+          "cited_by_count": 961,
+          "confidence": 0.85
+        }
+      ]
+    },
+    "humid": {
+      "total": 170,
+      "processes": {
+        "evapotranspiration": 21,
+        "runoff generation": 12,
+        "soil moisture": 9,
+        "wetland hydrology": 7,
+        "rainfall-runoff modeling": 6,
+        "climate change impacts": 6,
+        "soil moisture dynamics": 6,
+        "precipitation": 5,
+        "runoff": 5,
+        "extreme precipitation": 5,
+        "catchment hydrology": 5,
+        "hydrological modeling": 5,
+        "evaporation": 5,
+        "streamflow": 5,
+        "water cycle intensification": 4,
+        "soil erosion": 4,
+        "water yield": 4,
+        "groundwater-surface water interaction": 4,
+        "floods": 4,
+        "streamflow variability": 3,
+        "streamflow simulation": 3,
+        "snowmelt runoff": 3,
+        "transpiration": 3,
+        "land use change impacts": 3,
+        "flooding": 3,
+        "precipitation extremes": 3,
+        "precipitation recycling": 3,
+        "meteorological forcing": 3,
+        "snow water equivalent": 3,
+        "hydrological cycle": 3
+      },
+      "study_area_types": {
+        "country_or_multi_country": 30,
+        "global": 62,
+        "specific_basin": 45,
+        "named_region": 18,
+        "conceptual": 13,
+        "unclear": 2
+      },
+      "regions": {
+        "Global": 37,
+        "Global land surface": 8,
+        "Europe": 6,
+        "Contiguous United States": 5,
+        "Amazon Basin": 5,
+        "United States": 4,
+        "Congo River Basin": 3,
+        "Continental United States": 3,
+        "Global wetlands": 3,
+        "Conterminous United States": 3,
+        "South America": 2,
+        "Eastern United States": 2,
+        "Amazonia": 2,
+        "Global (3394 catchments)": 1,
+        "Panama Canal Watershed": 1,
+        "Rio Piedras catchment": 1,
+        "South Central United States": 1,
+        "Global (50°N–50°S)": 1,
+        "Global rivers": 1,
+        "Tropical and subtropical Africa": 1,
+        "Switzerland": 1,
+        "China": 1,
+        "Girnock catchment": 1,
+        "France": 1,
+        "Catchment scale (generic)": 1,
+        "US Corn Belt": 1,
+        "Midwest USA": 1,
+        "Central Belgium": 1,
+        "Headwater streams in humid landscapes": 1,
+        "Berlin": 1
+      },
+      "top_references": [
+        {
+          "id": "oa_10_3354_cr00953",
+          "title": "Changes in precipitation with climate change",
+          "venue": "Climate Research",
+          "year": "2010",
+          "cited_by_count": 3754,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_bams_84_9_1205",
+          "title": "The Changing Character of Precipitation",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2003",
+          "cited_by_count": 3189,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_s41467_017_02142_7",
+          "title": "An assessment of the global impact of 21st century land use change on soil erosion",
+          "venue": "Nature Communications",
+          "year": "2017",
+          "cited_by_count": 2619,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1038_nature09396",
+          "title": "Recent decline in the global land evapotranspiration trend due to limited moisture supply",
+          "venue": "Nature",
+          "year": "2010",
+          "cited_by_count": 2291,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_jcli3790_1",
+          "title": "Development of a 50-Year High-Resolution Global Dataset of Meteorological Forcings for Land Surface Modeling",
+          "venue": "Journal of Climate",
+          "year": "2006",
+          "cited_by_count": 2047,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1002_2014rg000464",
+          "title": "Future changes to the intensity and frequency of short-duration extreme rainfall",
+          "venue": "Reviews of Geophysics",
+          "year": "2014",
+          "cited_by_count": 1478,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41598_020_70816_2",
+          "title": "Climate change impact on flood and extreme precipitation increases with water availability",
+          "venue": "Scientific Reports",
+          "year": "2020",
+          "cited_by_count": 1470,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1175_1520_0442_2002_015_3237_althbd_2_0_co_2",
+          "title": "A Long-Term Hydrologically Based Dataset of Land Surface Fluxes and States for the Conterminous United States*",
+          "venue": "Journal of Climate",
+          "year": "2002",
+          "cited_by_count": 1458,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2003jd003823",
+          "title": "The multi‐institution North American Land Data Assimilation System (NLDAS): Utilizing multiple GCIP products and partners in a continental distributed hydrological modeling system",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2004",
+          "cited_by_count": 1341,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1080_02626667_2013_803183",
+          "title": "A decade of Predictions in Ungauged Basins (PUB)—a review",
+          "venue": "Hydrological Sciences Journal",
+          "year": "2013",
+          "cited_by_count": 1318,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_15_1675_2011",
+          "title": "The International Soil Moisture Network: a data hosting facility for global in situ soil moisture measurements",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 1161,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2019wr024873",
+          "title": "MERIT Hydro: A High‐Resolution Global Hydrography Map Based on Latest Topography Dataset",
+          "venue": "Water Resources Research",
+          "year": "2019",
+          "cited_by_count": 1136,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1007_s10584_014_1084_5",
+          "title": "The impacts of climate change on river flood risk at the global scale",
+          "venue": "Climatic Change",
+          "year": "2014",
+          "cited_by_count": 1135,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_21_589_2017",
+          "title": "MSWEP: 3-hourly 0.25° global gridded precipitation (1979–2015) by merging gauge, satellite, and reanalysis data",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2017",
+          "cited_by_count": 1077,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_2012ei000434_1",
+          "title": "Performance of Drought Indices for Ecological, Agricultural, and Hydrological Applications",
+          "venue": "Earth Interactions",
+          "year": "2012",
+          "cited_by_count": 930,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_2011jhm1369_1",
+          "title": "Creation of the WATCH Forcing Data and Its Use to Assess Global and Regional Reference Crop Evaporation over Land during the Twentieth Century",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2011",
+          "cited_by_count": 925,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1002_2016ef000485",
+          "title": "Global projections of river flood risk in a warmer world",
+          "venue": "Earth s Future",
+          "year": "2016",
+          "cited_by_count": 879,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_1520_0477_2000_081_1281_tgsmdb_2_3_co_2",
+          "title": "The Global Soil Moisture Data Bank",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2000",
+          "cited_by_count": 875,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_5194_hess_21_6201_2017",
+          "title": "Global-scale evaluation of 22 precipitation datasets using gauge observations and hydrological modeling",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2017",
+          "cited_by_count": 830,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_s41586_022_05572_6",
+          "title": "Extensive global wetland loss over the past three centuries",
+          "venue": "Nature",
+          "year": "2023",
+          "cited_by_count": 814,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_3390_su8030281",
+          "title": "Soil Degradation, Land Scarcity and Food Security: Reviewing a Complex Challenge",
+          "venue": "Sustainability",
+          "year": "2016",
+          "cited_by_count": 775,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1029_2011rg000372",
+          "title": "Upscaling sparse ground‐based soil moisture observations for the validation of coarse‐resolution satellite soil moisture products",
+          "venue": "Reviews of Geophysics",
+          "year": "2012",
+          "cited_by_count": 750,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1175_2010jhm1224_1",
+          "title": "A New Global 0.5° Gridded Dataset (1901–2006) of a Multiscalar Drought Index: Comparison with Current Drought Index Datasets Based on the Palmer Drought Severity Index",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2010",
+          "cited_by_count": 721,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1126_science_abl4649",
+          "title": "The biodiversity and ecosystem service contributions and trade-offs of forest restoration approaches",
+          "venue": "Science",
+          "year": "2022",
+          "cited_by_count": 719,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_nature21048",
+          "title": "Age, extent and carbon storage of the central Congo Basin peatland complex",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 685,
+          "confidence": 0.8
+        }
+      ]
+    },
+    "boreal": {
+      "total": 192,
+      "processes": {
+        "permafrost thaw": 26,
+        "snowmelt runoff": 22,
+        "permafrost hydrology": 14,
+        "river discharge": 12,
+        "permafrost degradation": 9,
+        "wetland hydrology": 9,
+        "snowmelt": 8,
+        "soil moisture dynamics": 8,
+        "evapotranspiration": 8,
+        "dissolved organic carbon transport": 7,
+        "peatland hydrology": 6,
+        "permafrost": 6,
+        "runoff generation": 6,
+        "land surface modeling": 5,
+        "runoff": 5,
+        "water table dynamics": 5,
+        "glacier melt": 5,
+        "groundwater discharge": 4,
+        "thermokarst": 3,
+        "biogeochemical cycling": 3,
+        "storage dynamics": 3,
+        "snow cover": 3,
+        "soil thermal dynamics": 3,
+        "soil moisture": 3,
+        "snow cover dynamics": 3,
+        "land-atmosphere coupling": 3,
+        "riverine export": 2,
+        "cryospheric change": 2,
+        "hydrological cycle intensification": 2,
+        "evaporation": 2
+      },
+      "study_area_types": {
+        "named_region": 50,
+        "global": 66,
+        "specific_basin": 49,
+        "conceptual": 16,
+        "country_or_multi_country": 9,
+        "unclear": 1,
+        "Country_or_multi_country": 1
+      },
+      "regions": {
+        "Arctic": 25,
+        "Global": 18,
+        "Arctic Ocean": 9,
+        "Alaska": 8,
+        "Tibetan Plateau": 6,
+        "Northern Hemisphere": 5,
+        "Siberia": 5,
+        "Europe": 5,
+        "North Slope": 4,
+        "Qinghai-Tibet Plateau": 4,
+        "Permafrost regions": 4,
+        "Global peatlands": 4,
+        "North Slope of Alaska": 3,
+        "Canada": 3,
+        "Interior Alaska": 3,
+        "Pan-Arctic": 3,
+        "Kolyma River": 3,
+        "Yukon River Basin": 3,
+        "Samoylov Island": 3,
+        "Northern Eurasia": 3,
+        "Permafrost region": 3,
+        "Greenland ice sheet": 3,
+        "Global land surface": 3,
+        "Yenisey": 2,
+        "Lena": 2,
+        "Mackenzie": 2,
+        "Yukon": 2,
+        "Kolyma": 2,
+        "Krycklan": 2,
+        "Sweden": 2
+      },
+      "top_references": [
+        {
+          "id": "oa_10_2307_1941811",
+          "title": "Northern Peatlands: Role in the Carbon Cycle and Probable Responses to Climatic Warming",
+          "venue": "Ecological Applications",
+          "year": "1991",
+          "cited_by_count": 3789,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_gmd_4_677_2011",
+          "title": "The Joint UK Land Environment Simulator (JULES), model description – Part 1: Energy and water fluxes",
+          "venue": "Geoscientific model development",
+          "year": "2011",
+          "cited_by_count": 1576,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1088_1748_9326_6_4_045509",
+          "title": "Shrub expansion in tundra ecosystems: dynamics, impacts and research priorities",
+          "venue": "Environmental Research Letters",
+          "year": "2011",
+          "cited_by_count": 1505,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2010jg001566",
+          "title": "Global patterns of land-atmosphere fluxes of carbon dioxide, latent heat, and sensible heat derived from eddy covariance, satellite, and meteorological observations",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2011",
+          "cited_by_count": 1486,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1029_2011ms00045",
+          "title": "Parameterization improvements and functional and structural advances in Version 4 of the Community Land Model",
+          "venue": "Journal of Advances in Modeling Earth Systems",
+          "year": "2011",
+          "cited_by_count": 1356,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1175_bams_84_8_1013",
+          "title": "The Common Land Model",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "2003",
+          "cited_by_count": 1332,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1088_1748_9326_5_1_015101",
+          "title": "Review of climate and cryospheric change in the Tibetan Plateau",
+          "venue": "Environmental Research Letters",
+          "year": "2010",
+          "cited_by_count": 1153,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1126_science_aan2506",
+          "title": "Changing climate shifts timing of European floods",
+          "venue": "Science",
+          "year": "2017",
+          "cited_by_count": 1026,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_bg_5_1475_2008",
+          "title": "Peatlands and the carbon cycle: from local processes to global implications – a synthesis",
+          "venue": "Biogeosciences",
+          "year": "2008",
+          "cited_by_count": 965,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2006jf000631",
+          "title": "Responses of permafrost to climate change and their environmental significance, Qinghai‐Tibet Plateau",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2007",
+          "cited_by_count": 945,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1029_2009jd012882",
+          "title": "Bias correction of monthly precipitation and temperature fields from Intergovernmental Panel on Climate Change AR4 models using equidistant quantile matching",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 919,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1088_1748_9326_aafc1b",
+          "title": "Key indicators of Arctic climate change: 1971–2017",
+          "venue": "Environmental Research Letters",
+          "year": "2019",
+          "cited_by_count": 874,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_3402_polar_v21i1_6479",
+          "title": "The physical environment of Kongsfjorden–Krossfjorden, an Arctic fjord system in Svalbard",
+          "venue": "Polar Research",
+          "year": "2002",
+          "cited_by_count": 751,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1641_0006_3568_2005_055_0017_wbpchc_2_0_co_2",
+          "title": "Winter Biological Processes Could Help Convert Arctic Tundra to Shrubland",
+          "venue": "BioScience",
+          "year": "2005",
+          "cited_by_count": 712,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_jhm548_1",
+          "title": "A Distributed Snow-Evolution Modeling System (SnowModel)",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2006",
+          "cited_by_count": 647,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_gmd_13_2197_2020",
+          "title": "Development of the MIROC-ES2L Earth system model and the evaluation of biogeochemical processes and feedbacks",
+          "venue": "Geoscientific model development",
+          "year": "2020",
+          "cited_by_count": 632,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1029_2007gl030216",
+          "title": "Increased groundwater to stream discharge from permafrost thawing in the Yukon River basin: Potential impacts on lateral export of carbon and nitrogen",
+          "venue": "Geophysical Research Letters",
+          "year": "2007",
+          "cited_by_count": 626,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1175_2010jhm1202_1",
+          "title": "Estimating Snow Water Equivalent Using Snow Depth Data and Climate Classes",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2010",
+          "cited_by_count": 594,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_bg_12_7129_2015",
+          "title": "Reviews and syntheses: Effects of permafrost thaw on Arctic aquatic ecosystems",
+          "venue": "Biogeosciences",
+          "year": "2015",
+          "cited_by_count": 594,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_jhm538_1",
+          "title": "Effects of Frozen Soil on Snowmelt Runoff and Soil Water Storage at a Continental Scale",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2006",
+          "cited_by_count": 575,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1890_07_0187_1",
+          "title": "GLACIAL ECOSYSTEMS",
+          "venue": "Ecological Monographs",
+          "year": "2008",
+          "cited_by_count": 528,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_15_967_2011",
+          "title": "Magnitude and variability of land evaporation and its components at the global scale",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 518,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_3189_172756505781829007",
+          "title": "Mass changes of the Greenland and Antarctic ice sheets and shelves and contributions to sea-level rise: 1992–2002",
+          "venue": "Journal of Glaciology",
+          "year": "2005",
+          "cited_by_count": 502,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2015rg000512",
+          "title": "Stable isotopes in atmospheric water vapor and applications to the hydrologic cycle",
+          "venue": "Reviews of Geophysics",
+          "year": "2016",
+          "cited_by_count": 493,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2015jg003140",
+          "title": "Freshwater and its role in the Arctic Marine System: Sources, disposition, storage, export, and physical and biogeochemical consequences in the Arctic and global oceans",
+          "venue": "Journal of Geophysical Research Biogeosciences",
+          "year": "2015",
+          "cited_by_count": 485,
+          "confidence": 0.85
+        }
+      ]
+    },
+    "tropical": {
+      "total": 194,
+      "processes": {
+        "evapotranspiration": 38,
+        "wetland hydrology": 11,
+        "drought": 11,
+        "moisture recycling": 9,
+        "water balance": 8,
+        "land use change impacts": 8,
+        "floodplain inundation": 7,
+        "rainfall recycling": 7,
+        "runoff generation": 6,
+        "evaporation": 6,
+        "precipitation": 6,
+        "climate change impacts": 5,
+        "transpiration": 5,
+        "hydrological modeling": 4,
+        "groundwater recharge": 4,
+        "remote sensing": 4,
+        "soil moisture": 4,
+        "sediment transport": 3,
+        "surface water storage": 3,
+        "rainfall variability": 3,
+        "ENSO impacts": 3,
+        "surface runoff": 3,
+        "precipitation changes": 3,
+        "carbon storage": 3,
+        "floodplain hydrology": 3,
+        "deforestation impacts": 3,
+        "surface water dynamics": 3,
+        "terrestrial water storage": 3,
+        "dam impacts": 3,
+        "river regulation": 3
+      },
+      "study_area_types": {
+        "specific_basin": 54,
+        "named_region": 49,
+        "global": 71,
+        "country_or_multi_country": 13,
+        "unclear": 1,
+        "conceptual": 5,
+        "continent_or_multi_country": 1
+      },
+      "regions": {
+        "Global": 33,
+        "Amazon Basin": 24,
+        "Amazonia": 8,
+        "South America": 7,
+        "Global land surface": 6,
+        "Tropics": 6,
+        "Congo River Basin": 5,
+        "Congo Basin": 5,
+        "Tropical Andes": 5,
+        "Amazon": 5,
+        "Amazon River": 4,
+        "Northern Australia": 4,
+        "Manaus": 4,
+        "Amazon basin": 4,
+        "Andes": 4,
+        "Sahel": 3,
+        "West Africa": 3,
+        "Brazil": 3,
+        "Amazon rainforest": 3,
+        "Amazon River Basin": 3,
+        "Global rivers": 2,
+        "Amazon floodplain": 2,
+        "Latin America": 2,
+        "Caribbean": 2,
+        "Cordillera Blanca": 2,
+        "Pantanal wetland": 2,
+        "Solimões River": 2,
+        "Central Amazonia": 2,
+        "Andes Mountains": 2,
+        "Congo": 2
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1002_2014rg000464",
+          "title": "Future changes to the intensity and frequency of short-duration extreme rainfall",
+          "venue": "Reviews of Geophysics",
+          "year": "2014",
+          "cited_by_count": 1478,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_1525_7541_2002_003_0660_eofdfc_2_0_co_2",
+          "title": "Estimates of Freshwater Discharge from Continents: Latitudinal and Seasonal Variations",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2002",
+          "cited_by_count": 1302,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2016ef000485",
+          "title": "Global projections of river flood risk in a warmer world",
+          "venue": "Earth s Future",
+          "year": "2016",
+          "cited_by_count": 879,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_nature22333",
+          "title": "Damming the rivers of the Amazon basin",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 807,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_2007jcli1600_1",
+          "title": "The Drought of Amazonia in 2005",
+          "venue": "Journal of Climate",
+          "year": "2008",
+          "cited_by_count": 733,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_nature21048",
+          "title": "Age, extent and carbon storage of the central Congo Basin peatland complex",
+          "venue": "Nature",
+          "year": "2017",
+          "cited_by_count": 685,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_3390_rs10040641",
+          "title": "On the Use of Unmanned Aerial Systems for Environmental Monitoring",
+          "venue": "Remote Sensing",
+          "year": "2018",
+          "cited_by_count": 659,
+          "confidence": 0.75
+        },
+        {
+          "id": "oa_10_1002_2015wr016954",
+          "title": "A high-resolution global flood hazard model",
+          "venue": "Water Resources Research",
+          "year": "2015",
+          "cited_by_count": 645,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_srep33130",
+          "title": "Record-breaking warming and extreme drought in the Amazon rainforest during the course of El Niño 2015–2016",
+          "venue": "Scientific Reports",
+          "year": "2016",
+          "cited_by_count": 641,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_bg_9_1053_2012",
+          "title": "Subsidence and carbon loss in drained tropical peatlands",
+          "venue": "Biogeosciences",
+          "year": "2012",
+          "cited_by_count": 603,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_s41558_022_01287_8",
+          "title": "Pronounced loss of Amazon rainforest resilience since the early 2000s",
+          "venue": "Nature Climate Change",
+          "year": "2022",
+          "cited_by_count": 587,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_joc_1791",
+          "title": "Spatio‐temporal rainfall variability in the Amazon basin countries (Brazil, Peru, Bolivia, Colombia, and Ecuador)",
+          "venue": "International Journal of Climatology",
+          "year": "2008",
+          "cited_by_count": 577,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_2475_ajs_302_9_774",
+          "title": "The low-temperature geochemical cycle of iron: From continental fluxes to marine sediment deposition",
+          "venue": "American Journal of Science",
+          "year": "2002",
+          "cited_by_count": 539,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1029_2006jd007847",
+          "title": "Global inundation dynamics inferred from multiple satellite observations, 1993–2000",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2007",
+          "cited_by_count": 531,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1371_journal_pone_0035126",
+          "title": "Proliferation of Hydroelectric Dams in the Andean Amazon and Implications for Andes-Amazon Connectivity",
+          "venue": "PLoS ONE",
+          "year": "2012",
+          "cited_by_count": 525,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2012wr012514",
+          "title": "A subgrid channel model for simulating river hydraulics and floodplain inundation over large and data sparse areas",
+          "venue": "Water Resources Research",
+          "year": "2012",
+          "cited_by_count": 523,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_5194_bg_8_1415_2011",
+          "title": "Soils of Amazonia with particular reference to the RAINFOR sites",
+          "venue": "Biogeosciences",
+          "year": "2011",
+          "cited_by_count": 518,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_5194_hess_15_967_2011",
+          "title": "Magnitude and variability of land evaporation and its components at the global scale",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2011",
+          "cited_by_count": 518,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_essd_12_2097_2020",
+          "title": "WFDE5: bias-adjusted ERA5 reanalysis data for impact studies",
+          "venue": "Earth system science data",
+          "year": "2020",
+          "cited_by_count": 508,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2015rg000512",
+          "title": "Stable isotopes in atmospheric water vapor and applications to the hydrologic cycle",
+          "venue": "Reviews of Geophysics",
+          "year": "2016",
+          "cited_by_count": 493,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1038_s41586_023_06970_0",
+          "title": "Critical transitions in the Amazon forest system",
+          "venue": "Nature",
+          "year": "2024",
+          "cited_by_count": 492,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1029_2009jd013255",
+          "title": "Water‐stable isotopes in the LMDZ4 general circulation model: Model evaluation for present‐day and past climates and applications to climatic interpretations of tropical isotopic records",
+          "venue": "Journal of Geophysical Research Atmospheres",
+          "year": "2010",
+          "cited_by_count": 422,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1111_j_1095_8649_2010_02684_x",
+          "title": "Fish and aquatic habitat conservation in South America: a continental overview with emphasis on neotropical systems",
+          "venue": "Journal of Fish Biology",
+          "year": "2010",
+          "cited_by_count": 420,
+          "confidence": 0.75
+        },
+        {
+          "id": "oa_10_1002_2015gl063040",
+          "title": "The fertilizing role of African dust in the Amazon rainforest: A first multiyear assessment based on data from Cloud‐Aerosol Lidar and Infrared Pathfinder Satellite Observations",
+          "venue": "Geophysical Research Letters",
+          "year": "2015",
+          "cited_by_count": 419,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1038_ncomms14681",
+          "title": "Self-amplified Amazon forest loss due to vegetation-atmosphere feedbacks",
+          "venue": "Nature Communications",
+          "year": "2017",
+          "cited_by_count": 415,
+          "confidence": 0.95
+        }
+      ]
+    },
+    "dryNatural": {
+      "total": 311,
+      "processes": {
+        "groundwater recharge": 32,
+        "evapotranspiration": 22,
+        "drought": 21,
+        "runoff generation": 17,
+        "transmission losses": 11,
+        "climate change impacts": 10,
+        "groundwater-surface water interaction": 9,
+        "groundwater depletion": 9,
+        "rainfall-runoff modeling": 9,
+        "ephemeral flow": 8,
+        "dryland hydrology": 7,
+        "soil moisture": 7,
+        "soil moisture dynamics": 7,
+        "snowmelt runoff": 6,
+        "land use change impacts": 6,
+        "terrestrial water storage": 6,
+        "drought monitoring": 6,
+        "water scarcity": 6,
+        "erosion": 6,
+        "evaporation": 6,
+        "hydrological drought": 5,
+        "glacier melt": 5,
+        "climate variability": 5,
+        "flow intermittence": 5,
+        "water balance": 5,
+        "streamflow": 5,
+        "drought propagation": 5,
+        "drought impacts": 4,
+        "rainfall variability": 4,
+        "meteorological drought": 4
+      },
+      "study_area_types": {
+        "named_region": 58,
+        "specific_basin": 94,
+        "conceptual": 40,
+        "global": 63,
+        "country_or_multi_country": 55,
+        "unclear": 1
+      },
+      "regions": {
+        "Global": 25,
+        "Australia": 13,
+        "Contiguous United States": 6,
+        "East Africa": 6,
+        "Murray-Darling Basin": 5,
+        "Africa": 5,
+        "North America": 4,
+        "Global drylands": 4,
+        "United States": 3,
+        "Global land surface": 3,
+        "Cooper Creek": 3,
+        "West Africa": 3,
+        "Sahel": 3,
+        "Niger River Basin": 3,
+        "Lake Chad Basin": 3,
+        "Conterminous United States": 3,
+        "Atacama Desert": 3,
+        "Chihuahuan Desert": 3,
+        "Central Asia": 3,
+        "Europe": 3,
+        "Great Plains": 3,
+        "Northwestern China": 2,
+        "Caribbean": 2,
+        "Lake Eyre Basin": 2,
+        "Arabian Peninsula": 2,
+        "Southern Africa": 2,
+        "North Africa": 2,
+        "Ethiopia": 2,
+        "France": 2,
+        "United Kingdom": 2
+      },
+      "top_references": [
+        {
+          "id": "oa_10_1175_2009jcli2909_1",
+          "title": "A Multiscalar Drought Index Sensitive to Global Warming: The Standardized Precipitation Evapotranspiration Index",
+          "venue": "Journal of Climate",
+          "year": "2009",
+          "cited_by_count": 8952,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1126_sciadv_1500323",
+          "title": "Four billion people facing severe water scarcity",
+          "venue": "Science Advances",
+          "year": "2016",
+          "cited_by_count": 5232,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1016_j_jhydrol_2005_07_007",
+          "title": "A manifesto for the equifinality thesis",
+          "venue": "Journal of Hydrology",
+          "year": "2005",
+          "cited_by_count": 2608,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1175_jhm_386_1",
+          "title": "A Global Dataset of Palmer Drought Severity Index for 1870–2002: Relationship with Soil Moisture and Effects of Surface Warming",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2004",
+          "cited_by_count": 2064,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_s41598_020_70816_2",
+          "title": "Climate change impact on flood and extreme precipitation increases with water availability",
+          "venue": "Scientific Reports",
+          "year": "2020",
+          "cited_by_count": 1470,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1641_b580908",
+          "title": "Consequences of More Extreme Precipitation Regimes for Terrestrial Ecosystems",
+          "venue": "BioScience",
+          "year": "2008",
+          "cited_by_count": 1240,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1108_09504120710728879",
+          "title": "Kirk‐Othmer Encyclopedia of Chemical Technology",
+          "venue": "Reference Reviews",
+          "year": "2007",
+          "cited_by_count": 1164,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_1520_0442_1998_011_3128_mdaert_2_0_co_2",
+          "title": "Mesoscale Disturbance and Ecological Response to Decadal Climatic Variability in the American Southwest",
+          "venue": "Journal of Climate",
+          "year": "1998",
+          "cited_by_count": 944,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1038_s41467_021_26907_3",
+          "title": "Global predictions of primary soil salinization under changing climate in the 21st century",
+          "venue": "Nature Communications",
+          "year": "2021",
+          "cited_by_count": 881,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1029_2006wr005467",
+          "title": "Moving beyond heterogeneity and process complexity: A new vision for watershed hydrology",
+          "venue": "Water Resources Research",
+          "year": "2007",
+          "cited_by_count": 828,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1002_2017gl076521",
+          "title": "Global Changes in Drought Conditions Under Different Levels of Warming",
+          "venue": "Geophysical Research Letters",
+          "year": "2018",
+          "cited_by_count": 816,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2016rg000544",
+          "title": "Climate and climatic variability of rainfall over eastern Africa",
+          "venue": "Reviews of Geophysics",
+          "year": "2017",
+          "cited_by_count": 772,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1093_biosci_bit027",
+          "title": "Intermittent Rivers: A Challenge for Freshwater Ecology",
+          "venue": "BioScience",
+          "year": "2014",
+          "cited_by_count": 718,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_5_1_2001",
+          "title": "How far can we go in distributed hydrological modelling?",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2001",
+          "cited_by_count": 709,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_5194_hess_19_209_2015",
+          "title": "Development of a large-sample watershed-scale hydrometeorological data set for the contiguous USA: data set characteristics and assessment of regional variability in hydrologic model performance",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2015",
+          "cited_by_count": 670,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1175_jcli_d_11_00296_1",
+          "title": "On the Increased Frequency of Mediterranean Drought",
+          "venue": "Journal of Climate",
+          "year": "2011",
+          "cited_by_count": 656,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1038_s41558_022_01290_z",
+          "title": "Rapid intensification of the emerging southwestern North American megadrought in 2020–2021",
+          "venue": "Nature Climate Change",
+          "year": "2022",
+          "cited_by_count": 654,
+          "confidence": 0.6
+        },
+        {
+          "id": "oa_10_1175_1520_0477_1998_079_2693_yodvit_2_0_co_2",
+          "title": "2000 Years of Drought Variability in the Central United States",
+          "venue": "Bulletin of the American Meteorological Society",
+          "year": "1998",
+          "cited_by_count": 638,
+          "confidence": 0.85
+        },
+        {
+          "id": "oa_10_1029_2010wr009827",
+          "title": "Pursuing the method of multiple working hypotheses for hydrological modeling",
+          "venue": "Water Resources Research",
+          "year": "2011",
+          "cited_by_count": 631,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_sdata_2017_12",
+          "title": "A land data assimilation system for sub-Saharan Africa food and water security applications",
+          "venue": "Scientific Data",
+          "year": "2017",
+          "cited_by_count": 630,
+          "confidence": 0.8
+        },
+        {
+          "id": "oa_10_1175_1525_7541_2004_005_0064_ccothc_2_0_co_2",
+          "title": "Contemporary Changes of the Hydrological Cycle over the Contiguous United States: Trends Derived from In Situ Observations",
+          "venue": "Journal of Hydrometeorology",
+          "year": "2004",
+          "cited_by_count": 625,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_1038_s41467_021_24016_9",
+          "title": "Observed increasing water constraint on vegetation growth over the last three decades",
+          "venue": "Nature Communications",
+          "year": "2021",
+          "cited_by_count": 611,
+          "confidence": 0.7
+        },
+        {
+          "id": "oa_10_1029_2018wr024618",
+          "title": "Global GRACE Data Assimilation for Groundwater and Drought Monitoring: Advances and Challenges",
+          "venue": "Water Resources Research",
+          "year": "2019",
+          "cited_by_count": 599,
+          "confidence": 0.9
+        },
+        {
+          "id": "oa_10_5194_hess_11_1417_2007",
+          "title": "A multimodel ensemble approach to assessment of climate change impacts on the hydrology and water resources of the Colorado River Basin",
+          "venue": "Hydrology and earth system sciences",
+          "year": "2007",
+          "cited_by_count": 594,
+          "confidence": 0.95
+        },
+        {
+          "id": "oa_10_1002_2016rg000549",
+          "title": "Seasonal Drought Prediction: Advances, Challenges, and Future Prospects",
+          "venue": "Reviews of Geophysics",
+          "year": "2018",
+          "cited_by_count": 586,
+          "confidence": 0.95
+        }
+      ]
+    }
+  }
+}

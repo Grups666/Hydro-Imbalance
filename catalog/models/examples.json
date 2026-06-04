@@ -1,0 +1,50 @@
+[
+  {
+    "id": "vic-model",
+    "name": "Variable Infiltration Capacity (VIC) Model",
+    "domain": "hydrology",
+    "description": "VIC 是一种分布式陆面水文模型，模拟降水-径流过程",
+    "inputs": [
+      { "name": "precipitation", "type": "timeseries", "required": true },
+      { "name": "temperature", "type": "timeseries", "required": true },
+      { "name": "soil_parameters", "type": "static", "required": true },
+      { "name": "vegetation", "type": "static", "required": false }
+    ],
+    "outputs": [
+      { "name": "runoff", "type": "timeseries" },
+      { "name": "evapotranspiration", "type": "timeseries" },
+      { "name": "soil_moisture", "type": "timeseries" }
+    ],
+    "parameters": [
+      { "name": "b_infilt", "default": "0.2", "range": "0-1" },
+      { "name": "Ds", "default": "0.001", "range": "0-1" }
+    ],
+    "supported_regions": ["yellow-river", "north-china-plain"],
+    "supported_scales": ["basin", "subbasin"],
+    "runtime": "local",
+    "source_code": "https://github.com/UW-Hydro/VIC",
+    "documentation": "https://vic.readthedocs.io",
+    "license": "GPL-2.0"
+  },
+  {
+    "id": "pcr-globwb",
+    "name": "PCR-GLOBWB",
+    "domain": "hydrology",
+    "description": "全球水文模型，模拟地表水、地下水和人类用水",
+    "inputs": [
+      { "name": "precipitation", "type": "timeseries", "required": true },
+      { "name": "temperature", "type": "timeseries", "required": true },
+      { "name": "irrigation_demand", "type": "timeseries", "required": false }
+    ],
+    "outputs": [
+      { "name": "discharge", "type": "timeseries" },
+      { "name": "groundwater_depth", "type": "timeseries" },
+      { "name": "total_water_storage", "type": "timeseries" }
+    ],
+    "supported_regions": ["indus", "ganges", "high-plains"],
+    "supported_scales": ["global", "basin"],
+    "runtime": "docker",
+    "source_code": "https://github.com/UU-Hydro/PCR-GLOBWB_model",
+    "license": "GPL-3.0"
+  }
+]

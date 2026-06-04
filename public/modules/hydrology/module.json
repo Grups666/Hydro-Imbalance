@@ -1,0 +1,75 @@
+{
+  "id": "hydrology",
+  "name": "Water Cycle Imbalance",
+  "version": "1.0.0",
+  "description": "Hydrological cycle analysis and basin research",
+  "author": "Spatial Research Team",
+  "icon": "droplet",
+
+  "provides": {
+    "layers": [
+      {
+        "id": "hydro-basins",
+        "name": "Hydrological Basins",
+        "type": "vector",
+        "source": "window.BASIN_DATA.basins",
+        "interactive": true
+      }
+    ],
+
+    "panels": [
+      {
+        "id": "hydrological-summary",
+        "name": "Basin Profile",
+        "position": "right",
+        "trigger": "feature:click",
+        "condition": { "layer": "hydro-basins" }
+      },
+      {
+        "id": "literature",
+        "name": "Literature",
+        "position": "right",
+        "tab": true
+      },
+      {
+        "id": "research",
+        "name": "Research Query",
+        "position": "bottom"
+      }
+    ],
+
+    "catalogs": [
+      {
+        "type": "regions",
+        "name": "Basin Profiles",
+        "data": "catalog/modules/hydrology/regions/basin-profiles.js"
+      },
+      {
+        "type": "literature",
+        "name": "Reference Catalog",
+        "data": "catalog/modules/hydrology/literature/reference-catalog.js"
+      }
+    ]
+  },
+
+  "events": {
+    "feature:click": "handleFeatureClick"
+  },
+
+  "configuration": {
+    "modes": {
+      "snow": { "label": "Snow and Glacier Melt Dominant", "color": "#39b8c4" },
+      "monsoon": { "label": "Monsoon Floodplain Recharge", "color": "#48c78e" },
+      "dryIrrigation": { "label": "Arid Irrigation & Groundwater Dependent", "color": "#e85d75" },
+      "reservoir": { "label": "Reservoir Regulation & Flow Redistribution", "color": "#8f72d8" },
+      "humid": { "label": "Humid Runoff Dominant", "color": "#4f8ce8" },
+      "tropical": { "label": "Tropical High-runoff Forest Basin", "color": "#1f9d68" },
+      "boreal": { "label": "Boreal Snowmelt and Wetland Storage", "color": "#2d9cdb" },
+      "dryNatural": { "label": "Natural Dryland Ephemeral Flow", "color": "#c98b2b" },
+      "mountain": { "label": "Mountain Orographic Runoff", "color": "#7b8fa1" },
+      "lowHumanImpact": { "label": "Low Human-impact Natural Basin", "color": "#6abf69" },
+      "managed": { "label": "Managed Recovery or External Transfer", "color": "#d89b35" },
+      "mixed": { "label": "Mixed or Weak Diagnosis", "color": "#9aa3ad" }
+    }
+  }
+}

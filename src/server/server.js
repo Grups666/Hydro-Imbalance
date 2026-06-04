@@ -2,9 +2,13 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const ROOT = path.resolve(__dirname, "../../..");
-const HERE = __dirname;
-const LOCAL_CONFIG_PATH = path.join(HERE, "atlas.local.json");
+const PROJECT_ROOT = path.resolve(__dirname, "../..");
+const PUBLIC_DIR = path.join(PROJECT_ROOT, "public");
+const CATALOG_DIR = path.join(PROJECT_ROOT, "catalog");
+const REFERENCES_DIR = path.join(PROJECT_ROOT, "references");
+const ASSETS_DIR = path.join(PUBLIC_DIR, "assets");
+const MODULES_DIR = path.join(PUBLIC_DIR, "modules");
+const LOCAL_CONFIG_PATH = path.join(PROJECT_ROOT, "config", "atlas.local.json");
 const PORT = Number(process.env.PORT || 8791);
 
 const mime = {
@@ -13,12 +17,15 @@ const mime = {
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".svg": "image/svg+xml",
   ".pdf": "application/pdf"
 };
 
 function readLocalConfig() {
   try {
-    return JSON.parse(fs.readFileSync(LOCAL_CONFIG_PATH, "utf8").replace(/^\uFEFF/, ""));
+    return JSON.parse(fs.readFileSync(LOCAL_CONFIG_PATH, "utf8").replace(/^﻿/, ""));
   } catch {
     return {};
   }
@@ -54,8 +61,76 @@ function health(res) {
   send(res, 200, JSON.stringify({
     ok: true,
     llmConfigured: Boolean(setting("ANTHROPIC_API_KEY")),
-    model: setting("ANTHROPIC_MODEL", setting("ANTHROPIC_DEFAULT_SONNET_MODEL", "not configured"))
+    model: setting("ANTHROPIC_MODEL", setting("ANTHROPIC_DEFAULT_SONNET_MODEL", "not configured")),
+    foundation: true,
+    modules: discoverModules()
   }));
+}
+
+/**
+ * Discover available modules from public/modules directory
+ */
+function discoverModules() {
+  try {
+    const modules = [];
+    if (!fs.existsSync(MODULES_DIR)) return modules;
+
+    for (const entry of fs.readdirSync(MODULES_DIR, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+
+      const moduleJsonPath = path.join(MODULES_DIR, entry.name, "module.json");
+      if (fs.existsSync(moduleJsonPath)) {
+        try {
+          const manifest = JSON.parse(fs.readFileSync(moduleJsonPath, "utf8"));
+          modules.push({
+            id: manifest.id,
+            name: manifest.name,
+            version: manifest.version,
+            description: manifest.description
+          });
+        } catch (e) {
+          console.warn(`Failed to parse module.json for ${entry.name}:`, e.message);
+        }
+      }
+    }
+    return modules;
+  } catch (e) {
+    console.warn("Module discovery error:", e.message);
+    return [];
+  }
+}
+
+/**
+ * Get module manifest
+ */
+function getModuleManifest(moduleId) {
+  const moduleJsonPath = path.join(MODULES_DIR, moduleId, "module.json");
+  if (!fs.existsSync(moduleJsonPath)) return null;
+
+  try {
+    return JSON.parse(fs.readFileSync(moduleJsonPath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * List available modules
+ */
+function listModules(res) {
+  send(res, 200, JSON.stringify({ modules: discoverModules() }));
+}
+
+/**
+ * Get module details
+ */
+function getModule(res, moduleId) {
+  const manifest = getModuleManifest(moduleId);
+  if (!manifest) {
+    send(res, 404, JSON.stringify({ error: `Module "${moduleId}" not found` }));
+    return;
+  }
+  send(res, 200, JSON.stringify(manifest));
 }
 
 async function research(req, res) {
@@ -102,28 +177,28 @@ function buildPrompt(payload) {
   const basin = payload.basin || {};
   const profile = basin.profile || {};
   return [
-    "你是一个严谨的地理空间科研助理。请基于用户选择的 catchment 上下文，生成中文科研检索与综述报告。",
-    "如果问题需要外部文献检索，但当前上下文不足，请明确给出推荐检索式和需要验证的文献类型，不要编造不存在的论文。",
+    "You are a rigorous geospatial research assistant. Based on the selected catchment context, generate a research summary report.",
+    "If the question requires external literature search but context is insufficient, provide recommended search queries and literature types to verify. Do not fabricate non-existent papers.",
     "",
-    `用户问题：${payload.question || ""}`,
-    `流域名称：${basin.name || ""}`,
-    `HydroBASINS ID：${basin.id || ""}`,
-    `区域：${basin.region || ""}`,
-    `bbox：${JSON.stringify(basin.bbox || [])}`,
-    `面积 km2：${basin.areaKm2 || ""}`,
-    `水文循环模式：${basin.hydrologicalMode || ""}`,
-    `已配置摘要：${profile.summary || ""}`,
-    `水循环特点：${(profile.cycle || []).join("；")}`,
-    `时空 pattern：${(profile.pattern || []).join("；")}`,
-    `本地参考文献：${(profile.references || []).join("；")}`,
+    `User question: ${payload.question || ""}`,
+    `Basin name: ${basin.name || ""}`,
+    `HydroBASINS ID: ${basin.id || ""}`,
+    `Region: ${basin.region || ""}`,
+    `bbox: ${JSON.stringify(basin.bbox || [])}`,
+    `Area km2: ${basin.areaKm2 || ""}`,
+    `Hydrological mode: ${basin.hydrologicalMode || ""}`,
+    `Configured summary: ${profile.summary || ""}`,
+    `Water cycle characteristics: ${(profile.cycle || []).join("; ")}`,
+    `Spatiotemporal patterns: ${(profile.pattern || []).join("; ")}`,
+    `Local references: ${(profile.references || []).join("; ")}`,
     "",
-    "输出结构：",
-    "1. 研究问题重述",
-    "2. 流域背景与相关水文/生态机制",
-    "3. 与用户主题相关的可能研究方向",
-    "4. 已有本地文献如何支撑或不足",
-    "5. 推荐检索式",
-    "6. 证据强度与不确定性"
+    "Output structure:",
+    "1. Research question restatement",
+    "2. Basin background and relevant hydrological/ecological mechanisms",
+    "3. Potential research directions related to user's topic",
+    "4. How existing local literature supports or falls short",
+    "5. Recommended search queries",
+    "6. Evidence strength and uncertainties"
   ].join("\n");
 }
 
@@ -132,51 +207,58 @@ function mockReport(payload) {
   const profile = basin.profile || {};
   const refs = profile.references || [];
   return [
-    "离线示例报告",
+    "Offline Demo Report",
     "",
-    `研究问题：${payload.question || "未提供"}`,
-    `流域：${basin.name || "未选择"}`,
-    `水文循环模式：${basin.hydrologicalMode || "未知"}`,
+    `Research question: ${payload.question || "Not provided"}`,
+    `Basin: ${basin.name || "Not selected"}`,
+    `Hydrological mode: ${basin.hydrologicalMode || "Unknown"}`,
     "",
-    "流域背景：",
-    profile.summary || "该 catchment 尚未配置专门 profile，当前仅使用 HydroBASINS 空间属性和系统默认水文模式。",
+    "Basin background:",
+    profile.summary || "This catchment has no configured profile. Using HydroBASINS spatial attributes and default hydrological classification.",
     "",
-    "可能机制：",
-    ...((profile.cycle || ["需要结合降水、蒸散、径流、地下水和人类活动数据进一步判定。"]).map((item) => `- ${item}`)),
+    "Potential mechanisms:",
+    ...((profile.cycle || ["Requires precipitation, evapotranspiration, runoff, groundwater, and human activity data for full assessment."]).map((item) => `- ${item}`)),
     "",
-    "时空 pattern：",
-    ...((profile.pattern || ["尚未配置。"]).map((item) => `- ${item}`)),
+    "Spatiotemporal patterns:",
+    ...((profile.pattern || ["Not configured."]).map((item) => `- ${item}`)),
     "",
-    "本地参考文献：",
+    "Local references:",
     ...(refs.length ? refs.map((item) => `- ${item}`) : ["- Rodell et al. 2018 Nature", "- Jasechko et al. 2024 Nature"]),
     "",
-    "推荐检索式：",
-    `- \"${basin.name || "selected basin"}\" \"${payload.question || "research"}\"`,
-    `- \"${basin.name || "selected basin"}\" hydrology ecology climate`,
-    `- \"${basin.name || "selected basin"}\" water management remote sensing`,
+    "Recommended search queries:",
+    `- "${basin.name || "selected basin"}" "${payload.question || "research"}"`,
+    `- "${basin.name || "selected basin"}" hydrology ecology climate`,
+    `- "${basin.name || "selected basin"}" water management remote sensing`,
     "",
-    "说明：当前返回的是无 API key 时的 fallback。配置本地 API key 后会请求真实 LLM。"
+    "Note: This is a fallback response without API key. Configure local API key for real LLM-powered synthesis."
   ].join("\n");
 }
 
-function serveFile(req, res) {
+function isInside(child, parent) {
+  const relative = path.relative(parent, child);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+function resolveStaticPath(req) {
   let requestPath = decodeURIComponent(new URL(req.url, `http://${req.headers.host}`).pathname);
   if (requestPath === "/") requestPath = "/index.html";
 
-  let filePath;
-  if (requestPath === "/basin-data.js") {
-    filePath = path.join(ROOT, "projects", "basin-data.js");
-  } else if (requestPath.startsWith("/references/")) {
-    filePath = path.join(ROOT, requestPath.slice(1));
-  } else {
-    filePath = path.join(HERE, requestPath);
-  }
+  if (requestPath === "/basin-data.js") return path.join(ASSETS_DIR, "basin-data.js");
+  if (requestPath === "/land-50m.js") return path.join(ASSETS_DIR, "land-50m.js");
+  if (requestPath.startsWith("/catalog/")) return path.join(CATALOG_DIR, requestPath.slice("/catalog/".length));
+  if (requestPath.startsWith("/references/")) return path.join(REFERENCES_DIR, requestPath.slice("/references/".length));
+  return path.join(PUBLIC_DIR, requestPath);
+}
 
-  const allowed = filePath.startsWith(HERE) ||
-    filePath.endsWith(path.join("projects", "basin-data.js")) ||
-    filePath.startsWith(path.join(ROOT, "references"));
+function isAllowedStaticPath(filePath) {
+  return isInside(filePath, PUBLIC_DIR) ||
+    isInside(filePath, CATALOG_DIR) ||
+    isInside(filePath, REFERENCES_DIR);
+}
 
-  if (!allowed) {
+function serveFile(req, res) {
+  const filePath = resolveStaticPath(req);
+  if (!isAllowedStaticPath(filePath)) {
     send(res, 403, "Forbidden", "text/plain; charset=utf-8");
     return;
   }
@@ -193,6 +275,11 @@ function serveFile(req, res) {
 const server = http.createServer(async (req, res) => {
   try {
     if (req.url === "/api/health") return health(res);
+    if (req.url === "/api/modules") return listModules(res);
+    if (req.url.startsWith("/api/modules/") && req.method === "GET") {
+      const moduleId = req.url.slice("/api/modules/".length);
+      return getModule(res, moduleId);
+    }
     if (req.url === "/api/research" && req.method === "POST") return await research(req, res);
     serveFile(req, res);
   } catch (error) {
@@ -201,5 +288,8 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, "127.0.0.1", () => {
-  console.log(`科研空间图谱 running at http://127.0.0.1:${PORT}`);
+  console.log(`Spatial Research Foundation running at http://127.0.0.1:${PORT}`);
+  console.log(`  - Legacy UI: http://127.0.0.1:${PORT}/index.html`);
+  console.log(`  - Foundation UI: http://127.0.0.1:${PORT}/index-foundation.html`);
+  console.log(`  - Available modules: ${discoverModules().map(m => m.id).join(", ") || "none"}`);
 });
