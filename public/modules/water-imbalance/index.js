@@ -23,6 +23,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.layerIds = [];
     this.chartModal = null;
     this.activeChartSeries = null;
+    this.foundationLayerState = new Map();
 
     Foundation.eventBus.on(Foundation.Events.FEATURE_CLICK, (payload) => {
       if (payload.layer?.moduleId === this.manifest.id) this.onFeatureClick(payload);
@@ -34,9 +35,17 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     await this.loadTimeSeriesDataset();
     this.indexGraph();
     this.prepareBasins(window.BASIN_DATA?.basins || []);
+    this.hideFoundationBasinLayer();
     this.registerLayer();
     this.ensureLegend();
     this.ensureChartUI();
+  }
+
+  onUnload() {
+    for (const [layerId, visible] of this.foundationLayerState) {
+      this.app.layerManager.setVisibility(layerId, visible);
+    }
+    this.foundationLayerState.clear();
   }
 
   getLayerIds() {
@@ -145,6 +154,15 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     });
   }
 
+  hideFoundationBasinLayer() {
+    const layerId = "outlines-basins";
+    const layer = this.app.layerManager.getLayer(layerId);
+    if (!layer) return;
+
+    this.foundationLayerState.set(layerId, layer.visible);
+    if (layer.visible) this.app.layerManager.setVisibility(layerId, false);
+  }
+
   render(ctx, viewport) {
     const base = (viewport.height / 180) * viewport.scale;
     const { width, height, offsetX, offsetY } = viewport;
@@ -156,20 +174,20 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     for (const prep of this.preparedBasins) {
       const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
       const isHovered = this.app.hoveredFeatureId === prep.basin.id;
-      const color = prep.classification?.color || "#d1d5db";
+      const color = prep.classification?.color || "#e3e6e9";
 
-      let fillAlpha = prep.classification ? 0.72 : 0.3;
-      let strokeColor = "rgba(17,24,39,0.32)";
-      let lineWidth = 0.45;
+      let fillAlpha = prep.classification ? 0.68 : 0.32;
+      let strokeColor = "rgba(71,85,105,0.16)";
+      let lineWidth = 0.28;
 
       if (isSelected) {
-        fillAlpha = 0.58;
+        fillAlpha = 0.9;
         strokeColor = "#111827";
         lineWidth = 1.8;
       } else if (isHovered) {
-        fillAlpha = Math.min(fillAlpha + 0.15, 0.5);
-        strokeColor = "rgba(17,24,39,0.6)";
-        lineWidth = 1.2;
+        fillAlpha = 0.82;
+        strokeColor = "rgba(51,65,85,0.48)";
+        lineWidth = 1;
       }
 
       ctx.fillStyle = Foundation.UI.hexToRgba(color, fillAlpha);
@@ -250,7 +268,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     const content = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span style="display:inline-block;width:12px;height:12px;border:1px solid #94a3b8;border-radius:3px;background:${this.escape(classification?.color || "#d1d5db")}"></span>
+        <span style="display:inline-block;width:12px;height:12px;border:1px solid #94a3b8;border-radius:3px;background:${this.escape(classification?.color || "#e3e6e9")}"></span>
         <span style="font-size:11px;color:#64748b;text-transform:uppercase">${this.escape(classLabel)}</span>
       </div>
       <h2 style="margin:0 0 6px;font-size:18px;font-weight:600">${this.escape(title)}</h2>
@@ -264,8 +282,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           <div style="font-size:11px;color:#64748b">Area km2</div>
         </div>
         <div style="background:#f8fafc;padding:12px;border-radius:6px">
-          <div style="font-size:18px;font-weight:600">${this.escape(this.timeSeriesMetadata?.coverage?.foundationCoveragePercent ?? "—")}%</div>
-          <div style="font-size:11px;color:#64748b">Foundation basin match rate</div>
+          <div style="font-size:18px;font-weight:600">${this.escape(this.getRegionName(basin.region))}</div>
+          <div style="font-size:11px;color:#64748b">HydroBASINS region</div>
         </div>
       </div>
 
@@ -340,6 +358,21 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     return classification.imbalancedVariables.map((key) => labels[key] || key).join(" + ");
   }
 
+  getRegionName(regionCode) {
+    const names = {
+      AF: "Africa",
+      AR: "Arctic",
+      AS: "Asia",
+      AU: "Australia and Oceania",
+      EU: "Europe",
+      GR: "Greenland",
+      NA: "North America",
+      SA: "South America",
+      SI: "Siberia"
+    };
+    return names[regionCode] || regionCode || "Unknown";
+  }
+
   renderLiteratureCard(item) {
     const ref = item.record;
     const url = ref.external_url || (ref.doi ? `https://doi.org/${ref.doi}` : "");
@@ -358,16 +391,16 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const legend = document.createElement("div");
     legend.id = "wi-imbalance-legend";
     legend.style.cssText = "position:fixed;left:18px;bottom:18px;z-index:120;background:rgba(255,255,255,.94);border:1px solid #cbd5e1;border-radius:6px;padding:10px 12px;box-shadow:0 3px 12px rgba(15,23,42,.12);font-size:11px;color:#334155;max-width:240px";
+    const colors = this.timeSeriesMetadata?.classColors || {};
     const items = [
-      ["#eef2f7", "No detected imbalance"],
-      ["#e3b23c", "Total water withdrawal"],
-      ["#c767b1", "Groundwater storage"],
-      ["#2fb7c8", "Glacier storage"],
-      ["#d85f55", "Withdrawal + groundwater"],
-      ["#66b95a", "Withdrawal + glacier"],
-      ["#4f7fd5", "Groundwater + glacier"],
-      ["#3f4652", "All three variables"],
-      ["#d1d5db", "No matched time series"]
+      [colors.none || "#eef2f7", "No detected imbalance"],
+      [colors.withdrawal || "#e3b23c", "Total water withdrawal"],
+      [colors.groundwater || "#c767b1", "Groundwater storage"],
+      [colors.glacier || "#2fb7c8", "Glacier storage"],
+      [colors["withdrawal+groundwater"] || "#d85f55", "Withdrawal + groundwater"],
+      [colors["withdrawal+glacier"] || "#66b95a", "Withdrawal + glacier"],
+      [colors["groundwater+glacier"] || "#4f7fd5", "Groundwater + glacier"],
+      [colors["withdrawal+groundwater+glacier"] || "#3f4652", "All three variables"]
     ];
     legend.innerHTML = `
       <div style="font-weight:600;margin-bottom:7px">Water imbalance classes</div>

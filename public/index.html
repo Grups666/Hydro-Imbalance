@@ -561,6 +561,7 @@
         // Event listeners
         this.eventBus.on(Foundation.Events.LAYER_ADD, () => this.updateLayerList());
         this.eventBus.on(Foundation.Events.LAYER_REMOVE, () => this.updateLayerList());
+        this.eventBus.on(Foundation.Events.LAYER_TOGGLE, () => this.updateLayerList());
 
         // Foundation-level feature click handler
         this.eventBus.on(Foundation.Events.FEATURE_CLICK, (payload) => {
@@ -1338,6 +1339,7 @@
       async toggleModule(id) {
         if (this.moduleLoader.isLoaded(id)) {
           const module = this.moduleLoader.get(id);
+          module?.onUnload?.();
           if (module?.getLayerIds) {
             module.getLayerIds().forEach(lid => this.layerManager.removeLayer(lid));
           }
