@@ -1,8 +1,9 @@
 {
-  "id": "basin-four-variable-timeseries-1962-2016",
+  "id": "basin-three-variable-timeseries-1962-2016",
   "name": "Unified Basin Hydrology Time Series",
   "type": "basin-time-series",
-  "file": "./basin-four-variable-timeseries-1962-2016.csv",
+  "file": "./basin-three-variable-timeseries-1962-2016.csv",
+  "classification": "./basin-imbalance-classification.json",
   "join": {
     "moduleField": "basin_id",
     "foundationEntity": "Basin",
@@ -19,38 +20,57 @@
     "records": 70125,
     "basins": 1275,
     "matchedFoundationBasins": 1096,
+    "foundationBasins": 1121,
     "foundationCoveragePercent": 97.77
   },
   "variables": [
     {
-      "id": "aet_mm_yr",
-      "label": "Actual Evapotranspiration",
+      "id": "potential_total_water_withdrawal_mm_yr",
+      "key": "withdrawal",
+      "label": "Potential Total Water Withdrawal",
       "unit": "mm yr-1",
       "kind": "flux",
-      "color": "#0f766e"
-    },
-    {
-      "id": "potential_groundwater_withdrawal_mm_yr",
-      "label": "Potential Groundwater Withdrawal",
-      "unit": "mm yr-1",
-      "kind": "flux",
-      "color": "#dc2626"
+      "color": "#d97706"
     },
     {
       "id": "groundwater_storage_mm",
+      "key": "groundwater",
       "label": "Groundwater Storage",
       "unit": "mm",
       "kind": "storage",
-      "color": "#2563eb"
+      "color": "#7c3aed"
     },
     {
       "id": "glacier_storage_mm_we",
+      "key": "glacier",
       "label": "Glacier Storage",
       "unit": "mm water equivalent",
       "kind": "storage",
-      "color": "#7c3aed"
+      "color": "#0891b2"
     }
   ],
+  "imbalanceMethod": {
+    "historicalPeriod": [
+      1962,
+      1996
+    ],
+    "recentPeriod": [
+      1997,
+      2016
+    ],
+    "recentWindowYears": 20,
+    "rule": "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm"
+  },
+  "classColors": {
+    "none": "#ffffff",
+    "withdrawal": "#ffff00",
+    "groundwater": "#ff00ff",
+    "glacier": "#00ffff",
+    "withdrawal+groundwater": "#ff0000",
+    "withdrawal+glacier": "#00ff00",
+    "groundwater+glacier": "#0000ff",
+    "withdrawal+groundwater+glacier": "#000000"
+  },
   "provenance": {
     "waterGapVersion": "2.2d",
     "glacierSources": [

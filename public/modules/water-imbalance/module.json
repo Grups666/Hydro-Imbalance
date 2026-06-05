@@ -1,24 +1,21 @@
 {
   "id": "water-imbalance",
-  "name": "Water Imbalance Ontology",
-  "version": "0.1.0",
-  "description": "Ontology-driven module for basin water-cycle imbalance concepts, evidence, literature links, and basin-level inspection.",
+  "name": "Water Imbalance",
+  "version": "0.1.1",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "entry": "./index.js",
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": true,
-
-  "ontology": "./ontology.json",
   "knowledgeGraph": "./data/knowledge-graph.json",
   "datasets": [
     {
-      "id": "basin-four-variable-timeseries-1962-2016",
+      "id": "basin-three-variable-timeseries-1962-2016",
       "metadata": "./data/basin-time-series-metadata.json"
     }
   ],
-
   "provides": {
     "layers": [
       {
@@ -32,7 +29,7 @@
     "panels": [
       {
         "id": "water-imbalance-inspector",
-        "name": "Ontology Inspector",
+        "name": "Water Imbalance Inspector",
         "position": "right",
         "trigger": "feature:click",
         "condition": { "layer": "water-imbalance-basins" }
@@ -46,48 +43,19 @@
     ],
     "dataProducts": [
       {
-        "id": "basin-mode-assignment",
-        "type": "derived-relation",
-        "description": "Links foundation basin features to water imbalance modes and regional contexts."
-      },
-      {
-        "id": "literature-evidence-graph",
-        "type": "knowledge-graph",
-        "description": "Links papers to modes, named regions, and process evidence."
+        "id": "basin-imbalance-classification",
+        "type": "derived-classification",
+        "description": "Classifies each basin from recent-versus-historical shifts in total withdrawal, groundwater storage, and glacier storage."
       },
       {
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
-        "description": "Four annual hydrological variables joined to Foundation basins by basin_id."
-      }
-    ]
-  },
-
-  "relations": {
-    "foundationBinding": [
-      {
-        "from": "Basin",
-        "to": "ImbalanceMode",
-        "relation": "basin_has_mode",
-        "method": "module.spatialRules"
+        "description": "Three annual hydrological variables joined to Foundation basins by basin_id."
       },
       {
-        "from": "Literature",
-        "to": "ImbalanceMode",
-        "relation": "paper_evidences_mode",
-        "method": "llmSemanticAudit"
-      },
-      {
-        "from": "Literature",
-        "to": "RegionContext",
-        "relation": "paper_studies_region",
-        "method": "llmSemanticAudit"
-      },
-      {
-        "from": "BasinTimeSeries",
-        "to": "Basin",
-        "relation": "time_series_describes_basin",
-        "method": "exact basin_id join"
+        "id": "literature-evidence",
+        "type": "literature-catalog",
+        "description": "Literature records retained independently from the numerical imbalance classification."
       }
     ]
   }

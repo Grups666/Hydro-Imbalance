@@ -540,9 +540,9 @@
       staticModules: [
         {
           id: 'water-imbalance',
-          name: 'Water Imbalance Ontology',
-          version: '0.1.0',
-          description: 'Ontology-driven basin water-cycle imbalance module',
+          name: 'Water Imbalance',
+          version: '0.1.1',
+          description: 'Three-variable basin water imbalance classification',
           importKind: 'module-manifest',
           defaultLoad: true
         }
@@ -842,7 +842,6 @@
             ['version', manifest.version || ''],
             ['entry', manifest.entry],
             ['className', manifest.className],
-            ['ontology', manifest.ontology || ''],
             ['knowledgeGraph', manifest.knowledgeGraph || '']
           ].map(([k, v]) => `<tr><td>${this.escape(k)}</td><td>${this.escape(v)}</td></tr>`).join('');
 

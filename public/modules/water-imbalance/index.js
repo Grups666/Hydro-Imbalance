@@ -1,20 +1,19 @@
 /**
- * Water Imbalance Ontology Module
+ * Water Imbalance Module
  *
  * This module is intentionally isolated from Foundation domain logic. Foundation
  * supplies map rendering, basin geometry, module loading, and panel APIs. The
- * module supplies its own ontology, knowledge graph, relation rules, and UI.
+ * module supplies its own time series, imbalance classification, literature, and UI.
  */
 window.WaterImbalanceModule = class WaterImbalanceModule {
   constructor(app, manifest = {}) {
     this.app = app;
     this.manifest = manifest;
     this.basePath = manifest.basePath || `/modules/${manifest.id || "water-imbalance"}/`;
-    this.ontology = null;
     this.graph = null;
     this.timeSeriesMetadata = null;
     this.timeSeriesByBasin = new Map();
-    this.modes = new Map();
+    this.classificationByBasin = new Map();
     this.regions = [];
     this.literature = new Map();
     this.relationsBySource = new Map();
@@ -31,12 +30,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   async onLoad() {
-    this.ontology = await this.fetchJson(this.resolveModulePath(this.manifest.ontology || "./ontology.json"));
     this.graph = await this.fetchJson(this.resolveModulePath(this.manifest.knowledgeGraph || "./data/knowledge-graph.json"));
     await this.loadTimeSeriesDataset();
     this.indexGraph();
     this.prepareBasins(window.BASIN_DATA?.basins || []);
     this.registerLayer();
+    this.ensureLegend();
     this.ensureChartUI();
   }
 
@@ -56,7 +55,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   async loadTimeSeriesDataset() {
-    const dataset = this.manifest.datasets?.find((item) => item.id === "basin-four-variable-timeseries-1962-2016");
+    const dataset = this.manifest.datasets?.find((item) => item.id === "basin-three-variable-timeseries-1962-2016");
     if (!dataset?.metadata) return;
 
     this.timeSeriesMetadata = await this.fetchJson(this.resolveModulePath(dataset.metadata));
@@ -66,6 +65,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const response = await fetch(csvUrl);
     if (!response.ok) throw new Error(`Failed to load ${csvUrl}: ${response.status}`);
     this.indexTimeSeries(await response.text());
+    const classification = await this.fetchJson(this.resolveModulePath(
+      dataset.metadata.replace(/[^/]+$/, "") + this.timeSeriesMetadata.classification.replace(/^\.\//, "")
+    ));
+    for (const [basinId, result] of Object.entries(classification.basins || {})) {
+      this.classificationByBasin.set(String(basinId), result);
+    }
   }
 
   indexTimeSeries(csvText) {
@@ -89,10 +94,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   indexGraph() {
-    for (const mode of this.graph?.concepts?.modes || []) {
-      this.modes.set(mode.id, mode);
-    }
-
     this.regions = this.graph?.spatialContexts?.regions || [];
 
     for (const [id, record] of Object.entries(this.graph?.literature?.records || {})) {
@@ -114,35 +115,14 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   prepareBasins(basins) {
     this.preparedBasins = basins.map((basin) => {
       const region = this.findRegion(basin);
-      const modeId = region?.mode || this.inferMode(basin);
-      const mode = this.modes.get(modeId) || this.modes.get("mixed") || {};
+      const classification = this.classificationByBasin.get(String(basin.id)) || null;
       return {
         basin,
         region,
-        modeId,
-        mode,
-        ontologyRelations: this.buildBasinRelations(basin, region, modeId),
+        classification,
         rings: (basin.rings || []).filter((ring) => ring.length >= 3)
       };
     });
-  }
-
-  buildBasinRelations(basin, region, modeId) {
-    const relations = [
-      { type: "basin_has_mode", source: String(basin.id), target: modeId, method: region ? "regionRule" : "spatialRule" }
-    ];
-    if (region) {
-      relations.push({ type: "basin_matches_region", source: String(basin.id), target: region.id, method: "bboxMatch" });
-    }
-    if (this.timeSeriesByBasin.has(String(basin.id))) {
-      relations.push({
-        type: "time_series_describes_basin",
-        source: `basin-timeseries:${basin.id}`,
-        target: String(basin.id),
-        method: "exact basin_id join"
-      });
-    }
-    return relations;
   }
 
   registerLayer() {
@@ -159,7 +139,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       renderer: (ctx, layer, viewport) => this.render(ctx, viewport),
       hitTest: (lon, lat) => this.hitTest(lon, lat),
       metadata: {
-        ontology: this.ontology?.id,
+        classification: this.timeSeriesMetadata?.imbalanceMethod,
         graph: this.graph?.schema
       }
     });
@@ -176,11 +156,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     for (const prep of this.preparedBasins) {
       const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
       const isHovered = this.app.hoveredFeatureId === prep.basin.id;
-      const color = prep.mode.color || "#9aa3ad";
+      const color = prep.classification?.color || "#d1d5db";
 
-      let fillAlpha = prep.region ? 0.34 : 0.07;
-      let strokeColor = prep.region ? "rgba(17,24,39,0.28)" : "rgba(17,24,39,0.08)";
-      let lineWidth = prep.region ? 0.5 : 0.2;
+      let fillAlpha = prep.classification ? 0.72 : 0.3;
+      let strokeColor = "rgba(17,24,39,0.32)";
+      let lineWidth = 0.45;
 
       if (isSelected) {
         fillAlpha = 0.58;
@@ -255,25 +235,28 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     this.selectedBasin = prep;
     this.app.draw();
-    this.showOntologyInspector(prep);
+    this.showInspector(prep);
   }
 
-  showOntologyInspector(prep) {
-    const { basin, region, mode, modeId } = prep;
+  showInspector(prep) {
+    const { basin, region, classification } = prep;
     const references = this.getLiteratureFor(prep);
-    const processes = mode.cycle || [];
     const title = region?.name || basin.name;
     const series = this.timeSeriesByBasin.get(String(basin.id)) || [];
     const previewId = `wi-preview-${basin.id}`;
     const expandId = `wi-expand-${basin.id}`;
+    const classLabel = this.getClassLabel(classification);
+    const metrics = classification?.metrics || {};
 
     const content = `
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:${this.escape(mode.color || "#9aa3ad")}"></span>
-        <span style="font-size:11px;color:#64748b;text-transform:uppercase">${this.escape(mode.label || modeId)}</span>
+        <span style="display:inline-block;width:12px;height:12px;border:1px solid #94a3b8;border-radius:3px;background:${this.escape(classification?.color || "#d1d5db")}"></span>
+        <span style="font-size:11px;color:#64748b;text-transform:uppercase">${this.escape(classLabel)}</span>
       </div>
       <h2 style="margin:0 0 6px;font-size:18px;font-weight:600">${this.escape(title)}</h2>
-      <p style="margin:0 0 14px;color:#64748b;font-size:12px;line-height:1.5">${this.escape(mode.summary || "No mode summary configured.")}</p>
+      <p style="margin:0 0 14px;color:#64748b;font-size:12px;line-height:1.5">
+        Recent period 1997-2016 compared with historical period 1962-1996. A variable is imbalanced when its mean shift exceeds one historical standard deviation and 1 mm.
+      </p>
 
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
         <div style="background:#f8fafc;padding:12px;border-radius:6px">
@@ -281,10 +264,15 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           <div style="font-size:11px;color:#64748b">Area km2</div>
         </div>
         <div style="background:#f8fafc;padding:12px;border-radius:6px">
-          <div style="font-size:18px;font-weight:600">${this.escape(basin.region)}</div>
-          <div style="font-size:11px;color:#64748b">Foundation basin region</div>
+          <div style="font-size:18px;font-weight:600">${this.escape(this.timeSeriesMetadata?.coverage?.foundationCoveragePercent ?? "—")}%</div>
+          <div style="font-size:11px;color:#64748b">Foundation basin match rate</div>
         </div>
       </div>
+
+      <section style="margin-bottom:16px">
+        <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Imbalance Assessment</h3>
+        ${this.renderMetricCards(metrics)}
+      </section>
 
       <section style="margin-bottom:16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -295,25 +283,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           ? `<canvas id="${previewId}" width="300" height="132" style="display:block;width:100%;height:132px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer"></canvas>`
           : `<p style="font-size:12px;color:#64748b;margin:0">No basin_id match in the module time-series dataset.</p>`}
       </section>
-
-      <section style="margin-bottom:16px">
-        <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Ontology Relations</h3>
-        ${prep.ontologyRelations.map((rel) => `
-          <div style="font-size:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:7px 9px;margin-bottom:6px">
-            <strong>${this.escape(rel.type)}</strong><br>
-            <span style="color:#64748b">${this.escape(rel.source)} -> ${this.escape(rel.target)} (${this.escape(rel.method)})</span>
-          </div>
-        `).join("")}
-      </section>
-
-      ${processes.length ? `
-        <section style="margin-bottom:16px">
-          <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Hydrological Processes</h3>
-          <ul style="margin:0;padding-left:20px;font-size:13px;line-height:1.6">
-            ${processes.map((item) => `<li>${this.escape(item)}</li>`).join("")}
-          </ul>
-        </section>
-      ` : ""}
 
       <section>
         <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Literature Evidence</h3>
@@ -338,6 +307,39 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     }
   }
 
+  renderMetricCards(metrics) {
+    const variables = this.timeSeriesMetadata?.variables || [];
+    return `<div style="display:flex;flex-direction:column;gap:6px">${variables.map((variable) => {
+      const metric = metrics[variable.key] || {};
+      const status = metric.status === "evaluated"
+        ? (metric.imbalanced ? "Imbalanced" : "Within historical variability")
+        : "Insufficient data";
+      const color = metric.imbalanced ? "#b91c1c" : "#64748b";
+      return `
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 10px">
+          <div style="display:flex;justify-content:space-between;gap:8px;font-size:12px">
+            <strong>${this.escape(variable.label)}</strong>
+            <span style="color:${color};white-space:nowrap">${this.escape(status)}</span>
+          </div>
+          ${metric.status === "evaluated" ? `
+            <div style="margin-top:4px;color:#64748b;font-size:11px">
+              mean shift ${this.formatValue(metric.difference)} ${this.escape(variable.unit)} · historical SD ${this.formatValue(metric.historicalStdDev)}
+            </div>` : ""}
+        </div>`;
+    }).join("")}</div>`;
+  }
+
+  getClassLabel(classification) {
+    if (!classification) return "No matched time series";
+    if (classification.classId === "none") return "No detected imbalance";
+    const labels = {
+      withdrawal: "Total water withdrawal",
+      groundwater: "Groundwater storage",
+      glacier: "Glacier storage"
+    };
+    return classification.imbalancedVariables.map((key) => labels[key] || key).join(" + ");
+  }
+
   renderLiteratureCard(item) {
     const ref = item.record;
     const url = ref.external_url || (ref.doi ? `https://doi.org/${ref.doi}` : "");
@@ -349,6 +351,31 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         ${url ? `<a href="${this.escape(url)}" target="_blank" rel="noopener" style="color:#3b82f6;text-decoration:none;font-size:11px">Open Link</a>` : ""}
       </div>
     `;
+  }
+
+  ensureLegend() {
+    if (document.getElementById("wi-imbalance-legend")) return;
+    const legend = document.createElement("div");
+    legend.id = "wi-imbalance-legend";
+    legend.style.cssText = "position:fixed;left:18px;bottom:18px;z-index:120;background:rgba(255,255,255,.94);border:1px solid #cbd5e1;border-radius:6px;padding:10px 12px;box-shadow:0 3px 12px rgba(15,23,42,.12);font-size:11px;color:#334155;max-width:240px";
+    const items = [
+      ["#ffffff", "No detected imbalance"],
+      ["#ffff00", "Total water withdrawal"],
+      ["#ff00ff", "Groundwater storage"],
+      ["#00ffff", "Glacier storage"],
+      ["#ff0000", "Withdrawal + groundwater"],
+      ["#00ff00", "Withdrawal + glacier"],
+      ["#0000ff", "Groundwater + glacier"],
+      ["#000000", "All three variables"],
+      ["#d1d5db", "No matched time series"]
+    ];
+    legend.innerHTML = `
+      <div style="font-weight:600;margin-bottom:7px">Water imbalance classes</div>
+      <div style="display:grid;grid-template-columns:12px 1fr;gap:5px 7px;align-items:center">
+        ${items.map(([color, label]) => `<span style="width:12px;height:12px;border:1px solid #64748b;background:${color}"></span><span>${label}</span>`).join("")}
+      </div>
+      <div style="margin-top:7px;color:#64748b;line-height:1.35">1997-2016 mean shift beyond historical SD and 1 mm.</div>`;
+    document.body.appendChild(legend);
   }
 
   ensureChartUI() {
@@ -364,7 +391,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-chart-subtitle{font-size:11px;color:#64748b;margin-top:2px}
       .wi-chart-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:#64748b}
       .wi-chart-close:hover{background:#f1f5f9}
-      .wi-chart-grid{flex:1;overflow:auto;padding:12px 18px 18px;display:grid;grid-template-rows:repeat(4,minmax(150px,1fr));gap:8px}
+      .wi-chart-grid{flex:1;overflow:auto;padding:12px 18px 18px;display:grid;grid-template-rows:repeat(3,minmax(150px,1fr));gap:8px}
       .wi-chart-row{position:relative;border-bottom:1px solid #e2e8f0;min-height:150px}
       .wi-chart-row:last-child{border-bottom:0}
       .wi-chart-row canvas{display:block;width:100%;height:100%;min-height:150px}
@@ -379,7 +406,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         <div class="wi-chart-header">
           <div>
             <div class="wi-chart-title" id="wi-chart-title">Basin Time Series</div>
-            <div class="wi-chart-subtitle" id="wi-chart-subtitle">Shared annual cursor across four variables</div>
+            <div class="wi-chart-subtitle" id="wi-chart-subtitle">Shared annual cursor across three variables</div>
           </div>
           <button class="wi-chart-close" id="wi-chart-close" type="button" aria-label="Close">x</button>
         </div>
@@ -650,8 +677,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   getLiteratureFor(prep) {
     const candidates = [];
     const seen = new Set();
-    const targetIds = [prep.modeId];
-    if (prep.region?.id) targetIds.push(prep.region.id);
+    const targetIds = prep.region?.id ? [prep.region.id] : [];
 
     for (const targetId of targetIds) {
       for (const relation of this.relationsByTarget.get(targetId) || []) {
@@ -679,23 +705,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       lon >= region.match.lon[0] && lon <= region.match.lon[1] &&
       lat >= region.match.lat[0] && lat <= region.match.lat[1]
     );
-  }
-
-  inferMode(basin) {
-    const lon = (basin.bbox[0] + basin.bbox[2]) / 2;
-    const lat = (basin.bbox[1] + basin.bbox[3]) / 2;
-    const absLat = Math.abs(lat);
-    const highLatitude = absLat > 55;
-    const tropical = absLat < 12 && ["SA", "AF", "AS"].includes(basin.region);
-    const dryLarge = absLat >= 12 && absLat <= 35 && basin.areaKm2 > 150000;
-    const mountainAsia = basin.region === "AS" && lon >= 65 && lon <= 105 && lat >= 25 && lat <= 42;
-
-    if (mountainAsia) return "mountain";
-    if (highLatitude) return "boreal";
-    if (tropical) return "tropical";
-    if (dryLarge) return "dryIrrigation";
-    if (basin.region === "EU" || (basin.region === "NA" && absLat > 35)) return "humid";
-    return "mixed";
   }
 
   escape(value) {
