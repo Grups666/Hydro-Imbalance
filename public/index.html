@@ -157,12 +157,15 @@
         border-color: #94a3b8;
       }
       .layer-checkbox:checked::after {
-        content: "✔";
+        content: "";
         position: absolute;
-        top: -1px;
-        left: 1px;
-        font-size: 10px;
-        color: #64748b;
+        left: 4px;
+        top: 1px;
+        width: 4px;
+        height: 8px;
+        border: solid #64748b;
+        border-width: 0 1px 1px 0;
+        transform: rotate(45deg);
       }
       .layer-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .layer-expandable {
@@ -446,7 +449,7 @@
       <div class="panel-section">
         <div class="panel-section-header" data-section="modules">
           <span>Modules</span>
-          <span class="toggle-icon">▼</span>
+          <span class="toggle-icon">v</span>
         </div>
         <div class="panel-section-content">
           <div id="moduleList"></div>
@@ -457,7 +460,7 @@
       <div class="panel-section">
         <div class="panel-section-header" data-section="layers">
           <span>Layers</span>
-          <span class="toggle-icon">▼</span>
+          <span class="toggle-icon">v</span>
         </div>
         <div class="panel-section-content">
           <div id="layerList"></div>
@@ -468,7 +471,7 @@
         <div class="panel-section">
           <div class="panel-section-header" data-section="legend">
             <span>Legend</span>
-            <span class="toggle-icon">鈻?/span>
+            <span class="toggle-icon">v</span>
           </div>
           <div class="panel-section-content">
             <div id="legendList" class="legend-list"></div>
@@ -483,21 +486,21 @@
     <!-- Map Controls -->
     <div class="map-controls">
       <button class="map-btn" id="btnZoomIn">+</button>
-      <button class="map-btn" id="btnZoomOut">−</button>
-      <button class="map-btn" id="btnReset">⌂</button>
+      <button class="map-btn" id="btnZoomOut">-</button>
+      <button class="map-btn" id="btnReset">reset</button>
     </div>
 
     <!-- Map Status -->
     <div class="map-status">
       <span id="statusFeatures">0 layers</span>
-      <span id="statusCoords">—</span>
+      <span id="statusCoords">--</span>
     </div>
 
     <!-- Inspector -->
     <div class="inspector-panel" id="inspectorPanel">
       <div class="inspector-header">
         <span class="inspector-title" id="inspectorTitle">Inspector</span>
-        <button class="inspector-close" id="btnCloseInspector">×</button>
+        <button class="inspector-close" id="btnCloseInspector">x</button>
       </div>
       <div class="inspector-body" id="inspectorBody"></div>
     </div>
@@ -510,7 +513,7 @@
       <div class="import-dialog">
         <div class="import-header">
           <span class="import-title">Import Data</span>
-          <button class="import-close" id="btnCloseImport">×</button>
+          <button class="import-close" id="btnCloseImport">x</button>
         </div>
         <div class="import-body">
           <div class="import-section">
@@ -667,7 +670,7 @@
         this.canvas.addEventListener('mousemove', (e) => {
           const { x, y } = this.getCanvasCoords(e);
           const { lon, lat } = this.screenToGeo(x, y);
-          document.getElementById('statusCoords').textContent = `${lon.toFixed(1)}°, ${lat.toFixed(1)}°`;
+          document.getElementById('statusCoords').textContent = `${lon.toFixed(1)} deg, ${lat.toFixed(1)} deg`;
 
           if (this.dragging) {
             this.viewport.offsetX = this.dragStart.ox + (x - this.dragStart.x);
@@ -1304,7 +1307,7 @@
           <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
             <div style="background:#f8fafc;padding:12px;border-radius:6px">
               <div style="font-size:18px;font-weight:600">${Math.round(basin.areaKm2).toLocaleString()}</div>
-              <div style="font-size:11px;color:#64748b">Area km²</div>
+              <div style="font-size:11px;color:#64748b">Area km2</div>
             </div>
             <div style="background:#f8fafc;padding:12px;border-radius:6px">
               <div style="font-size:18px;font-weight:600">${this.escape(this.getRegionName(basin.region))}</div>
@@ -1510,7 +1513,7 @@
             <div class="layer-item" data-id="${l.id}">
               <input type="checkbox" class="layer-checkbox" ${l.visible ? 'checked' : ''}>
               <span class="layer-name">${l.name}</span>
-              <div class="layer-actions"><button class="layer-btn layer-remove">×</button></div>
+              <div class="layer-actions"><button class="layer-btn layer-remove">x</button></div>
             </div>
           `;
         });
@@ -1621,3 +1624,4 @@
 
   </body>
 </html>
+
