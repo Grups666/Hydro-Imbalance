@@ -598,6 +598,7 @@
     <script src="./foundation/core/module-loader.js"></script>
     <script src="./foundation/map/coordinate-system.js"></script>
     <script src="./foundation/map/layer-manager.js"></script>
+    <script src="./foundation/map/render-scheduler.js"></script>
     <script src="./foundation/ui/utilities.js"></script>
 
     <script>
@@ -605,6 +606,7 @@
       canvas: null,
       ctx: null,
       layerManager: null,
+      renderScheduler: null,
       renderer: null,
       eventBus: Foundation.eventBus,
       moduleLoader: Foundation.moduleLoader,
@@ -630,11 +632,14 @@
       viewport: { width: 0, height: 0, scale: 1, offsetX: 0, offsetY: 0 },
       dragging: false,
       dragStart: null,
+      hoverPending: false,
+      latestHoverPoint: null,
 
       async init() {
         this.canvas = document.getElementById('mapCanvas');
         this.ctx = this.canvas.getContext('2d');
         this.layerManager = new Foundation.LayerManager(this.eventBus);
+        this.renderScheduler = new Foundation.RenderScheduler((state) => this.drawNow(state));
 
         // Event listeners
         this.eventBus.on(Foundation.Events.LAYER_ADD, () => this.updateLayerList());
@@ -701,6 +706,7 @@
         // Mouse events
         this.canvas.addEventListener('mousedown', (e) => {
           this.dragging = true;
+          this.renderScheduler.beginInteraction();
           const { x, y } = this.getCanvasCoords(e);
           this.dragStart = { x, y, ox: this.viewport.offsetX, oy: this.viewport.offsetY };
           this.canvas.style.cursor = 'grabbing';
@@ -709,6 +715,7 @@
         window.addEventListener('mouseup', () => {
           if (this.dragging) {
             this.dragging = false;
+            this.renderScheduler.endInteraction();
             this.canvas.style.cursor = 'grab';
           }
         });
@@ -722,18 +729,9 @@
             this.viewport.offsetX = this.dragStart.ox + (x - this.dragStart.x);
             this.viewport.offsetY = this.dragStart.oy + (y - this.dragStart.y);
             this.clampOffset();
-            this.draw();
+            this.requestDraw("drag");
           } else {
-            const hit = this.hitTest(x, y);
-            this.canvas.style.cursor = hit ? 'pointer' : 'grab';
-
-            // Hover highlight
-            const newHoveredId = hit?.feature?.id;
-            if (newHoveredId !== this.hoveredFeatureId) {
-              this.hoveredFeatureId = newHoveredId;
-              this.hoveredLayer = hit?.layer;
-              this.draw();
-            }
+            this.scheduleHover(x, y);
           }
         });
 
@@ -745,7 +743,7 @@
             this.selectedFeature = hit.feature;
             this.selectedLayer = hit.layer;
             this.eventBus.emit(Foundation.Events.FEATURE_CLICK, hit);
-            this.draw();
+            this.requestDraw("select");
           } else {
             // Click on empty area - hide inspector
             this.selectedFeature = null;
@@ -753,12 +751,13 @@
             this.hoveredFeatureId = null;
             this.hoveredLayer = null;
             document.getElementById('inspectorPanel').classList.remove('visible');
-            this.draw();
+            this.requestDraw("clear-selection");
           }
         });
 
         this.canvas.addEventListener('wheel', (e) => {
           e.preventDefault();
+          this.renderScheduler.beginInteraction();
           const { x, y } = this.getCanvasCoords(e);
           const { lon, lat } = this.screenToGeo(x, y);
 
@@ -774,8 +773,9 @@
             this.viewport.offsetY = y - this.viewport.height / 2 + lat * newBase;
 
             this.clampOffset();
-            this.draw();
+            this.requestDraw("wheel");
           }
+          this.renderScheduler.endInteraction();
         }, { passive: false });
       },
 
@@ -786,6 +786,27 @@
           x: e.clientX - this.canvasRect.left,
           y: e.clientY - this.canvasRect.top
         };
+      },
+
+      scheduleHover(x, y) {
+        this.latestHoverPoint = { x, y };
+        if (this.hoverPending) return;
+
+        this.hoverPending = true;
+        requestAnimationFrame(() => {
+          this.hoverPending = false;
+          if (!this.latestHoverPoint || this.dragging) return;
+
+          const hit = this.hitTest(this.latestHoverPoint.x, this.latestHoverPoint.y);
+          this.canvas.style.cursor = hit ? 'pointer' : 'grab';
+
+          const newHoveredId = hit?.feature?.id;
+          if (newHoveredId !== this.hoveredFeatureId) {
+            this.hoveredFeatureId = newHoveredId;
+            this.hoveredLayer = hit?.layer;
+            this.requestDraw("hover");
+          }
+        });
       },
 
       setupUI() {
@@ -1162,8 +1183,17 @@
       },
 
       draw() {
+        this.requestDraw("draw");
+      },
+
+      requestDraw(reason = "update") {
+        this.renderScheduler?.request(reason);
+      },
+
+      drawNow(renderState = {}) {
         const { ctx, viewport } = this;
         const { width, height } = viewport;
+        viewport.interacting = !!renderState.interacting;
 
         // Background
         const grad = ctx.createLinearGradient(0, 0, 0, height);
@@ -1201,12 +1231,14 @@
             layer.renderer(ctx, layer, viewport);
           }
         }
+        viewport.interacting = false;
       },
 
       renderBasemap(ctx, viewport) {
         const landRings = window.LAND_50M || [];
         const base = this.getBaseScale();
         const { width, height, offsetX, offsetY } = viewport;
+        const lightweight = !!viewport.interacting;
 
         const leftLon = (-width / 2 - offsetX) / base;
         const rightLon = (width / 2 - offsetX) / base;
@@ -1230,12 +1262,13 @@
               else path.lineTo(x, y);
             }
             ctx.fill(path);
-            ctx.stroke(path);
+            if (!lightweight) ctx.stroke(path);
           }
         }
       },
 
       renderBasinOutlines(ctx, viewport) {
+        if (viewport.interacting) return;
         const basins = window.BASIN_DATA?.basins || [];
         const base = this.getBaseScale();
         const { width, height, offsetX, offsetY } = viewport;

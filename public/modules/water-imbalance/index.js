@@ -174,6 +174,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   render(ctx, viewport) {
     const base = (viewport.height / 180) * viewport.scale;
     const { width, height, offsetX, offsetY } = viewport;
+    const lightweight = !!viewport.interacting;
     const leftLon = (-width / 2 - offsetX) / base;
     const rightLon = (width / 2 - offsetX) / base;
     const firstSeg = Math.floor(leftLon / 360);
@@ -214,7 +215,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
             else path.lineTo(x, y);
           }
           ctx.fill(path);
-          ctx.stroke(path);
+          if (!lightweight || isSelected || isHovered) ctx.stroke(path);
         }
       }
     }
