@@ -25,10 +25,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.activeChartSeries = null;
     this.enhancedLayer = null;
     this.originalLayerState = null;
-
-    Foundation.eventBus.on(Foundation.Events.FEATURE_CLICK, (payload) => {
+    this.handleFeatureClick = (payload) => {
       if (payload.layer?.moduleId === this.manifest.id) this.onFeatureClick(payload);
-    });
+    };
+
+    Foundation.eventBus.on(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
   }
 
   async onLoad() {
@@ -48,6 +49,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     }
     this.enhancedLayer = null;
     this.originalLayerState = null;
+    Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
+    this.closeTimeSeriesModal();
   }
 
   getLayerIds() {
@@ -415,7 +418,15 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   ensureChartUI() {
-    if (document.getElementById("wi-chart-modal")) return;
+    const existing = document.getElementById("wi-chart-modal");
+    if (existing) {
+      this.chartModal = existing;
+      existing.onclick = (event) => {
+        if (event.target === existing) this.closeTimeSeriesModal();
+      };
+      existing.querySelector("#wi-chart-close").onclick = () => this.closeTimeSeriesModal();
+      return;
+    }
 
     const style = document.createElement("style");
     style.textContent = `

@@ -1375,17 +1375,22 @@
       },
 
       async fetchModuleManifest(id) {
+        const staticUrl = `./modules/${encodeURIComponent(id)}/module.json`;
         try {
-          const response = await fetch(`/api/modules/${encodeURIComponent(id)}`);
-          if (!response.ok) throw new Error(`Module API unavailable: ${response.status}`);
-          return response.json();
-        } catch {
-          const response = await fetch(`./modules/${encodeURIComponent(id)}/module.json`);
+          const response = await fetch(staticUrl);
           if (!response.ok) throw new Error(`Module manifest not found: ${id}`);
           return {
             ...(await response.json()),
             basePath: `./modules/${id}/`
           };
+        } catch (staticError) {
+          try {
+            const response = await fetch(`/api/modules/${encodeURIComponent(id)}`);
+            if (!response.ok) throw new Error(`Module API unavailable: ${response.status}`);
+            return response.json();
+          } catch (apiError) {
+            throw new Error(`Module manifest failed: ${staticError.message}; API fallback failed: ${apiError.message}`);
+          }
         }
       },
 
