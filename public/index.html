@@ -114,7 +114,14 @@
       .panel-section-header:hover { background: #e2e8f0; }
       .panel-section.collapsed .panel-section-content { display: none; }
       .panel-section.collapsed .toggle-icon { transform: rotate(-90deg); }
-      .toggle-icon { transition: transform 0.2s; }
+      .toggle-icon {
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 6px solid #94a3b8;
+        transition: transform 0.2s;
+      }
       .panel-section-content { padding: 8px; }
       .legend-list { display: flex; flex-direction: column; gap: 8px; }
       .legend-empty { padding: 8px 12px; font-size: 12px; color: #94a3b8; line-height: 1.45; }
@@ -211,9 +218,6 @@
         font-size: 14px; color: #64748b;
       }
       .layer-btn:hover { background: #cbd5e1; color: #1e293b; }
-
-      /* Section toggle icon color */
-      .toggle-icon { color: #94a3b8; }
 
       /* Import Modal */
       .import-modal {
@@ -443,7 +447,7 @@
       <div class="panel-section">
         <div class="panel-section-header" data-section="modules">
           <span>Modules</span>
-          <span class="toggle-icon">v</span>
+          <span class="toggle-icon" aria-hidden="true"></span>
         </div>
         <div class="panel-section-content">
           <div id="moduleList"></div>
@@ -454,7 +458,7 @@
       <div class="panel-section">
         <div class="panel-section-header" data-section="layers">
           <span>Layers</span>
-          <span class="toggle-icon">v</span>
+          <span class="toggle-icon" aria-hidden="true"></span>
         </div>
         <div class="panel-section-content">
           <div id="layerList"></div>
@@ -465,7 +469,7 @@
         <div class="panel-section">
           <div class="panel-section-header" data-section="legend">
             <span>Legend</span>
-            <span class="toggle-icon">v</span>
+            <span class="toggle-icon" aria-hidden="true"></span>
           </div>
           <div class="panel-section-content">
             <div id="legendList" class="legend-list"></div>
