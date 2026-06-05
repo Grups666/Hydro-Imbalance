@@ -27,13 +27,23 @@
         border-right: 1px solid #e2e8f0;
         display: flex;
         flex-direction: column;
-        overflow-y: auto;
+        overflow: hidden;
         z-index: 50;
         box-shadow: 2px 0 8px rgba(0,0,0,0.1);
         transition: transform 0.2s;
       }
       .left-panel.hidden {
         transform: translateX(-100%);
+      }
+      .panel-main {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      .panel-bottom {
+        margin-top: auto;
+        border-top: 1px solid #e2e8f0;
+        background: #f8fafc;
       }
 
       /* Panel header bar - full width toggle button */
@@ -65,26 +75,32 @@
       /* Show panel button - between panel and map layer */
       .panel-show-btn {
         position: absolute;
-        top: 8px;
-        left: 8px;
-        width: 28px;
-        height: 28px;
+        top: 50%;
+        left: 260px;
+        width: 26px;
+        height: 64px;
         background: #fff;
-        border: none;
-        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+        border-left: 0;
+        border-radius: 0 6px 6px 0;
         cursor: pointer;
-        z-index: 40;
+        z-index: 60;
         box-shadow: 0 1px 4px rgba(0,0,0,0.15);
         display: block;
         color: #64748b;
-        font-size: 14px;
-        font-weight: normal;
-        word-spacing: 0.3px;
-        line-height: 28px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        line-height: 1;
         text-align: center;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: translateY(-50%);
+        transition: left 0.2s;
       }
       .panel-show-btn:hover { background: #f8fafc; color: #1e293b; }
-      .panel-show-btn::before { content: ">>"; letter-spacing: 0.3px; }
+      .panel-show-btn::before { content: "Tab"; }
+      .left-panel.hidden + .panel-show-btn { left: 0; }
 
       /* Panel sections */
       .panel-section { border-bottom: 1px solid #e2e8f0; position: relative; }
@@ -106,6 +122,13 @@
       .panel-section.collapsed .toggle-icon { transform: rotate(-90deg); }
       .toggle-icon { transition: transform 0.2s; }
       .panel-section-content { padding: 8px; }
+      .legend-list { display: flex; flex-direction: column; gap: 8px; }
+      .legend-empty { padding: 8px 12px; font-size: 12px; color: #94a3b8; line-height: 1.45; }
+      .legend-card { border: 1px solid #e2e8f0; border-radius: 6px; background: #fff; padding: 10px 12px; font-size: 11px; color: #334155; }
+      .legend-title { font-weight: 600; margin-bottom: 7px; }
+      .legend-grid { display: grid; grid-template-columns: 12px 1fr; gap: 5px 7px; align-items: center; }
+      .legend-swatch { width: 12px; height: 12px; border: 1px solid #64748b; }
+      .legend-note { margin-top: 7px; color: #64748b; line-height: 1.35; }
 
       /* Module/Layer items */
       .module-item, .layer-item {
@@ -419,6 +442,7 @@
       <div class="panel-header">
         <button class="panel-toggle-btn" id="btnHidePanel"></button>
       </div>
+      <div class="panel-main">
       <div class="panel-section">
         <div class="panel-section-header" data-section="modules">
           <span>Modules</span>
@@ -439,9 +463,21 @@
           <div id="layerList"></div>
         </div>
       </div>
+      </div>
+      <div class="panel-bottom">
+        <div class="panel-section">
+          <div class="panel-section-header" data-section="legend">
+            <span>Legend</span>
+            <span class="toggle-icon">鈻?/span>
+          </div>
+          <div class="panel-section-content">
+            <div id="legendList" class="legend-list"></div>
+          </div>
+        </div>
+      </div>
     </aside>
 
-    <!-- Show panel button - appears when panel hidden -->
+    <!-- Side tab - toggles the panel in and out -->
     <button class="panel-show-btn" id="btnShowPanel"></button>
 
     <!-- Map Controls -->
@@ -532,6 +568,7 @@
       eventBus: Foundation.eventBus,
       moduleLoader: Foundation.moduleLoader,
       modules: [],
+      legends: new Map(),
       selectedFeature: null,
       selectedLayer: null,
       hoveredFeatureId: null,
@@ -597,6 +634,7 @@
         // Setup interactions
         this.setupCanvasEvents();
         this.setupUI();
+        this.updateLegendList();
 
         // Fetch and show modules
         await this.fetchModules();
@@ -726,7 +764,7 @@
           panel.classList.add('hidden');
         };
         showBtn.onclick = () => {
-          panel.classList.remove('hidden');
+          panel.classList.toggle('hidden');
         };
 
         // Section toggle
@@ -1534,6 +1572,33 @@
         });
 
         document.getElementById('statusFeatures').textContent = `${layers.length} layers`;
+      },
+
+      registerLegend(id, legend) {
+        this.legends.set(id, legend);
+        this.updateLegendList();
+      },
+
+      unregisterLegend(id) {
+        this.legends.delete(id);
+        this.updateLegendList();
+      },
+
+      updateLegendList() {
+        const el = document.getElementById('legendList');
+        if (!el) return;
+
+        if (!this.legends.size) {
+          el.innerHTML = '<div class="legend-empty">No active module legends.</div>';
+          return;
+        }
+
+        el.innerHTML = Array.from(this.legends.entries()).map(([id, legend]) => `
+          <div class="legend-card" data-id="${this.escape(id)}">
+            <div class="legend-title">${this.escape(legend.title || id)}</div>
+            ${legend.html || ""}
+          </div>
+        `).join('');
       },
 
       showInspector(title, content) {

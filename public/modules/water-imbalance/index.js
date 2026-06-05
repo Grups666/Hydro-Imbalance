@@ -25,6 +25,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.activeChartSeries = null;
     this.enhancedLayer = null;
     this.originalLayerState = null;
+    this.legendId = `${this.manifest.id || "water-imbalance"}-legend`;
     this.handleFeatureClick = (payload) => {
       if (payload.layer?.moduleId === this.manifest.id) this.onFeatureClick(payload);
     };
@@ -51,6 +52,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.originalLayerState = null;
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
+    this.app.unregisterLegend?.(this.legendId);
   }
 
   getLayerIds() {
@@ -393,10 +395,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   ensureLegend() {
-    if (document.getElementById("wi-imbalance-legend")) return;
-    const legend = document.createElement("div");
-    legend.id = "wi-imbalance-legend";
-    legend.style.cssText = "position:fixed;left:18px;bottom:18px;z-index:120;background:rgba(255,255,255,.94);border:1px solid #cbd5e1;border-radius:6px;padding:10px 12px;box-shadow:0 3px 12px rgba(15,23,42,.12);font-size:11px;color:#334155;max-width:240px";
     const colors = this.timeSeriesMetadata?.classColors || {};
     const items = [
       [colors.none || "#eef2f7", "No detected imbalance"],
@@ -408,13 +406,14 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       [colors["groundwater+glacier"] || "#4f7fd5", "Groundwater + glacier"],
       [colors["withdrawal+groundwater+glacier"] || "#3f4652", "All three variables"]
     ];
-    legend.innerHTML = `
-      <div style="font-weight:600;margin-bottom:7px">Water imbalance classes</div>
-      <div style="display:grid;grid-template-columns:12px 1fr;gap:5px 7px;align-items:center">
-        ${items.map(([color, label]) => `<span style="width:12px;height:12px;border:1px solid #64748b;background:${color}"></span><span>${label}</span>`).join("")}
+    this.app.registerLegend?.(this.legendId, {
+      title: "Water imbalance classes",
+      html: `
+      <div class="legend-grid">
+        ${items.map(([color, label]) => `<span class="legend-swatch" style="background:${this.escape(color)}"></span><span>${this.escape(label)}</span>`).join("")}
       </div>
-      <div style="margin-top:7px;color:#64748b;line-height:1.35">1997-2016 mean shift beyond historical SD and 1 mm.</div>`;
-    document.body.appendChild(legend);
+      <div class="legend-note">1997-2016 mean shift beyond historical SD and 1 mm.</div>`
+    });
   }
 
   ensureChartUI() {
