@@ -545,19 +545,23 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   drawExpandedCharts() {
     if (!this.activeChartSeries) return;
     const variables = this.timeSeriesMetadata?.variables || [];
+    const metrics = this.activeChartSeries.prep.classification?.metrics || {};
     const canvases = this.chartModal.querySelectorAll("canvas[data-variable]");
     canvases.forEach((canvas, index) => {
+      const variable = variables[index];
+      if (!variable) return;
       this.drawTimeSeriesChart(
         canvas,
         this.activeChartSeries.series,
-        variables[index],
+        variable,
+        metrics[variable?.key],
         this.activeChartSeries.hoverIndex,
         index === canvases.length - 1
       );
     });
   }
 
-  drawTimeSeriesChart(canvas, series, variable, hoverIndex, showXAxis) {
+  drawTimeSeriesChart(canvas, series, variable, metric, hoverIndex, showXAxis) {
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     canvas.width = Math.max(1, Math.round(rect.width * dpr));
@@ -576,6 +580,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     ctx.fillStyle = "#334155";
     ctx.font = "600 12px sans-serif";
     ctx.fillText(variable.label, plot.left, 16);
+    if (metric?.imbalanced) {
+      const labelWidth = ctx.measureText(variable.label).width;
+      ctx.fillStyle = "#b91c1c";
+      ctx.font = "600 12px sans-serif";
+      ctx.fillText("Imbalanced", plot.left + labelWidth + 14, 16);
+    }
     ctx.fillStyle = "#94a3b8";
     ctx.font = "11px sans-serif";
     ctx.textAlign = "right";
