@@ -365,10 +365,50 @@
         width: 32px; height: 32px;
         border: none; background: #fff;
         border-radius: 6px;
-        cursor: pointer; font-size: 16px;
+        cursor: pointer;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       .map-btn:hover { background: #f8fafc; }
+      .map-icon {
+        position: relative;
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+      }
+      .map-icon-plus::before,
+      .map-icon-minus::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        right: 1px;
+        top: 6px;
+        height: 2px;
+        background: #111827;
+        border-radius: 1px;
+      }
+      .map-icon-plus::after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        bottom: 1px;
+        left: 6px;
+        width: 2px;
+        background: #111827;
+        border-radius: 1px;
+      }
+      .map-icon-home::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        background: #111827;
+        clip-path: polygon(50% 0, 100% 42%, 82% 42%, 82% 100%, 18% 100%, 18% 42%, 0 42%);
+      }
 
       .map-status {
         position: absolute;
@@ -483,9 +523,9 @@
 
     <!-- Map Controls -->
     <div class="map-controls">
-      <button class="map-btn" id="btnZoomIn">+</button>
-      <button class="map-btn" id="btnZoomOut">-</button>
-      <button class="map-btn" id="btnReset">reset</button>
+      <button class="map-btn" id="btnZoomIn" aria-label="Zoom in"><span class="map-icon map-icon-plus" aria-hidden="true"></span></button>
+      <button class="map-btn" id="btnZoomOut" aria-label="Zoom out"><span class="map-icon map-icon-minus" aria-hidden="true"></span></button>
+      <button class="map-btn" id="btnReset" aria-label="Reset view"><span class="map-icon map-icon-home" aria-hidden="true"></span></button>
     </div>
 
     <!-- Map Status -->
