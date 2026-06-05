@@ -19,8 +19,8 @@
   "provides": {
     "layers": [
       {
-        "id": "water-imbalance-basins",
-        "name": "Water Imbalance Basins",
+        "id": "outlines-basins",
+        "name": "Foundation Basins with Water Imbalance",
         "type": "vector",
         "source": "foundation.basins",
         "interactive": true
@@ -32,7 +32,7 @@
         "name": "Water Imbalance Inspector",
         "position": "right",
         "trigger": "feature:click",
-        "condition": { "layer": "water-imbalance-basins" }
+        "condition": { "layer": "outlines-basins", "module": "water-imbalance" }
       },
       {
         "id": "literature-evidence",

@@ -1269,12 +1269,27 @@
               <div style="font-size:11px;color:#64748b">Area km²</div>
             </div>
             <div style="background:#f8fafc;padding:12px;border-radius:6px">
-              <div style="font-size:18px;font-weight:600">${basin.region}</div>
+              <div style="font-size:18px;font-weight:600">${this.escape(this.getRegionName(basin.region))}</div>
               <div style="font-size:11px;color:#64748b">Region</div>
             </div>
           </div>
         `;
         this.showInspector(basin.name, content);
+      },
+
+      getRegionName(regionCode) {
+        const names = {
+          AF: 'Africa',
+          AR: 'Arctic',
+          AS: 'Asia',
+          AU: 'Australia and Oceania',
+          EU: 'Europe',
+          GR: 'Greenland',
+          NA: 'North America',
+          SA: 'South America',
+          SI: 'Siberia'
+        };
+        return names[regionCode] || regionCode || 'Unknown';
       },
 
       escape(s) {

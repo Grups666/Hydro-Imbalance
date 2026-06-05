@@ -23,7 +23,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.layerIds = [];
     this.chartModal = null;
     this.activeChartSeries = null;
-    this.foundationLayerState = new Map();
+    this.enhancedLayer = null;
+    this.originalLayerState = null;
 
     Foundation.eventBus.on(Foundation.Events.FEATURE_CLICK, (payload) => {
       if (payload.layer?.moduleId === this.manifest.id) this.onFeatureClick(payload);
@@ -35,17 +36,18 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     await this.loadTimeSeriesDataset();
     this.indexGraph();
     this.prepareBasins(window.BASIN_DATA?.basins || []);
-    this.hideFoundationBasinLayer();
-    this.registerLayer();
+    this.enhanceFoundationBasinLayer();
     this.ensureLegend();
     this.ensureChartUI();
   }
 
   onUnload() {
-    for (const [layerId, visible] of this.foundationLayerState) {
-      this.app.layerManager.setVisibility(layerId, visible);
+    if (this.enhancedLayer && this.originalLayerState) {
+      Object.assign(this.enhancedLayer, this.originalLayerState);
+      this.app.updateLayerList?.();
     }
-    this.foundationLayerState.clear();
+    this.enhancedLayer = null;
+    this.originalLayerState = null;
   }
 
   getLayerIds() {
@@ -134,33 +136,34 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     });
   }
 
-  registerLayer() {
-    const layerId = "water-imbalance-basins";
-    this.layerIds.push(layerId);
-
-    this.app.layerManager.addLayer({
-      id: layerId,
-      name: "Water Imbalance Basins",
-      type: "vector",
-      visible: true,
-      interactive: true,
-      moduleId: this.manifest.id,
-      renderer: (ctx, layer, viewport) => this.render(ctx, viewport),
-      hitTest: (lon, lat) => this.hitTest(lon, lat),
-      metadata: {
-        classification: this.timeSeriesMetadata?.imbalanceMethod,
-        graph: this.graph?.schema
-      }
-    });
-  }
-
-  hideFoundationBasinLayer() {
+  enhanceFoundationBasinLayer() {
     const layerId = "outlines-basins";
     const layer = this.app.layerManager.getLayer(layerId);
     if (!layer) return;
 
-    this.foundationLayerState.set(layerId, layer.visible);
-    if (layer.visible) this.app.layerManager.setVisibility(layerId, false);
+    this.enhancedLayer = layer;
+    this.originalLayerState = {
+      name: layer.name,
+      visible: layer.visible,
+      interactive: layer.interactive,
+      moduleId: layer.moduleId,
+      renderer: layer.renderer,
+      hitTest: layer.hitTest,
+      metadata: layer.metadata
+    };
+
+    layer.name = "Basins";
+    layer.visible = true;
+    layer.interactive = true;
+    layer.moduleId = this.manifest.id;
+    layer.renderer = (ctx, _layer, viewport) => this.render(ctx, viewport);
+    layer.hitTest = (lon, lat) => this.hitTest(lon, lat);
+    layer.metadata = {
+      ...layer.metadata,
+      classification: this.timeSeriesMetadata?.imbalanceMethod,
+      graph: this.graph?.schema
+    };
+    this.app.updateLayerList?.();
   }
 
   render(ctx, viewport) {
