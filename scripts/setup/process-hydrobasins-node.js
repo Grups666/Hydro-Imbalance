@@ -11,6 +11,9 @@ const path = require('path');
 const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const DATA_RAW = path.join(PROJECT_ROOT, 'data/raw');
 const PUBLIC_ASSETS = path.join(PROJECT_ROOT, 'public/assets');
+const BASIN_RING_SIMPLIFY_TOLERANCE = 0.2;
+const MIN_RING_AREA_DEGREES2 = 0.02;
+const MIN_RELATIVE_RING_AREA = 0.02;
 
 // 区域配置
 const REGIONS = [
@@ -89,7 +92,7 @@ function douglasPeuckerSimplify(coords, tolerance = 0.1) {
 }
 
 // 简化坐标环 - 使用更精确的算法
-function simplifyRing(coords, tolerance = 0.15) {
+function simplifyRing(coords, tolerance = BASIN_RING_SIMPLIFY_TOLERANCE) {
   if (!coords || coords.length < 3) return [];
 
   // 使用 Douglas-Peucker 算法
@@ -105,6 +108,31 @@ function simplifyRing(coords, tolerance = 0.15) {
   }
 
   return simplified;
+}
+
+function ringArea(ring) {
+  let area = 0;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    area += ring[j][0] * ring[i][1] - ring[i][0] * ring[j][1];
+  }
+  return Math.abs(area / 2);
+}
+
+function selectSignificantRings(rings) {
+  const ranked = rings
+    .map((ring) => ({ ring, area: ringArea(ring) }))
+    .filter((item) => item.ring.length >= 4 && item.area > 0)
+    .sort((a, b) => b.area - a.area);
+  if (ranked.length === 0) return [];
+
+  const maxArea = ranked[0].area;
+  return ranked
+    .filter((item, index) =>
+      index === 0 ||
+      item.area >= MIN_RING_AREA_DEGREES2 ||
+      item.area >= maxArea * MIN_RELATIVE_RING_AREA
+    )
+    .map((item) => item.ring);
 }
 
 // 处理单个 Shapefile
@@ -133,17 +161,18 @@ async function processShapefile(shpPath, dbfPath, regionCode) {
       // 提取所有多边形（保持完整边界）
       const rings = [];
       if (geom.type === 'Polygon') {
-        const ring = simplifyRing(geom.coordinates[0], 0.15);
+        const ring = simplifyRing(geom.coordinates[0]);
         if (ring.length >= 4) rings.push(ring);
       } else if (geom.type === 'MultiPolygon') {
         // 保留所有多边形，不只是最大的
         for (const poly of geom.coordinates) {
-          const ring = simplifyRing(poly[0], 0.15);
+          const ring = simplifyRing(poly[0]);
           if (ring.length >= 4) rings.push(ring);
         }
       }
 
-      if (rings.length === 0 || rings[0].length < 4) continue;
+      const significantRings = selectSignificantRings(rings);
+      if (significantRings.length === 0 || significantRings[0].length < 4) continue;
 
       basins.push({
         id: props.HYBAS_ID || `basin_${count}`,
@@ -151,7 +180,7 @@ async function processShapefile(shpPath, dbfPath, regionCode) {
         region: regionCode,
         bbox: bbox,
         areaKm2: Math.round(props.SUB_AREA || 0),
-        rings: rings
+        rings: significantRings
       });
 
       count++;
