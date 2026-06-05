@@ -22,6 +22,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.selectedBasin = null;
     this.layerIds = [];
     this.chartModal = null;
+    this.literatureModal = null;
     this.activeChartSeries = null;
     this.enhancedLayer = null;
     this.originalLayerState = null;
@@ -41,6 +42,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.enhanceFoundationBasinLayer();
     this.ensureLegend();
     this.ensureChartUI();
+    this.ensureLiteratureUI();
   }
 
   onUnload() {
@@ -52,6 +54,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.originalLayerState = null;
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
+    this.closeLiteratureModal();
     this.app.unregisterLegend?.(this.legendId);
   }
 
@@ -314,7 +317,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       <section>
         <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Literature Evidence</h3>
         <div style="display:flex;flex-direction:column;gap:6px">
-          ${references.slice(0, 10).map((item) => this.renderLiteratureCard(item)).join("") || "<p style=\"font-size:12px;color:#64748b\">No evidence linked by this module.</p>"}
+          ${references.slice(0, 10).map((item, index) => this.renderLiteratureCard(item, index)).join("") || "<p style=\"font-size:12px;color:#64748b\">No evidence linked by this module.</p>"}
         </div>
       </section>
     `;
@@ -332,6 +335,22 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         if (expand) expand.onclick = () => this.openTimeSeriesModal(prep, series);
       }, 0);
     }
+    setTimeout(() => {
+      document.querySelectorAll("[data-wi-literature-index]").forEach((card) => {
+        const item = references[Number(card.dataset.wiLiteratureIndex)];
+        if (!item) return;
+        card.onclick = (event) => {
+          if (event.target.closest("a")) return;
+          this.openLiteratureModal(item);
+        };
+        card.onkeydown = (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            this.openLiteratureModal(item);
+          }
+        };
+      });
+    }, 0);
   }
 
   renderMetricCards(metrics) {
@@ -382,17 +401,116 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     return names[regionCode] || regionCode || "Unknown";
   }
 
-  renderLiteratureCard(item) {
+  renderLiteratureCard(item, index) {
     const ref = item.record;
-    const url = ref.external_url || (ref.doi ? `https://doi.org/${ref.doi}` : "");
+    const url = this.getArticleUrl(ref);
+    const authorUrl = this.getScholarUrl(ref.authors || ref.title);
     return `
-      <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px">
-        <div style="font-weight:500;color:#1e293b;margin-bottom:2px">${this.escape(ref.title)}</div>
-        <div style="color:#64748b;font-size:11px;margin-bottom:4px">${this.escape([ref.authors, ref.year].filter(Boolean).join(" · "))}</div>
-        <div style="color:#64748b;font-size:11px;margin-bottom:4px">${this.escape(item.relation.type)}${item.relation.confidence != null ? ` · confidence ${this.escape(item.relation.confidence)}` : ""}</div>
-        ${url ? `<a href="${this.escape(url)}" target="_blank" rel="noopener" style="color:#3b82f6;text-decoration:none;font-size:11px">Open Link</a>` : ""}
+      <div data-wi-literature-index="${index}" tabindex="0" role="button" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer">
+        <div style="font-weight:500;margin-bottom:3px"><a href="${this.escape(url)}" target="_blank" rel="noopener" style="color:#1e293b;text-decoration:none">${this.escape(ref.title)}</a></div>
+        <div style="font-size:11px;margin-bottom:4px"><a href="${this.escape(authorUrl)}" target="_blank" rel="noopener" style="color:#64748b;text-decoration:none">${this.escape(ref.authors || "Unknown authors")}</a>${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
+        <div style="color:#64748b;font-size:11px">${this.escape(item.relation.type)}${item.relation.confidence != null ? ` · confidence ${this.escape(item.relation.confidence)}` : ""}</div>
       </div>
     `;
+  }
+
+  getArticleUrl(ref) {
+    if (ref.external_url) return ref.external_url;
+    if (ref.doi) return `https://doi.org/${ref.doi}`;
+    return this.getScholarUrl(ref.title);
+  }
+
+  getScholarUrl(query) {
+    return `https://scholar.google.com/scholar?q=${encodeURIComponent(query || "")}`;
+  }
+
+  ensureLiteratureUI() {
+    const existing = document.getElementById("wi-literature-modal");
+    if (existing) {
+      this.literatureModal = existing;
+      existing.onclick = (event) => {
+        if (event.target === existing) this.closeLiteratureModal();
+      };
+      existing.querySelector("#wi-literature-close").onclick = () => this.closeLiteratureModal();
+      return;
+    }
+
+    const style = document.createElement("style");
+    style.textContent = `
+      .wi-literature-modal{position:fixed;inset:0;background:rgba(15,23,42,.34);z-index:310;display:none;align-items:center;justify-content:center;padding:28px}
+      .wi-literature-modal.visible{display:flex}
+      .wi-literature-dialog{width:min(820px,calc(100vw - 56px));max-height:min(820px,calc(100vh - 56px));background:#fff;border-radius:8px;box-shadow:0 18px 48px rgba(15,23,42,.28);display:flex;flex-direction:column;overflow:hidden}
+      .wi-literature-header{min-height:54px;padding:12px 18px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+      .wi-literature-heading{font-size:14px;font-weight:600;color:#1e293b}
+      .wi-literature-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:#64748b;flex:0 0 auto}
+      .wi-literature-close:hover{background:#f1f5f9}
+      .wi-literature-body{overflow:auto;padding:20px;color:#334155}
+      .wi-literature-title{font-size:22px;line-height:1.3;margin:0 0 8px}
+      .wi-literature-title a{color:#1e293b;text-decoration:none}
+      .wi-literature-title a:hover{text-decoration:underline}
+      .wi-literature-authors{font-size:13px;margin-bottom:14px}
+      .wi-literature-authors a{color:#3b82f6;text-decoration:none}
+      .wi-literature-authors a:hover{text-decoration:underline}
+      .wi-literature-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+      .wi-literature-chip{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;padding:4px 8px;font-size:11px;color:#64748b}
+      .wi-literature-section{margin-top:18px}
+      .wi-literature-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#64748b;margin:0 0 7px}
+      .wi-literature-section p{font-size:13px;line-height:1.65;margin:0;color:#334155}
+      .wi-literature-section a{color:#3b82f6;text-decoration:none}
+      .wi-literature-section a:hover{text-decoration:underline}
+    `;
+    document.head.appendChild(style);
+
+    const modal = document.createElement("div");
+    modal.id = "wi-literature-modal";
+    modal.className = "wi-literature-modal";
+    modal.innerHTML = `
+      <div class="wi-literature-dialog">
+        <div class="wi-literature-header">
+          <div class="wi-literature-heading">Literature Evidence</div>
+          <button class="wi-literature-close" id="wi-literature-close" type="button" aria-label="Close">x</button>
+        </div>
+        <div class="wi-literature-body" id="wi-literature-body"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (event) => {
+      if (event.target === modal) this.closeLiteratureModal();
+    };
+    modal.querySelector("#wi-literature-close").onclick = () => this.closeLiteratureModal();
+    this.literatureModal = modal;
+  }
+
+  openLiteratureModal(item) {
+    this.ensureLiteratureUI();
+    const ref = item.record;
+    const relation = item.relation || {};
+    const articleUrl = this.getArticleUrl(ref);
+    const authorUrl = this.getScholarUrl(ref.authors || ref.title);
+    const doiUrl = ref.doi ? `https://doi.org/${ref.doi}` : "";
+    const evidenceReason = relation.reason || ref.llm?.reason || "";
+    const chips = [
+      ref.year,
+      ref.venue,
+      relation.type,
+      relation.confidence != null ? `confidence ${relation.confidence}` : ""
+    ].filter(Boolean);
+
+    this.literatureModal.querySelector("#wi-literature-body").innerHTML = `
+      <h2 class="wi-literature-title"><a href="${this.escape(articleUrl)}" target="_blank" rel="noopener">${this.escape(ref.title)}</a></h2>
+      <div class="wi-literature-authors"><a href="${this.escape(authorUrl)}" target="_blank" rel="noopener">${this.escape(ref.authors || "Unknown authors")}</a></div>
+      <div class="wi-literature-meta">${chips.map((chip) => `<span class="wi-literature-chip">${this.escape(chip)}</span>`).join("")}</div>
+      ${ref.abstract ? `<section class="wi-literature-section"><h3>Abstract</h3><p>${this.escape(ref.abstract)}</p></section>` : ""}
+      ${ref.affiliations ? `<section class="wi-literature-section"><h3>Affiliations</h3><p>${this.escape(ref.affiliations)}</p></section>` : ""}
+      ${evidenceReason ? `<section class="wi-literature-section"><h3>Evidence relationship</h3><p>${this.escape(evidenceReason)}</p></section>` : ""}
+      ${ref.keywords?.length ? `<section class="wi-literature-section"><h3>Keywords</h3><p>${ref.keywords.map((keyword) => this.escape(keyword)).join(" · ")}</p></section>` : ""}
+      ${doiUrl ? `<section class="wi-literature-section"><h3>DOI</h3><p><a href="${this.escape(doiUrl)}" target="_blank" rel="noopener">${this.escape(ref.doi)}</a></p></section>` : ""}
+    `;
+    this.literatureModal.classList.add("visible");
+  }
+
+  closeLiteratureModal() {
+    this.literatureModal?.classList.remove("visible");
   }
 
   ensureLegend() {
