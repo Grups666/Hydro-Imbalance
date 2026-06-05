@@ -359,14 +359,14 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     legend.id = "wi-imbalance-legend";
     legend.style.cssText = "position:fixed;left:18px;bottom:18px;z-index:120;background:rgba(255,255,255,.94);border:1px solid #cbd5e1;border-radius:6px;padding:10px 12px;box-shadow:0 3px 12px rgba(15,23,42,.12);font-size:11px;color:#334155;max-width:240px";
     const items = [
-      ["#ffffff", "No detected imbalance"],
-      ["#ffff00", "Total water withdrawal"],
-      ["#ff00ff", "Groundwater storage"],
-      ["#00ffff", "Glacier storage"],
-      ["#ff0000", "Withdrawal + groundwater"],
-      ["#00ff00", "Withdrawal + glacier"],
-      ["#0000ff", "Groundwater + glacier"],
-      ["#000000", "All three variables"],
+      ["#eef2f7", "No detected imbalance"],
+      ["#e3b23c", "Total water withdrawal"],
+      ["#c767b1", "Groundwater storage"],
+      ["#2fb7c8", "Glacier storage"],
+      ["#d85f55", "Withdrawal + groundwater"],
+      ["#66b95a", "Withdrawal + glacier"],
+      ["#4f7fd5", "Groundwater + glacier"],
+      ["#3f4652", "All three variables"],
       ["#d1d5db", "No matched time series"]
     ];
     legend.innerHTML = `

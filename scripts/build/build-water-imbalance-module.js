@@ -19,7 +19,7 @@ const variables = [
     label: "Potential Total Water Withdrawal",
     unit: "mm yr-1",
     kind: "flux",
-    color: "#d97706"
+    color: "#e3b23c"
   },
   {
     id: "groundwater_storage_mm",
@@ -27,7 +27,7 @@ const variables = [
     label: "Groundwater Storage",
     unit: "mm",
     kind: "storage",
-    color: "#7c3aed"
+    color: "#c767b1"
   },
   {
     id: "glacier_storage_mm_we",
@@ -35,19 +35,19 @@ const variables = [
     label: "Glacier Storage",
     unit: "mm water equivalent",
     kind: "storage",
-    color: "#0891b2"
+    color: "#2fb7c8"
   }
 ];
 
 const classColors = {
-  none: "#ffffff",
-  withdrawal: "#ffff00",
-  groundwater: "#ff00ff",
-  glacier: "#00ffff",
-  "withdrawal+groundwater": "#ff0000",
-  "withdrawal+glacier": "#00ff00",
-  "groundwater+glacier": "#0000ff",
-  "withdrawal+groundwater+glacier": "#000000"
+  none: "#eef2f7",
+  withdrawal: "#e3b23c",
+  groundwater: "#c767b1",
+  glacier: "#2fb7c8",
+  "withdrawal+groundwater": "#d85f55",
+  "withdrawal+glacier": "#66b95a",
+  "groundwater+glacier": "#4f7fd5",
+  "withdrawal+groundwater+glacier": "#3f4652"
 };
 
 function parseValue(raw) {
