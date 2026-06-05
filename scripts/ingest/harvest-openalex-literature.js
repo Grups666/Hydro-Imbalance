@@ -225,6 +225,16 @@ function authors(work) {
   return `${names.slice(0, 8).join(", ")}, et al.`;
 }
 
+function authorProfiles(work) {
+  return (work.authorships || []).map((authorship) => ({
+    name: authorship.author?.display_name || "",
+    openalex_id: authorship.author?.id || "",
+    orcid: authorship.author?.orcid || "",
+    scholar_url: "",
+    affiliations: (authorship.institutions || []).map((institution) => institution.display_name).filter(Boolean)
+  })).filter((author) => author.name);
+}
+
 function affiliations(work) {
   const institutions = [];
   for (const authorship of work.authorships || []) {
@@ -273,6 +283,7 @@ function convertWork(work, mode, query) {
   return {
     title: work.display_name || work.title || "",
     authors: authors(work),
+    author_profiles: authorProfiles(work),
     affiliations: affiliations(work) || "Not available from OpenAlex metadata.",
     year: String(work.publication_year || ""),
     venue: sourceName(work),

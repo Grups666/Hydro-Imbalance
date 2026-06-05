@@ -18,6 +18,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.classificationByBasin = new Map();
     this.regions = [];
     this.literature = new Map();
+    this.authors = new Map();
     this.relationsBySource = new Map();
     this.relationsByTarget = new Map();
     this.preparedBasins = [];
@@ -140,8 +141,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     for (const [id, record] of Object.entries(this.graph?.literature?.records || {})) {
       this.literature.set(id, record);
     }
+    for (const [id, author] of Object.entries(this.graph?.authors?.records || {})) {
+      this.authors.set(id, author);
+    }
 
     for (const relation of this.graph?.relations || []) {
+      if (!relation.type.includes("literature") && !relation.type.startsWith("paper_studies_")) continue;
       this.addRelationIndex(this.relationsBySource, relation.source, relation);
       this.addRelationIndex(this.relationsByTarget, relation.target, relation);
     }
@@ -454,24 +459,15 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     return `https://scholar.google.com/scholar?q=${encodeURIComponent(query || "")}`;
   }
 
-  getScholarAuthorUrl(name) {
-    return `https://scholar.google.com/citations?view_op=search_authors&mauthors=${encodeURIComponent(name || "")}`;
+  getAuthors(ref) {
+    return (ref.authorIds || [])
+      .map((authorId) => this.authors.get(authorId))
+      .filter(Boolean);
   }
 
-  getAuthors(ref) {
-    if (Array.isArray(ref.author_profiles)) {
-      return ref.author_profiles.map((author) => ({
-        name: author.name,
-        url: author.scholar_url || this.getScholarAuthorUrl(author.name)
-      })).filter((author) => author.name);
-    }
-
-    return String(ref.authors || "")
-      .replace(/\bet al\.?$/i, "")
-      .split(/\s*,\s*(?=[A-Z][A-Za-z' -]+,\s*[A-Z])|\s*,?\s+and\s+/i)
-      .map((name) => name.trim().replace(/,\s*$/, ""))
-      .filter(Boolean)
-      .map((name) => ({ name, url: this.getScholarAuthorUrl(name) }));
+  renderAuthor(author) {
+    if (!author.scholar_url) return this.escape(author.name);
+    return `<a href="${this.escape(author.scholar_url)}" target="_blank" rel="noopener">${this.escape(author.name)}</a>`;
   }
 
   ensureLiteratureUI() {
@@ -549,7 +545,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.literatureModal.querySelector("#wi-literature-body").innerHTML = `
       <h2 class="wi-literature-title"><a href="${this.escape(articleUrl)}" target="_blank" rel="noopener">${this.escape(ref.title)}</a></h2>
       <div class="wi-literature-authors">${authors.length
-        ? authors.map((author) => `<a href="${this.escape(author.url)}" target="_blank" rel="noopener">${this.escape(author.name)}</a>`).join(", ")
+        ? authors.map((author) => this.renderAuthor(author)).join(", ")
         : "Unknown authors"}</div>
       <div class="wi-literature-meta">${chips.map((chip) => `<span class="wi-literature-chip">${this.escape(chip)}</span>`).join("")}</div>
       ${ref.abstract ? `<section class="wi-literature-section"><h3>Abstract</h3><p>${this.escape(ref.abstract)}</p></section>` : ""}

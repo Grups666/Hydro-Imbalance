@@ -1,5 +1,5 @@
 {
-  "schema": "water-imbalance-literature/v1",
+  "schema": "water-imbalance-literature/v2",
   "module": "water-imbalance",
   "generatedFrom": [
     "public/modules/water-imbalance/data/knowledge-graph.json"
@@ -296,7 +296,13 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicitly focuses on Central Valley groundwater recovery dynamics, fitting the dryIrrigation mode and managed recovery context of the predefined case study."
-        }
+        },
+        "authorIds": [
+          "author_alam_s",
+          "author_gebremichael_m",
+          "author_ban_z",
+          "author_scanlon_b_r"
+        ]
       },
       "alAnsari2021TigrisReview": {
         "id": "alAnsari2021TigrisReview",
@@ -315,7 +321,10 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Regional synthesis of Tigris-Euphrates matching the case study definition, highlighting reservoir regulation and scarcity relevant to both reservoir and dryIrrigation modes."
-        }
+        },
+        "authorIds": [
+          "author_al_ansari_n"
+        ]
       },
       "arshad2022IndusSWAT": {
         "id": "arshad2022IndusSWAT",
@@ -334,7 +343,13 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Directly estimates groundwater depletion in the Indus Basin driven by irrigation, perfectly aligning with the 'dryIrrigation' mode and case study region."
-        }
+        },
+        "authorIds": [
+          "author_arshad_a",
+          "author_mirchi_a",
+          "author_samimi_m",
+          "author_ahmad_b"
+        ]
       },
       "asoka2017India": {
         "id": "asoka2017India",
@@ -353,7 +368,13 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Analyzes groundwater storage across India, identifying declines in the north (Indus/Ganges) driven by pumping and monsoon variability, linking to both monsoon and dryIrrigation modes."
-        }
+        },
+        "authorIds": [
+          "author_asoka_a",
+          "author_gleeson_t",
+          "author_wada_y",
+          "author_mishra_v"
+        ]
       },
       "basheer2021Nile": {
         "id": "basheer2021Nile",
@@ -372,7 +393,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Focuses on coordinated management of the Grand Ethiopian Renaissance Dam in the Nile Basin, directly aligning with the reservoir mode and Nile case study."
-        }
+        },
+        "authorIds": [
+          "author_basheer_m",
+          "author_wheeler_k_g",
+          "author_ribbe_l"
+        ]
       },
       "cai2008MDBClimate": {
         "id": "cai2008MDBClimate",
@@ -391,7 +417,11 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Direct study of climate impacts on inflows in the Murray-Darling Basin; perfect match for the 'murray-darling' case study and 'reservoir' mode."
-        }
+        },
+        "authorIds": [
+          "author_cai_w",
+          "author_cowan_t"
+        ]
       },
       "cao2013NorthChinaRecharge": {
         "id": "cao2013NorthChinaRecharge",
@@ -410,7 +440,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Explicit focus on groundwater depletion and scarcity in the North China Plain; matches the 'north-china-plain' case study and 'managed' mode."
-        }
+        },
+        "authorIds": [
+          "author_cao_g",
+          "author_zheng_c",
+          "author_scanlon_b_r"
+        ]
       },
       "chen2019NorthChinaAcceleration": {
         "id": "chen2019NorthChinaAcceleration",
@@ -429,7 +464,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Geodetic and hydrological analysis of accelerated groundwater depletion in the North China Plain; matches the 'north-china-plain' case study and 'managed' mode."
-        }
+        },
+        "authorIds": [
+          "author_chen_j",
+          "author_li_j",
+          "author_zhang_z"
+        ]
       },
       "chiew2011MDBDrought": {
         "id": "chiew2011MDBDrought",
@@ -448,7 +488,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Documents non-stationary rainfall-runoff behavior in the Murray-Darling Basin, directly relevant to water planning and reservoir management in the region."
-        }
+        },
+        "authorIds": [
+          "author_chiew_f_h_s",
+          "author_potter_n_j",
+          "author_vaze_j"
+        ]
       },
       "cretaux2013Aral": {
         "id": "cretaux2013Aral",
@@ -467,7 +512,10 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Focuses on altimetry calibration over the Aral Sea, providing technical support for monitoring water level changes in this reservoir-impacted terminal lake system."
-        }
+        },
+        "authorIds": [
+          "author_cretaux_j_f"
+        ]
       },
       "dang2020MekongDams": {
         "id": "dang2020MekongDams",
@@ -486,7 +534,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global review with emphasis on Mekong hydropower impacts, directly addressing reservoir-driven flow alteration and floodplain dynamics in the Lower Mekong case study."
-        }
+        },
+        "authorIds": [
+          "author_dang_t_d",
+          "author_cochrane_t_a",
+          "author_arias_m_e"
+        ]
       },
       "deGraaf2019EnvironmentalFlow": {
         "id": "deGraaf2019EnvironmentalFlow",
@@ -505,7 +558,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global-scale analysis linking groundwater pumping to streamflow depletion and environmental flow limits; conceptually relevant to multiple modes but not tied to a specific region."
-        }
+        },
+        "authorIds": [
+          "author_de_graaf_i_e_m",
+          "author_gleeson_t",
+          "author_van_beek_l_p_h"
+        ]
       },
       "deines2020HighPlains": {
         "id": "deines2020HighPlains",
@@ -524,7 +582,13 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Directly addresses transitions from irrigated to dryland agriculture driven by groundwater depletion in the Ogallala Aquifer, a perfect match for the High Plains case study."
-        }
+        },
+        "authorIds": [
+          "author_deines_j_m",
+          "author_kendall_a_d",
+          "author_butler_j_j",
+          "author_hyndman_d_w"
+        ]
       },
       "elshamy2009NileClimate": {
         "id": "elshamy2009NileClimate",
@@ -543,7 +607,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Assesses climate change impacts on Blue Nile flows, directly relevant to inflow variability and reservoir risk management for the Nile Basin case study."
-        }
+        },
+        "authorIds": [
+          "author_elshamy_m_e",
+          "author_seierstad_i_a",
+          "author_sorteberg_a"
+        ]
       },
       "famiglietti2011CentralValley": {
         "id": "famiglietti2011CentralValley",
@@ -562,7 +631,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Seminal study using GRACE to measure groundwater depletion in California's Central Valley, directly matching the Central Valley case study focus."
-        }
+        },
+        "authorIds": [
+          "author_famiglietti_j_s",
+          "author_lo_m",
+          "author_ho_s_l"
+        ]
       },
       "faunt2016CentralValley": {
         "id": "faunt2016CentralValley",
@@ -581,7 +655,13 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Comprehensive review of groundwater availability and subsidence in the Central Valley, directly matching the Central Valley case study and its focus on pumping-driven storage loss."
-        }
+        },
+        "authorIds": [
+          "author_faunt_c_c",
+          "author_sneed_m",
+          "author_traum_j",
+          "author_brandt_j_t"
+        ]
       },
       "feng2013NorthChina": {
         "id": "feng2013NorthChina",
@@ -600,7 +680,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Study covers China broadly but explicitly highlights major depletion regions (North China Plain) and groundwater imbalance driven by abstraction, aligning well with the 'managed' mode and the specific North China Plain case study."
-        }
+        },
+        "authorIds": [
+          "author_feng_w",
+          "author_zhong_m",
+          "author_lemoine_j_m"
+        ]
       },
       "foster2024HighPlainsDrought": {
         "id": "foster2024HighPlainsDrought",
@@ -619,7 +704,10 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Directly investigates the High Plains/Ogallala aquifer, linking depletion to reduced drought resilience in an irrigated agricultural system, perfectly matching the 'dryIrrigation' mode and case study."
-        }
+        },
+        "authorIds": [
+          "author_foster_t"
+        ]
       },
       "galelli2024Mekong": {
         "id": "galelli2024Mekong",
@@ -638,7 +726,10 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Focuses on hydropower operations altering flow regimes in the Lower Mekong, which aligns exactly with the 'reservoir' mode and the Mekong case study definition."
-        }
+        },
+        "authorIds": [
+          "author_galelli_s"
+        ]
       },
       "gaybullaev2012AralBalance": {
         "id": "gaybullaev2012AralBalance",
@@ -657,7 +748,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Analyzes the Aral Sea desiccation caused by irrigation diversions from Amu Darya and Syr Darya, matching the 'reservoir' mode (defined here as terminal lake diversion) and the Aral case study."
-        }
+        },
+        "authorIds": [
+          "author_gaybullaev_b",
+          "author_chen_s_c",
+          "author_gaybullaev_d"
+        ]
       },
       "gleeson2012WaterBalance": {
         "id": "gleeson2012WaterBalance",
@@ -676,7 +772,13 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global analysis of groundwater footprints and abstraction limits; relevant to the dryIrrigation mode conceptually but not tied to a specific case-study region."
-        }
+        },
+        "authorIds": [
+          "author_gleeson_t",
+          "author_wada_y",
+          "author_bierkens_m_f_p",
+          "author_van_beek_l_p_h"
+        ]
       },
       "globalIrrigationReview": {
         "id": "globalIrrigationReview",
@@ -695,7 +797,10 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global synthesis of irrigation impacts; highly relevant to the dryIrrigation mode but broad in scope, covering multiple regions rather than a single case study."
-        }
+        },
+        "authorIds": [
+          "author_scanlon_b_r"
+        ]
       },
       "grace2018TigrisDrought": {
         "id": "grace2018TigrisDrought",
@@ -714,7 +819,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Direct focus on Tigris-Euphrates water storage declines driven by human use and drought; perfect match for the tigris-euphrates case-study and dryIrrigation mode."
-        }
+        },
+        "authorIds": [
+          "author_longuevergne_l",
+          "author_scanlon_b_r",
+          "author_wilson_c_r"
+        ]
       },
       "grafton2011MDBPlan": {
         "id": "grafton2011MDBPlan",
@@ -733,7 +843,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicitly focuses on Murray-Darling Basin governance, allocation, and environmental flows, matching the 'reservoir' mode definition and case-study region perfectly."
-        }
+        },
+        "authorIds": [
+          "author_grafton_r_q",
+          "author_pittock_j",
+          "author_davis_r"
+        ]
       },
       "hecht2019Mekong": {
         "id": "hecht2019Mekong",
@@ -752,7 +867,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Direct review of hydropower impacts on the Mekong's hydrology, aligning exactly with the 'mekong' case-study and its 'reservoir' mode label regarding hydropower altering floodplain pulses."
-        }
+        },
+        "authorIds": [
+          "author_hecht_j_s",
+          "author_lacombe_g",
+          "author_arias_m_e"
+        ]
       },
       "jasechko2024Aquifers": {
         "id": "jasechko2024Aquifers",
@@ -771,7 +891,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global synthesis of groundwater decline and recovery; conceptually relevant to dryIrrigation and managed modes, covers multiple case-study regions but is global in scope."
-        }
+        },
+        "authorIds": [
+          "author_jasechko_s",
+          "author_seybold_h",
+          "author_perrone_d"
+        ]
       },
       "joodaki2014MiddleEast": {
         "id": "joodaki2014MiddleEast",
@@ -790,7 +915,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Explicit focus on Middle East groundwater depletion using GRACE; directly matches the Tigris-Euphrates case-study region and dryIrrigation mode."
-        }
+        },
+        "authorIds": [
+          "author_joodaki_g",
+          "author_wahr_j",
+          "author_swenson_s"
+        ]
       },
       "kahsay2015NileCooperation": {
         "id": "kahsay2015NileCooperation",
@@ -809,7 +939,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Analyzes multipurpose reservoir operation and cooperation in the Blue Nile/GERD context; directly matches the Nile case-study region and reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_kahsay_t_n",
+          "author_arjoon_d",
+          "author_kuik_o"
+        ]
       },
       "kondolf2018MekongSediment": {
         "id": "kondolf2018MekongSediment",
@@ -828,7 +963,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Reviews sediment budget and dam impacts in the Mekong; directly matches the Lower Mekong case-study region and reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_kondolf_g_m",
+          "author_rubin_z_k",
+          "author_minear_j_t"
+        ]
       },
       "kong2020YellowRiver500y": {
         "id": "kong2020YellowRiver500y",
@@ -847,7 +987,12 @@
           "confidence": 0.99,
           "researchArea": "",
           "reason": "Reconstructs Yellow River runoff and sediment over 500 years; directly matches the Yellow River case-study region and reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_kong_d",
+          "author_miao_c",
+          "author_wu_j"
+        ]
       },
       "leblanc2009MurrayDarling": {
         "id": "leblanc2009MurrayDarling",
@@ -866,7 +1011,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Integrated observations of drought in the Murray-Darling Basin; directly matches the Murray-Darling case-study region and reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_leblanc_m_j",
+          "author_tregoning_p",
+          "author_ramillien_g"
+        ]
       },
       "leng2014NorthChina": {
         "id": "leng2014NorthChina",
@@ -885,7 +1035,12 @@
           "confidence": 0.99,
           "researchArea": "",
           "reason": "Comparative analysis of climate change and irrigation impacts in the North China Plain; directly matches the North China Plain case-study region and managed mode."
-        }
+        },
+        "authorIds": [
+          "author_leng_g",
+          "author_tang_q",
+          "author_huang_m"
+        ]
       },
       "leng2015Irrigation": {
         "id": "leng2015Irrigation",
@@ -904,7 +1059,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global modeling study of irrigation effects on water resources; conceptually relevant to dryIrrigation and managed modes, not limited to specific regions."
-        }
+        },
+        "authorIds": [
+          "author_leng_g",
+          "author_huang_m",
+          "author_tang_q"
+        ]
       },
       "li2019YellowTWS": {
         "id": "li2019YellowTWS",
@@ -923,7 +1083,12 @@
           "confidence": 0.98,
           "researchArea": "",
           "reason": "Characterizes terrestrial water storage variations in the Yellow River Basin; directly matches the Yellow River case-study region and reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_li_x",
+          "author_long_d",
+          "author_scanlon_b_r"
+        ]
       },
       "liu2022CentralValley": {
         "id": "liu2022CentralValley",
@@ -942,7 +1107,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicit focus on Central Valley groundwater depletion during drought, perfectly matching the dryIrrigation mode and case-study region."
-        }
+        },
+        "authorIds": [
+          "author_liu_p_w",
+          "author_famiglietti_j_s",
+          "author_purdy_a_j"
+        ]
       },
       "long2025NorthChina": {
         "id": "long2025NorthChina",
@@ -961,7 +1131,10 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Direct study of North China Plain groundwater recovery driven by human management, matching the managed mode definition."
-        }
+        },
+        "authorIds": [
+          "author_long_d"
+        ]
       },
       "macallister2022Accumulation": {
         "id": "macallister2022Accumulation",
@@ -980,7 +1153,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Historical groundwater analysis in Pakistan and Northwest India (Indus region) relevant to irrigation-driven groundwater dynamics."
-        }
+        },
+        "authorIds": [
+          "author_macallister_d_j",
+          "author_krishan_g",
+          "author_basharat_m"
+        ]
       },
       "macdonald2016IndoGangetic": {
         "id": "macdonald2016IndoGangetic",
@@ -999,7 +1177,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Basin-wide synthesis covering both Indus and Ganges systems, relevant to both dryIrrigation (Indus) and monsoon (Ganges) modes."
-        }
+        },
+        "authorIds": [
+          "author_macdonald_a_m",
+          "author_bonsor_h_c",
+          "author_ahmed_k_m"
+        ]
       },
       "micklin2007Aral": {
         "id": "micklin2007Aral",
@@ -1018,7 +1201,10 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Foundational review of the Aral Sea disaster caused by irrigation diversions, matching the reservoir/diversion case study."
-        }
+        },
+        "authorIds": [
+          "author_micklin_p"
+        ]
       },
       "mueller2016YellowSedimentRunoff": {
         "id": "mueller2016YellowSedimentRunoff",
@@ -1037,7 +1223,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Analyzes Yellow River runoff and sediment changes driven by reservoirs and human interventions, matching the reservoir mode."
-        }
+        },
+        "authorIds": [
+          "author_wang_s",
+          "author_fu_b",
+          "author_piao_s"
+        ]
       },
       "ojha2018CentralValley": {
         "id": "ojha2018CentralValley",
@@ -1056,7 +1247,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicit Central Valley study on groundwater loss exacerbated by drought, matching dryIrrigation mode and region."
-        }
+        },
+        "authorIds": [
+          "author_ojha_c",
+          "author_werth_s",
+          "author_shirzaei_m"
+        ]
       },
       "papa2015GBMStorage": {
         "id": "papa2015GBMStorage",
@@ -1075,7 +1271,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Satellite-derived storage analysis in the Ganges-Brahmaputra Basin, matching the monsoon mode and case-study region."
-        }
+        },
+        "authorIds": [
+          "author_papa_f",
+          "author_frappart_f",
+          "author_malbeteau_y"
+        ]
       },
       "perkins2017HighPlainsFish": {
         "id": "perkins2017HighPlainsFish",
@@ -1094,7 +1295,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicitly links groundwater depletion in the High Plains Aquifer to stream ecology, fitting the dryIrrigation mode and High Plains case study."
-        }
+        },
+        "authorIds": [
+          "author_perkin_j_s",
+          "author_gido_k_b",
+          "author_falke_j_a"
+        ]
       },
       "piao2010ChinaWater": {
         "id": "piao2010ChinaWater",
@@ -1113,7 +1319,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "China-scale synthesis covering water scarcity and runoff changes; highly relevant to the North China Plain and Yellow River case studies listed in the context."
-        }
+        },
+        "authorIds": [
+          "author_piao_s",
+          "author_ciais_p",
+          "author_huang_y"
+        ]
       },
       "pokhrel2012HumanWaterCycle": {
         "id": "pokhrel2012HumanWaterCycle",
@@ -1132,7 +1343,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global modeling study on irrigation's impact on water storage; relevant conceptually to the dryIrrigation mode but not tied to a specific region."
-        }
+        },
+        "authorIds": [
+          "author_pokhrel_y_n",
+          "author_hanasaki_n",
+          "author_koirala_s"
+        ]
       },
       "rasanen2017Mekong": {
         "id": "rasanen2017Mekong",
@@ -1151,7 +1367,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Empirical study linking discharge changes to hydropower in the Upper Mekong; directly aligns with the reservoir mode and Mekong case study."
-        }
+        },
+        "authorIds": [
+          "author_rasanen_t_a",
+          "author_someth_p",
+          "author_lauri_h"
+        ]
       },
       "revelle1964GangesMachine": {
         "id": "revelle1964GangesMachine",
@@ -1170,7 +1391,11 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Classic conceptual paper specifically proposing a groundwater management strategy for the Ganges Basin, fitting the monsoon recharge and managed intervention modes."
-        }
+        },
+        "authorIds": [
+          "author_revelle_r",
+          "author_lakshminarayana_v"
+        ]
       },
       "rodell2009India": {
         "id": "rodell2009India",
@@ -1189,7 +1414,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Seminal paper using GRACE to quantify groundwater depletion in northern India, directly mapping to the Indus and Ganges case-study regions defined by irrigation-driven depletion."
-        }
+        },
+        "authorIds": [
+          "author_rodell_m",
+          "author_velicogna_i",
+          "author_famiglietti_j_s"
+        ]
       },
       "rodell2018Freshwater": {
         "id": "rodell2018Freshwater",
@@ -1208,7 +1438,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global synthesis of GRACE data identifying freshwater availability hotspots. Relevant to multiple modes and regions but conceptual in nature, warranting attachment at the global/mode level rather than specific basins."
-        }
+        },
+        "authorIds": [
+          "author_rodell_m",
+          "author_famiglietti_j_s",
+          "author_wiese_d_n"
+        ]
       },
       "scanlon2012": {
         "id": "scanlon2012",
@@ -1227,7 +1462,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Direct comparative study of groundwater depletion and irrigation sustainability in the High Plains and Central Valley. Perfectly aligns with the dryIrrigation mode and the two specified case-study regions."
-        }
+        },
+        "authorIds": [
+          "author_scanlon_b_r",
+          "author_faunt_c_c",
+          "author_longuevergne_l"
+        ]
       },
       "shamsudduha2012GBM": {
         "id": "shamsudduha2012GBM",
@@ -1246,7 +1486,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Focuses on terrestrial water storage dynamics in the Ganges-Brahmaputra-Meghna basin, explicitly emphasizing seasonal monsoon dynamics. Matches the 'ganges' case-study and 'monsoon' mode."
-        }
+        },
+        "authorIds": [
+          "author_shamsudduha_m",
+          "author_taylor_r_g",
+          "author_longuevergne_l"
+        ]
       },
       "siam2017Nile": {
         "id": "siam2017Nile",
@@ -1265,7 +1510,11 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Analyzes climate change impacts on Nile River flow variability and explicitly discusses implications for reservoir operation and allocation. Aligns with the 'nile' case-study and 'reservoir' mode."
-        }
+        },
+        "authorIds": [
+          "author_siam_m_s",
+          "author_eltahir_e_a_b"
+        ]
       },
       "small2001Aral": {
         "id": "small2001Aral",
@@ -1284,7 +1533,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Directly reviews the Aral Sea disaster, explicitly matching the 'aral' case study region and its 'reservoir' mode (defined as terminal lake diversion and irrigation loss)."
-        }
+        },
+        "authorIds": [
+          "author_small_i",
+          "author_van_der_meer_j",
+          "author_upshur_r_e_g"
+        ]
       },
       "steward2013HighPlains": {
         "id": "steward2013HighPlains",
@@ -1303,7 +1557,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Explicitly focuses on the High Plains Aquifer in Kansas, analyzing groundwater depletion driven by irrigation, which perfectly matches the 'high-plains' case study and 'dryIrrigation' mode."
-        }
+        },
+        "authorIds": [
+          "author_steward_d_r",
+          "author_bruss_p_j",
+          "author_yang_x"
+        ]
       },
       "taylor2013GroundwaterClimate": {
         "id": "taylor2013GroundwaterClimate",
@@ -1322,7 +1581,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "A global synthesis paper on groundwater-climate interactions. It provides conceptual backing for multiple modes (monsoon, dryIrrigation) but is not tied to a specific region."
-        }
+        },
+        "authorIds": [
+          "author_taylor_r_g",
+          "author_scanlon_b",
+          "author_doll_p"
+        ]
       },
       "tiwari2009India": {
         "id": "tiwari2009India",
@@ -1341,7 +1605,12 @@
           "confidence": 0.9,
           "researchArea": "",
           "reason": "Satellite-based study of groundwater depletion in northern India. The region overlaps with the Indus and Ganges case studies defined in the catalog, both of which are associated with irrigation-driven depletion."
-        }
+        },
+        "authorIds": [
+          "author_tiwari_v_m",
+          "author_wahr_j",
+          "author_swenson_s"
+        ]
       },
       "vandijk2013MurrayDarling": {
         "id": "vandijk2013MurrayDarling",
@@ -1360,7 +1629,12 @@
           "confidence": 1,
           "researchArea": "",
           "reason": "Directly focuses on the Murray-Darling Basin during the Millennium Drought, analyzing human regulation and policy in a regulated river system; matches the 'reservoir' mode and case study region."
-        }
+        },
+        "authorIds": [
+          "author_van_dijk_a_i_j_m",
+          "author_beck_h_e",
+          "author_crosbie_r_s"
+        ]
       },
       "voss2013MiddleEast": {
         "id": "voss2013MiddleEast",
@@ -1379,7 +1653,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Explicit focus on groundwater depletion in the Tigris-Euphrates-Western Iran region, matching the case-study definition for dryIrrigation mode."
-        }
+        },
+        "authorIds": [
+          "author_voss_k_a",
+          "author_famiglietti_j_s",
+          "author_lo_m"
+        ]
       },
       "wada2010GlobalGroundwater": {
         "id": "wada2010GlobalGroundwater",
@@ -1398,7 +1677,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Foundational global study on groundwater depletion driven by irrigation, relevant to the dryIrrigation mode conceptually rather than a specific basin."
-        }
+        },
+        "authorIds": [
+          "author_wada_y",
+          "author_van_beek_l_p_h",
+          "author_van_kempen_c_m"
+        ]
       },
       "wada2012Nonsustainable": {
         "id": "wada2012Nonsustainable",
@@ -1417,7 +1701,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Global assessment linking non-renewable groundwater to irrigation; provides conceptual basis for dryIrrigation mode."
-        }
+        },
+        "authorIds": [
+          "author_wada_y",
+          "author_van_beek_l_p_h",
+          "author_bierkens_m_f_p"
+        ]
       },
       "wang2020YellowRiver": {
         "id": "wang2020YellowRiver",
@@ -1436,7 +1725,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Direct study of Yellow River Basin streamflow changes attributed to human activities, matching the reservoir/managed case study."
-        }
+        },
+        "authorIds": [
+          "author_wang_w",
+          "author_zhang_y",
+          "author_tang_q"
+        ]
       },
       "wheeler2020Nile": {
         "id": "wheeler2020Nile",
@@ -1455,7 +1749,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Core paper on GERD impacts on Nile Basin, directly relevant to the reservoir mode and Nile case study."
-        }
+        },
+        "authorIds": [
+          "author_wheeler_k_g",
+          "author_jeuland_m",
+          "author_hall_j_w"
+        ]
       },
       "yin2021IndusTWS": {
         "id": "yin2021IndusTWS",
@@ -1474,7 +1773,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "GRACE-based analysis of Indus Basin identifying groundwater overexploitation, matching the Indus dryIrrigation case study."
-        }
+        },
+        "authorIds": [
+          "author_yin_w",
+          "author_hu_l",
+          "author_han_s_c"
+        ]
       },
       "zhang2015NileGERD": {
         "id": "zhang2015NileGERD",
@@ -1493,7 +1797,12 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Focuses on GERD filling strategies and downstream Nile impacts; matches Nile reservoir case study."
-        }
+        },
+        "authorIds": [
+          "author_zhang_y",
+          "author_erkyihun_s_t",
+          "author_block_p"
+        ]
       },
       "ziv2012MekongTradeoffs": {
         "id": "ziv2012MekongTradeoffs",
@@ -1512,7 +1821,1536 @@
           "confidence": 0.95,
           "researchArea": "",
           "reason": "Quantifies tradeoffs of hydropower in Mekong Basin; directly matches the Mekong reservoir case study."
-        }
+        },
+        "authorIds": [
+          "author_ziv_g",
+          "author_baran_e",
+          "author_nam_s",
+          "author_rodriguez_iturbe_i",
+          "author_levin_s_a"
+        ]
+      }
+    }
+  },
+  "authors": {
+    "records": {
+      "author_alam_s": {
+        "id": "author_alam_s",
+        "name": "Alam, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_gebremichael_m": {
+        "id": "author_gebremichael_m",
+        "name": "Gebremichael, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ban_z": {
+        "id": "author_ban_z",
+        "name": "Ban, Z.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_scanlon_b_r": {
+        "id": "author_scanlon_b_r",
+        "name": "Scanlon, B. R.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_al_ansari_n": {
+        "id": "author_al_ansari_n",
+        "name": "Al-Ansari, N.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_arshad_a": {
+        "id": "author_arshad_a",
+        "name": "Arshad, A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_mirchi_a": {
+        "id": "author_mirchi_a",
+        "name": "Mirchi, A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_samimi_m": {
+        "id": "author_samimi_m",
+        "name": "Samimi, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ahmad_b": {
+        "id": "author_ahmad_b",
+        "name": "Ahmad, B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_asoka_a": {
+        "id": "author_asoka_a",
+        "name": "Asoka, A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_gleeson_t": {
+        "id": "author_gleeson_t",
+        "name": "Gleeson, T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "https://scholar.google.com/citations?user=dFMNKjgAAAAJ",
+        "scholar_verification": {
+          "verified_name": "Tom Gleeson",
+          "verified_by": "https://www.uvic.ca/ecs/civil/people/home/faculty-profiles/gleeson-tom.php",
+          "verified_on": "2026-06-05"
+        },
+        "affiliations": []
+      },
+      "author_wada_y": {
+        "id": "author_wada_y",
+        "name": "Wada, Y.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "https://scholar.google.com/citations?user=meSO9ooAAAAJ",
+        "scholar_verification": {
+          "verified_name": "Yoshihide Wada",
+          "verified_by": "https://www.kaust.edu.sa/en/study/faculty/yoshihide-wada",
+          "verified_on": "2026-06-05"
+        },
+        "affiliations": []
+      },
+      "author_mishra_v": {
+        "id": "author_mishra_v",
+        "name": "Mishra, V.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_basheer_m": {
+        "id": "author_basheer_m",
+        "name": "Basheer, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wheeler_k_g": {
+        "id": "author_wheeler_k_g",
+        "name": "Wheeler, K. G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ribbe_l": {
+        "id": "author_ribbe_l",
+        "name": "Ribbe, L.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_cai_w": {
+        "id": "author_cai_w",
+        "name": "Cai, W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_cowan_t": {
+        "id": "author_cowan_t",
+        "name": "Cowan, T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_cao_g": {
+        "id": "author_cao_g",
+        "name": "Cao, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_zheng_c": {
+        "id": "author_zheng_c",
+        "name": "Zheng, C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_chen_j": {
+        "id": "author_chen_j",
+        "name": "Chen, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_li_j": {
+        "id": "author_li_j",
+        "name": "Li, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_zhang_z": {
+        "id": "author_zhang_z",
+        "name": "Zhang, Z.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_chiew_f_h_s": {
+        "id": "author_chiew_f_h_s",
+        "name": "Chiew, F. H. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_potter_n_j": {
+        "id": "author_potter_n_j",
+        "name": "Potter, N. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_vaze_j": {
+        "id": "author_vaze_j",
+        "name": "Vaze, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_cretaux_j_f": {
+        "id": "author_cretaux_j_f",
+        "name": "Cretaux, J.-F.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_dang_t_d": {
+        "id": "author_dang_t_d",
+        "name": "Dang, T. D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_cochrane_t_a": {
+        "id": "author_cochrane_t_a",
+        "name": "Cochrane, T. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_arias_m_e": {
+        "id": "author_arias_m_e",
+        "name": "Arias, M. E.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_de_graaf_i_e_m": {
+        "id": "author_de_graaf_i_e_m",
+        "name": "de Graaf, I. E. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_van_beek_l_p_h": {
+        "id": "author_van_beek_l_p_h",
+        "name": "van Beek, L. P. H.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_deines_j_m": {
+        "id": "author_deines_j_m",
+        "name": "Deines, J. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_kendall_a_d": {
+        "id": "author_kendall_a_d",
+        "name": "Kendall, A. D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_butler_j_j": {
+        "id": "author_butler_j_j",
+        "name": "Butler, J. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_hyndman_d_w": {
+        "id": "author_hyndman_d_w",
+        "name": "Hyndman, D. W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_elshamy_m_e": {
+        "id": "author_elshamy_m_e",
+        "name": "Elshamy, M. E.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_seierstad_i_a": {
+        "id": "author_seierstad_i_a",
+        "name": "Seierstad, I. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_sorteberg_a": {
+        "id": "author_sorteberg_a",
+        "name": "Sorteberg, A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_famiglietti_j_s": {
+        "id": "author_famiglietti_j_s",
+        "name": "Famiglietti, J. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_lo_m": {
+        "id": "author_lo_m",
+        "name": "Lo, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ho_s_l": {
+        "id": "author_ho_s_l",
+        "name": "Ho, S. L.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_faunt_c_c": {
+        "id": "author_faunt_c_c",
+        "name": "Faunt, C. C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_sneed_m": {
+        "id": "author_sneed_m",
+        "name": "Sneed, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_traum_j": {
+        "id": "author_traum_j",
+        "name": "Traum, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_brandt_j_t": {
+        "id": "author_brandt_j_t",
+        "name": "Brandt, J. T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_feng_w": {
+        "id": "author_feng_w",
+        "name": "Feng, W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_zhong_m": {
+        "id": "author_zhong_m",
+        "name": "Zhong, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_lemoine_j_m": {
+        "id": "author_lemoine_j_m",
+        "name": "Lemoine, J.-M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_foster_t": {
+        "id": "author_foster_t",
+        "name": "Foster, T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_galelli_s": {
+        "id": "author_galelli_s",
+        "name": "Galelli, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_gaybullaev_b": {
+        "id": "author_gaybullaev_b",
+        "name": "Gaybullaev, B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_chen_s_c": {
+        "id": "author_chen_s_c",
+        "name": "Chen, S.-C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_gaybullaev_d": {
+        "id": "author_gaybullaev_d",
+        "name": "Gaybullaev, D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_bierkens_m_f_p": {
+        "id": "author_bierkens_m_f_p",
+        "name": "Bierkens, M. F. P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_longuevergne_l": {
+        "id": "author_longuevergne_l",
+        "name": "Longuevergne, L.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wilson_c_r": {
+        "id": "author_wilson_c_r",
+        "name": "Wilson, C. R.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_grafton_r_q": {
+        "id": "author_grafton_r_q",
+        "name": "Grafton, R. Q.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_pittock_j": {
+        "id": "author_pittock_j",
+        "name": "Pittock, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_davis_r": {
+        "id": "author_davis_r",
+        "name": "Davis, R.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_hecht_j_s": {
+        "id": "author_hecht_j_s",
+        "name": "Hecht, J. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_lacombe_g": {
+        "id": "author_lacombe_g",
+        "name": "Lacombe, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_jasechko_s": {
+        "id": "author_jasechko_s",
+        "name": "Jasechko, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_seybold_h": {
+        "id": "author_seybold_h",
+        "name": "Seybold, H.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_perrone_d": {
+        "id": "author_perrone_d",
+        "name": "Perrone, D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_joodaki_g": {
+        "id": "author_joodaki_g",
+        "name": "Joodaki, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wahr_j": {
+        "id": "author_wahr_j",
+        "name": "Wahr, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_swenson_s": {
+        "id": "author_swenson_s",
+        "name": "Swenson, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_kahsay_t_n": {
+        "id": "author_kahsay_t_n",
+        "name": "Kahsay, T. N.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_arjoon_d": {
+        "id": "author_arjoon_d",
+        "name": "Arjoon, D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_kuik_o": {
+        "id": "author_kuik_o",
+        "name": "Kuik, O.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_kondolf_g_m": {
+        "id": "author_kondolf_g_m",
+        "name": "Kondolf, G. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_rubin_z_k": {
+        "id": "author_rubin_z_k",
+        "name": "Rubin, Z. K.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_minear_j_t": {
+        "id": "author_minear_j_t",
+        "name": "Minear, J. T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_kong_d": {
+        "id": "author_kong_d",
+        "name": "Kong, D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_miao_c": {
+        "id": "author_miao_c",
+        "name": "Miao, C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wu_j": {
+        "id": "author_wu_j",
+        "name": "Wu, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_leblanc_m_j": {
+        "id": "author_leblanc_m_j",
+        "name": "Leblanc, M. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_tregoning_p": {
+        "id": "author_tregoning_p",
+        "name": "Tregoning, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ramillien_g": {
+        "id": "author_ramillien_g",
+        "name": "Ramillien, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_leng_g": {
+        "id": "author_leng_g",
+        "name": "Leng, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_tang_q": {
+        "id": "author_tang_q",
+        "name": "Tang, Q.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_huang_m": {
+        "id": "author_huang_m",
+        "name": "Huang, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_li_x": {
+        "id": "author_li_x",
+        "name": "Li, X.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_long_d": {
+        "id": "author_long_d",
+        "name": "Long, D.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_liu_p_w": {
+        "id": "author_liu_p_w",
+        "name": "Liu, P.-W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_purdy_a_j": {
+        "id": "author_purdy_a_j",
+        "name": "Purdy, A. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_macallister_d_j": {
+        "id": "author_macallister_d_j",
+        "name": "MacAllister, D. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_krishan_g": {
+        "id": "author_krishan_g",
+        "name": "Krishan, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_basharat_m": {
+        "id": "author_basharat_m",
+        "name": "Basharat, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_macdonald_a_m": {
+        "id": "author_macdonald_a_m",
+        "name": "MacDonald, A. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_bonsor_h_c": {
+        "id": "author_bonsor_h_c",
+        "name": "Bonsor, H. C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ahmed_k_m": {
+        "id": "author_ahmed_k_m",
+        "name": "Ahmed, K. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_micklin_p": {
+        "id": "author_micklin_p",
+        "name": "Micklin, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wang_s": {
+        "id": "author_wang_s",
+        "name": "Wang, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_fu_b": {
+        "id": "author_fu_b",
+        "name": "Fu, B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_piao_s": {
+        "id": "author_piao_s",
+        "name": "Piao, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ojha_c": {
+        "id": "author_ojha_c",
+        "name": "Ojha, C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_werth_s": {
+        "id": "author_werth_s",
+        "name": "Werth, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_shirzaei_m": {
+        "id": "author_shirzaei_m",
+        "name": "Shirzaei, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_papa_f": {
+        "id": "author_papa_f",
+        "name": "Papa, F.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_frappart_f": {
+        "id": "author_frappart_f",
+        "name": "Frappart, F.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_malbeteau_y": {
+        "id": "author_malbeteau_y",
+        "name": "Malbeteau, Y.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_perkin_j_s": {
+        "id": "author_perkin_j_s",
+        "name": "Perkin, J. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_gido_k_b": {
+        "id": "author_gido_k_b",
+        "name": "Gido, K. B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_falke_j_a": {
+        "id": "author_falke_j_a",
+        "name": "Falke, J. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ciais_p": {
+        "id": "author_ciais_p",
+        "name": "Ciais, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_huang_y": {
+        "id": "author_huang_y",
+        "name": "Huang, Y.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_pokhrel_y_n": {
+        "id": "author_pokhrel_y_n",
+        "name": "Pokhrel, Y. N.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_hanasaki_n": {
+        "id": "author_hanasaki_n",
+        "name": "Hanasaki, N.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_koirala_s": {
+        "id": "author_koirala_s",
+        "name": "Koirala, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_rasanen_t_a": {
+        "id": "author_rasanen_t_a",
+        "name": "Rasanen, T. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_someth_p": {
+        "id": "author_someth_p",
+        "name": "Someth, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_lauri_h": {
+        "id": "author_lauri_h",
+        "name": "Lauri, H.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_revelle_r": {
+        "id": "author_revelle_r",
+        "name": "Revelle, R.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_lakshminarayana_v": {
+        "id": "author_lakshminarayana_v",
+        "name": "Lakshminarayana, V.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_rodell_m": {
+        "id": "author_rodell_m",
+        "name": "Rodell, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_velicogna_i": {
+        "id": "author_velicogna_i",
+        "name": "Velicogna, I.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wiese_d_n": {
+        "id": "author_wiese_d_n",
+        "name": "Wiese, D. N.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_shamsudduha_m": {
+        "id": "author_shamsudduha_m",
+        "name": "Shamsudduha, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_taylor_r_g": {
+        "id": "author_taylor_r_g",
+        "name": "Taylor, R. G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_siam_m_s": {
+        "id": "author_siam_m_s",
+        "name": "Siam, M. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_eltahir_e_a_b": {
+        "id": "author_eltahir_e_a_b",
+        "name": "Eltahir, E. A. B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_small_i": {
+        "id": "author_small_i",
+        "name": "Small, I.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_van_der_meer_j": {
+        "id": "author_van_der_meer_j",
+        "name": "van der Meer, J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_upshur_r_e_g": {
+        "id": "author_upshur_r_e_g",
+        "name": "Upshur, R. E. G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_steward_d_r": {
+        "id": "author_steward_d_r",
+        "name": "Steward, D. R.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_bruss_p_j": {
+        "id": "author_bruss_p_j",
+        "name": "Bruss, P. J.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_yang_x": {
+        "id": "author_yang_x",
+        "name": "Yang, X.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_scanlon_b": {
+        "id": "author_scanlon_b",
+        "name": "Scanlon, B.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_doll_p": {
+        "id": "author_doll_p",
+        "name": "Doll, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_tiwari_v_m": {
+        "id": "author_tiwari_v_m",
+        "name": "Tiwari, V. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_van_dijk_a_i_j_m": {
+        "id": "author_van_dijk_a_i_j_m",
+        "name": "van Dijk, A. I. J. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_beck_h_e": {
+        "id": "author_beck_h_e",
+        "name": "Beck, H. E.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_crosbie_r_s": {
+        "id": "author_crosbie_r_s",
+        "name": "Crosbie, R. S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_voss_k_a": {
+        "id": "author_voss_k_a",
+        "name": "Voss, K. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_van_kempen_c_m": {
+        "id": "author_van_kempen_c_m",
+        "name": "van Kempen, C. M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_wang_w": {
+        "id": "author_wang_w",
+        "name": "Wang, W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_zhang_y": {
+        "id": "author_zhang_y",
+        "name": "Zhang, Y.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_jeuland_m": {
+        "id": "author_jeuland_m",
+        "name": "Jeuland, M.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_hall_j_w": {
+        "id": "author_hall_j_w",
+        "name": "Hall, J. W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_yin_w": {
+        "id": "author_yin_w",
+        "name": "Yin, W.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_hu_l": {
+        "id": "author_hu_l",
+        "name": "Hu, L.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_han_s_c": {
+        "id": "author_han_s_c",
+        "name": "Han, S.-C.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_erkyihun_s_t": {
+        "id": "author_erkyihun_s_t",
+        "name": "Erkyihun, S. T.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_block_p": {
+        "id": "author_block_p",
+        "name": "Block, P.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_ziv_g": {
+        "id": "author_ziv_g",
+        "name": "Ziv, G.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_baran_e": {
+        "id": "author_baran_e",
+        "name": "Baran, E.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_nam_s": {
+        "id": "author_nam_s",
+        "name": "Nam, S.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_rodriguez_iturbe_i": {
+        "id": "author_rodriguez_iturbe_i",
+        "name": "Rodriguez-Iturbe, I.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
+      },
+      "author_levin_s_a": {
+        "id": "author_levin_s_a",
+        "name": "Levin, S. A.",
+        "aliases": [],
+        "openalex_id": "",
+        "orcid": "",
+        "scholar_url": "",
+        "scholar_verification": null,
+        "affiliations": []
       }
     }
   },
@@ -2074,6 +3912,1122 @@
       "source": "deGraaf2019EnvironmentalFlow",
       "target": "murray-darling",
       "method": "curated-region-link"
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "alam2021CentralValleyRecovery",
+      "target": "author_alam_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "alam2021CentralValleyRecovery",
+      "target": "author_gebremichael_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "alam2021CentralValleyRecovery",
+      "target": "author_ban_z",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "alam2021CentralValleyRecovery",
+      "target": "author_scanlon_b_r",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "alAnsari2021TigrisReview",
+      "target": "author_al_ansari_n",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "arshad2022IndusSWAT",
+      "target": "author_arshad_a",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "arshad2022IndusSWAT",
+      "target": "author_mirchi_a",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "arshad2022IndusSWAT",
+      "target": "author_samimi_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "arshad2022IndusSWAT",
+      "target": "author_ahmad_b",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "asoka2017India",
+      "target": "author_asoka_a",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "asoka2017India",
+      "target": "author_gleeson_t",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "asoka2017India",
+      "target": "author_wada_y",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "asoka2017India",
+      "target": "author_mishra_v",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "basheer2021Nile",
+      "target": "author_basheer_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "basheer2021Nile",
+      "target": "author_wheeler_k_g",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "basheer2021Nile",
+      "target": "author_ribbe_l",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cai2008MDBClimate",
+      "target": "author_cai_w",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cai2008MDBClimate",
+      "target": "author_cowan_t",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cao2013NorthChinaRecharge",
+      "target": "author_cao_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cao2013NorthChinaRecharge",
+      "target": "author_zheng_c",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cao2013NorthChinaRecharge",
+      "target": "author_scanlon_b_r",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chen2019NorthChinaAcceleration",
+      "target": "author_chen_j",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chen2019NorthChinaAcceleration",
+      "target": "author_li_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chen2019NorthChinaAcceleration",
+      "target": "author_zhang_z",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chiew2011MDBDrought",
+      "target": "author_chiew_f_h_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chiew2011MDBDrought",
+      "target": "author_potter_n_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "chiew2011MDBDrought",
+      "target": "author_vaze_j",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "cretaux2013Aral",
+      "target": "author_cretaux_j_f",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "dang2020MekongDams",
+      "target": "author_dang_t_d",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "dang2020MekongDams",
+      "target": "author_cochrane_t_a",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "dang2020MekongDams",
+      "target": "author_arias_m_e",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deGraaf2019EnvironmentalFlow",
+      "target": "author_de_graaf_i_e_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deGraaf2019EnvironmentalFlow",
+      "target": "author_gleeson_t",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deGraaf2019EnvironmentalFlow",
+      "target": "author_van_beek_l_p_h",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deines2020HighPlains",
+      "target": "author_deines_j_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deines2020HighPlains",
+      "target": "author_kendall_a_d",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deines2020HighPlains",
+      "target": "author_butler_j_j",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "deines2020HighPlains",
+      "target": "author_hyndman_d_w",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "elshamy2009NileClimate",
+      "target": "author_elshamy_m_e",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "elshamy2009NileClimate",
+      "target": "author_seierstad_i_a",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "elshamy2009NileClimate",
+      "target": "author_sorteberg_a",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "famiglietti2011CentralValley",
+      "target": "author_famiglietti_j_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "famiglietti2011CentralValley",
+      "target": "author_lo_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "famiglietti2011CentralValley",
+      "target": "author_ho_s_l",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "faunt2016CentralValley",
+      "target": "author_faunt_c_c",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "faunt2016CentralValley",
+      "target": "author_sneed_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "faunt2016CentralValley",
+      "target": "author_traum_j",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "faunt2016CentralValley",
+      "target": "author_brandt_j_t",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "feng2013NorthChina",
+      "target": "author_feng_w",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "feng2013NorthChina",
+      "target": "author_zhong_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "feng2013NorthChina",
+      "target": "author_lemoine_j_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "foster2024HighPlainsDrought",
+      "target": "author_foster_t",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "galelli2024Mekong",
+      "target": "author_galelli_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gaybullaev2012AralBalance",
+      "target": "author_gaybullaev_b",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gaybullaev2012AralBalance",
+      "target": "author_chen_s_c",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gaybullaev2012AralBalance",
+      "target": "author_gaybullaev_d",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gleeson2012WaterBalance",
+      "target": "author_gleeson_t",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gleeson2012WaterBalance",
+      "target": "author_wada_y",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gleeson2012WaterBalance",
+      "target": "author_bierkens_m_f_p",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "gleeson2012WaterBalance",
+      "target": "author_van_beek_l_p_h",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "globalIrrigationReview",
+      "target": "author_scanlon_b_r",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grace2018TigrisDrought",
+      "target": "author_longuevergne_l",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grace2018TigrisDrought",
+      "target": "author_scanlon_b_r",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grace2018TigrisDrought",
+      "target": "author_wilson_c_r",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grafton2011MDBPlan",
+      "target": "author_grafton_r_q",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grafton2011MDBPlan",
+      "target": "author_pittock_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "grafton2011MDBPlan",
+      "target": "author_davis_r",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "hecht2019Mekong",
+      "target": "author_hecht_j_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "hecht2019Mekong",
+      "target": "author_lacombe_g",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "hecht2019Mekong",
+      "target": "author_arias_m_e",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "jasechko2024Aquifers",
+      "target": "author_jasechko_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "jasechko2024Aquifers",
+      "target": "author_seybold_h",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "jasechko2024Aquifers",
+      "target": "author_perrone_d",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "joodaki2014MiddleEast",
+      "target": "author_joodaki_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "joodaki2014MiddleEast",
+      "target": "author_wahr_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "joodaki2014MiddleEast",
+      "target": "author_swenson_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kahsay2015NileCooperation",
+      "target": "author_kahsay_t_n",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kahsay2015NileCooperation",
+      "target": "author_arjoon_d",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kahsay2015NileCooperation",
+      "target": "author_kuik_o",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kondolf2018MekongSediment",
+      "target": "author_kondolf_g_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kondolf2018MekongSediment",
+      "target": "author_rubin_z_k",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kondolf2018MekongSediment",
+      "target": "author_minear_j_t",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kong2020YellowRiver500y",
+      "target": "author_kong_d",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kong2020YellowRiver500y",
+      "target": "author_miao_c",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "kong2020YellowRiver500y",
+      "target": "author_wu_j",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leblanc2009MurrayDarling",
+      "target": "author_leblanc_m_j",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leblanc2009MurrayDarling",
+      "target": "author_tregoning_p",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leblanc2009MurrayDarling",
+      "target": "author_ramillien_g",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2014NorthChina",
+      "target": "author_leng_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2014NorthChina",
+      "target": "author_tang_q",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2014NorthChina",
+      "target": "author_huang_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2015Irrigation",
+      "target": "author_leng_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2015Irrigation",
+      "target": "author_huang_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "leng2015Irrigation",
+      "target": "author_tang_q",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "li2019YellowTWS",
+      "target": "author_li_x",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "li2019YellowTWS",
+      "target": "author_long_d",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "li2019YellowTWS",
+      "target": "author_scanlon_b_r",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "liu2022CentralValley",
+      "target": "author_liu_p_w",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "liu2022CentralValley",
+      "target": "author_famiglietti_j_s",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "liu2022CentralValley",
+      "target": "author_purdy_a_j",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "long2025NorthChina",
+      "target": "author_long_d",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macallister2022Accumulation",
+      "target": "author_macallister_d_j",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macallister2022Accumulation",
+      "target": "author_krishan_g",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macallister2022Accumulation",
+      "target": "author_basharat_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macdonald2016IndoGangetic",
+      "target": "author_macdonald_a_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macdonald2016IndoGangetic",
+      "target": "author_bonsor_h_c",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "macdonald2016IndoGangetic",
+      "target": "author_ahmed_k_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "micklin2007Aral",
+      "target": "author_micklin_p",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "mueller2016YellowSedimentRunoff",
+      "target": "author_wang_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "mueller2016YellowSedimentRunoff",
+      "target": "author_fu_b",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "mueller2016YellowSedimentRunoff",
+      "target": "author_piao_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ojha2018CentralValley",
+      "target": "author_ojha_c",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ojha2018CentralValley",
+      "target": "author_werth_s",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ojha2018CentralValley",
+      "target": "author_shirzaei_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "papa2015GBMStorage",
+      "target": "author_papa_f",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "papa2015GBMStorage",
+      "target": "author_frappart_f",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "papa2015GBMStorage",
+      "target": "author_malbeteau_y",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "perkins2017HighPlainsFish",
+      "target": "author_perkin_j_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "perkins2017HighPlainsFish",
+      "target": "author_gido_k_b",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "perkins2017HighPlainsFish",
+      "target": "author_falke_j_a",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "piao2010ChinaWater",
+      "target": "author_piao_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "piao2010ChinaWater",
+      "target": "author_ciais_p",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "piao2010ChinaWater",
+      "target": "author_huang_y",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "pokhrel2012HumanWaterCycle",
+      "target": "author_pokhrel_y_n",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "pokhrel2012HumanWaterCycle",
+      "target": "author_hanasaki_n",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "pokhrel2012HumanWaterCycle",
+      "target": "author_koirala_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rasanen2017Mekong",
+      "target": "author_rasanen_t_a",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rasanen2017Mekong",
+      "target": "author_someth_p",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rasanen2017Mekong",
+      "target": "author_lauri_h",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "revelle1964GangesMachine",
+      "target": "author_revelle_r",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "revelle1964GangesMachine",
+      "target": "author_lakshminarayana_v",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2009India",
+      "target": "author_rodell_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2009India",
+      "target": "author_velicogna_i",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2009India",
+      "target": "author_famiglietti_j_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2018Freshwater",
+      "target": "author_rodell_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2018Freshwater",
+      "target": "author_famiglietti_j_s",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "rodell2018Freshwater",
+      "target": "author_wiese_d_n",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "scanlon2012",
+      "target": "author_scanlon_b_r",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "scanlon2012",
+      "target": "author_faunt_c_c",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "scanlon2012",
+      "target": "author_longuevergne_l",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "shamsudduha2012GBM",
+      "target": "author_shamsudduha_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "shamsudduha2012GBM",
+      "target": "author_taylor_r_g",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "shamsudduha2012GBM",
+      "target": "author_longuevergne_l",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "siam2017Nile",
+      "target": "author_siam_m_s",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "siam2017Nile",
+      "target": "author_eltahir_e_a_b",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "small2001Aral",
+      "target": "author_small_i",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "small2001Aral",
+      "target": "author_van_der_meer_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "small2001Aral",
+      "target": "author_upshur_r_e_g",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "steward2013HighPlains",
+      "target": "author_steward_d_r",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "steward2013HighPlains",
+      "target": "author_bruss_p_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "steward2013HighPlains",
+      "target": "author_yang_x",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "taylor2013GroundwaterClimate",
+      "target": "author_taylor_r_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "taylor2013GroundwaterClimate",
+      "target": "author_scanlon_b",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "taylor2013GroundwaterClimate",
+      "target": "author_doll_p",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "tiwari2009India",
+      "target": "author_tiwari_v_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "tiwari2009India",
+      "target": "author_wahr_j",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "tiwari2009India",
+      "target": "author_swenson_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "vandijk2013MurrayDarling",
+      "target": "author_van_dijk_a_i_j_m",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "vandijk2013MurrayDarling",
+      "target": "author_beck_h_e",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "vandijk2013MurrayDarling",
+      "target": "author_crosbie_r_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "voss2013MiddleEast",
+      "target": "author_voss_k_a",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "voss2013MiddleEast",
+      "target": "author_famiglietti_j_s",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "voss2013MiddleEast",
+      "target": "author_lo_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2010GlobalGroundwater",
+      "target": "author_wada_y",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2010GlobalGroundwater",
+      "target": "author_van_beek_l_p_h",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2010GlobalGroundwater",
+      "target": "author_van_kempen_c_m",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2012Nonsustainable",
+      "target": "author_wada_y",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2012Nonsustainable",
+      "target": "author_van_beek_l_p_h",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wada2012Nonsustainable",
+      "target": "author_bierkens_m_f_p",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wang2020YellowRiver",
+      "target": "author_wang_w",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wang2020YellowRiver",
+      "target": "author_zhang_y",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wang2020YellowRiver",
+      "target": "author_tang_q",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wheeler2020Nile",
+      "target": "author_wheeler_k_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wheeler2020Nile",
+      "target": "author_jeuland_m",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "wheeler2020Nile",
+      "target": "author_hall_j_w",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "yin2021IndusTWS",
+      "target": "author_yin_w",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "yin2021IndusTWS",
+      "target": "author_hu_l",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "yin2021IndusTWS",
+      "target": "author_han_s_c",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "zhang2015NileGERD",
+      "target": "author_zhang_y",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "zhang2015NileGERD",
+      "target": "author_erkyihun_s_t",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "zhang2015NileGERD",
+      "target": "author_block_p",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "author_ziv_g",
+      "position": 0
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "author_baran_e",
+      "position": 1
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "author_nam_s",
+      "position": 2
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "author_rodriguez_iturbe_i",
+      "position": 3
+    },
+    {
+      "type": "paper_authored_by",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "author_levin_s_a",
+      "position": 4
     }
   ]
 }

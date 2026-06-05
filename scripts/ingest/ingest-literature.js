@@ -25,6 +25,13 @@ async function fetchFromOpenAlex(doi) {
               id: json.id,
               title: json.title,
               authors: json.authorships?.map(a => a.author.display_name).join(', '),
+              author_profiles: json.authorships?.map(a => ({
+                name: a.author?.display_name || '',
+                openalex_id: a.author?.id || '',
+                orcid: a.author?.orcid || '',
+                scholar_url: '',
+                affiliations: (a.institutions || []).map(institution => institution.display_name).filter(Boolean)
+              })).filter(author => author.name),
               year: json.publication_year?.toString(),
               venue: json.primary_location?.source?.display_name,
               doi: json.doi,
