@@ -16,7 +16,8 @@
     "harvest:openalex": "node scripts/ingest/harvest-openalex-literature.js",
     "summary:llm-modes": "node scripts/export/export-llm-mode-summary.js",
     "build:water-imbalance": "node scripts/build/build-water-imbalance-module.js",
-    "check": "node --check public/app.js && node --check public/modules/water-imbalance/index.js && node --check src/server/server.js && node --check catalog/literature/reference-catalog.js && node --check catalog/regions/basin-profiles.js",
+    "check": "node --check public/app.js && node --check public/foundation/performance/geometry-index.js && node --check public/modules/water-imbalance/index.js && node --check src/server/server.js && node --check catalog/literature/reference-catalog.js && node --check catalog/regions/basin-profiles.js",
+    "build:runtime-graph": "node scripts/build/build-water-runtime-graph.js",
     "test": "npm run check && npm run validate"
   },
   "keywords": [],

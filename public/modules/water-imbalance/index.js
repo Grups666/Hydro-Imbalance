@@ -13,12 +13,16 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.graph = null;
     this.timeSeriesMetadata = null;
     this.timeSeriesByBasin = new Map();
+    this.timeSeriesLoadPromise = null;
+    this.timeSeriesLoaded = false;
     this.classificationByBasin = new Map();
     this.regions = [];
     this.literature = new Map();
     this.relationsBySource = new Map();
     this.relationsByTarget = new Map();
     this.preparedBasins = [];
+    this.basinPathCache = null;
+    this.basinSpatialIndex = null;
     this.selectedBasin = null;
     this.layerIds = [];
     this.chartModal = null;
@@ -36,7 +40,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   async onLoad() {
     this.graph = await this.fetchJson(this.resolveModulePath(this.manifest.knowledgeGraph || "./data/knowledge-graph.json"));
-    await this.loadTimeSeriesDataset();
+    await this.loadDatasetMetadata();
     this.indexGraph();
     this.prepareBasins(window.BASIN_DATA?.basins || []);
     this.enhanceFoundationBasinLayer();
@@ -52,6 +56,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     }
     this.enhancedLayer = null;
     this.originalLayerState = null;
+    this.selectedBasin = null;
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
     this.closeLiteratureModal();
@@ -73,23 +78,40 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     return response.json();
   }
 
-  async loadTimeSeriesDataset() {
+  async loadDatasetMetadata() {
     const dataset = this.manifest.datasets?.find((item) => item.id === "basin-three-variable-timeseries-1962-2016");
     if (!dataset?.metadata) return;
 
     this.timeSeriesMetadata = await this.fetchJson(this.resolveModulePath(dataset.metadata));
-    const csvUrl = this.resolveModulePath(
-      dataset.metadata.replace(/[^/]+$/, "") + this.timeSeriesMetadata.file.replace(/^\.\//, "")
-    );
-    const response = await fetch(csvUrl);
-    if (!response.ok) throw new Error(`Failed to load ${csvUrl}: ${response.status}`);
-    this.indexTimeSeries(await response.text());
     const classification = await this.fetchJson(this.resolveModulePath(
       dataset.metadata.replace(/[^/]+$/, "") + this.timeSeriesMetadata.classification.replace(/^\.\//, "")
     ));
     for (const [basinId, result] of Object.entries(classification.basins || {})) {
       this.classificationByBasin.set(String(basinId), result);
     }
+  }
+
+  ensureTimeSeriesLoaded() {
+    if (this.timeSeriesLoaded) return Promise.resolve();
+    if (this.timeSeriesLoadPromise) return this.timeSeriesLoadPromise;
+
+    const dataset = this.manifest.datasets?.find((item) => item.id === "basin-three-variable-timeseries-1962-2016");
+    const csvUrl = this.resolveModulePath(
+      dataset.metadata.replace(/[^/]+$/, "") + this.timeSeriesMetadata.file.replace(/^\.\//, "")
+    );
+    this.timeSeriesLoadPromise = fetch(csvUrl)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Failed to load ${csvUrl}: ${response.status}`);
+        return response.text();
+      })
+      .then((csvText) => {
+        this.indexTimeSeries(csvText);
+        this.timeSeriesLoaded = true;
+      })
+      .finally(() => {
+        this.timeSeriesLoadPromise = null;
+      });
+    return this.timeSeriesLoadPromise;
   }
 
   indexTimeSeries(csvText) {
@@ -142,6 +164,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         rings: (basin.rings || []).filter((ring) => ring.length >= 3)
       };
     });
+    this.basinPathCache = new Foundation.PathCache((prep) => prep.rings);
+    this.basinSpatialIndex = new Foundation.SpatialGridIndex(
+      this.preparedBasins,
+      (prep) => prep.basin.bbox,
+      10
+    );
   }
 
   enhanceFoundationBasinLayer() {
@@ -183,45 +211,47 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const firstSeg = Math.floor(leftLon / 360);
     const lastSeg = Math.ceil(rightLon / 360);
 
-    for (const prep of this.preparedBasins) {
-      const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
-      const isHovered = this.app.hoveredFeatureId === prep.basin.id;
-      const color = prep.classification?.color || "#e3e6e9";
+    ctx.save();
+    for (let seg = firstSeg; seg <= lastSeg; seg++) {
+      const candidates = this.basinSpatialIndex.queryBounds(
+        Math.max(-180, leftLon - seg * 360),
+        -90,
+        Math.min(180, rightLon - seg * 360),
+        90
+      );
+      const lonOffset = seg * 360;
 
-      let fillAlpha = prep.classification ? 0.68 : 0.32;
-      let strokeColor = "rgba(71,85,105,0.16)";
-      let lineWidth = 0.28;
+      for (const prep of candidates) {
+        const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
+        const isHovered = this.app.hoveredFeatureId === prep.basin.id;
+        const color = prep.classification?.color || "#e3e6e9";
 
-      if (isSelected) {
-        fillAlpha = 0.9;
-        strokeColor = "#111827";
-        lineWidth = 1.8;
-      } else if (isHovered) {
-        fillAlpha = 0.82;
-        strokeColor = "rgba(51,65,85,0.48)";
-        lineWidth = 1;
-      }
+        let fillAlpha = prep.classification ? 0.68 : 0.32;
+        let strokeColor = "rgba(71,85,105,0.16)";
+        let lineWidth = 0.28;
 
-      ctx.fillStyle = Foundation.UI.hexToRgba(color, fillAlpha);
-      ctx.strokeStyle = strokeColor;
-      ctx.lineWidth = lineWidth;
+        if (isSelected) {
+          fillAlpha = 0.9;
+          strokeColor = "#111827";
+          lineWidth = 1.8;
+        } else if (isHovered) {
+          fillAlpha = 0.82;
+          strokeColor = "rgba(51,65,85,0.48)";
+          lineWidth = 1;
+        }
 
-      for (let seg = firstSeg; seg <= lastSeg; seg++) {
-        const lonOffset = seg * 360;
-        for (const ring of prep.rings) {
-          const path = new Path2D();
-          for (let i = 0; i < ring.length; i++) {
-            const [lon, lat] = ring[i];
-            const x = width / 2 + (lon + lonOffset) * base + offsetX;
-            const y = height / 2 - lat * base + offsetY;
-            if (i === 0) path.moveTo(x, y);
-            else path.lineTo(x, y);
-          }
+        ctx.fillStyle = Foundation.UI.hexToRgba(color, fillAlpha);
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = lineWidth / base;
+        ctx.setTransform(base, 0, 0, -base, width / 2 + offsetX + lonOffset * base, height / 2 + offsetY);
+
+        for (const path of this.basinPathCache.get(prep)) {
           ctx.fill(path);
           if (!lightweight || isSelected || isHovered) ctx.stroke(path);
         }
       }
     }
+    ctx.restore();
   }
 
   hitTest(lon, lat) {
@@ -229,7 +259,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     let best = null;
     let bestArea = Infinity;
 
-    for (const prep of this.preparedBasins) {
+    for (const prep of this.basinSpatialIndex.queryPoint(lon - seg * 360, lat)) {
       const minLon = prep.basin.bbox[0] + seg * 360;
       const maxLon = prep.basin.bbox[2] + seg * 360;
 
@@ -266,6 +296,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.selectedBasin = prep;
     this.app.draw();
     this.showInspector(prep);
+    this.ensureTimeSeriesLoaded()
+      .then(() => {
+        if (this.selectedBasin === prep) this.showInspector(prep);
+      })
+      .catch((error) => console.error("Failed to load basin time series:", error));
   }
 
   showInspector(prep) {
@@ -311,7 +346,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         </div>
         ${series.length
           ? `<canvas id="${previewId}" width="300" height="132" style="display:block;width:100%;height:132px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer"></canvas>`
-          : `<p style="font-size:12px;color:#64748b;margin:0">No basin_id match in the module time-series dataset.</p>`}
+          : `<p style="font-size:12px;color:#64748b;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
 
       <section>
@@ -339,10 +374,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       document.querySelectorAll("[data-wi-literature-index]").forEach((card) => {
         const item = references[Number(card.dataset.wiLiteratureIndex)];
         if (!item) return;
-        card.onclick = (event) => {
-          if (event.target.closest("a")) return;
-          this.openLiteratureModal(item);
-        };
+        card.onclick = () => this.openLiteratureModal(item);
         card.onkeydown = (event) => {
           if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
@@ -403,12 +435,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   renderLiteratureCard(item, index) {
     const ref = item.record;
-    const url = this.getArticleUrl(ref);
-    const authorUrl = this.getScholarUrl(ref.authors || ref.title);
     return `
       <div data-wi-literature-index="${index}" tabindex="0" role="button" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer">
-        <div style="font-weight:500;margin-bottom:3px"><a href="${this.escape(url)}" target="_blank" rel="noopener" style="color:#1e293b;text-decoration:none">${this.escape(ref.title)}</a></div>
-        <div style="font-size:11px;margin-bottom:4px"><a href="${this.escape(authorUrl)}" target="_blank" rel="noopener" style="color:#64748b;text-decoration:none">${this.escape(ref.authors || "Unknown authors")}</a>${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
+        <div style="font-weight:500;margin-bottom:3px;color:#1e293b">${this.escape(ref.title)}</div>
+        <div style="font-size:11px;margin-bottom:4px;color:#64748b">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
         <div style="color:#64748b;font-size:11px">${this.escape(item.relation.type)}${item.relation.confidence != null ? ` · confidence ${this.escape(item.relation.confidence)}` : ""}</div>
       </div>
     `;
@@ -422,6 +452,26 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   getScholarUrl(query) {
     return `https://scholar.google.com/scholar?q=${encodeURIComponent(query || "")}`;
+  }
+
+  getScholarAuthorUrl(name) {
+    return `https://scholar.google.com/citations?view_op=search_authors&mauthors=${encodeURIComponent(name || "")}`;
+  }
+
+  getAuthors(ref) {
+    if (Array.isArray(ref.author_profiles)) {
+      return ref.author_profiles.map((author) => ({
+        name: author.name,
+        url: author.scholar_url || this.getScholarAuthorUrl(author.name)
+      })).filter((author) => author.name);
+    }
+
+    return String(ref.authors || "")
+      .replace(/\bet al\.?$/i, "")
+      .split(/\s*,\s*(?=[A-Z][A-Za-z' -]+,\s*[A-Z])|\s*,?\s+and\s+/i)
+      .map((name) => name.trim().replace(/,\s*$/, ""))
+      .filter(Boolean)
+      .map((name) => ({ name, url: this.getScholarAuthorUrl(name) }));
   }
 
   ensureLiteratureUI() {
@@ -486,7 +536,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const ref = item.record;
     const relation = item.relation || {};
     const articleUrl = this.getArticleUrl(ref);
-    const authorUrl = this.getScholarUrl(ref.authors || ref.title);
+    const authors = this.getAuthors(ref);
     const doiUrl = ref.doi ? `https://doi.org/${ref.doi}` : "";
     const evidenceReason = relation.reason || ref.llm?.reason || "";
     const chips = [
@@ -498,7 +548,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     this.literatureModal.querySelector("#wi-literature-body").innerHTML = `
       <h2 class="wi-literature-title"><a href="${this.escape(articleUrl)}" target="_blank" rel="noopener">${this.escape(ref.title)}</a></h2>
-      <div class="wi-literature-authors"><a href="${this.escape(authorUrl)}" target="_blank" rel="noopener">${this.escape(ref.authors || "Unknown authors")}</a></div>
+      <div class="wi-literature-authors">${authors.length
+        ? authors.map((author) => `<a href="${this.escape(author.url)}" target="_blank" rel="noopener">${this.escape(author.name)}</a>`).join(", ")
+        : "Unknown authors"}</div>
       <div class="wi-literature-meta">${chips.map((chip) => `<span class="wi-literature-chip">${this.escape(chip)}</span>`).join("")}</div>
       ${ref.abstract ? `<section class="wi-literature-section"><h3>Abstract</h3><p>${this.escape(ref.abstract)}</p></section>` : ""}
       ${ref.affiliations ? `<section class="wi-literature-section"><h3>Affiliations</h3><p>${this.escape(ref.affiliations)}</p></section>` : ""}

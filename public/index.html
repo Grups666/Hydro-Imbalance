@@ -599,6 +599,7 @@
     <script src="./foundation/map/coordinate-system.js"></script>
     <script src="./foundation/map/layer-manager.js"></script>
     <script src="./foundation/map/render-scheduler.js"></script>
+    <script src="./foundation/performance/geometry-index.js"></script>
     <script src="./foundation/ui/utilities.js"></script>
 
     <script>
@@ -608,6 +609,9 @@
       layerManager: null,
       renderScheduler: null,
       renderer: null,
+      landPathCache: null,
+      basinPathCache: null,
+      basinSpatialIndex: null,
       eventBus: Foundation.eventBus,
       moduleLoader: Foundation.moduleLoader,
       modules: [],
@@ -640,6 +644,13 @@
         this.ctx = this.canvas.getContext('2d');
         this.layerManager = new Foundation.LayerManager(this.eventBus);
         this.renderScheduler = new Foundation.RenderScheduler((state) => this.drawNow(state));
+        this.landPathCache = new Foundation.PathCache((ring) => [ring]);
+        this.basinPathCache = new Foundation.PathCache((basin) => basin.rings || []);
+        this.basinSpatialIndex = new Foundation.SpatialGridIndex(
+          window.BASIN_DATA?.basins || [],
+          (basin) => basin.bbox,
+          10
+        );
 
         // Event listeners
         this.eventBus.on(Foundation.Events.LAYER_ADD, () => this.updateLayerList());
@@ -1249,22 +1260,19 @@
         ctx.strokeStyle = 'rgba(72, 84, 96, 0.3)';
         ctx.lineWidth = 0.5;
 
+        ctx.save();
         for (let seg = firstSeg; seg <= lastSeg; seg++) {
           const lonOffset = seg * 360;
           for (const ring of landRings) {
             if (ring.length < 3) continue;
-            const path = new Path2D();
-            for (let i = 0; i < ring.length; i++) {
-              const [lon, lat] = ring[i];
-              const x = width / 2 + (lon + lonOffset) * base + offsetX;
-              const y = height / 2 - lat * base + offsetY;
-              if (i === 0) path.moveTo(x, y);
-              else path.lineTo(x, y);
-            }
+            ctx.lineWidth = 0.5 / base;
+            ctx.setTransform(base, 0, 0, -base, width / 2 + offsetX + lonOffset * base, height / 2 + offsetY);
+            const [path] = this.landPathCache.get(ring);
             ctx.fill(path);
             if (!lightweight) ctx.stroke(path);
           }
         }
+        ctx.restore();
       },
 
       renderBasinOutlines(ctx, viewport) {
@@ -1316,7 +1324,7 @@
         const firstSeg = Math.floor(leftLon / 360);
         const lastSeg = Math.ceil(rightLon / 360);
 
-        for (const basin of basins) {
+        for (const basin of this.basinSpatialIndex.queryPoint(lon - seg * 360, lat)) {
           const isHovered = this.hoveredFeatureId === basin.id;
           const isSelected = this.selectedFeature?.id === basin.id;
 

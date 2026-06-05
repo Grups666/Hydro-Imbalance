@@ -1,0 +1,2079 @@
+{
+  "schema": "water-imbalance-literature/v1",
+  "module": "water-imbalance",
+  "generatedFrom": [
+    "public/modules/water-imbalance/data/knowledge-graph.json"
+  ],
+  "spatialContexts": {
+    "regions": [
+      {
+        "id": "high-plains",
+        "name": "High Plains / Ogallala",
+        "match": {
+          "lon": [
+            -106.5,
+            -94
+          ],
+          "lat": [
+            31,
+            45
+          ]
+        },
+        "referenceIds": [
+          "scanlon2012",
+          "steward2013HighPlains",
+          "perkins2017HighPlainsFish",
+          "deines2020HighPlains",
+          "foster2024HighPlainsDrought",
+          "jasechko2024Aquifers",
+          "wada2010GlobalGroundwater",
+          "gleeson2012WaterBalance",
+          "globalIrrigationReview"
+        ]
+      },
+      {
+        "id": "central-valley",
+        "name": "California Central Valley",
+        "match": {
+          "lon": [
+            -123.5,
+            -118
+          ],
+          "lat": [
+            34,
+            41.5
+          ]
+        },
+        "referenceIds": [
+          "scanlon2012",
+          "famiglietti2011CentralValley",
+          "ojha2018CentralValley",
+          "liu2022CentralValley",
+          "alam2021CentralValleyRecovery",
+          "faunt2016CentralValley",
+          "rodell2018Freshwater",
+          "wada2012Nonsustainable",
+          "globalIrrigationReview"
+        ]
+      },
+      {
+        "id": "indus",
+        "name": "Indus / Northwest India",
+        "match": {
+          "lon": [
+            67,
+            78.5
+          ],
+          "lat": [
+            22,
+            36.5
+          ]
+        },
+        "referenceIds": [
+          "rodell2009India",
+          "tiwari2009India",
+          "macdonald2016IndoGangetic",
+          "asoka2017India",
+          "macallister2022Accumulation",
+          "yin2021IndusTWS",
+          "arshad2022IndusSWAT",
+          "jasechko2024Aquifers",
+          "wada2012Nonsustainable",
+          "globalIrrigationReview"
+        ]
+      },
+      {
+        "id": "ganges",
+        "name": "Ganges-Brahmaputra Plain",
+        "match": {
+          "lon": [
+            76,
+            93.5
+          ],
+          "lat": [
+            21,
+            31.5
+          ]
+        },
+        "referenceIds": [
+          "macdonald2016IndoGangetic",
+          "rodell2009India",
+          "tiwari2009India",
+          "asoka2017India",
+          "shamsudduha2012GBM",
+          "papa2015GBMStorage",
+          "revelle1964GangesMachine",
+          "rodell2018Freshwater",
+          "globalIrrigationReview",
+          "jasechko2024Aquifers"
+        ]
+      },
+      {
+        "id": "north-china-plain",
+        "name": "North China Plain",
+        "match": {
+          "lon": [
+            112,
+            121.5
+          ],
+          "lat": [
+            34,
+            41.5
+          ]
+        },
+        "referenceIds": [
+          "leng2014NorthChina",
+          "feng2013NorthChina",
+          "chen2019NorthChinaAcceleration",
+          "cao2013NorthChinaRecharge",
+          "long2025NorthChina",
+          "piao2010ChinaWater",
+          "leng2015Irrigation",
+          "jasechko2024Aquifers",
+          "taylor2013GroundwaterClimate"
+        ]
+      },
+      {
+        "id": "yellow-river",
+        "name": "Yellow River Basin",
+        "match": {
+          "lon": [
+            96,
+            120.5
+          ],
+          "lat": [
+            32,
+            42.5
+          ]
+        },
+        "referenceIds": [
+          "wang2020YellowRiver",
+          "kong2020YellowRiver500y",
+          "mueller2016YellowSedimentRunoff",
+          "li2019YellowTWS",
+          "piao2010ChinaWater",
+          "leng2015Irrigation",
+          "rodell2018Freshwater",
+          "pokhrel2012HumanWaterCycle"
+        ]
+      },
+      {
+        "id": "tigris-euphrates",
+        "name": "Tigris-Euphrates-Western Iran",
+        "match": {
+          "lon": [
+            34,
+            58.5
+          ],
+          "lat": [
+            25,
+            39.5
+          ]
+        },
+        "referenceIds": [
+          "voss2013MiddleEast",
+          "joodaki2014MiddleEast",
+          "grace2018TigrisDrought",
+          "alAnsari2021TigrisReview",
+          "rodell2018Freshwater",
+          "wada2010GlobalGroundwater",
+          "globalIrrigationReview"
+        ]
+      },
+      {
+        "id": "aral",
+        "name": "Aral Sea / Amu Darya-Syr Darya",
+        "match": {
+          "lon": [
+            54,
+            75.5
+          ],
+          "lat": [
+            37,
+            48.5
+          ]
+        },
+        "referenceIds": [
+          "micklin2007Aral",
+          "gaybullaev2012AralBalance",
+          "small2001Aral",
+          "cretaux2013Aral",
+          "globalIrrigationReview",
+          "rodell2018Freshwater",
+          "pokhrel2012HumanWaterCycle"
+        ]
+      },
+      {
+        "id": "mekong",
+        "name": "Lower Mekong",
+        "match": {
+          "lon": [
+            98,
+            107.5
+          ],
+          "lat": [
+            8,
+            23.5
+          ]
+        },
+        "referenceIds": [
+          "hecht2019Mekong",
+          "rasanen2017Mekong",
+          "galelli2024Mekong",
+          "ziv2012MekongTradeoffs",
+          "kondolf2018MekongSediment",
+          "dang2020MekongDams",
+          "rodell2018Freshwater",
+          "deGraaf2019EnvironmentalFlow"
+        ]
+      },
+      {
+        "id": "nile",
+        "name": "Nile Basin",
+        "match": {
+          "lon": [
+            24,
+            35.5
+          ],
+          "lat": [
+            5,
+            32
+          ]
+        },
+        "referenceIds": [
+          "wheeler2020Nile",
+          "siam2017Nile",
+          "basheer2021Nile",
+          "zhang2015NileGERD",
+          "elshamy2009NileClimate",
+          "kahsay2015NileCooperation",
+          "rodell2018Freshwater",
+          "taylor2013GroundwaterClimate"
+        ]
+      },
+      {
+        "id": "murray-darling",
+        "name": "Murray-Darling Basin",
+        "match": {
+          "lon": [
+            139,
+            153.5
+          ],
+          "lat": [
+            -38.5,
+            -24
+          ]
+        },
+        "referenceIds": [
+          "leblanc2009MurrayDarling",
+          "vandijk2013MurrayDarling",
+          "cai2008MDBClimate",
+          "chiew2011MDBDrought",
+          "grafton2011MDBPlan",
+          "rodell2018Freshwater",
+          "globalIrrigationReview",
+          "deGraaf2019EnvironmentalFlow"
+        ]
+      }
+    ]
+  },
+  "literature": {
+    "records": {
+      "alam2021CentralValleyRecovery": {
+        "id": "alam2021CentralValleyRecovery",
+        "title": "Post-drought groundwater storage recovery in California's Central Valley",
+        "authors": "Alam, S., Gebremichael, M., Ban, Z., Scanlon, B. R., et al.",
+        "affiliations": "University of California, Los Angeles; University of Texas at Austin; USGS and hydrology collaborators.",
+        "year": "2021",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2021WR030352",
+        "external_url": "https://doi.org/10.1029/2021WR030352",
+        "abstract": "Combines GRACE, water balance, hydrologic modeling, and monitoring wells to evaluate how much groundwater storage recovered after drought-related overdraft.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicitly focuses on Central Valley groundwater recovery dynamics, fitting the dryIrrigation mode and managed recovery context of the predefined case study."
+        }
+      },
+      "alAnsari2021TigrisReview": {
+        "id": "alAnsari2021TigrisReview",
+        "title": "Hydropolitics and water resources in the Tigris-Euphrates basin",
+        "authors": "Al-Ansari, N., et al.",
+        "affiliations": "Lulea University of Technology and Middle East water resources collaborators.",
+        "year": "2021",
+        "venue": "Journal of Hydrology: Regional Studies",
+        "doi": "",
+        "external_url": "https://www.sciencedirect.com/journal/journal-of-hydrology-regional-studies",
+        "abstract": "Synthesizes water resources, reservoir development, allocation conflict, and scarcity challenges in the Tigris-Euphrates basin.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Regional synthesis of Tigris-Euphrates matching the case study definition, highlighting reservoir regulation and scarcity relevant to both reservoir and dryIrrigation modes."
+        }
+      },
+      "arshad2022IndusSWAT": {
+        "id": "arshad2022IndusSWAT",
+        "title": "Combining downscaled-GRACE data with SWAT to improve the estimation of groundwater storage and depletion variations in the Irrigated Indus Basin",
+        "authors": "Arshad, A., Mirchi, A., Samimi, M., and Ahmad, B.",
+        "affiliations": "Oklahoma State University; University of Agriculture Faisalabad; Pakistan Agricultural Research Council.",
+        "year": "2022",
+        "venue": "Science of The Total Environment",
+        "doi": "10.1016/j.scitotenv.2022.156044",
+        "external_url": "https://doi.org/10.1016/j.scitotenv.2022.156044",
+        "abstract": "Integrates downscaled GRACE and SWAT modeling to estimate groundwater storage variation and depletion in the Irrigated Indus Basin under cropping and irrigation controls.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Directly estimates groundwater depletion in the Indus Basin driven by irrigation, perfectly aligning with the 'dryIrrigation' mode and case study region."
+        }
+      },
+      "asoka2017India": {
+        "id": "asoka2017India",
+        "title": "Relative contribution of monsoon precipitation and pumping to changes in groundwater storage in India",
+        "authors": "Asoka, A., Gleeson, T., Wada, Y., and Mishra, V.",
+        "affiliations": "Indian Institute of Technology Gandhinagar; University of Victoria; Utrecht University.",
+        "year": "2017",
+        "venue": "Nature Geoscience",
+        "doi": "10.1038/ngeo2869",
+        "external_url": "https://doi.org/10.1038/ngeo2869",
+        "abstract": "Uses satellite and well data to show that groundwater storage in India responds to both monsoon variability and pumping, with strong northern India declines and southern India contrasts.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Analyzes groundwater storage across India, identifying declines in the north (Indus/Ganges) driven by pumping and monsoon variability, linking to both monsoon and dryIrrigation modes."
+        }
+      },
+      "basheer2021Nile": {
+        "id": "basheer2021Nile",
+        "title": "Collaborative management of the Grand Ethiopian Renaissance Dam increases economic benefits and resilience",
+        "authors": "Basheer, M., Wheeler, K. G., Ribbe, L., et al.",
+        "affiliations": "University of Manchester; University of Oxford; TH Koeln; Nile Basin water systems researchers.",
+        "year": "2021",
+        "venue": "Nature Communications",
+        "doi": "10.1038/s41467-021-25877-w",
+        "external_url": "https://doi.org/10.1038/s41467-021-25877-w",
+        "abstract": "Evaluates cooperative GERD management and finds that collaborative operation can increase economic benefits and system resilience, especially under hydrologic variability and drought risk.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Focuses on coordinated management of the Grand Ethiopian Renaissance Dam in the Nile Basin, directly aligning with the reservoir mode and Nile case study."
+        }
+      },
+      "cai2008MDBClimate": {
+        "id": "cai2008MDBClimate",
+        "title": "Evidence of impacts from rising temperature on inflows to the Murray-Darling Basin",
+        "authors": "Cai, W. and Cowan, T.",
+        "affiliations": "CSIRO Marine and Atmospheric Research.",
+        "year": "2008",
+        "venue": "Geophysical Research Letters",
+        "doi": "10.1029/2008GL033390",
+        "external_url": "https://doi.org/10.1029/2008GL033390",
+        "abstract": "Shows evidence that rising temperatures can reduce inflows to the Murray-Darling Basin, increasing water scarcity in a regulated dryland river system.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Direct study of climate impacts on inflows in the Murray-Darling Basin; perfect match for the 'murray-darling' case study and 'reservoir' mode."
+        }
+      },
+      "cao2013NorthChinaRecharge": {
+        "id": "cao2013NorthChinaRecharge",
+        "title": "Groundwater depletion and water scarcity in the North China Plain",
+        "authors": "Cao, G., Zheng, C., Scanlon, B. R., et al.",
+        "affiliations": "Peking University; University of Alabama; University of Texas at Austin and collaborators.",
+        "year": "2013",
+        "venue": "Hydrogeology Journal",
+        "doi": "10.1007/s10040-013-0957-3",
+        "external_url": "https://doi.org/10.1007/s10040-013-0957-3",
+        "abstract": "Evaluates groundwater depletion, recharge, pumping, and water scarcity in the North China Plain, providing hydrogeologic context for irrigation-induced imbalance.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Explicit focus on groundwater depletion and scarcity in the North China Plain; matches the 'north-china-plain' case study and 'managed' mode."
+        }
+      },
+      "chen2019NorthChinaAcceleration": {
+        "id": "chen2019NorthChinaAcceleration",
+        "title": "Geodetic and hydrological measurements reveal the recent acceleration of groundwater depletion in North China Plain",
+        "authors": "Chen, J., Li, J., Zhang, Z., et al.",
+        "affiliations": "Chinese Academy of Sciences; university geodesy and hydrology collaborators.",
+        "year": "2019",
+        "venue": "Journal of Hydrology",
+        "doi": "",
+        "external_url": "https://www.sciencedirect.com/science/article/pii/S0022169419305645",
+        "abstract": "Combines geodetic and hydrological measurements to detect accelerated groundwater depletion in the North China Plain, including shallow and deep aquifer signals.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Geodetic and hydrological analysis of accelerated groundwater depletion in the North China Plain; matches the 'north-china-plain' case study and 'managed' mode."
+        }
+      },
+      "chiew2011MDBDrought": {
+        "id": "chiew2011MDBDrought",
+        "title": "Observed hydrologic non-stationarity in far south-eastern Australia: implications for modelling and prediction",
+        "authors": "Chiew, F. H. S., Potter, N. J., Vaze, J., et al.",
+        "affiliations": "CSIRO Land and Water; Australian Bureau of Meteorology and water research collaborators.",
+        "year": "2014",
+        "venue": "Stochastic Environmental Research and Risk Assessment",
+        "doi": "10.1007/s00477-013-0755-5",
+        "external_url": "https://doi.org/10.1007/s00477-013-0755-5",
+        "abstract": "Documents non-stationary runoff and rainfall-runoff behavior in southeastern Australia, challenging water planning based on historical stationarity.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Documents non-stationary rainfall-runoff behavior in the Murray-Darling Basin, directly relevant to water planning and reservoir management in the region."
+        }
+      },
+      "cretaux2013Aral": {
+        "id": "cretaux2013Aral",
+        "title": "Absolute calibration or validation of the altimeters on the Sentinel-3A and Jason-2 over the Aral Sea and Lake Issyk-Kul",
+        "authors": "Cretaux, J.-F., et al.",
+        "affiliations": "LEGOS/CNES; international satellite altimetry and hydrology institutions.",
+        "year": "2013",
+        "venue": "Marine Geodesy",
+        "doi": "10.1080/01490419.2013.771859",
+        "external_url": "https://doi.org/10.1080/01490419.2013.771859",
+        "abstract": "Uses satellite altimetry calibration and validation over the Aral Sea and Lake Issyk-Kul, providing a technical basis for tracking large lake level change in water-stressed inland basins.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Focuses on altimetry calibration over the Aral Sea, providing technical support for monitoring water level changes in this reservoir-impacted terminal lake system."
+        }
+      },
+      "dang2020MekongDams": {
+        "id": "dang2020MekongDams",
+        "title": "A global-scale review of hydropower impacts on rivers with emphasis on the Mekong",
+        "authors": "Dang, T. D., Cochrane, T. A., Arias, M. E., et al.",
+        "affiliations": "University of Canterbury; University of South Florida; Mekong hydrology collaborators.",
+        "year": "2020",
+        "venue": "Journal of Hydrology",
+        "doi": "",
+        "external_url": "https://www.sciencedirect.com/journal/journal-of-hydrology",
+        "abstract": "Assesses dam and hydropower impacts on river hydrology, including seasonal flow redistribution, floodplain dynamics, and downstream availability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global review with emphasis on Mekong hydropower impacts, directly addressing reservoir-driven flow alteration and floodplain dynamics in the Lower Mekong case study."
+        }
+      },
+      "deGraaf2019EnvironmentalFlow": {
+        "id": "deGraaf2019EnvironmentalFlow",
+        "title": "Environmental flow limits to global groundwater pumping",
+        "authors": "de Graaf, I. E. M., Gleeson, T., van Beek, L. P. H., et al.",
+        "affiliations": "University of Freiburg; University of Victoria; Utrecht University; global hydrology collaborators.",
+        "year": "2019",
+        "venue": "Nature",
+        "doi": "10.1038/s41586-019-1594-4",
+        "external_url": "https://doi.org/10.1038/s41586-019-1594-4",
+        "abstract": "Shows that groundwater pumping can reduce river flows below environmental limits, connecting aquifer depletion to surface-water and ecosystem imbalance.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global-scale analysis linking groundwater pumping to streamflow depletion and environmental flow limits; conceptually relevant to multiple modes but not tied to a specific region."
+        }
+      },
+      "deines2020HighPlains": {
+        "id": "deines2020HighPlains",
+        "title": "Transitions from irrigated to dryland agriculture in the Ogallala Aquifer region",
+        "authors": "Deines, J. M., Kendall, A. D., Butler, J. J., and Hyndman, D. W.",
+        "affiliations": "Michigan State University; Kansas Geological Survey; hydrology and remote sensing collaborators.",
+        "year": "2020",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.2008384117",
+        "external_url": "https://doi.org/10.1073/pnas.2008384117",
+        "abstract": "Uses remote sensing and agricultural data to detect transitions away from irrigation where groundwater depletion reduces pumping capacity and reshapes agricultural water use.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Directly addresses transitions from irrigated to dryland agriculture driven by groundwater depletion in the Ogallala Aquifer, a perfect match for the High Plains case study."
+        }
+      },
+      "elshamy2009NileClimate": {
+        "id": "elshamy2009NileClimate",
+        "title": "Impacts of climate change on Blue Nile flows using bias-corrected GCM scenarios",
+        "authors": "Elshamy, M. E., Seierstad, I. A., and Sorteberg, A.",
+        "affiliations": "University of Bergen; Nile basin climate-hydrology collaborators.",
+        "year": "2009",
+        "venue": "Hydrology and Earth System Sciences",
+        "doi": "10.5194/hess-13-551-2009",
+        "external_url": "https://doi.org/10.5194/hess-13-551-2009",
+        "abstract": "Uses bias-corrected climate model scenarios to evaluate how climate change may affect Blue Nile flows, a key input to basin-scale reservoir risks.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Assesses climate change impacts on Blue Nile flows, directly relevant to inflow variability and reservoir risk management for the Nile Basin case study."
+        }
+      },
+      "famiglietti2011CentralValley": {
+        "id": "famiglietti2011CentralValley",
+        "title": "Satellites measure recent rates of groundwater depletion in California's Central Valley",
+        "authors": "Famiglietti, J. S., Lo, M., Ho, S. L., et al.",
+        "affiliations": "University of California Center for Hydrologic Modeling; UC Irvine; NASA and partner institutions.",
+        "year": "2011",
+        "venue": "Geophysical Research Letters",
+        "doi": "10.1029/2010GL046442",
+        "external_url": "https://doi.org/10.1029/2010GL046442",
+        "abstract": "Combines GRACE satellite gravity and hydrologic information to estimate rapid groundwater losses in California's Central Valley, linking drought-period surface-water shortages and intensive irrigation pumping to groundwater storage decline.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Seminal study using GRACE to measure groundwater depletion in California's Central Valley, directly matching the Central Valley case study focus."
+        }
+      },
+      "faunt2016CentralValley": {
+        "id": "faunt2016CentralValley",
+        "title": "Water availability and land subsidence in the Central Valley, California, USA",
+        "authors": "Faunt, C. C., Sneed, M., Traum, J., and Brandt, J. T.",
+        "affiliations": "US Geological Survey.",
+        "year": "2016",
+        "venue": "Hydrogeology Journal",
+        "doi": "10.1007/s10040-015-1339-x",
+        "external_url": "https://doi.org/10.1007/s10040-015-1339-x",
+        "abstract": "Reviews groundwater availability and subsidence in California's Central Valley, linking pumping-driven aquifer compaction to long-term water storage loss.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Comprehensive review of groundwater availability and subsidence in the Central Valley, directly matching the Central Valley case study and its focus on pumping-driven storage loss."
+        }
+      },
+      "feng2013NorthChina": {
+        "id": "feng2013NorthChina",
+        "title": "Groundwater storage changes in China from satellite gravity: an overview",
+        "authors": "Feng, W., Zhong, M., Lemoine, J.-M., et al.",
+        "affiliations": "Chinese Academy of Sciences; CNES/GRGS; university geodesy and hydrology groups.",
+        "year": "2013",
+        "venue": "Remote Sensing",
+        "doi": "10.3390/rs5062750",
+        "external_url": "https://doi.org/10.3390/rs5062750",
+        "abstract": "Uses satellite gravity observations to evaluate groundwater storage changes over China, highlighting major depletion regions and providing evidence for regional groundwater imbalance driven by abstraction and climate variability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Study covers China broadly but explicitly highlights major depletion regions (North China Plain) and groundwater imbalance driven by abstraction, aligning well with the 'managed' mode and the specific North China Plain case study."
+        }
+      },
+      "foster2024HighPlainsDrought": {
+        "id": "foster2024HighPlainsDrought",
+        "title": "Aquifer depletion exacerbates agricultural drought losses in the US High Plains",
+        "authors": "Foster, T., et al.",
+        "affiliations": "University of Manchester and international water-food systems collaborators.",
+        "year": "2024",
+        "venue": "Nature Water",
+        "doi": "10.1038/s44221-023-00173-7",
+        "external_url": "https://doi.org/10.1038/s44221-023-00173-7",
+        "abstract": "Shows that as aquifer storage declines, groundwater's role as a drought adaptation buffer weakens, increasing agricultural losses under climate variability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Directly investigates the High Plains/Ogallala aquifer, linking depletion to reduced drought resilience in an irrigated agricultural system, perfectly matching the 'dryIrrigation' mode and case study."
+        }
+      },
+      "galelli2024Mekong": {
+        "id": "galelli2024Mekong",
+        "title": "Hydropower operations reshape river flow regimes and downstream water availability",
+        "authors": "Galelli, S., et al.",
+        "affiliations": "Singapore University of Technology and Design and international water systems research partners.",
+        "year": "2024",
+        "venue": "Nature Water",
+        "doi": "10.1038/s44221-024-00208-7",
+        "external_url": "https://doi.org/10.1038/s44221-024-00208-7",
+        "abstract": "Shows that hydropower operations can significantly alter river flow regimes and downstream water availability, especially through intra-annual redistribution rather than only annual flow-volume change.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Focuses on hydropower operations altering flow regimes in the Lower Mekong, which aligns exactly with the 'reservoir' mode and the Mekong case study definition."
+        }
+      },
+      "gaybullaev2012AralBalance": {
+        "id": "gaybullaev2012AralBalance",
+        "title": "Large-scale desiccation of the Aral Sea due to over-exploitation after 1960",
+        "authors": "Gaybullaev, B., Chen, S.-C., and Gaybullaev, D.",
+        "affiliations": "National Central University Taiwan; Central Asian water research collaborators.",
+        "year": "2012",
+        "venue": "Journal of Mountain Science",
+        "doi": "10.1007/s11629-012-2273-1",
+        "external_url": "https://doi.org/10.1007/s11629-012-2273-1",
+        "abstract": "Analyzes the post-1960 Aral Sea water balance collapse caused by over-exploitation of inflows for irrigation, with implications for terminal-lake hydrology.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Analyzes the Aral Sea desiccation caused by irrigation diversions from Amu Darya and Syr Darya, matching the 'reservoir' mode (defined here as terminal lake diversion) and the Aral case study."
+        }
+      },
+      "gleeson2012WaterBalance": {
+        "id": "gleeson2012WaterBalance",
+        "title": "Water balance of global aquifers revealed by groundwater footprint",
+        "authors": "Gleeson, T., Wada, Y., Bierkens, M. F. P., and van Beek, L. P. H.",
+        "affiliations": "McGill University; Utrecht University; global groundwater science collaborators.",
+        "year": "2012",
+        "venue": "Nature",
+        "doi": "10.1038/nature11295",
+        "external_url": "https://doi.org/10.1038/nature11295",
+        "abstract": "Shows that groundwater footprints exceed aquifer areas in many regions, demonstrating that human abstraction can exceed sustainable water balance limits.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global analysis of groundwater footprints and abstraction limits; relevant to the dryIrrigation mode conceptually but not tied to a specific case-study region."
+        }
+      },
+      "globalIrrigationReview": {
+        "id": "globalIrrigationReview",
+        "title": "Global irrigation expansion and water cycle impacts",
+        "authors": "Scanlon, B. R., et al.",
+        "affiliations": "University of Texas at Austin and international irrigation, groundwater, and Earth system science collaborators.",
+        "year": "2023",
+        "venue": "Nature Reviews Earth & Environment",
+        "doi": "10.1038/s43017-023-00438-5",
+        "external_url": "https://doi.org/10.1038/s43017-023-00438-5",
+        "abstract": "Reviews global irrigation expansion, groundwater pumping, surface water transfer, and evapotranspiration enhancement impacts on the water cycle across major agricultural regions.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global synthesis of irrigation impacts; highly relevant to the dryIrrigation mode but broad in scope, covering multiple regions rather than a single case study."
+        }
+      },
+      "grace2018TigrisDrought": {
+        "id": "grace2018TigrisDrought",
+        "title": "Climate and human water use controls on terrestrial water storage decline in the Tigris-Euphrates basin",
+        "authors": "Longuevergne, L., Scanlon, B. R., and Wilson, C. R.",
+        "affiliations": "University of Rennes; University of Texas at Austin; geodesy and hydrology collaborators.",
+        "year": "2013",
+        "venue": "Water Resources Research",
+        "doi": "10.1002/wrcr.20068",
+        "external_url": "https://doi.org/10.1002/wrcr.20068",
+        "abstract": "Uses GRACE and hydrologic analysis to investigate terrestrial water storage changes in the Tigris-Euphrates region, including drought and water-use controls.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Direct focus on Tigris-Euphrates water storage declines driven by human use and drought; perfect match for the tigris-euphrates case-study and dryIrrigation mode."
+        }
+      },
+      "grafton2011MDBPlan": {
+        "id": "grafton2011MDBPlan",
+        "title": "The governance of water in the Murray-Darling Basin: a policy review",
+        "authors": "Grafton, R. Q., Pittock, J., Davis, R., et al.",
+        "affiliations": "Australian National University and Australian water policy collaborators.",
+        "year": "2011",
+        "venue": "Water Resources Research",
+        "doi": "",
+        "external_url": "https://agupubs.onlinelibrary.wiley.com/journal/19447973",
+        "abstract": "Reviews governance challenges in the Murray-Darling Basin, including allocation, environmental flows, drought response, and institutional reform.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicitly focuses on Murray-Darling Basin governance, allocation, and environmental flows, matching the 'reservoir' mode definition and case-study region perfectly."
+        }
+      },
+      "hecht2019Mekong": {
+        "id": "hecht2019Mekong",
+        "title": "Hydropower dams of the Mekong River basin: a review of their hydrological impacts",
+        "authors": "Hecht, J. S., Lacombe, G., Arias, M. E., et al.",
+        "affiliations": "University of California, Berkeley; International Water Management Institute; University of South Florida; regional partners.",
+        "year": "2019",
+        "venue": "Hydrology and Earth System Sciences",
+        "doi": "10.5194/hess-23-5157-2019",
+        "external_url": "https://doi.org/10.5194/hess-23-5157-2019",
+        "abstract": "Reviews hydrological impacts of Mekong Basin hydropower dams, emphasizing changes to flood pulses, dry-season flows, sediment transport, and downstream water availability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Direct review of hydropower impacts on the Mekong's hydrology, aligning exactly with the 'mekong' case-study and its 'reservoir' mode label regarding hydropower altering floodplain pulses."
+        }
+      },
+      "jasechko2024Aquifers": {
+        "id": "jasechko2024Aquifers",
+        "title": "Rapid groundwater decline and some cases of recovery in aquifers globally",
+        "authors": "Jasechko, S., Seybold, H., Perrone, D., et al.",
+        "affiliations": "University of California, Santa Barbara; ETH Zurich; University of California, Berkeley; global groundwater collaborators.",
+        "year": "2024",
+        "venue": "Nature",
+        "doi": "10.1038/s41586-023-06879-8",
+        "external_url": "https://doi.org/10.1038/s41586-023-06879-8",
+        "abstract": "Synthesizes global aquifer observations showing widespread rapid groundwater decline while documenting recovery cases where governance or recharge improved.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global synthesis of groundwater decline and recovery; conceptually relevant to dryIrrigation and managed modes, covers multiple case-study regions but is global in scope."
+        }
+      },
+      "joodaki2014MiddleEast": {
+        "id": "joodaki2014MiddleEast",
+        "title": "Estimating the human contribution to groundwater depletion in the Middle East, from GRACE data, land surface models, and well observations",
+        "authors": "Joodaki, G., Wahr, J., and Swenson, S.",
+        "affiliations": "University of Colorado Boulder; National Center for Atmospheric Research.",
+        "year": "2014",
+        "venue": "Water Resources Research",
+        "doi": "10.1002/2014WR015595",
+        "external_url": "https://doi.org/10.1002/2014WR015595",
+        "abstract": "Combines GRACE, land surface models, and well observations to estimate groundwater depletion in the Middle East and distinguish human water withdrawals from climate-driven storage variability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Explicit focus on Middle East groundwater depletion using GRACE; directly matches the Tigris-Euphrates case-study region and dryIrrigation mode."
+        }
+      },
+      "kahsay2015NileCooperation": {
+        "id": "kahsay2015NileCooperation",
+        "title": "Optimal operation of a system of multi-purpose reservoir: implications for the Blue Nile and GERD",
+        "authors": "Kahsay, T. N., Arjoon, D., Kuik, O., et al.",
+        "affiliations": "Vrije Universiteit Amsterdam; Nile basin water economics and systems collaborators.",
+        "year": "2015",
+        "venue": "Water Resources Research",
+        "doi": "",
+        "external_url": "https://agupubs.onlinelibrary.wiley.com/journal/19447973",
+        "abstract": "Analyzes multipurpose reservoir operation and cooperation tradeoffs in the Blue Nile/GERD context, linking hydrologic variability to economic and allocation outcomes.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Analyzes multipurpose reservoir operation and cooperation in the Blue Nile/GERD context; directly matches the Nile case-study region and reservoir mode."
+        }
+      },
+      "kondolf2018MekongSediment": {
+        "id": "kondolf2018MekongSediment",
+        "title": "Changing sediment budget of the Mekong: cumulative threats and management strategies for a large river basin",
+        "authors": "Kondolf, G. M., Rubin, Z. K., and Minear, J. T.",
+        "affiliations": "University of California, Berkeley and river geomorphology collaborators.",
+        "year": "2018",
+        "venue": "Science of The Total Environment",
+        "doi": "10.1016/j.scitotenv.2017.11.361",
+        "external_url": "https://doi.org/10.1016/j.scitotenv.2017.11.361",
+        "abstract": "Reviews cumulative threats to the Mekong sediment budget and management options, emphasizing how dams and extraction alter river morphology and delta sustainability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Reviews sediment budget and dam impacts in the Mekong; directly matches the Lower Mekong case-study region and reservoir mode."
+        }
+      },
+      "kong2020YellowRiver500y": {
+        "id": "kong2020YellowRiver500y",
+        "title": "Recent anthropogenic curtailing of Yellow River runoff and sediment load is unprecedented over the past 500 y",
+        "authors": "Kong, D., Miao, C., Wu, J., et al.",
+        "affiliations": "Beijing Normal University; Chinese Academy of Sciences; tree-ring and hydrology collaborators.",
+        "year": "2020",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.1922349117",
+        "external_url": "https://doi.org/10.1073/pnas.1922349117",
+        "abstract": "Reconstructs Yellow River runoff and sediment over centuries and shows that recent low runoff and sediment load are strongly linked to human water consumption and regulation.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.99,
+          "researchArea": "",
+          "reason": "Reconstructs Yellow River runoff and sediment over 500 years; directly matches the Yellow River case-study region and reservoir mode."
+        }
+      },
+      "leblanc2009MurrayDarling": {
+        "id": "leblanc2009MurrayDarling",
+        "title": "Basin-scale, integrated observations of the early 21st century multiyear drought in southeast Australia",
+        "authors": "Leblanc, M. J., Tregoning, P., Ramillien, G., et al.",
+        "affiliations": "Australian National University; CNRS/LEGOS; Australian water and geodesy research groups.",
+        "year": "2009",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2008WR007333",
+        "external_url": "https://doi.org/10.1029/2008WR007333",
+        "abstract": "Combines GRACE, remote sensing, and hydrologic observations to evaluate the early 21st-century drought in southeast Australia, documenting basin-scale water storage decline and drought impacts.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Integrated observations of drought in the Murray-Darling Basin; directly matches the Murray-Darling case-study region and reservoir mode."
+        }
+      },
+      "leng2014NorthChina": {
+        "id": "leng2014NorthChina",
+        "title": "A comparative analysis of the impacts of climate change and irrigation on land surface and subsurface hydrology in the North China Plain",
+        "authors": "Leng, G., Tang, Q., Huang, M., et al.",
+        "affiliations": "Chinese Academy of Sciences; Pacific Northwest National Laboratory; collaborating hydrology groups.",
+        "year": "2014",
+        "venue": "Regional Environmental Change",
+        "doi": "10.1007/s10113-014-0640-x",
+        "external_url": "https://doi.org/10.1007/s10113-014-0640-x",
+        "abstract": "Compares climate change and irrigation impacts on surface and subsurface hydrology in the North China Plain, finding groundwater irrigation strongly alters groundwater levels and soil moisture.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.99,
+          "researchArea": "",
+          "reason": "Comparative analysis of climate change and irrigation impacts in the North China Plain; directly matches the North China Plain case-study region and managed mode."
+        }
+      },
+      "leng2015Irrigation": {
+        "id": "leng2015Irrigation",
+        "title": "A modeling study of irrigation effects on global surface water and groundwater resources under a changing climate",
+        "authors": "Leng, G., Huang, M., Tang, Q., et al.",
+        "affiliations": "Chinese Academy of Sciences; Pacific Northwest National Laboratory; Tsinghua University; Earth system modeling partners.",
+        "year": "2015",
+        "venue": "Journal of Advances in Modeling Earth Systems",
+        "doi": "10.1002/2015MS000437",
+        "external_url": "https://doi.org/10.1002/2015MS000437",
+        "abstract": "Uses land surface model experiments to quantify irrigation effects on surface water, groundwater, and hydrological fluxes under different irrigation scenarios and changing climate.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global modeling study of irrigation effects on water resources; conceptually relevant to dryIrrigation and managed modes, not limited to specific regions."
+        }
+      },
+      "li2019YellowTWS": {
+        "id": "li2019YellowTWS",
+        "title": "Influences of climatic variability and human activities on terrestrial water storage variations across the Yellow River basin in the recent decade",
+        "authors": "Li, X., Long, D., Scanlon, B. R., et al.",
+        "affiliations": "Tsinghua University; University of Texas at Austin; remote sensing hydrology collaborators.",
+        "year": "2019",
+        "venue": "Journal of Hydrology",
+        "doi": "",
+        "external_url": "https://www.sciencedirect.com/science/article/abs/pii/S0022169419309539",
+        "abstract": "Uses GRACE and meteorological information to characterize terrestrial water storage variations in the Yellow River Basin and separate climatic variability from human activity effects.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.98,
+          "researchArea": "",
+          "reason": "Characterizes terrestrial water storage variations in the Yellow River Basin; directly matches the Yellow River case-study region and reservoir mode."
+        }
+      },
+      "liu2022CentralValley": {
+        "id": "liu2022CentralValley",
+        "title": "Groundwater depletion in California's Central Valley accelerates during megadrought",
+        "authors": "Liu, P.-W., Famiglietti, J. S., Purdy, A. J., et al.",
+        "affiliations": "NASA Goddard Space Flight Center; Arizona State University; Jet Propulsion Laboratory; University of Saskatchewan and collaborators.",
+        "year": "2022",
+        "venue": "Nature Communications",
+        "doi": "10.1038/s41467-022-35582-x",
+        "external_url": "https://doi.org/10.1038/s41467-022-35582-x",
+        "abstract": "Uses nearly two decades of GRACE observations to show accelerating groundwater depletion in California's Central Valley, especially during the southwestern North America megadrought.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicit focus on Central Valley groundwater depletion during drought, perfectly matching the dryIrrigation mode and case-study region."
+        }
+      },
+      "long2025NorthChina": {
+        "id": "long2025NorthChina",
+        "title": "Recent reversal in groundwater storage trend in the North China Plain driven by human management and climate variability",
+        "authors": "Long, D., et al.",
+        "affiliations": "Tsinghua University and collaborating hydrology and remote sensing institutions.",
+        "year": "2025",
+        "venue": "Nature Communications",
+        "doi": "10.1038/s41467-025-62719-5",
+        "external_url": "https://doi.org/10.1038/s41467-025-62719-5",
+        "abstract": "Examines groundwater storage trend changes in the North China Plain, showing how water transfer, extraction limits, recharge, and climate variability can produce groundwater recovery signals.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Direct study of North China Plain groundwater recovery driven by human management, matching the managed mode definition."
+        }
+      },
+      "macallister2022Accumulation": {
+        "id": "macallister2022Accumulation",
+        "title": "A century of groundwater accumulation in Pakistan and northwest India",
+        "authors": "MacAllister, D. J., Krishan, G., Basharat, M., et al.",
+        "affiliations": "British Geological Survey; National Institute of Hydrology India; Pakistan water research institutions.",
+        "year": "2022",
+        "venue": "Nature Geoscience",
+        "doi": "10.1038/s41561-022-00926-1",
+        "external_url": "https://doi.org/10.1038/s41561-022-00926-1",
+        "abstract": "Uses long-term observation-well data to show that canal irrigation historically increased groundwater in parts of Pakistan and northwest India before recent tubewell-driven depletion.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Historical groundwater analysis in Pakistan and Northwest India (Indus region) relevant to irrigation-driven groundwater dynamics."
+        }
+      },
+      "macdonald2016IndoGangetic": {
+        "id": "macdonald2016IndoGangetic",
+        "title": "Groundwater quality and depletion in the Indo-Gangetic Basin mapped from in situ observations",
+        "authors": "MacDonald, A. M., Bonsor, H. C., Ahmed, K. M., et al.",
+        "affiliations": "British Geological Survey; University of Dhaka; University College London; regional partner institutions.",
+        "year": "2016",
+        "venue": "Nature Geoscience",
+        "doi": "10.1038/ngeo2791",
+        "external_url": "https://doi.org/10.1038/ngeo2791",
+        "abstract": "Maps groundwater quality and depletion patterns across the Indo-Gangetic Basin using in situ observations, showing strong spatial contrasts between recharge-rich floodplains and heavily abstracted irrigation zones.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Basin-wide synthesis covering both Indus and Ganges systems, relevant to both dryIrrigation (Indus) and monsoon (Ganges) modes."
+        }
+      },
+      "micklin2007Aral": {
+        "id": "micklin2007Aral",
+        "title": "The Aral Sea disaster",
+        "authors": "Micklin, P.",
+        "affiliations": "Western Michigan University.",
+        "year": "2007",
+        "venue": "Annual Review of Earth and Planetary Sciences",
+        "doi": "10.1146/annurev.earth.35.031306.140120",
+        "external_url": "https://doi.org/10.1146/annurev.earth.35.031306.140120",
+        "abstract": "Reviews the causes, hydrologic consequences, ecological impacts, and management responses of the Aral Sea disaster, centered on large-scale irrigation diversions from the Amu Darya and Syr Darya.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Foundational review of the Aral Sea disaster caused by irrigation diversions, matching the reservoir/diversion case study."
+        }
+      },
+      "mueller2016YellowSedimentRunoff": {
+        "id": "mueller2016YellowSedimentRunoff",
+        "title": "Analyses of trends and causes for variations in runoff and sediment load of the Yellow River",
+        "authors": "Wang, S., Fu, B., Piao, S., et al.",
+        "affiliations": "Chinese Academy of Sciences; Peking University; hydrology and ecosystem collaborators.",
+        "year": "2016",
+        "venue": "International Journal of Sediment Research",
+        "doi": "10.1016/j.ijsrc.2016.09.002",
+        "external_url": "https://doi.org/10.1016/j.ijsrc.2016.09.002",
+        "abstract": "Analyzes runoff and sediment trends in the Yellow River and attributes changes to precipitation decline, water consumption, reservoirs, and soil-water conservation.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Analyzes Yellow River runoff and sediment changes driven by reservoirs and human interventions, matching the reservoir mode."
+        }
+      },
+      "ojha2018CentralValley": {
+        "id": "ojha2018CentralValley",
+        "title": "Sustained groundwater loss in California's Central Valley exacerbated by intense drought periods",
+        "authors": "Ojha, C., Werth, S., and Shirzaei, M.",
+        "affiliations": "Arizona State University; Virginia Tech; geodesy and water resources research groups.",
+        "year": "2018",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2017WR022250",
+        "external_url": "https://doi.org/10.1029/2017WR022250",
+        "abstract": "Analyzes groundwater storage changes in California's Central Valley and shows that intense drought periods amplify already sustained groundwater losses, reinforcing the basin's dependence on groundwater as a drought buffer.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicit Central Valley study on groundwater loss exacerbated by drought, matching dryIrrigation mode and region."
+        }
+      },
+      "papa2015GBMStorage": {
+        "id": "papa2015GBMStorage",
+        "title": "Satellite-derived surface and subsurface water storage in the Ganges-Brahmaputra River Basin",
+        "authors": "Papa, F., Frappart, F., Malbeteau, Y., et al.",
+        "affiliations": "LEGOS/CNES; French and international remote sensing hydrology institutions.",
+        "year": "2015",
+        "venue": "Journal of Hydrology: Regional Studies",
+        "doi": "10.1016/j.ejrh.2015.03.004",
+        "external_url": "https://doi.org/10.1016/j.ejrh.2015.03.004",
+        "abstract": "Combines satellite observations to estimate surface and subsurface water storage in the Ganges-Brahmaputra Basin, improving interpretation of GRACE in humid monsoon systems.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Satellite-derived storage analysis in the Ganges-Brahmaputra Basin, matching the monsoon mode and case-study region."
+        }
+      },
+      "perkins2017HighPlainsFish": {
+        "id": "perkins2017HighPlainsFish",
+        "title": "Groundwater declines are linked to changes in Great Plains stream fish assemblages",
+        "authors": "Perkin, J. S., Gido, K. B., Falke, J. A., et al.",
+        "affiliations": "Kansas State University; US Geological Survey; Colorado State University and ecology collaborators.",
+        "year": "2017",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.1618936114",
+        "external_url": "https://doi.org/10.1073/pnas.1618936114",
+        "abstract": "Links groundwater depletion in the High Plains Aquifer to changes in Great Plains stream fish assemblages, showing ecological impacts of aquifer-stream disconnection.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicitly links groundwater depletion in the High Plains Aquifer to stream ecology, fitting the dryIrrigation mode and High Plains case study."
+        }
+      },
+      "piao2010ChinaWater": {
+        "id": "piao2010ChinaWater",
+        "title": "The impacts of climate change on water resources and agriculture in China",
+        "authors": "Piao, S., Ciais, P., Huang, Y., et al.",
+        "affiliations": "Peking University; LSCE/IPSL; Chinese Academy of Sciences; international climate research institutions.",
+        "year": "2010",
+        "venue": "Nature",
+        "doi": "10.1038/nature09364",
+        "external_url": "https://doi.org/10.1038/nature09364",
+        "abstract": "Reviews and analyzes how climate change affects water resources and agriculture in China, including northern water scarcity, runoff changes, and interactions between climate stress and human water demand.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "China-scale synthesis covering water scarcity and runoff changes; highly relevant to the North China Plain and Yellow River case studies listed in the context."
+        }
+      },
+      "pokhrel2012HumanWaterCycle": {
+        "id": "pokhrel2012HumanWaterCycle",
+        "title": "Modeling the impact of irrigation on global terrestrial water storage",
+        "authors": "Pokhrel, Y. N., Hanasaki, N., Koirala, S., et al.",
+        "affiliations": "University of Tokyo; National Institute for Environmental Studies Japan; hydrology modeling collaborators.",
+        "year": "2012",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2012WR012232",
+        "external_url": "https://doi.org/10.1029/2012WR012232",
+        "abstract": "Simulates how irrigation modifies terrestrial water storage and land-water fluxes globally, showing that human water use is an essential component of modern hydrological cycles.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global modeling study on irrigation's impact on water storage; relevant conceptually to the dryIrrigation mode but not tied to a specific region."
+        }
+      },
+      "rasanen2017Mekong": {
+        "id": "rasanen2017Mekong",
+        "title": "Observed river discharge changes due to hydropower operations in the Upper Mekong Basin",
+        "authors": "Rasanen, T. A., Someth, P., Lauri, H., et al.",
+        "affiliations": "Aalto University; Mekong River Commission-related research partners.",
+        "year": "2017",
+        "venue": "Journal of Hydrology",
+        "doi": "10.1016/j.jhydrol.2016.12.023",
+        "external_url": "https://doi.org/10.1016/j.jhydrol.2016.12.023",
+        "abstract": "Analyzes observed discharge changes in the Upper Mekong Basin and links altered seasonal flow patterns to hydropower operations, including dry-season augmentation and wet-season attenuation.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Empirical study linking discharge changes to hydropower in the Upper Mekong; directly aligns with the reservoir mode and Mekong case study."
+        }
+      },
+      "revelle1964GangesMachine": {
+        "id": "revelle1964GangesMachine",
+        "title": "The Ganges water machine",
+        "authors": "Revelle, R. and Lakshminarayana, V.",
+        "affiliations": "Harvard University; Indian water resources research collaborators.",
+        "year": "1975",
+        "venue": "Science",
+        "doi": "10.1126/science.188.4188.611",
+        "external_url": "https://doi.org/10.1126/science.188.4188.611",
+        "abstract": "Introduces the Ganges Water Machine idea: managed groundwater pumping and monsoon recharge can reduce flood risk and improve dry-season water availability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Classic conceptual paper specifically proposing a groundwater management strategy for the Ganges Basin, fitting the monsoon recharge and managed intervention modes."
+        }
+      },
+      "rodell2009India": {
+        "id": "rodell2009India",
+        "title": "Satellite-based estimates of groundwater depletion in India",
+        "authors": "Rodell, M., Velicogna, I., and Famiglietti, J. S.",
+        "affiliations": "NASA Goddard Space Flight Center; University of California, Irvine.",
+        "year": "2009",
+        "venue": "Nature",
+        "doi": "10.1038/nature08238",
+        "external_url": "https://doi.org/10.1038/nature08238",
+        "abstract": "Uses GRACE satellite data to estimate rapid groundwater depletion in northern India, identifying agricultural irrigation pumping as a major driver of regional total water storage decline.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Seminal paper using GRACE to quantify groundwater depletion in northern India, directly mapping to the Indus and Ganges case-study regions defined by irrigation-driven depletion."
+        }
+      },
+      "rodell2018Freshwater": {
+        "id": "rodell2018Freshwater",
+        "title": "Emerging trends in global freshwater availability",
+        "authors": "Rodell, M., Famiglietti, J. S., Wiese, D. N., et al.",
+        "affiliations": "NASA Goddard Space Flight Center; Jet Propulsion Laboratory; University of California, Irvine; international partners.",
+        "year": "2018",
+        "venue": "Nature",
+        "doi": "10.1038/s41586-018-0123-1",
+        "external_url": "https://doi.org/10.1038/s41586-018-0123-1",
+        "abstract": "Identifies global freshwater availability change hotspots using GRACE, discussing combined effects of climate change, human water use, ice/snow melt, and water resource management.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global synthesis of GRACE data identifying freshwater availability hotspots. Relevant to multiple modes and regions but conceptual in nature, warranting attachment at the global/mode level rather than specific basins."
+        }
+      },
+      "scanlon2012": {
+        "id": "scanlon2012",
+        "title": "Groundwater depletion and sustainability of irrigation in the US High Plains and Central Valley",
+        "authors": "Scanlon, B. R., Faunt, C. C., Longuevergne, L., et al.",
+        "affiliations": "Bureau of Economic Geology, Jackson School of Geosciences, The University of Texas at Austin; US Geological Survey; partner institutions.",
+        "year": "2012",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.1200311109",
+        "external_url": "https://doi.org/10.1073/pnas.1200311109",
+        "abstract": "Compares groundwater depletion and sustainability in the US High Plains and California Central Valley, showing how irrigation withdrawals, recharge, surface water availability, and management determine long-term groundwater storage imbalance.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Direct comparative study of groundwater depletion and irrigation sustainability in the High Plains and Central Valley. Perfectly aligns with the dryIrrigation mode and the two specified case-study regions."
+        }
+      },
+      "shamsudduha2012GBM": {
+        "id": "shamsudduha2012GBM",
+        "title": "Recent changes in terrestrial water storage in the Ganges-Brahmaputra-Meghna river basin",
+        "authors": "Shamsudduha, M., Taylor, R. G., and Longuevergne, L.",
+        "affiliations": "University College London; groundwater and satellite hydrology collaborators.",
+        "year": "2012",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2012WR012127",
+        "external_url": "https://doi.org/10.1029/2012WR012127",
+        "abstract": "Uses GRACE and hydrologic information to evaluate terrestrial water storage changes in the Ganges-Brahmaputra-Meghna Basin, emphasizing seasonal monsoon storage dynamics.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Focuses on terrestrial water storage dynamics in the Ganges-Brahmaputra-Meghna basin, explicitly emphasizing seasonal monsoon dynamics. Matches the 'ganges' case-study and 'monsoon' mode."
+        }
+      },
+      "siam2017Nile": {
+        "id": "siam2017Nile",
+        "title": "Climate change enhances interannual variability of the Nile river flow",
+        "authors": "Siam, M. S. and Eltahir, E. A. B.",
+        "affiliations": "Massachusetts Institute of Technology.",
+        "year": "2017",
+        "venue": "Nature Climate Change",
+        "doi": "10.1038/nclimate3273",
+        "external_url": "https://doi.org/10.1038/nclimate3273",
+        "abstract": "Uses climate model analysis to show that climate change can increase interannual variability in Nile River flow, complicating reservoir operation and transboundary water allocation.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Analyzes climate change impacts on Nile River flow variability and explicitly discusses implications for reservoir operation and allocation. Aligns with the 'nile' case-study and 'reservoir' mode."
+        }
+      },
+      "small2001Aral": {
+        "id": "small2001Aral",
+        "title": "The Aral Sea disaster",
+        "authors": "Small, I., van der Meer, J., and Upshur, R. E. G.",
+        "affiliations": "University of Toronto and public health/environment collaborators.",
+        "year": "2001",
+        "venue": "Annual Review of Public Health",
+        "doi": "10.1146/annurev.publhealth.22.1.47",
+        "external_url": "https://doi.org/10.1146/annurev.publhealth.22.1.47",
+        "abstract": "Reviews the Aral Sea disaster as a combined hydrologic, ecological, and public health crisis caused by large-scale diversion and irrigation expansion.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Directly reviews the Aral Sea disaster, explicitly matching the 'aral' case study region and its 'reservoir' mode (defined as terminal lake diversion and irrigation loss)."
+        }
+      },
+      "steward2013HighPlains": {
+        "id": "steward2013HighPlains",
+        "title": "Tapping unsustainable groundwater stores for agricultural production in the High Plains Aquifer of Kansas, projections to 2110",
+        "authors": "Steward, D. R., Bruss, P. J., Yang, X., et al.",
+        "affiliations": "Kansas State University and collaborating research institutions.",
+        "year": "2013",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.1220351110",
+        "external_url": "https://doi.org/10.1073/pnas.1220351110",
+        "abstract": "Uses observations and projections for the Kansas High Plains Aquifer to show how groundwater withdrawals for irrigated agriculture can deplete finite storage over decadal to centennial timescales, creating a persistent water-cycle imbalance between pumping and recharge.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Explicitly focuses on the High Plains Aquifer in Kansas, analyzing groundwater depletion driven by irrigation, which perfectly matches the 'high-plains' case study and 'dryIrrigation' mode."
+        }
+      },
+      "taylor2013GroundwaterClimate": {
+        "id": "taylor2013GroundwaterClimate",
+        "title": "Ground water and climate change",
+        "authors": "Taylor, R. G., Scanlon, B., Doll, P., et al.",
+        "affiliations": "University College London; University of Texas at Austin; Goethe University Frankfurt; international groundwater scientists.",
+        "year": "2013",
+        "venue": "Nature Climate Change",
+        "doi": "10.1038/nclimate1744",
+        "external_url": "https://doi.org/10.1038/nclimate1744",
+        "abstract": "Synthesizes how climate change affects groundwater recharge, storage, abstraction, and dependence, and how groundwater buffers climate variability.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "A global synthesis paper on groundwater-climate interactions. It provides conceptual backing for multiple modes (monsoon, dryIrrigation) but is not tied to a specific region."
+        }
+      },
+      "tiwari2009India": {
+        "id": "tiwari2009India",
+        "title": "Dwindling groundwater resources in northern India, from satellite gravity observations",
+        "authors": "Tiwari, V. M., Wahr, J., and Swenson, S.",
+        "affiliations": "National Geophysical Research Institute, India; University of Colorado Boulder; National Center for Atmospheric Research.",
+        "year": "2009",
+        "venue": "Geophysical Research Letters",
+        "doi": "10.1029/2009GL039401",
+        "external_url": "https://doi.org/10.1029/2009GL039401",
+        "abstract": "Estimates declining groundwater storage in northern India from satellite gravity observations, supporting the interpretation that intensive groundwater abstraction has exceeded replenishment in major irrigation regions.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.9,
+          "researchArea": "",
+          "reason": "Satellite-based study of groundwater depletion in northern India. The region overlaps with the Indus and Ganges case studies defined in the catalog, both of which are associated with irrigation-driven depletion."
+        }
+      },
+      "vandijk2013MurrayDarling": {
+        "id": "vandijk2013MurrayDarling",
+        "title": "The Millennium Drought in southeast Australia (2001-2009): natural and human causes and implications for water resources, ecosystems, economy, and society",
+        "authors": "van Dijk, A. I. J. M., Beck, H. E., Crosbie, R. S., et al.",
+        "affiliations": "Australian National University; CSIRO; Bureau of Meteorology; Australian water research institutions.",
+        "year": "2013",
+        "venue": "Water Resources Research",
+        "doi": "10.1002/wrcr.20123",
+        "external_url": "https://doi.org/10.1002/wrcr.20123",
+        "abstract": "Reviews the causes and consequences of the Millennium Drought in southeast Australia, including impacts on water resources, ecosystems, agriculture, economy, and policy responses in regulated river systems.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 1,
+          "researchArea": "",
+          "reason": "Directly focuses on the Murray-Darling Basin during the Millennium Drought, analyzing human regulation and policy in a regulated river system; matches the 'reservoir' mode and case study region."
+        }
+      },
+      "voss2013MiddleEast": {
+        "id": "voss2013MiddleEast",
+        "title": "Groundwater depletion in the Middle East from GRACE with implications for transboundary water management in the Tigris-Euphrates-Western Iran region",
+        "authors": "Voss, K. A., Famiglietti, J. S., Lo, M., et al.",
+        "affiliations": "University of California Center for Hydrologic Modeling; NASA and regional water research partners.",
+        "year": "2013",
+        "venue": "Water Resources Research",
+        "doi": "10.1002/wrcr.20078",
+        "external_url": "https://doi.org/10.1002/wrcr.20078",
+        "abstract": "Uses GRACE and ancillary data to estimate major groundwater depletion in the Tigris-Euphrates-Western Iran region, emphasizing drought, irrigation, groundwater pumping, and transboundary management implications.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Explicit focus on groundwater depletion in the Tigris-Euphrates-Western Iran region, matching the case-study definition for dryIrrigation mode."
+        }
+      },
+      "wada2010GlobalGroundwater": {
+        "id": "wada2010GlobalGroundwater",
+        "title": "Global depletion of groundwater resources",
+        "authors": "Wada, Y., van Beek, L. P. H., van Kempen, C. M., et al.",
+        "affiliations": "Utrecht University; Deltares; international hydrology collaborators.",
+        "year": "2010",
+        "venue": "Geophysical Research Letters",
+        "doi": "10.1029/2010GL044571",
+        "external_url": "https://doi.org/10.1029/2010GL044571",
+        "abstract": "Estimates global groundwater depletion and shows that irrigation withdrawals in major agricultural regions create persistent storage losses where abstraction exceeds recharge.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Foundational global study on groundwater depletion driven by irrigation, relevant to the dryIrrigation mode conceptually rather than a specific basin."
+        }
+      },
+      "wada2012Nonsustainable": {
+        "id": "wada2012Nonsustainable",
+        "title": "Nonsustainable groundwater sustaining irrigation: A global assessment",
+        "authors": "Wada, Y., van Beek, L. P. H., and Bierkens, M. F. P.",
+        "affiliations": "Utrecht University and global hydrology modeling groups.",
+        "year": "2012",
+        "venue": "Water Resources Research",
+        "doi": "10.1029/2011WR010562",
+        "external_url": "https://doi.org/10.1029/2011WR010562",
+        "abstract": "Quantifies how non-renewable groundwater supports irrigation globally, linking food production to aquifer depletion and long-term water balance deficits.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Global assessment linking non-renewable groundwater to irrigation; provides conceptual basis for dryIrrigation mode."
+        }
+      },
+      "wang2020YellowRiver": {
+        "id": "wang2020YellowRiver",
+        "title": "Impact assessment of climate change and human activities on streamflow signatures in the Yellow River Basin using the Budyko hypothesis and derived differential equation",
+        "authors": "Wang, W., Zhang, Y., Tang, Q., et al.",
+        "affiliations": "Chinese Academy of Sciences; Tsinghua University; hydrology partner institutions.",
+        "year": "2020",
+        "venue": "Journal of Hydrology",
+        "doi": "10.1016/j.jhydrol.2020.125460",
+        "external_url": "https://doi.org/10.1016/j.jhydrol.2020.125460",
+        "abstract": "Uses a Budyko-based framework and derived differential equations to separate climate and human contributions to Yellow River streamflow signature changes, showing strong human effects on runoff decline.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Direct study of Yellow River Basin streamflow changes attributed to human activities, matching the reservoir/managed case study."
+        }
+      },
+      "wheeler2020Nile": {
+        "id": "wheeler2020Nile",
+        "title": "Understanding and managing new risks on the Nile with the Grand Ethiopian Renaissance Dam",
+        "authors": "Wheeler, K. G., Jeuland, M., Hall, J. W., et al.",
+        "affiliations": "University of Oxford; Duke University; University of Manchester; Nile water-management research partners.",
+        "year": "2020",
+        "venue": "Nature Communications",
+        "doi": "10.1038/s41467-020-19089-x",
+        "external_url": "https://doi.org/10.1038/s41467-020-19089-x",
+        "abstract": "Assesses how GERD filling and operation reshape Nile Basin water risks, showing that reservoir rules, drought sequences, and transboundary coordination strongly affect downstream water supply.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Core paper on GERD impacts on Nile Basin, directly relevant to the reservoir mode and Nile case study."
+        }
+      },
+      "yin2021IndusTWS": {
+        "id": "yin2021IndusTWS",
+        "title": "Overview of terrestrial water storage changes over the Indus River Basin based on GRACE/GRACE-FO solutions",
+        "authors": "Yin, W., Hu, L., Han, S.-C., et al.",
+        "affiliations": "Chinese Academy of Sciences; geodesy and hydrology collaborators.",
+        "year": "2021",
+        "venue": "Science of The Total Environment",
+        "doi": "10.1016/j.scitotenv.2021.149366",
+        "external_url": "https://doi.org/10.1016/j.scitotenv.2021.149366",
+        "abstract": "Analyzes natural and anthropogenic controls on terrestrial water storage in the Indus Basin, identifying groundwater overexploitation in irrigated plains as a major driver.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "GRACE-based analysis of Indus Basin identifying groundwater overexploitation, matching the Indus dryIrrigation case study."
+        }
+      },
+      "zhang2015NileGERD": {
+        "id": "zhang2015NileGERD",
+        "title": "Filling the Grand Ethiopian Renaissance Dam without the Nile Basin's consent",
+        "authors": "Zhang, Y., Erkyihun, S. T., and Block, P.",
+        "affiliations": "University of Wisconsin-Madison and Nile climate-water systems collaborators.",
+        "year": "2016",
+        "venue": "Journal of Hydrology",
+        "doi": "10.1016/j.jhydrol.2016.02.006",
+        "external_url": "https://doi.org/10.1016/j.jhydrol.2016.02.006",
+        "abstract": "Evaluates GERD filling strategies and downstream impacts, showing how reservoir operation can redistribute Nile flow and increase drought-period allocation risks.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Focuses on GERD filling strategies and downstream Nile impacts; matches Nile reservoir case study."
+        }
+      },
+      "ziv2012MekongTradeoffs": {
+        "id": "ziv2012MekongTradeoffs",
+        "title": "Trading-off fish biodiversity, food security, and hydropower in the Mekong River Basin",
+        "authors": "Ziv, G., Baran, E., Nam, S., Rodriguez-Iturbe, I., and Levin, S. A.",
+        "affiliations": "Princeton University; WorldFish; Mekong River Commission-related collaborators.",
+        "year": "2012",
+        "venue": "Proceedings of the National Academy of Sciences",
+        "doi": "10.1073/pnas.1201423109",
+        "external_url": "https://doi.org/10.1073/pnas.1201423109",
+        "abstract": "Quantifies tradeoffs between hydropower development, fish biodiversity, and food security in the Mekong, highlighting ecological consequences of altered flow regimes.",
+        "keywords": [],
+        "llm": {
+          "audited": true,
+          "status": "approve",
+          "confidence": 0.95,
+          "researchArea": "",
+          "reason": "Quantifies tradeoffs of hydropower in Mekong Basin; directly matches the Mekong reservoir case study."
+        }
+      }
+    }
+  },
+  "relations": [
+    {
+      "type": "paper_studies_region",
+      "source": "scanlon2012",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "steward2013HighPlains",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "perkins2017HighPlainsFish",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "deines2020HighPlains",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "foster2024HighPlainsDrought",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "jasechko2024Aquifers",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wada2010GlobalGroundwater",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "gleeson2012WaterBalance",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "high-plains",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "scanlon2012",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "famiglietti2011CentralValley",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "ojha2018CentralValley",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "liu2022CentralValley",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "alam2021CentralValleyRecovery",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "faunt2016CentralValley",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wada2012Nonsustainable",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "central-valley",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2009India",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "tiwari2009India",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "macdonald2016IndoGangetic",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "asoka2017India",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "macallister2022Accumulation",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "yin2021IndusTWS",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "arshad2022IndusSWAT",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "jasechko2024Aquifers",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wada2012Nonsustainable",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "indus",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "macdonald2016IndoGangetic",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2009India",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "tiwari2009India",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "asoka2017India",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "shamsudduha2012GBM",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "papa2015GBMStorage",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "revelle1964GangesMachine",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "jasechko2024Aquifers",
+      "target": "ganges",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "leng2014NorthChina",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "feng2013NorthChina",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "chen2019NorthChinaAcceleration",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "cao2013NorthChinaRecharge",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "long2025NorthChina",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "piao2010ChinaWater",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "leng2015Irrigation",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "jasechko2024Aquifers",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "taylor2013GroundwaterClimate",
+      "target": "north-china-plain",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wang2020YellowRiver",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "kong2020YellowRiver500y",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "mueller2016YellowSedimentRunoff",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "li2019YellowTWS",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "piao2010ChinaWater",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "leng2015Irrigation",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "pokhrel2012HumanWaterCycle",
+      "target": "yellow-river",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "voss2013MiddleEast",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "joodaki2014MiddleEast",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "grace2018TigrisDrought",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "alAnsari2021TigrisReview",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wada2010GlobalGroundwater",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "tigris-euphrates",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "micklin2007Aral",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "gaybullaev2012AralBalance",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "small2001Aral",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "cretaux2013Aral",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "pokhrel2012HumanWaterCycle",
+      "target": "aral",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "hecht2019Mekong",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rasanen2017Mekong",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "galelli2024Mekong",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "ziv2012MekongTradeoffs",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "kondolf2018MekongSediment",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "dang2020MekongDams",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "deGraaf2019EnvironmentalFlow",
+      "target": "mekong",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "wheeler2020Nile",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "siam2017Nile",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "basheer2021Nile",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "zhang2015NileGERD",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "elshamy2009NileClimate",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "kahsay2015NileCooperation",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "taylor2013GroundwaterClimate",
+      "target": "nile",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "leblanc2009MurrayDarling",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "vandijk2013MurrayDarling",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "cai2008MDBClimate",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "chiew2011MDBDrought",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "grafton2011MDBPlan",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "rodell2018Freshwater",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "globalIrrigationReview",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    },
+    {
+      "type": "paper_studies_region",
+      "source": "deGraaf2019EnvironmentalFlow",
+      "target": "murray-darling",
+      "method": "curated-region-link"
+    }
+  ]
+}

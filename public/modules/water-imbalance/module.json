@@ -9,7 +9,7 @@
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": true,
-  "knowledgeGraph": "./data/knowledge-graph.json",
+  "knowledgeGraph": "./data/runtime-graph.json",
   "datasets": [
     {
       "id": "basin-three-variable-timeseries-1962-2016",
