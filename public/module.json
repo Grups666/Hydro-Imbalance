@@ -6,7 +6,7 @@
   "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
   "author": "Spatial Research Team",
   "icon": "droplet",
-  "basePath": "https://grups666.github.io/Hydro-Imbalance/",
+  "basePath": "https://grups666.github.io/Hydro-Imbalance/public/",
   "entry": "./modules/water-imbalance/index.js",
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",

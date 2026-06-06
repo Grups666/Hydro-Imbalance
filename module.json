@@ -7,15 +7,15 @@
   "author": "Spatial Research Team",
   "icon": "droplet",
   "basePath": "https://grups666.github.io/Hydro-Imbalance/",
-  "entry": "./modules/water-imbalance/index.js",
+  "entry": "./public/modules/water-imbalance/index.js",
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": false,
-  "knowledgeGraph": "./modules/water-imbalance/data/runtime-graph.json",
+  "knowledgeGraph": "./public/modules/water-imbalance/data/runtime-graph.json",
   "datasets": [
     {
       "id": "basin-three-variable-timeseries-1962-2016",
-      "metadata": "./modules/water-imbalance/data/basin-time-series-metadata.json"
+      "metadata": "./public/modules/water-imbalance/data/basin-time-series-metadata.json"
     }
   ],
   "provides": {
