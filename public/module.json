@@ -2,7 +2,7 @@
   "id": "water-imbalance",
   "name": "Water Imbalance",
   "version": "0.1.1",
-  "assetVersion": "2026-06-06-coordinate-fix",
+  "assetVersion": "2026-06-07-hover-cache",
   "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
   "author": "Spatial Research Team",
   "icon": "droplet",

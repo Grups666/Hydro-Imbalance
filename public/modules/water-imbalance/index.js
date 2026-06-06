@@ -21,6 +21,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.authors = new Map();
     this.relationsByTarget = new Map();
     this.preparedBasins = [];
+    this.preparedByBasinId = new Map();
     this.basinSpatialIndex = null;
     this.selectedBasin = null;
     this.chartModal = null;
@@ -28,6 +29,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.activeChartSeries = null;
     this.enhancedLayer = null;
     this.originalLayerState = null;
+    this.staticLayerCache = { key: null, canvas: null, ctx: null };
     this.legendId = `${this.manifest.id || "water-imbalance"}-legend`;
     this.handleFeatureClick = (payload) => {
       if (payload.layer?.moduleId === this.manifest.id) this.onFeatureClick(payload);
@@ -55,6 +57,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.enhancedLayer = null;
     this.originalLayerState = null;
     this.selectedBasin = null;
+    this.staticLayerCache = { key: null, canvas: null, ctx: null };
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
     this.closeLiteratureModal();
@@ -161,11 +164,13 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         rings: (basin.rings || []).filter((ring) => ring.length >= 3)
       };
     });
+    this.preparedByBasinId = new Map(this.preparedBasins.map((prep) => [prep.basin.id, prep]));
     this.basinSpatialIndex = new Foundation.SpatialGridIndex(
       this.preparedBasins,
       (prep) => prep.basin.bbox,
-      10
+      4
     );
+    this.staticLayerCache = { key: null, canvas: null, ctx: null };
   }
 
   enhanceFoundationBasinLayer() {
@@ -199,9 +204,68 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   render(ctx, viewport) {
+    if (!viewport.interacting) {
+      this.renderCachedStaticLayer(ctx, viewport);
+      this.renderHighlightLayer(ctx, viewport);
+      return;
+    }
+
+    this.renderDynamicLayer(ctx, viewport, { includeHighlights: true, lightweight: true });
+  }
+
+  renderCachedStaticLayer(ctx, viewport) {
+    const key = this.getStaticLayerCacheKey(viewport);
+    if (this.staticLayerCache.key !== key) {
+      this.buildStaticLayerCache(viewport, key);
+    }
+    if (this.staticLayerCache.canvas) {
+      ctx.drawImage(this.staticLayerCache.canvas, 0, 0, viewport.width, viewport.height);
+    }
+  }
+
+  getStaticLayerCacheKey(viewport) {
+    const dpr = window.devicePixelRatio || 1;
+    return [
+      Math.round(viewport.width),
+      Math.round(viewport.height),
+      viewport.scale.toFixed(4),
+      Math.round(viewport.offsetX),
+      Math.round(viewport.offsetY),
+      dpr.toFixed(2)
+    ].join(":");
+  }
+
+  buildStaticLayerCache(viewport, key) {
+    const dpr = window.devicePixelRatio || 1;
+    const canvas = this.staticLayerCache.canvas || document.createElement("canvas");
+    const width = Math.max(1, Math.round(viewport.width * dpr));
+    const height = Math.max(1, Math.round(viewport.height * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    const cacheCtx = canvas.getContext("2d");
+    cacheCtx.setTransform(1, 0, 0, 1, 0, 0);
+    cacheCtx.clearRect(0, 0, canvas.width, canvas.height);
+    cacheCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.renderDynamicLayer(cacheCtx, viewport, { includeHighlights: false, lightweight: false });
+    this.staticLayerCache = { key, canvas, ctx: cacheCtx };
+  }
+
+  renderHighlightLayer(ctx, viewport) {
+    const highlighted = new Set();
+    const hovered = this.app.hoveredFeatureId ? this.preparedByBasinId.get(this.app.hoveredFeatureId) : null;
+    const selected = this.selectedBasin || null;
+    if (hovered) highlighted.add(hovered);
+    if (selected) highlighted.add(selected);
+    for (const prep of highlighted) this.renderPreparedBasin(ctx, viewport, prep, { highlight: true });
+  }
+
+  renderDynamicLayer(ctx, viewport, options = {}) {
+    const includeHighlights = options.includeHighlights !== false;
+    const lightweight = !!options.lightweight;
     const base = (viewport.height / 180) * viewport.scale;
     const { width, height, offsetX, offsetY } = viewport;
-    const lightweight = !!viewport.interacting;
     const leftLon = (-width / 2 - offsetX) / base;
     const rightLon = (width / 2 - offsetX) / base;
     const firstSeg = Math.floor(leftLon / 360);
@@ -217,8 +281,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       const lonOffset = seg * 360;
 
       for (const prep of candidates) {
-        const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
-        const isHovered = this.app.hoveredFeatureId === prep.basin.id;
+        const isSelected = includeHighlights && this.selectedBasin?.basin.id === prep.basin.id;
+        const isHovered = includeHighlights && this.app.hoveredFeatureId === prep.basin.id;
         const color = prep.classification?.color || "#e3e6e9";
 
         let fillAlpha = prep.classification ? 0.68 : 0.32;
@@ -243,6 +307,28 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           ctx.fill(path);
           if (!lightweight || isSelected || isHovered) ctx.stroke(path);
         }
+      }
+    }
+  }
+
+  renderPreparedBasin(ctx, viewport, prep, options = {}) {
+    const base = (viewport.height / 180) * viewport.scale;
+    const { width, height, offsetX, offsetY } = viewport;
+    const leftLon = (-width / 2 - offsetX) / base;
+    const rightLon = (width / 2 - offsetX) / base;
+    const firstSeg = Math.floor(leftLon / 360);
+    const lastSeg = Math.ceil(rightLon / 360);
+    const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
+
+    ctx.fillStyle = Foundation.UI.hexToRgba(prep.classification?.color || "#e3e6e9", isSelected ? 0.9 : 0.82);
+    ctx.strokeStyle = isSelected ? "#111827" : "rgba(51,65,85,0.48)";
+    ctx.lineWidth = isSelected ? 1.8 : 1;
+
+    for (let seg = firstSeg; seg <= lastSeg; seg++) {
+      const lonOffset = seg * 360;
+      for (const path of this.buildScreenPaths(prep, lonOffset, base, width, height, offsetX, offsetY)) {
+        ctx.fill(path);
+        ctx.stroke(path);
       }
     }
   }
@@ -297,7 +383,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   onFeatureClick(payload) {
-    const prep = this.preparedBasins.find((item) => item.basin.id === payload.feature.id);
+    const prep = this.preparedByBasinId.get(payload.feature.id);
     if (!prep) return;
 
     this.selectedBasin = prep;
