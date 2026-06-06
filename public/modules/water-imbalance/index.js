@@ -19,12 +19,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.regions = [];
     this.literature = new Map();
     this.authors = new Map();
-    this.relationsBySource = new Map();
     this.relationsByTarget = new Map();
     this.preparedBasins = [];
     this.basinSpatialIndex = null;
     this.selectedBasin = null;
-    this.layerIds = [];
     this.chartModal = null;
     this.literatureModal = null;
     this.activeChartSeries = null;
@@ -61,10 +59,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.closeTimeSeriesModal();
     this.closeLiteratureModal();
     this.app.unregisterLegend?.(this.legendId);
-  }
-
-  getLayerIds() {
-    return this.layerIds;
   }
 
   resolveModulePath(relativePath) {
@@ -146,7 +140,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     for (const relation of this.graph?.relations || []) {
       if (!relation.type.includes("literature") && !relation.type.startsWith("paper_studies_")) continue;
-      this.addRelationIndex(this.relationsBySource, relation.source, relation);
       this.addRelationIndex(this.relationsByTarget, relation.target, relation);
     }
   }
