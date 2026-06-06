@@ -466,8 +466,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   renderAuthor(author) {
-    if (!author.scholar_url) return this.escape(author.name);
-    return `<a href="${this.escape(author.scholar_url)}" target="_blank" rel="noopener">${this.escape(author.name)}</a>`;
+    const label = this.escape(author.name);
+    if (!author.scholar_url) return `<span class="wi-literature-author">${label}</span>`;
+    return `<a class="wi-literature-author" href="${this.escape(author.scholar_url)}" target="_blank" rel="noopener">${label}</a>`;
   }
 
   ensureLiteratureUI() {
@@ -495,6 +496,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-literature-title a{color:#1e293b;text-decoration:none}
       .wi-literature-title a:hover{text-decoration:underline}
       .wi-literature-authors{font-size:13px;margin-bottom:14px}
+      .wi-literature-author-list{display:flex;flex-wrap:wrap;gap:6px}
+      .wi-literature-author{display:inline-flex;align-items:center;border:1px solid #e2e8f0;background:#f8fafc;border-radius:999px;padding:3px 8px;color:#475569}
       .wi-literature-authors a{color:#3b82f6;text-decoration:none}
       .wi-literature-authors a:hover{text-decoration:underline}
       .wi-literature-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
@@ -544,8 +547,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     this.literatureModal.querySelector("#wi-literature-body").innerHTML = `
       <h2 class="wi-literature-title"><a href="${this.escape(articleUrl)}" target="_blank" rel="noopener">${this.escape(ref.title)}</a></h2>
-      <div class="wi-literature-authors">${authors.length
-        ? authors.map((author) => this.renderAuthor(author)).join(", ")
+      <div class="wi-literature-authors wi-literature-author-list">${authors.length
+        ? authors.map((author) => this.renderAuthor(author)).join("")
         : "Unknown authors"}</div>
       <div class="wi-literature-meta">${chips.map((chip) => `<span class="wi-literature-chip">${this.escape(chip)}</span>`).join("")}</div>
       ${ref.abstract ? `<section class="wi-literature-section"><h3>Abstract</h3><p>${this.escape(ref.abstract)}</p></section>` : ""}
