@@ -22,7 +22,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.relationsBySource = new Map();
     this.relationsByTarget = new Map();
     this.preparedBasins = [];
-    this.basinPathCache = null;
     this.basinSpatialIndex = null;
     this.selectedBasin = null;
     this.layerIds = [];
@@ -169,7 +168,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         rings: (basin.rings || []).filter((ring) => ring.length >= 3)
       };
     });
-    this.basinPathCache = new Foundation.PathCache((prep) => prep.rings);
     this.basinSpatialIndex = new Foundation.SpatialGridIndex(
       this.preparedBasins,
       (prep) => prep.basin.bbox,
@@ -216,7 +214,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const firstSeg = Math.floor(leftLon / 360);
     const lastSeg = Math.ceil(rightLon / 360);
 
-    ctx.save();
     for (let seg = firstSeg; seg <= lastSeg; seg++) {
       const candidates = this.basinSpatialIndex.queryBounds(
         Math.max(-180, leftLon - seg * 360),
@@ -247,16 +244,28 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
         ctx.fillStyle = Foundation.UI.hexToRgba(color, fillAlpha);
         ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = lineWidth / base;
-        ctx.setTransform(base, 0, 0, -base, width / 2 + offsetX + lonOffset * base, height / 2 + offsetY);
+        ctx.lineWidth = lineWidth;
 
-        for (const path of this.basinPathCache.get(prep)) {
+        for (const path of this.buildScreenPaths(prep, lonOffset, base, width, height, offsetX, offsetY)) {
           ctx.fill(path);
           if (!lightweight || isSelected || isHovered) ctx.stroke(path);
         }
       }
     }
-    ctx.restore();
+  }
+
+  buildScreenPaths(prep, lonOffset, base, width, height, offsetX, offsetY) {
+    return prep.rings.map((ring) => {
+      const path = new Path2D();
+      for (let i = 0; i < ring.length; i++) {
+        const [lon, lat] = ring[i];
+        const x = width / 2 + (lon + lonOffset) * base + offsetX;
+        const y = height / 2 - lat * base + offsetY;
+        if (i === 0) path.moveTo(x, y);
+        else path.lineTo(x, y);
+      }
+      return path;
+    });
   }
 
   hitTest(lon, lat) {
@@ -444,7 +453,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       <div data-wi-literature-index="${index}" tabindex="0" role="button" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer">
         <div style="font-weight:500;margin-bottom:3px;color:#1e293b">${this.escape(ref.title)}</div>
         <div style="font-size:11px;margin-bottom:4px;color:#64748b">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
-        <div style="color:#64748b;font-size:11px">${this.escape(item.relation.type)}${item.relation.confidence != null ? ` · confidence ${this.escape(item.relation.confidence)}` : ""}</div>
+        ${item.relation.confidence != null ? `<div style="color:#64748b;font-size:11px">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
       </div>
     `;
   }
@@ -541,7 +550,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const chips = [
       ref.year,
       ref.venue,
-      relation.type,
       relation.confidence != null ? `confidence ${relation.confidence}` : ""
     ].filter(Boolean);
 

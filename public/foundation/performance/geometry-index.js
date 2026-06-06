@@ -1,33 +1,8 @@
 /**
- * Reusable geometry acceleration for vector features.
- * Paths are built once, while spatial queries only inspect nearby features.
+ * Reusable spatial acceleration for vector features.
+ * SpatialGridIndex limits viewport and pointer queries to nearby features.
  */
 window.Foundation = window.Foundation || {};
-
-Foundation.PathCache = class PathCache {
-  constructor(getRings) {
-    this.getRings = getRings;
-    this.paths = new WeakMap();
-  }
-
-  get(feature) {
-    let paths = this.paths.get(feature);
-    if (paths) return paths;
-
-    paths = (this.getRings(feature) || []).filter((ring) => ring.length >= 3).map((ring) => {
-      const path = new Path2D();
-      for (let i = 0; i < ring.length; i++) {
-        const [x, y] = ring[i];
-        if (i === 0) path.moveTo(x, y);
-        else path.lineTo(x, y);
-      }
-      path.closePath();
-      return path;
-    });
-    this.paths.set(feature, paths);
-    return paths;
-  }
-};
 
 Foundation.SpatialGridIndex = class SpatialGridIndex {
   constructor(features, getBounds, cellSize = 10) {
