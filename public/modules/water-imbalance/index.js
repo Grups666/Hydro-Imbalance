@@ -210,7 +210,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       return;
     }
 
-    this.renderDynamicLayer(ctx, viewport, { includeHighlights: true, lightweight: true });
+    this.renderDynamicLayer(ctx, viewport, { includeHighlights: true });
   }
 
   renderCachedStaticLayer(ctx, viewport) {
@@ -248,7 +248,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     cacheCtx.setTransform(1, 0, 0, 1, 0, 0);
     cacheCtx.clearRect(0, 0, canvas.width, canvas.height);
     cacheCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    this.renderDynamicLayer(cacheCtx, viewport, { includeHighlights: false, lightweight: false });
+    this.renderDynamicLayer(cacheCtx, viewport, { includeHighlights: false });
     this.staticLayerCache = { key, canvas, ctx: cacheCtx };
   }
 
@@ -263,7 +263,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   renderDynamicLayer(ctx, viewport, options = {}) {
     const includeHighlights = options.includeHighlights !== false;
-    const lightweight = !!options.lightweight;
     const base = (viewport.height / 180) * viewport.scale;
     const { width, height, offsetX, offsetY } = viewport;
     const leftLon = (-width / 2 - offsetX) / base;
@@ -305,7 +304,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
         for (const path of this.buildScreenPaths(prep, lonOffset, base, width, height, offsetX, offsetY)) {
           ctx.fill(path);
-          if (!lightweight || isSelected || isHovered) ctx.stroke(path);
+          ctx.stroke(path);
         }
       }
     }
