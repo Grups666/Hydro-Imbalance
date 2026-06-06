@@ -8,11 +8,19 @@ The Foundation map and module loader now live in:
 
 ## Remote Module
 
-Tereon can load this module from GitHub Pages:
+Tereon can load this module from GitHub Pages through the direct module manifest:
 
 ```text
 https://grups666.github.io/Hydro-Imbalance/modules/water-imbalance/module.json
 ```
+
+The repository also exposes a root `module.json` entry for repo URL imports:
+
+```text
+https://github.com/Grups666/Hydro-Imbalance
+```
+
+That root entry points Tereon back to the GitHub Pages module assets. Hydro-Imbalance remains a headless module/data repository.
 
 The manifest points to the module entry, runtime graph, classification, and time-series metadata under:
 
