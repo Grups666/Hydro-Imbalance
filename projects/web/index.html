@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水循环失衡诊断</title>
+    <script>
+      (() => {
+        try {
+          const language = localStorage.getItem("waterCycleLanguage");
+          if (language === "zh" || language === "en") {
+            document.documentElement.dataset.initialLanguage = language;
+            document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+          }
+          document.documentElement.classList.add("i18n-booting");
+          setTimeout(() => {
+            document.documentElement.classList.remove("i18n-booting");
+            document.documentElement.classList.add("i18n-ready");
+          }, 1500);
+        } catch (error) {
+          document.documentElement.classList.add("i18n-ready");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="hero-copy-block">
+            <p class="eyebrow" data-i18n="heroEyebrow">WaterGAP / Global Diagnostics</p>
+            <h1 data-i18n="heroTitle">水循环失衡诊断</h1>
+            <p class="hero-copy" data-i18n="heroCopy">
+              以综合失衡为入口，沿通量异常、储量异常、极端化异常和供需/功能异常四个维度追踪变量证据。
+            </p>
+          </div>
+          <nav class="page-links" aria-label="Page navigation">
+            <a class="page-link active" href="./index.html" data-i18n="navImbalance">失衡诊断</a>
+            <a class="page-link" href="./evidence.html" data-i18n="navEvidence">变量分析</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="diagnostic-workbench">
+        <section class="panel controls-panel">
+          <div class="panel-header">
+            <h2 data-i18n="controlsTitle">诊断控制</h2>
+            <p data-i18n="controlsDesc">切换诊断层级、空间单元和时间窗口。</p>
+          </div>
+
+          <label class="control">
+            <span data-i18n="language">语言</span>
+            <select id="languageSelect">
+              <option value="zh">中文</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="diagnosticLayer">诊断层级</span>
+            <select id="layerSelect"></select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="mapUnit">空间单元</span>
+            <select id="mapUnitSelect">
+              <option value="mesh" data-i18n="meshUnit">网格</option>
+              <option value="basin" data-i18n="basinUnit">流域</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="window">时间窗口</span>
+            <select id="windowSelect">
+              <option value="20">近 20 年</option>
+              <option value="30">近 30 年</option>
+            </select>
+          </label>
+
+        </section>
+
+        <section class="panel map-panel">
+          <div class="panel-header map-header">
+            <div>
+              <h2 id="mapTitle">综合失衡指数</h2>
+              <p id="mapSubtitle"></p>
+            </div>
+            <div class="risk-legend">
+              <span data-i18n="legendLow">低</span>
+              <span class="risk-legend-bar"></span>
+              <span data-i18n="legendHigh">高</span>
+            </div>
+          </div>
+
+          <div class="layer-tabs" id="layerTabs"></div>
+
+          <div class="map-frame">
+            <div class="map-stage">
+              <canvas id="mapCanvas" width="1080" height="540"></canvas>
+              <button id="expandMapButton" class="expand-map" type="button" aria-label="Expand map"></button>
+              <button id="resetViewButton" class="reset-view hidden" type="button" aria-label="Reset view"></button>
+              <div id="loadingOverlay" class="loading-overlay hidden">正在加载诊断数据...</div>
+              <div id="tooltip" class="tooltip hidden"></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="panel info-panel">
+          <section class="score-card" id="scoreCard"></section>
+        </aside>
+
+        <section class="panel detail-panel">
+          <section class="dimension-panel">
+            <h3 data-i18n="dimensionScores">四维诊断</h3>
+            <div id="dimensionBars"></div>
+          </section>
+          <section class="evidence-panel">
+            <h3 data-i18n="mainEvidence">主要证据</h3>
+            <div id="evidenceList"></div>
+          </section>
+          <section class="method-box" id="methodBox"></section>
+        </section>
+      </main>
+    </div>
+
+    <div id="mapModal" class="map-modal hidden" aria-hidden="true">
+      <div class="map-modal-backdrop"></div>
+      <div class="map-modal-panel">
+        <div class="modal-map-stage">
+          <button id="closeMapModalButton" class="close-map-modal" type="button" aria-label="Close expanded map"></button>
+          <canvas id="modalMapCanvas" width="1440" height="720"></canvas>
+          <button id="modalResetViewButton" class="reset-view hidden modal-reset-view" type="button" aria-label="Reset view"></button>
+          <div id="modalTooltip" class="tooltip hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./analysis-data.js"></script>
+    <script src="../basin-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

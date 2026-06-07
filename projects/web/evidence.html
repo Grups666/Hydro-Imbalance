@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>变量分析</title>
+    <script>
+      (() => {
+        try {
+          const language = localStorage.getItem("waterCycleLanguage");
+          if (language === "zh" || language === "en") {
+            document.documentElement.dataset.initialLanguage = language;
+            document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+          }
+          document.documentElement.classList.add("i18n-booting");
+          setTimeout(() => {
+            document.documentElement.classList.remove("i18n-booting");
+            document.documentElement.classList.add("i18n-ready");
+          }, 1500);
+        } catch (error) {
+          document.documentElement.classList.add("i18n-ready");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle theme">
+      <svg class="sun-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="5"/>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <svg class="moon-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="hero-copy-block">
+            <p class="eyebrow" data-i18n="heroEyebrow">WaterGAP / Global Diagnostics</p>
+            <h1 data-i18n="heroTitle">变量分析</h1>
+            <p class="hero-copy" data-i18n="heroCopy">
+              同时查看单个变量的标准化失衡证据和多年平均空间分布，区分异常强度与变量本身量级。
+            </p>
+          </div>
+          <nav class="page-links" aria-label="Page navigation">
+            <a class="page-link" href="./index.html" data-i18n="navImbalance">失衡诊断</a>
+            <a class="page-link active" href="./evidence.html" data-i18n="navVariables">变量分析</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="variable-workbench">
+        <section class="panel controls-panel">
+          <div class="panel-header">
+            <h2 data-i18n="controlsTitle">变量控制</h2>
+            <p data-i18n="controlsDesc">切换变量、近期窗口、异常阈值、均值类型和语言。</p>
+          </div>
+
+          <label class="control">
+            <span data-i18n="language">语言</span>
+            <select id="languageSelect">
+              <option value="zh">中文</option>
+              <option value="en">English</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="variable">变量</span>
+            <select id="variableSelect"></select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="window">近期窗口</span>
+            <select id="windowSelect">
+              <option value="20">近 20 年</option>
+              <option value="30">近 30 年</option>
+            </select>
+          </label>
+
+          <label class="control">
+            <span data-i18n="threshold">显著异常阈值</span>
+            <input id="thresholdRange" type="range" min="0.5" max="3" step="0.5" value="1.5" />
+            <strong id="thresholdValue">1.5σ</strong>
+          </label>
+
+          <label class="control">
+            <span data-i18n="meanType">均值类型</span>
+            <select id="meanTypeSelect">
+              <option value="baselineMean">长期基线多年平均</option>
+              <option value="recentMean">近期窗口多年平均</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="variable-map-stack">
+          <section class="panel map-panel variable-map-panel">
+            <div class="panel-header map-header">
+              <div>
+                <h2 id="evidenceMapTitle">变量失衡证据</h2>
+                <p id="evidenceMapSubtitle"></p>
+              </div>
+              <div class="z-legend">
+                <span data-i18n="legendNegative">负偏离</span>
+                <span class="z-legend-bar"></span>
+                <span data-i18n="legendPositive">正偏离</span>
+              </div>
+            </div>
+
+            <div class="map-frame compact-map-frame">
+              <div class="map-stage">
+                <canvas id="evidenceMapCanvas" width="1080" height="540"></canvas>
+                <button id="expandEvidenceMapButton" class="expand-map" type="button" aria-label="Expand evidence map"></button>
+                <button id="resetEvidenceViewButton" class="reset-view hidden" type="button" aria-label="Reset evidence map"></button>
+                <div id="loadingOverlay" class="loading-overlay hidden">正在加载变量数据...</div>
+                <div id="evidenceTooltip" class="tooltip hidden"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel map-panel variable-map-panel">
+            <div class="panel-header map-header">
+              <div>
+                <h2 id="meanMapTitle">变量均值分布</h2>
+                <p id="meanMapSubtitle"></p>
+              </div>
+              <div class="value-legend">
+                <span data-i18n="legendLow">低值</span>
+                <span class="value-legend-bar"></span>
+                <span data-i18n="legendHigh">高值</span>
+              </div>
+            </div>
+
+            <div class="map-frame compact-map-frame">
+              <div class="map-stage">
+                <canvas id="meanMapCanvas" width="1080" height="540"></canvas>
+                <button id="expandMeanMapButton" class="expand-map" type="button" aria-label="Expand mean map"></button>
+                <button id="resetMeanViewButton" class="reset-view hidden" type="button" aria-label="Reset mean map"></button>
+                <div id="meanTooltip" class="tooltip hidden"></div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="panel info-panel variable-info-panel">
+          <section class="metric-block">
+            <h3 data-i18n="evidenceSummaryTitle">失衡证据摘要</h3>
+            <div class="period-card" id="evidencePeriodCard"></div>
+            <div class="summary-grid" id="evidenceSummaryGrid"></div>
+          </section>
+
+          <section class="metric-block">
+            <h3 data-i18n="meanSummaryTitle">均值分布摘要</h3>
+            <div class="period-card" id="meanPeriodCard"></div>
+            <div class="summary-grid" id="meanSummaryGrid"></div>
+          </section>
+
+          <section id="methodBox" class="method-box compact-method"></section>
+        </aside>
+      </main>
+    </div>
+
+    <div id="mapModal" class="map-modal hidden" aria-hidden="true">
+      <div class="map-modal-backdrop"></div>
+      <div class="map-modal-panel">
+        <div class="modal-map-stage">
+          <button id="closeMapModalButton" class="close-map-modal" type="button" aria-label="Close expanded map"></button>
+          <canvas id="modalMapCanvas" width="1440" height="720"></canvas>
+          <button id="modalResetViewButton" class="reset-view hidden modal-reset-view" type="button" aria-label="Reset view"></button>
+          <div id="modalTooltip" class="tooltip hidden"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./analysis-data.js"></script>
+    <script src="./evidence.js"></script>
+  </body>
+</html>

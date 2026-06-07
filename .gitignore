@@ -1,14 +1,40 @@
-# 忽略数据文件夹
-datasets/
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# 但保留空文件夹（关键）
-!datasets/.gitkeep
-
-# 忽略 vscode
+# Local editor and app state
 .vscode/
+.DS_Store
+Thumbs.db
 
-# 可选：忽略大文件类型
-*.tab
-*.csv
+# Obsidian local workspace state
+.obsidian/
+
+# Headless browser profiles
+.chrome-headless-profile/
+.edge-headless-profile/
+projects/.chrome-headless-profile/
+projects/.edge-headless-profile/
+
+# Local demo credentials
+paper/reports/geospatial_research_explorer/atlas.local.json
+
+# Local/raw datasets
+projects/datasets/*
+!projects/datasets/.gitkeep
+projects/datasets/basins/raw/
 *.nc
+*.nc4
 *.tif
+*.tiff
+*.csv
+*.tab
+
+# Ignored generated paper figure filenames
+paper/charts/fig02_catchment_aggregation.png
+paper/charts/fig03_catchment_imbalance_intensity.png
+paper/charts/fig04_dominant_imbalance_subtype.png
+paper/charts/fig05_regional_imbalance.png
