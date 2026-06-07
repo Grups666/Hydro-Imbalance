@@ -1,0 +1,37 @@
+{
+  "name": "hydro-imbalance",
+  "version": "0.0.1",
+  "description": "Tereon module for basin-scale water-cycle imbalance data, classification, time series, and literature evidence.",
+  "main": "public/modules/water-imbalance/index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "validate": "node scripts/validate/validate-catalog.js",
+    "audit:keywords": "node scripts/validate/audit-literature-alignment.js",
+    "audit:llm": "node scripts/validate/llm-audit-literature.js",
+    "harvest:openalex": "node scripts/ingest/harvest-openalex-literature.js",
+    "summary:llm-modes": "node scripts/export/export-llm-mode-summary.js",
+    "build:water-imbalance": "node scripts/build/build-water-imbalance-module.js",
+    "build:runtime-graph": "node scripts/build/build-water-runtime-graph.js",
+    "check": "node --check public/modules/water-imbalance/index.js && node --check scripts/build/build-water-imbalance-module.js && node --check scripts/build/build-water-runtime-graph.js && node --check scripts/ingest/ingest-literature.js && node --check scripts/ingest/harvest-openalex-literature.js && node --check catalog/literature/reference-catalog.js && node --check catalog/regions/basin-profiles.js",
+    "test": "npm run check && npm run validate"
+  },
+  "keywords": [
+    "tereon-module",
+    "hydrology",
+    "water-imbalance",
+    "geospatial"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "shapefile": "^0.6.6"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.5.17"
+  }
+}

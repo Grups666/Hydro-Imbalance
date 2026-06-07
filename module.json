@@ -1,0 +1,64 @@
+{
+  "id": "water-imbalance",
+  "name": "Hydrological Imbalance",
+  "version": "0.1.1",
+  "assetVersion": "2026-06-07-hydrological-imbalance-page",
+  "description": "Basin-scale three-variable hydrological imbalance classification, time series, and literature evidence.",
+  "author": "Spatial Research Team",
+  "icon": "droplet",
+  "basePath": "https://grups666.github.io/Hydro-Imbalance/",
+  "entry": "./public/modules/water-imbalance/index.js",
+  "className": "WaterImbalanceModule",
+  "importKind": "module-manifest",
+  "defaultLoad": false,
+  "knowledgeGraph": "./public/modules/water-imbalance/data/runtime-graph.json",
+  "datasets": [
+    {
+      "id": "basin-three-variable-timeseries-1962-2016",
+      "metadata": "./public/modules/water-imbalance/data/basin-time-series-metadata.json"
+    }
+  ],
+  "provides": {
+    "layers": [
+      {
+        "id": "outlines-basins",
+        "name": "Foundation Basins with Hydrological Imbalance",
+        "type": "vector",
+        "source": "foundation.basins",
+        "interactive": true
+      }
+    ],
+    "panels": [
+      {
+        "id": "water-imbalance-inspector",
+        "name": "Hydrological Imbalance Inspector",
+        "position": "right",
+        "trigger": "feature:click",
+        "condition": { "layer": "outlines-basins", "module": "water-imbalance" }
+      },
+      {
+        "id": "literature-evidence",
+        "name": "Literature Evidence",
+        "position": "right",
+        "tab": true
+      }
+    ],
+    "dataProducts": [
+      {
+        "id": "basin-imbalance-classification",
+        "type": "derived-classification",
+        "description": "Classifies each basin from recent-versus-historical shifts in total withdrawal, groundwater storage, and glacier storage."
+      },
+      {
+        "id": "basin-hydrology-time-series",
+        "type": "basin-time-series",
+        "description": "Three annual hydrological variables joined to Foundation basins by basin_id."
+      },
+      {
+        "id": "literature-evidence",
+        "type": "literature-catalog",
+        "description": "Literature records retained independently from the numerical imbalance classification."
+      }
+    ]
+  }
+}

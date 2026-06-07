@@ -1,0 +1,60 @@
+[
+  {
+    "id": "grace-tws",
+    "name": "GRACE/GRACE-FO Terrestrial Water Storage",
+    "provider": "NASA JPL",
+    "url": "https://podaac.jpl.nasa.gov/GRACE",
+    "description": "GRACE 和 GRACE-FO 卫星重力数据，提供陆地水储量变化",
+    "variables": [
+      { "name": "terrestrial_water_storage_anomaly", "unit": "cm", "description": "陆地水储量异常" }
+    ],
+    "temporal_coverage": { "start": "2002", "end": "present", "resolution": "monthly" },
+    "spatial_coverage": "Global",
+    "spatial_resolution": "0.5°",
+    "format": ["NetCDF", "GeoTIFF"],
+    "license": "Public Domain",
+    "citation": "Tapley, B. D., et al. (2004). GRACE measurements of mass variability in the Earth system. Science, 305(5684), 503-505.",
+    "access_method": "download",
+    "related_regions": ["high-plains", "central-valley", "indus", "north-china-plain"]
+  },
+  {
+    "id": "era5-land",
+    "name": "ERA5-Land Reanalysis",
+    "provider": "ECMWF",
+    "url": "https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land",
+    "api_endpoint": "https://cds.climate.copernicus.eu/api/v2",
+    "description": "ERA5-Land 陆面再分析数据，提供高分辨率气象和水文变量",
+    "variables": [
+      { "name": "precipitation", "unit": "m", "description": "降水" },
+      { "name": "evapotranspiration", "unit": "m", "description": "蒸散发" },
+      { "name": "soil_moisture", "unit": "m³/m³", "description": "土壤湿度" },
+      { "name": "runoff", "unit": "m", "description": "径流" }
+    ],
+    "temporal_coverage": { "start": "1950", "end": "present", "resolution": "hourly" },
+    "spatial_coverage": "Global",
+    "spatial_resolution": "0.1°",
+    "format": ["NetCDF", "GRIB"],
+    "license": "Copernicus License",
+    "citation": "Muñoz Sabater, J. (2019). ERA5-Land: A state-of-the-art global land surface reanalysis dataset. ECMWF.",
+    "access_method": "api"
+  },
+  {
+    "id": "gldas",
+    "name": "Global Land Data Assimilation System (GLDAS)",
+    "provider": "NASA GSFC",
+    "url": "https://ldas.gsfc.nasa.gov/gldas",
+    "description": "GLDAS 陆面数据同化系统，提供多模型水文变量",
+    "variables": [
+      { "name": "soil_moisture", "unit": "kg/m²", "description": "土壤水分" },
+      { "name": "evapotranspiration", "unit": "kg/m²/s", "description": "蒸散发" },
+      { "name": "groundwater_storage", "unit": "kg/m²", "description": "地下水储量" }
+    ],
+    "temporal_coverage": { "start": "2000", "end": "present", "resolution": "monthly" },
+    "spatial_coverage": "Global",
+    "spatial_resolution": "0.25°",
+    "format": ["NetCDF"],
+    "license": "Public Domain",
+    "citation": "Rodell, M., et al. (2004). The Global Land Data Assimilation System. BAMS, 85(3), 381-394.",
+    "access_method": "download"
+  }
+]

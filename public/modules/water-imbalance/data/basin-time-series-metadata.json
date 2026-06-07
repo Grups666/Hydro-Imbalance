@@ -1,0 +1,82 @@
+{
+  "id": "basin-three-variable-timeseries-1962-2016",
+  "name": "Unified Basin Hydrology Time Series",
+  "type": "basin-time-series",
+  "file": "./basin-three-variable-timeseries-1962-2016.csv",
+  "classification": "./basin-imbalance-classification.json",
+  "join": {
+    "moduleField": "basin_id",
+    "foundationEntity": "Basin",
+    "foundationField": "id",
+    "method": "exact-string"
+  },
+  "time": {
+    "field": "year",
+    "start": 1962,
+    "end": 2016,
+    "resolution": "annual"
+  },
+  "coverage": {
+    "records": 70125,
+    "basins": 1275,
+    "matchedFoundationBasins": 1096,
+    "foundationBasins": 1121,
+    "foundationCoveragePercent": 97.77
+  },
+  "variables": [
+    {
+      "id": "potential_total_water_withdrawal_mm_yr",
+      "key": "withdrawal",
+      "label": "Potential Total Water Withdrawal",
+      "unit": "mm yr-1",
+      "kind": "flux",
+      "color": "#e3b23c"
+    },
+    {
+      "id": "groundwater_storage_mm",
+      "key": "groundwater",
+      "label": "Groundwater Storage",
+      "unit": "mm",
+      "kind": "storage",
+      "color": "#c767b1"
+    },
+    {
+      "id": "glacier_storage_mm_we",
+      "key": "glacier",
+      "label": "Glacier Storage",
+      "unit": "mm water equivalent",
+      "kind": "storage",
+      "color": "#2fb7c8"
+    }
+  ],
+  "imbalanceMethod": {
+    "historicalPeriod": [
+      1962,
+      1996
+    ],
+    "recentPeriod": [
+      1997,
+      2016
+    ],
+    "recentWindowYears": 20,
+    "rule": "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm"
+  },
+  "classColors": {
+    "none": "#eef2f7",
+    "withdrawal": "#e3b23c",
+    "groundwater": "#c767b1",
+    "glacier": "#2fb7c8",
+    "withdrawal+groundwater": "#d85f55",
+    "withdrawal+glacier": "#66b95a",
+    "groundwater+glacier": "#4f7fd5",
+    "withdrawal+groundwater+glacier": "#3f4652"
+  },
+  "provenance": {
+    "waterGapVersion": "2.2d",
+    "glacierSources": [
+      "Farinotti et al. (2019)",
+      "Zemp et al. (2019)"
+    ],
+    "sourceDirectory": "Water_Circle_Imbalance/projects/datasets/basin_time_series"
+  }
+}
