@@ -358,7 +358,7 @@ delta(v,c) = mu_recent(v,c) - mu_historical(v,c)
 A variable is classified as imbalanced when:
 
 ```
-abs(delta(v,c)) > sigma_historical(v,c)
+abs(delta(v,c)) > 2 sigma_historical(v,c)
 AND
 abs(delta(v,c)) > 1 mm
 ```

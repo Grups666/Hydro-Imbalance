@@ -412,7 +412,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       </div>
       <h2 style="margin:0 0 6px;font-size:18px;font-weight:600">${this.escape(title)}</h2>
       <p style="margin:0 0 14px;color:#64748b;font-size:12px;line-height:1.5">
-        Recent period 1997-2016 compared with historical period 1962-1996. A variable is imbalanced when its mean shift exceeds one historical standard deviation and 1 mm.
+        Recent period 1997-2016 compared with historical period 1962-1996. A variable is imbalanced when its mean shift exceeds two historical standard deviations and 1 mm.
       </p>
 
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
@@ -668,7 +668,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       <div class="legend-grid">
         ${items.map(([color, label]) => `<span class="legend-swatch" style="background:${this.escape(color)}"></span><span>${this.escape(label)}</span>`).join("")}
       </div>
-      <div class="legend-note">1997-2016 mean shift beyond historical SD and 1 mm.</div>`
+      <div class="legend-note">1997-2016 mean shift beyond 2 historical SD and 1 mm.</div>`
     });
   }
 

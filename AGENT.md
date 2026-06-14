@@ -146,7 +146,7 @@ Figure 2 uses annual basin time series for three variables:
 For each variable, compare the recent 20-year mean for 1997-2016 with the historical mean for 1962-1996. A variable is imbalanced when:
 
 ```text
-abs(recent_mean - historical_mean) > historical_standard_deviation
+abs(recent_mean - historical_mean) > 2 * historical_standard_deviation
 AND
 abs(recent_mean - historical_mean) > 1 mm
 ```

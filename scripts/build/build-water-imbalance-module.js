@@ -11,6 +11,8 @@ const outputCsv = path.join(outputDir, "basin-three-variable-timeseries-1962-201
 const outputClassification = path.join(outputDir, "basin-imbalance-classification.json");
 const outputMetadata = path.join(outputDir, "basin-time-series-metadata.json");
 const graphFile = path.join(outputDir, "knowledge-graph.json");
+const historicalStdMultiplier = 2;
+const absoluteDifferenceMinimumMm = 1;
 
 const variables = [
   {
@@ -113,7 +115,7 @@ for (const [basinId, records] of byBasin) {
     const recentMean = mean(recent);
     const historicalStdDev = standardDeviation(historical);
     const difference = recentMean - historicalMean;
-    const isImbalanced = Math.abs(difference) > historicalStdDev && Math.abs(difference) > 1;
+    const isImbalanced = Math.abs(difference) > historicalStdMultiplier * historicalStdDev && Math.abs(difference) > absoluteDifferenceMinimumMm;
     metrics[variable.key] = {
       imbalanced: isImbalanced,
       status: "evaluated",
@@ -143,7 +145,9 @@ const classificationDocument = {
     historicalPeriod: [1962, 1996],
     recentPeriod: [1997, 2016],
     recentWindowYears: 20,
-    rule: "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm",
+    historicalStdMultiplier,
+    absoluteDifferenceMinimumMm,
+    rule: "abs(recent_mean - historical_mean) > 2 * historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm",
     demandDeficitDefinition: "max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means"
   },
   colors: classColors,

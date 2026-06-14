@@ -59,7 +59,9 @@
       2016
     ],
     "recentWindowYears": 20,
-    "rule": "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm",
+    "historicalStdMultiplier": 2,
+    "absoluteDifferenceMinimumMm": 1,
+    "rule": "abs(recent_mean - historical_mean) > 2 * historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm",
     "demandDeficitDefinition": "max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means"
   },
   "classColors": {

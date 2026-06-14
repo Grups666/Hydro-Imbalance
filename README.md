@@ -68,7 +68,7 @@ Variables:
 A variable is classified as imbalanced when:
 
 ```text
-abs(recent mean - historical mean) > historical standard deviation
+abs(recent mean - historical mean) > 2 * historical standard deviation
 AND
 abs(recent mean - historical mean) > 1 mm
 ```

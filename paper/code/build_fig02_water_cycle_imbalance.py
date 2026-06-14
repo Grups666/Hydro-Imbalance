@@ -36,6 +36,7 @@ BASEMAPS = ROOT / "paper" / "data" / "basemaps" / "natural_earth"
 
 HISTORICAL_PERIOD = (1962, 1996)
 RECENT_PERIOD = (1997, 2016)
+HISTORICAL_STD_MULTIPLIER = 2.0
 ABSOLUTE_DIFFERENCE_MIN_MM = 1.0
 
 PTOTWW_FILE = "watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4"
@@ -181,7 +182,7 @@ def read_basin_classification() -> dict[str, dict]:
             historical_std = population_standard_deviation(historical)
             difference = recent_mean - historical_mean
             is_imbalanced = (
-                abs(difference) > historical_std
+                abs(difference) > HISTORICAL_STD_MULTIPLIER * historical_std
                 and abs(difference) > ABSOLUTE_DIFFERENCE_MIN_MM
             )
             metrics[variable["key"]] = {
@@ -469,7 +470,7 @@ def make_figure():
         "",
         f"- Historical period: {HISTORICAL_PERIOD[0]}-{HISTORICAL_PERIOD[1]}.",
         f"- Recent 20-year period: {RECENT_PERIOD[0]}-{RECENT_PERIOD[1]}.",
-        f"- Variable imbalance rule: absolute recent-minus-historical mean difference exceeds both the historical standard deviation and {ABSOLUTE_DIFFERENCE_MIN_MM:g} mm.",
+        f"- Variable imbalance rule: absolute recent-minus-historical mean difference exceeds both {HISTORICAL_STD_MULTIPLIER:g} historical standard deviations and {ABSOLUTE_DIFFERENCE_MIN_MM:g} mm.",
         "- Catchment class: combination of imbalanced net water-demand deficit, groundwater storage, and glacier storage variables.",
         f"- Net water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
         f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
