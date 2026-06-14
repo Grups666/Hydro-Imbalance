@@ -18,7 +18,7 @@ const variables = [
   {
     id: "net_water_demand_deficit_mm_yr",
     key: "deficit",
-    label: "Net Water-Demand Deficit",
+    label: "Water-demand deficit",
     unit: "mm yr-1",
     kind: "flux",
     color: "#e3b23c"

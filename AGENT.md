@@ -139,7 +139,7 @@ Catchments with `C < 0.95` are hatched.
 
 Figure 2 uses annual basin time series for three variables:
 
-- Net water-demand deficit.
+- Water-demand deficit.
 - Groundwater storage.
 - Reconstructed absolute glacier storage.
 
@@ -153,7 +153,7 @@ abs(recent_mean - historical_mean) > 1 mm
 
 The catchment class is the combination of variables that satisfy the rule, producing eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and an all-three-variable class.
 
-The net water-demand deficit is computed from WaterGAP 2.2d as `max(0, ptotww + EFR - ncrunnat)`, where EFR is the environmental-flow requirement estimated from naturalized runoff Q90 exceedance for each calendar month. Monthly deficits are aggregated to annual catchment means.
+Water-demand deficit is computed from WaterGAP 2.2d as `max(0, ptotww + EFR - ncrunnat)`, where EFR is the environmental-flow requirement estimated from naturalized runoff Q90 exceedance for each calendar month. Monthly deficits are aggregated to annual catchment means.
 
 The slate-gray boundary remains an independent human-impact annotation. It marks catchments where WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal above `0.1 mm/day` occupy at least 10% of catchment area. It does not change the three-variable imbalance class.
 

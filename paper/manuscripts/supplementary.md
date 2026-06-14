@@ -334,11 +334,11 @@ The catchment water-use class is assigned from the active-cell type proportions 
 
 Figure 2 uses the unified annual catchment time-series dataset for 1962-2016. Three variables are assessed:
 
-- Net water-demand deficit (`net_water_demand_deficit_mm_yr`), in mm yr-1.
+- Water-demand deficit (`net_water_demand_deficit_mm_yr`), in mm yr-1.
 - Groundwater storage (`groundwater_storage_mm`), in mm.
 - Reconstructed absolute glacier storage (`glacier_storage_mm_we`), in mm water equivalent.
 
-The net water-demand deficit is calculated from WaterGAP 2.2d monthly `ptotww` and naturalized net cell runoff (`ncrunnat`). Natural demand is represented as environmental-flow requirement (EFR), estimated for each grid cell and calendar month as the Q90 exceedance value of naturalized runoff during 1962-1996. In ordinary percentile notation this is the 10th percentile of the monthly naturalized runoff distribution for that calendar month. Monthly deficit is:
+Water-demand deficit is calculated from WaterGAP 2.2d monthly `ptotww` and naturalized net cell runoff (`ncrunnat`). Natural demand is represented as environmental-flow requirement (EFR), estimated for each grid cell and calendar month as the Q90 exceedance value of naturalized runoff during 1962-1996. In ordinary percentile notation this is the 10th percentile of the monthly naturalized runoff distribution for that calendar month. Monthly deficit is:
 
 ```
 deficit_flux = max(ptotww + EFR - ncrunnat, 0)

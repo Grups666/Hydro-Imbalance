@@ -46,7 +46,7 @@
       {
         "id": "basin-imbalance-classification",
         "type": "derived-classification",
-        "description": "Classifies each basin from recent-versus-historical shifts in net water-demand deficit, groundwater storage, and glacier storage."
+        "description": "Classifies each basin from recent-versus-historical shifts in water-demand deficit, groundwater storage, and glacier storage."
       },
       {
         "id": "basin-hydrology-time-series",

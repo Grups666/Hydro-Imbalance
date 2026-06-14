@@ -60,7 +60,7 @@ WATERGAP_SPECS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build unified annual basin time series for net water-demand deficit, groundwater storage, and absolute glacier storage."
+        description="Build unified annual basin time series for water-demand deficit, groundwater storage, and absolute glacier storage."
     )
     parser.add_argument("--start-year", type=int, default=1962)
     parser.add_argument("--end-year", type=int, default=2016)
@@ -292,7 +292,7 @@ Coverage:
 - Total catchments: {total_catchments}.
 - Catchments with non-zero glacier storage in at least one year: {glacier_catchments}, or {glacier_percent:.2f}%.
 - Catchments without glaciers are retained with `glacier_storage_mm_we = 0`.
-- WaterGAP values are available for 1273 catchments; two catchments contain no valid WaterGAP grid values and remain `NaN` for net water-demand deficit and groundwater storage.
+- WaterGAP values are available for 1273 catchments; two catchments contain no valid WaterGAP grid values and remain `NaN` for water-demand deficit and groundwater storage.
 - Rows: {total_catchments * (end_year - start_year + 1)} catchment-year records.
 
 ## Output Variables
@@ -301,11 +301,11 @@ Coverage:
 - `groundwater_storage_mm`: annual mean groundwater storage from WaterGAP `groundwstor`.
 - `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the full catchment area.
 
-All three outputs are area-normalized water depths. Net water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
+All three outputs are area-normalized water depths. Water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
 
 ## WaterGAP Processing
 
-### Net Water-Demand Deficit
+### Water-demand deficit
 
 Monthly potential total water withdrawal comes from WaterGAP 2.2d `ptotww`. Local water availability comes from naturalized net cell runoff, WaterGAP 2.2d `ncrunnat`. Natural demand is represented as environmental-flow requirement (EFR), estimated for each grid cell and calendar month as the Q90 exceedance value of naturalized runoff over {EFR_REFERENCE_PERIOD[0]}-{EFR_REFERENCE_PERIOD[1]}. In ordinary percentile notation this is the 10th percentile of monthly naturalized runoff for that calendar month.
 

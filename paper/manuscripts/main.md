@@ -41,11 +41,11 @@ To summarize human-water-use exposure at catchment scale, we classified HydroBAS
 
 ## Catchment-Scale Water Imbalance
 
-Figure 2 classifies each catchment from annual time series of net water-demand deficit, groundwater storage, and reconstructed absolute glacier storage. The deficit variable estimates the annual water demand that remains after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement. For each variable, the recent 20-year mean for 1997-2016 is compared with the historical period 1962-1996. A variable is classified as imbalanced when the absolute recent-minus-historical mean difference exceeds both two historical standard deviations and 1 mm.
+Figure 2 classifies each catchment from annual time series of water-demand deficit, groundwater storage, and reconstructed absolute glacier storage. The deficit variable estimates the annual water demand that remains after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement. For each variable, the recent 20-year mean for 1997-2016 is compared with the historical period 1962-1996. A variable is classified as imbalanced when the absolute recent-minus-historical mean difference exceeds both two historical standard deviations and 1 mm.
 
 The map color represents the combination of variables satisfying this rule. The eight possible classes are no detected imbalance, the three single-variable classes, the three two-variable combinations, and imbalance in all three variables. Gold boundaries independently identify human-impacted catchments using recent total-withdrawal activity from WaterGAP2.2d; the boundary does not alter the water-imbalance class.
 
-![Figure 2. Catchment-scale water imbalance classified from net water-demand deficit, groundwater storage, and glacier storage.](fig02_water_cycle_imbalance.png)
+![Figure 2. Catchment-scale water imbalance classified from water-demand deficit, groundwater storage, and glacier storage.](fig02_water_cycle_imbalance.png)
 
 ## Literature Basis for Human-Activity Interpretation
 

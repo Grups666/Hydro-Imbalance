@@ -1,9 +1,9 @@
 """
 Catchment-scale water-imbalance classification.
 
-Each catchment is classified from the combination of imbalanced net
+Each catchment is classified from the combination of imbalanced
 water-demand deficit, groundwater-storage, and glacier-storage variables.
-The net water-demand deficit is derived from WaterGAP 2.2d potential total
+Water-demand deficit is derived from WaterGAP 2.2d potential total
 withdrawal, naturalized runoff availability, and environmental-flow demand.
 """
 
@@ -471,8 +471,8 @@ def make_figure():
         f"- Historical period: {HISTORICAL_PERIOD[0]}-{HISTORICAL_PERIOD[1]}.",
         f"- Recent 20-year period: {RECENT_PERIOD[0]}-{RECENT_PERIOD[1]}.",
         f"- Variable imbalance rule: absolute recent-minus-historical mean difference exceeds both {HISTORICAL_STD_MULTIPLIER:g} historical standard deviations and {ABSOLUTE_DIFFERENCE_MIN_MM:g} mm.",
-        "- Catchment class: combination of imbalanced net water-demand deficit, groundwater storage, and glacier storage variables.",
-        f"- Net water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
+        "- Catchment class: combination of imbalanced water-demand deficit, groundwater storage, and glacier storage variables.",
+        f"- Water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
         f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
         f"- Human-impacted catchments outlined in slate gray: {human_count}.",
         "",

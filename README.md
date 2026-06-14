@@ -61,7 +61,7 @@ Variables:
 
 | Variable | Meaning | Unit |
 |---|---|---|
-| `net_water_demand_deficit_mm_yr` | Net water-demand deficit after local naturalized runoff availability and environmental-flow requirement are considered | mm yr-1 |
+| `net_water_demand_deficit_mm_yr` | Water-demand deficit after local naturalized runoff availability and environmental-flow requirement are considered | mm yr-1 |
 | `groundwater_storage_mm` | Annual mean groundwater storage | mm |
 | `glacier_storage_mm_we` | Reconstructed absolute glacier storage | mm water equivalent |
 
