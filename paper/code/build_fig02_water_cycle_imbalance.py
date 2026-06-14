@@ -43,7 +43,7 @@ PTOTWW_FILE = "watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4"
 SECONDS_PER_DAY = 86400.0
 CELL_WITHDRAWAL_MIN_MM_DAY = 0.10
 HUMAN_CATCHMENT_ACTIVE_AREA_MIN = 0.10
-HUMAN_IMPACTED_EDGE = "#f0b82e"
+HUMAN_IMPACTED_EDGE = "#475569"
 
 VARIABLES = [
     {
@@ -474,7 +474,7 @@ def make_figure():
         "- Catchment class: combination of imbalanced net water-demand deficit, groundwater storage, and glacier storage variables.",
         f"- Net water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
         f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
-        f"- Human-impacted catchments outlined in gold: {human_count}.",
+        f"- Human-impacted catchments outlined in slate gray: {human_count}.",
         "",
         "| Class | Catchment count | Color |",
         "|---|---:|---|",

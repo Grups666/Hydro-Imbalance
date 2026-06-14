@@ -6,7 +6,7 @@
 - Catchment class: combination of imbalanced net water-demand deficit, groundwater storage, and glacier storage variables.
 - Net water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.
 - Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= 0.10 mm/day occupy >= 10% of catchment area.
-- Human-impacted catchments outlined in gold: 412.
+- Human-impacted catchments outlined in slate gray: 412.
 
 | Class | Catchment count | Color |
 |---|---:|---|

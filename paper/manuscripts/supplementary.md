@@ -365,7 +365,7 @@ abs(delta(v,c)) > 1 mm
 
 The catchment class is the set of variables satisfying this rule. This produces eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and imbalance in all three variables.
 
-Human-impacted catchments are annotated independently using WaterGAP 2.2d total-withdrawal activity. A gold boundary marks catchments where cells with recent mean `ptotww` of at least 0.1 mm day-1 occupy at least 10% of catchment area. This boundary is contextual and does not modify the three-variable imbalance classification.
+Human-impacted catchments are annotated independently using WaterGAP 2.2d total-withdrawal activity. A slate-gray boundary marks catchments where cells with recent mean `ptotww` of at least 0.1 mm day-1 occupy at least 10% of catchment area. This boundary is contextual and does not modify the three-variable imbalance classification.
 
 ## S11. Figure S1: Variable-level imbalance evidence
 
