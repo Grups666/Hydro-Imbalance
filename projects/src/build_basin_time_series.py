@@ -40,16 +40,12 @@ class SeriesSpec:
     description: str
 
 
+PTOTWW_FILE = "watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4"
+NATURAL_RUNOFF_FILE = "watergap_22d_WFDEI-GPCC_nosoc_ncrunnat_monthly_1901_2016.nc4"
+EFR_REFERENCE_PERIOD = (1962, 1996)
+
+
 WATERGAP_SPECS = [
-    SeriesSpec(
-        code="total_water_withdrawal",
-        column="potential_total_water_withdrawal_mm_yr",
-        source_file="watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4",
-        variable_name="ptotww",
-        aggregation="flux_to_annual_depth",
-        unit="mm yr-1",
-        description="Potential total water withdrawals, annual depth over the basin.",
-    ),
     SeriesSpec(
         code="groundwater_storage",
         column="groundwater_storage_mm",
@@ -64,7 +60,7 @@ WATERGAP_SPECS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build unified annual basin time series for total water withdrawal, groundwater storage, and absolute glacier storage."
+        description="Build unified annual basin time series for net water-demand deficit, groundwater storage, and absolute glacier storage."
     )
     parser.add_argument("--start-year", type=int, default=1962)
     parser.add_argument("--end-year", type=int, default=2016)
@@ -127,6 +123,60 @@ def annual_grid(monthly_values: np.ndarray, year: int, aggregation: str) -> np.n
     raise ValueError(f"Unsupported aggregation: {aggregation}")
 
 
+def compute_monthly_efr_flux() -> np.ndarray:
+    """Estimate environmental flow requirement from naturalized runoff Q90."""
+    file_path = DATASET_DIR / NATURAL_RUNOFF_FILE
+    if not file_path.exists():
+        raise FileNotFoundError(file_path)
+
+    with Dataset(str(file_path)) as dataset:
+        variable = dataset.variables["ncrunnat"]
+        time_len = len(dataset.dimensions["time"])
+        source_start, source_end = infer_year_range(file_path, time_len)
+        if EFR_REFERENCE_PERIOD[0] < source_start or EFR_REFERENCE_PERIOD[1] > source_end:
+            raise ValueError(
+                f"EFR reference period {EFR_REFERENCE_PERIOD} is outside {source_start}-{source_end}"
+            )
+
+        efr = []
+        for month_index in range(12):
+            slices = []
+            for year in range(EFR_REFERENCE_PERIOD[0], EFR_REFERENCE_PERIOD[1] + 1):
+                offset = (year - source_start) * 12 + month_index
+                grid = as_float_grid(variable[offset])
+                grid = np.where(np.isfinite(grid), np.maximum(grid, 0.0), np.nan)
+                slices.append(grid)
+            with warnings.catch_warnings(), np.errstate(invalid="ignore"):
+                warnings.simplefilter("ignore", category=RuntimeWarning)
+                q90_exceedance = np.nanpercentile(np.stack(slices), 10, axis=0).astype(np.float32)
+            efr.append(np.where(np.isfinite(q90_exceedance), np.maximum(q90_exceedance, 0.0), np.nan))
+    return np.stack(efr).astype(np.float32)
+
+
+def annual_net_water_demand_deficit_grid(
+    demand_monthly: np.ndarray,
+    natural_runoff_monthly: np.ndarray,
+    efr_flux: np.ndarray,
+    year: int,
+) -> np.ndarray:
+    demand = as_float_grid(demand_monthly)
+    runoff = as_float_grid(natural_runoff_monthly)
+    if demand.shape[0] != 12 or runoff.shape[0] != 12:
+        raise ValueError(f"Expected 12 monthly slices for {year}, got {demand.shape} and {runoff.shape}")
+
+    days = month_weights(year).reshape(12, 1, 1)
+    demand = np.where(np.isfinite(demand), np.maximum(demand, 0.0), np.nan)
+    runoff = np.where(np.isfinite(runoff), np.maximum(runoff, 0.0), np.nan)
+    efr = np.where(np.isfinite(efr_flux), np.maximum(efr_flux, 0.0), np.nan)
+    valid = np.isfinite(demand) & np.isfinite(runoff) & np.isfinite(efr)
+
+    deficit_flux = np.maximum(demand + efr - runoff, 0.0)
+    deficit_flux[~valid] = np.nan
+    annual = np.nansum(deficit_flux * days * SECONDS_PER_DAY, axis=0, dtype=np.float64).astype(np.float32)
+    annual[np.sum(valid, axis=0) == 0] = np.nan
+    return annual
+
+
 def aggregate_grid_by_basin(grid: np.ndarray, basin_cells: list[np.ndarray]) -> list[float]:
     flat = grid.reshape(-1)
     values: list[float] = []
@@ -159,6 +209,39 @@ def read_watergap_series(spec: SeriesSpec, years: np.ndarray, basin_cells: list[
             grid = annual_grid(variable[offset : offset + 12], int(year), spec.aggregation)
             result[int(year)] = aggregate_grid_by_basin(grid, basin_cells)
 
+    return result
+
+
+def read_net_water_demand_deficit_series(years: np.ndarray, basin_cells: list[np.ndarray]) -> dict[int, list[float]]:
+    demand_path = DATASET_DIR / PTOTWW_FILE
+    runoff_path = DATASET_DIR / NATURAL_RUNOFF_FILE
+    if not demand_path.exists():
+        raise FileNotFoundError(demand_path)
+    if not runoff_path.exists():
+        raise FileNotFoundError(runoff_path)
+
+    efr_flux = compute_monthly_efr_flux()
+    result: dict[int, list[float]] = {}
+    with Dataset(str(demand_path)) as demand_dataset, Dataset(str(runoff_path)) as runoff_dataset:
+        demand = demand_dataset.variables["ptotww"]
+        runoff = runoff_dataset.variables["ncrunnat"]
+        demand_start, demand_end = infer_year_range(demand_path, len(demand_dataset.dimensions["time"]))
+        runoff_start, runoff_end = infer_year_range(runoff_path, len(runoff_dataset.dimensions["time"]))
+
+        for year in years:
+            year = int(year)
+            if year < demand_start or year > demand_end or year < runoff_start or year > runoff_end:
+                result[year] = [math.nan] * len(basin_cells)
+                continue
+            demand_offset = (year - demand_start) * 12
+            runoff_offset = (year - runoff_start) * 12
+            grid = annual_net_water_demand_deficit_grid(
+                demand[demand_offset : demand_offset + 12],
+                runoff[runoff_offset : runoff_offset + 12],
+                efr_flux,
+                year,
+            )
+            result[year] = aggregate_grid_by_basin(grid, basin_cells)
     return result
 
 
@@ -209,26 +292,30 @@ Coverage:
 - Total catchments: {total_catchments}.
 - Catchments with non-zero glacier storage in at least one year: {glacier_catchments}, or {glacier_percent:.2f}%.
 - Catchments without glaciers are retained with `glacier_storage_mm_we = 0`.
-- WaterGAP values are available for 1273 catchments; two catchments contain no valid WaterGAP grid values and remain `NaN` for total water withdrawal and groundwater storage.
+- WaterGAP values are available for 1273 catchments; two catchments contain no valid WaterGAP grid values and remain `NaN` for net water-demand deficit and groundwater storage.
 - Rows: {total_catchments * (end_year - start_year + 1)} catchment-year records.
 
 ## Output Variables
 
-- `potential_total_water_withdrawal_mm_yr`: annual potential total water withdrawal depth from WaterGAP `ptotww`. It includes total potential withdrawals across sectors and water sources.
+- `net_water_demand_deficit_mm_yr`: annual water-demand deficit after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement.
 - `groundwater_storage_mm`: annual mean groundwater storage from WaterGAP `groundwstor`.
 - `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the full catchment area.
 
-All three outputs are area-normalized water depths. Total water withdrawal is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
+All three outputs are area-normalized water depths. Net water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
 
 ## WaterGAP Processing
 
-### Potential Total Water Withdrawal
+### Net Water-Demand Deficit
 
-Monthly WaterGAP 2.2d `ptotww` flux in `kg m-2 s-1` is integrated using calendar month length:
+Monthly potential total water withdrawal comes from WaterGAP 2.2d `ptotww`. Local water availability comes from naturalized net cell runoff, WaterGAP 2.2d `ncrunnat`. Natural demand is represented as environmental-flow requirement (EFR), estimated for each grid cell and calendar month as the Q90 exceedance value of naturalized runoff over {EFR_REFERENCE_PERIOD[0]}-{EFR_REFERENCE_PERIOD[1]}. In ordinary percentile notation this is the 10th percentile of monthly naturalized runoff for that calendar month.
 
-`monthly_depth_mm = ptotww_kg_m2_s * days_in_month * 86400`
+For each month:
 
-Monthly depths are summed to annual depth and averaged across WaterGAP grid cells assigned to each catchment. This is total potential withdrawal, not groundwater-only withdrawal.
+`deficit_flux = max(ptotww + EFR - ncrunnat, 0)`
+
+`monthly_deficit_mm = deficit_flux * days_in_month * 86400`
+
+Monthly deficits are summed to annual depth and averaged across WaterGAP grid cells assigned to each catchment. The resulting variable is a local supply-adjusted demand deficit, not raw total withdrawal.
 
 ### Groundwater Storage
 
@@ -295,7 +382,7 @@ def write_csv(
         "basin_area_km2",
         "cell_count",
         "year",
-        "potential_total_water_withdrawal_mm_yr",
+        "net_water_demand_deficit_mm_yr",
         "groundwater_storage_mm",
         "glacier_storage_mm_we",
     ]
@@ -320,7 +407,7 @@ def write_csv(
                     "basin_area_km2": basin.get("areaKm2", ""),
                     "cell_count": basin.get("cellCount", ""),
                     "year": year,
-                    "potential_total_water_withdrawal_mm_yr": watergap_values["total_water_withdrawal"][year][basin_index],
+                    "net_water_demand_deficit_mm_yr": watergap_values["net_water_demand_deficit"][year][basin_index],
                     "groundwater_storage_mm": watergap_values["groundwater_storage"][year][basin_index],
                     "glacier_storage_mm_we": glacier_values[year][basin_index],
                 }
@@ -335,6 +422,8 @@ def main() -> None:
     basin_cells = [np.asarray(basin.get("cells", []), dtype=np.int64) for basin in basins]
 
     watergap_values: dict[str, dict[int, list[float]]] = {}
+    print(f"Aggregating net_water_demand_deficit from {PTOTWW_FILE} and {NATURAL_RUNOFF_FILE}")
+    watergap_values["net_water_demand_deficit"] = read_net_water_demand_deficit_series(years, basin_cells)
     for spec in WATERGAP_SPECS:
         print(f"Aggregating {spec.code} from {spec.source_file}")
         watergap_values[spec.code] = read_watergap_series(spec, years, basin_cells)

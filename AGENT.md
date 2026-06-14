@@ -139,7 +139,7 @@ Catchments with `C < 0.95` are hatched.
 
 Figure 2 uses annual basin time series for three variables:
 
-- Potential total water withdrawal.
+- Net water-demand deficit.
 - Groundwater storage.
 - Reconstructed absolute glacier storage.
 
@@ -153,7 +153,9 @@ abs(recent_mean - historical_mean) > 1 mm
 
 The catchment class is the combination of variables that satisfy the rule, producing eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and an all-three-variable class.
 
-The gold boundary remains an independent human-impact annotation. It marks catchments where cells with at least one sectoral withdrawal above `0.1 mm/day` occupy at least 10% of catchment area. It does not change the three-variable imbalance class.
+The net water-demand deficit is computed from WaterGAP 2.2d as `max(0, ptotww + EFR - ncrunnat)`, where EFR is the environmental-flow requirement estimated from naturalized runoff Q90 exceedance for each calendar month. Monthly deficits are aggregated to annual catchment means.
+
+The gold boundary remains an independent human-impact annotation. It marks catchments where WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal above `0.1 mm/day` occupy at least 10% of catchment area. It does not change the three-variable imbalance class.
 
 ## Figure Guidelines
 
@@ -171,5 +173,5 @@ The gold boundary remains an independent human-impact annotation. It marks catch
 - If a generated file is only a local dataset output under `projects/datasets/`, remember it is intentionally ignored by Git.
 - Keep figure scripts deterministic and write outputs to `paper/charts/`.
 - Keep reports under `paper/reports/` concise and aligned with current figures only.
-- Do not describe removed or superseded versions in documentation; treat the current repository state as the only version.
+- Documentation should describe only the current repository state and current outputs.
 - Use ASCII in code and documentation unless a file already requires non-ASCII content.

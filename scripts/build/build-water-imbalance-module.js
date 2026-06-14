@@ -14,9 +14,9 @@ const graphFile = path.join(outputDir, "knowledge-graph.json");
 
 const variables = [
   {
-    id: "potential_total_water_withdrawal_mm_yr",
-    key: "withdrawal",
-    label: "Potential Total Water Withdrawal",
+    id: "net_water_demand_deficit_mm_yr",
+    key: "deficit",
+    label: "Net Water-Demand Deficit",
     unit: "mm yr-1",
     kind: "flux",
     color: "#e3b23c"
@@ -41,13 +41,13 @@ const variables = [
 
 const classColors = {
   none: "#eef2f7",
-  withdrawal: "#e3b23c",
+  deficit: "#e3b23c",
   groundwater: "#c767b1",
   glacier: "#2fb7c8",
-  "withdrawal+groundwater": "#d85f55",
-  "withdrawal+glacier": "#66b95a",
+  "deficit+groundwater": "#d85f55",
+  "deficit+glacier": "#66b95a",
   "groundwater+glacier": "#4f7fd5",
-  "withdrawal+groundwater+glacier": "#3f4652"
+  "deficit+groundwater+glacier": "#3f4652"
 };
 
 function parseValue(raw) {
@@ -67,7 +67,10 @@ function standardDeviation(values) {
 }
 
 function loadFoundationBasins() {
-  const code = fs.readFileSync(path.join(root, "public/assets/basin-data.js"), "utf8");
+  const localBasinDataFile = path.join(root, "projects/basin-data.js");
+  const siblingBasinDataFile = path.resolve(root, "../Water_Circle_Imbalance/projects/basin-data.js");
+  const basinDataFile = fs.existsSync(localBasinDataFile) ? localBasinDataFile : siblingBasinDataFile;
+  const code = fs.readFileSync(basinDataFile, "utf8");
   const context = { window: {} };
   vm.createContext(context);
   vm.runInContext(code, context);
@@ -140,7 +143,8 @@ const classificationDocument = {
     historicalPeriod: [1962, 1996],
     recentPeriod: [1997, 2016],
     recentWindowYears: 20,
-    rule: "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm"
+    rule: "abs(recent_mean - historical_mean) > historical_standard_deviation AND abs(recent_mean - historical_mean) > 1 mm",
+    demandDeficitDefinition: "max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means"
   },
   colors: classColors,
   counts,
@@ -173,6 +177,8 @@ const metadata = {
   classColors,
   provenance: {
     waterGapVersion: "2.2d",
+    waterDemandVariable: "net_water_demand_deficit_mm_yr",
+    waterDemandSources: ["ptotww", "ncrunnat", "environmental flow requirement from ncrunnat Q90 exceedance"],
     glacierSources: ["Farinotti et al. (2019)", "Zemp et al. (2019)"],
     sourceDirectory: "Water_Circle_Imbalance/projects/datasets/basin_time_series"
   }

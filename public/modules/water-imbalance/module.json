@@ -1,9 +1,9 @@
 {
   "id": "water-imbalance",
-  "name": "Hydrological Imbalance",
+  "name": "Water Imbalance",
   "version": "0.1.1",
-  "assetVersion": "2026-06-07-hydrological-imbalance-page",
-  "description": "Basin-scale three-variable hydrological imbalance classification, time series, and literature evidence.",
+  "assetVersion": "2026-06-07-stable-boundaries",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "entry": "./index.js",
@@ -21,7 +21,7 @@
     "layers": [
       {
         "id": "outlines-basins",
-        "name": "Foundation Basins with Hydrological Imbalance",
+        "name": "Foundation Basins with Water Imbalance",
         "type": "vector",
         "source": "foundation.basins",
         "interactive": true
@@ -30,7 +30,7 @@
     "panels": [
       {
         "id": "water-imbalance-inspector",
-        "name": "Hydrological Imbalance Inspector",
+        "name": "Water Imbalance Inspector",
         "position": "right",
         "trigger": "feature:click",
         "condition": { "layer": "outlines-basins", "module": "water-imbalance" }
@@ -46,7 +46,7 @@
       {
         "id": "basin-imbalance-classification",
         "type": "derived-classification",
-        "description": "Classifies each basin from recent-versus-historical shifts in total withdrawal, groundwater storage, and glacier storage."
+        "description": "Classifies each basin from recent-versus-historical shifts in net water-demand deficit, groundwater storage, and glacier storage."
       },
       {
         "id": "basin-hydrology-time-series",

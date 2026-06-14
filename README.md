@@ -61,7 +61,7 @@ Variables:
 
 | Variable | Meaning | Unit |
 |---|---|---|
-| `potential_total_water_withdrawal_mm_yr` | Potential total water withdrawal across sectors and water sources | mm yr-1 |
+| `net_water_demand_deficit_mm_yr` | Net water-demand deficit after local naturalized runoff availability and environmental-flow requirement are considered | mm yr-1 |
 | `groundwater_storage_mm` | Annual mean groundwater storage | mm |
 | `glacier_storage_mm_we` | Reconstructed absolute glacier storage | mm water equivalent |
 
@@ -103,7 +103,7 @@ python src/build_analysis.py
 python src/build_basins.py
 ```
 
-The current analysis uses WaterGAP2-2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
+The core basin time-series classification and Figure 2 use WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
 
 The local research viewer can be opened from `projects/web/index.html`, or served locally with:
 

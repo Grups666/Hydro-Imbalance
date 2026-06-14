@@ -1,5 +1,5 @@
 /**
- * Hydrological Imbalance Module
+ * Water Imbalance Module
  *
  * This module is intentionally isolated from Foundation domain logic. Foundation
  * supplies map rendering, basin geometry, module loading, and panel APIs. The
@@ -44,7 +44,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.indexGraph();
     this.prepareBasins(window.BASIN_DATA?.basins || []);
     this.enhanceFoundationBasinLayer();
-    this.ensureInspectorStyles();
     this.ensureLegend();
     this.ensureChartUI();
     this.ensureLiteratureUI();
@@ -74,29 +73,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
     return response.json();
-  }
-
-  ensureInspectorStyles() {
-    if (document.getElementById("wi-inspector-styles")) return;
-    const style = document.createElement("style");
-    style.id = "wi-inspector-styles";
-    style.textContent = `
-      .wi-time-series-preview{display:block;width:100%;height:132px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer;transition:border-color .14s ease,box-shadow .14s ease,background .14s ease}
-      .wi-time-series-preview:hover,.wi-time-series-preview:focus{border-color:#60a5fa;box-shadow:0 0 0 2px rgba(59,130,246,.16);outline:0}
-      .wi-literature-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer;transition:border-color .14s ease,box-shadow .14s ease,background .14s ease,transform .14s ease}
-      .wi-literature-card:hover,.wi-literature-card:focus{background:#eef6ff;border-color:#60a5fa;box-shadow:0 0 0 2px rgba(59,130,246,.14);outline:0}
-      .wi-literature-card-title{font-weight:500;margin-bottom:3px;color:#1e293b}
-      .wi-literature-card-meta,.wi-literature-card-note{color:#64748b}
-      .wi-literature-card-meta{font-size:11px;margin-bottom:4px}
-      .wi-literature-card-note{font-size:11px}
-      body.theme-dark .wi-time-series-preview{background:#0f1d2f!important;border-color:#64748b!important}
-      body.theme-dark .wi-time-series-preview:hover,body.theme-dark .wi-time-series-preview:focus{border-color:#38bdf8!important;box-shadow:0 0 0 2px rgba(56,189,248,.2)}
-      body.theme-dark .wi-literature-card{background:#0f1d2f;border-color:#334155;color:#dbe7f3}
-      body.theme-dark .wi-literature-card:hover,body.theme-dark .wi-literature-card:focus{background:#16263a;border-color:#38bdf8;box-shadow:0 0 0 2px rgba(56,189,248,.18)}
-      body.theme-dark .wi-literature-card-title{color:#e5edf7}
-      body.theme-dark .wi-literature-card-meta,body.theme-dark .wi-literature-card-note{color:#94a3b8}
-    `;
-    document.head.appendChild(style);
   }
 
   async loadDatasetMetadata() {
@@ -425,6 +401,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const title = region?.name || basin.name;
     const series = this.timeSeriesByBasin.get(String(basin.id)) || [];
     const previewId = `wi-preview-${basin.id}`;
+    const expandId = `wi-expand-${basin.id}`;
     const classLabel = this.getClassLabel(classification);
     const metrics = classification?.metrics || {};
 
@@ -457,9 +434,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       <section style="margin-bottom:16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
           <h3 style="font-size:12px;font-weight:600;margin:0;color:#64748b;text-transform:uppercase">1962-2016 Time Series</h3>
+          ${series.length ? `<button id="${expandId}" type="button" style="border:1px solid #cbd5e1;background:#fff;border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;color:#334155">Expand</button>` : ""}
         </div>
         ${series.length
-          ? `<canvas id="${previewId}" class="wi-time-series-preview" width="300" height="132" tabindex="0" role="button" aria-label="Open time series"></canvas>`
+          ? `<canvas id="${previewId}" width="300" height="132" style="display:block;width:100%;height:132px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer"></canvas>`
           : `<p style="font-size:12px;color:#64748b;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
 
@@ -476,16 +454,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     if (series.length) {
       setTimeout(() => {
         const preview = document.getElementById(previewId);
+        const expand = document.getElementById(expandId);
         if (preview) {
           this.drawMiniPreview(preview, series);
           preview.onclick = () => this.openTimeSeriesModal(prep, series);
-          preview.onkeydown = (event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              this.openTimeSeriesModal(prep, series);
-            }
-          };
         }
+        if (expand) expand.onclick = () => this.openTimeSeriesModal(prep, series);
       }, 0);
     }
     setTimeout(() => {
@@ -529,7 +503,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     if (!classification) return "No matched time series";
     if (classification.classId === "none") return "No detected imbalance";
     const labels = {
-      withdrawal: "Total water withdrawal",
+      deficit: "Water-demand deficit",
       groundwater: "Groundwater storage",
       glacier: "Glacier storage"
     };
@@ -554,10 +528,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   renderLiteratureCard(item, index) {
     const ref = item.record;
     return `
-      <div class="wi-literature-card" data-wi-literature-index="${index}" tabindex="0" role="button">
-        <div class="wi-literature-card-title">${this.escape(ref.title)}</div>
-        <div class="wi-literature-card-meta">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
-        ${item.relation.confidence != null ? `<div class="wi-literature-card-note">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
+      <div data-wi-literature-index="${index}" tabindex="0" role="button" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer">
+        <div style="font-weight:500;margin-bottom:3px;color:#1e293b">${this.escape(ref.title)}</div>
+        <div style="font-size:11px;margin-bottom:4px;color:#64748b">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
+        ${item.relation.confidence != null ? `<div style="color:#64748b;font-size:11px">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
       </div>
     `;
   }
@@ -620,18 +594,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-literature-section p{font-size:13px;line-height:1.65;margin:0;color:#334155}
       .wi-literature-section a{color:#3b82f6;text-decoration:none}
       .wi-literature-section a:hover{text-decoration:underline}
-      body.theme-dark .wi-literature-modal{background:rgba(2,6,23,.64)}
-      body.theme-dark .wi-literature-dialog{background:#0f172a;border:1px solid #334155;box-shadow:0 18px 48px rgba(0,0,0,.42)}
-      body.theme-dark .wi-literature-header{border-bottom-color:#334155}
-      body.theme-dark .wi-literature-heading,body.theme-dark .wi-literature-title a{color:#e5edf7}
-      body.theme-dark .wi-literature-close{color:#94a3b8}
-      body.theme-dark .wi-literature-close:hover{background:#1e293b;color:#e5edf7}
-      body.theme-dark .wi-literature-body{color:#dbe7f3}
-      body.theme-dark .wi-literature-author{border-color:#334155;background:#16263a;color:#cbd5e1}
-      body.theme-dark .wi-literature-chip{background:#16263a;border-color:#334155;color:#94a3b8}
-      body.theme-dark .wi-literature-section h3{color:#94a3b8}
-      body.theme-dark .wi-literature-section p{color:#dbe7f3}
-      body.theme-dark .wi-literature-section a,body.theme-dark .wi-literature-authors a{color:#60a5fa}
     `;
     document.head.appendChild(style);
 
@@ -692,13 +654,13 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const colors = this.timeSeriesMetadata?.classColors || {};
     const items = [
       [colors.none || "#eef2f7", "No detected imbalance"],
-      [colors.withdrawal || "#e3b23c", "Total water withdrawal"],
+      [colors.deficit || "#e3b23c", "Water-demand deficit"],
       [colors.groundwater || "#c767b1", "Groundwater storage"],
       [colors.glacier || "#2fb7c8", "Glacier storage"],
-      [colors["withdrawal+groundwater"] || "#d85f55", "Withdrawal + groundwater"],
-      [colors["withdrawal+glacier"] || "#66b95a", "Withdrawal + glacier"],
+      [colors["deficit+groundwater"] || "#d85f55", "Deficit + groundwater"],
+      [colors["deficit+glacier"] || "#66b95a", "Deficit + glacier"],
       [colors["groundwater+glacier"] || "#4f7fd5", "Groundwater + glacier"],
-      [colors["withdrawal+groundwater+glacier"] || "#3f4652", "All three variables"]
+      [colors["deficit+groundwater+glacier"] || "#3f4652", "All three variables"]
     ];
     this.app.registerLegend?.(this.legendId, {
       title: "Water imbalance classes",
@@ -735,15 +697,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-chart-row{position:relative;border-bottom:1px solid #e2e8f0;min-height:150px}
       .wi-chart-row:last-child{border-bottom:0}
       .wi-chart-row canvas{display:block;width:100%;height:100%;min-height:150px}
-      body.theme-dark .wi-chart-modal{background:rgba(2,6,23,.64)}
-      body.theme-dark .wi-chart-dialog{background:#0f172a;border:1px solid #334155;box-shadow:0 18px 48px rgba(0,0,0,.42)}
-      body.theme-dark .wi-chart-header{border-bottom-color:#334155}
-      body.theme-dark .wi-chart-title{color:#e5edf7}
-      body.theme-dark .wi-chart-subtitle{color:#94a3b8}
-      body.theme-dark .wi-chart-close{color:#94a3b8}
-      body.theme-dark .wi-chart-close:hover{background:#1e293b;color:#e5edf7}
-      body.theme-dark .wi-chart-grid{background:#0f172a}
-      body.theme-dark .wi-chart-row{border-bottom-color:#334155}
     `;
     document.head.appendChild(style);
 
@@ -876,19 +829,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const height = rect.height;
     const plot = this.getChartPlot(width, height, showXAxis);
     const finiteValues = series.map((record) => record[variable.id]).filter(Number.isFinite);
-    const dark = document.body.classList.contains("theme-dark");
-    const chartBackground = dark ? "#0f172a" : "#fff";
-    const primaryText = dark ? "#e5edf7" : "#334155";
-    const secondaryText = dark ? "#94a3b8" : "#64748b";
-    const mutedText = "#94a3b8";
-    const gridStrong = dark ? "#334155" : "#e2e8f0";
-    const gridSoft = dark ? "#1e293b" : "#edf2f7";
-    const cursorColor = dark ? "#94a3b8" : "#64748b";
 
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = chartBackground;
+    ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = primaryText;
+    ctx.fillStyle = "#334155";
     ctx.font = "600 12px sans-serif";
     ctx.fillText(variable.label, plot.left, 16);
     if (metric?.imbalanced) {
@@ -897,14 +842,14 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       ctx.font = "600 12px sans-serif";
       ctx.fillText("Imbalanced", plot.left + labelWidth + 14, 16);
     }
-    ctx.fillStyle = mutedText;
+    ctx.fillStyle = "#94a3b8";
     ctx.font = "11px sans-serif";
     ctx.textAlign = "right";
     ctx.fillText(variable.unit, plot.right, 16);
     ctx.textAlign = "left";
 
     if (!finiteValues.length) {
-      ctx.fillStyle = mutedText;
+      ctx.fillStyle = "#94a3b8";
       ctx.fillText("No valid values", plot.left, plot.top + 24);
       return;
     }
@@ -919,7 +864,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const yAt = (value) => plot.bottom - ((value - min) / span) * (plot.bottom - plot.top);
 
     const yearTicks = this.getYearTicks(series[0].year, series[series.length - 1].year);
-    ctx.strokeStyle = gridSoft;
+    ctx.strokeStyle = "#edf2f7";
     ctx.lineWidth = 1;
     for (const year of yearTicks) {
       const yearIndex = Math.max(0, Math.min(series.length - 1, year - series[0].year));
@@ -930,7 +875,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       ctx.stroke();
     }
 
-    ctx.strokeStyle = gridStrong;
+    ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 1;
     for (let i = 0; i <= 3; i++) {
       const y = plot.top + (i / 3) * (plot.bottom - plot.top);
@@ -939,7 +884,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       ctx.lineTo(plot.right, y);
       ctx.stroke();
       const value = max - (i / 3) * span;
-      ctx.fillStyle = mutedText;
+      ctx.fillStyle = "#94a3b8";
       ctx.font = "10px sans-serif";
       ctx.fillText(this.formatValue(value), 4, y + 3);
     }
@@ -966,7 +911,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     ctx.stroke();
 
     if (showXAxis) {
-      ctx.fillStyle = secondaryText;
+      ctx.fillStyle = "#64748b";
       ctx.font = "10px sans-serif";
       for (const year of yearTicks) {
         const yearIndex = Math.max(0, Math.min(series.length - 1, year - series[0].year));
@@ -984,7 +929,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       const value = record[variable.id];
       const x = xAt(hoverIndex);
       ctx.setLineDash([4, 4]);
-      ctx.strokeStyle = cursorColor;
+      ctx.strokeStyle = "#64748b";
       ctx.beginPath();
       ctx.moveTo(x, plot.top);
       ctx.lineTo(x, plot.bottom);
@@ -1001,12 +946,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         ctx.beginPath();
         ctx.arc(x, y, 3.5, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = primaryText;
+        ctx.fillStyle = "#334155";
         ctx.font = "600 11px sans-serif";
         ctx.fillText(`${record.year}: ${this.formatValue(value)} ${variable.unit}`, plot.right + 10, Math.max(plot.top + 12, y + 4));
       } else {
         ctx.setLineDash([]);
-        ctx.fillStyle = secondaryText;
+        ctx.fillStyle = "#64748b";
         ctx.font = "600 11px sans-serif";
         ctx.fillText(`${record.year}: no data`, plot.right + 10, plot.top + 14);
       }

@@ -334,11 +334,19 @@ The catchment water-use class is assigned from the active-cell type proportions 
 
 Figure 2 uses the unified annual catchment time-series dataset for 1962-2016. Three variables are assessed:
 
-- Potential total water withdrawal (`potential_total_water_withdrawal_mm_yr`), in mm yr-1.
+- Net water-demand deficit (`net_water_demand_deficit_mm_yr`), in mm yr-1.
 - Groundwater storage (`groundwater_storage_mm`), in mm.
 - Reconstructed absolute glacier storage (`glacier_storage_mm_we`), in mm water equivalent.
 
-For each variable `v` and catchment `c`, the historical mean and population standard deviation are calculated over 1962-1996, and the recent mean is calculated over the recent 20-year period 1997-2016:
+The net water-demand deficit is calculated from WaterGAP 2.2d monthly `ptotww` and naturalized net cell runoff (`ncrunnat`). Natural demand is represented as environmental-flow requirement (EFR), estimated for each grid cell and calendar month as the Q90 exceedance value of naturalized runoff during 1962-1996. In ordinary percentile notation this is the 10th percentile of the monthly naturalized runoff distribution for that calendar month. Monthly deficit is:
+
+```
+deficit_flux = max(ptotww + EFR - ncrunnat, 0)
+```
+
+Monthly fluxes are converted to depth using calendar month length and summed to annual catchment means.
+
+For each final variable `v` and catchment `c`, the historical mean and population standard deviation are calculated over 1962-1996, and the recent mean is calculated over the recent 20-year period 1997-2016:
 
 ```
 mu_historical(v,c) = mean(x(v,c,t)), 1962 <= t <= 1996
@@ -357,7 +365,7 @@ abs(delta(v,c)) > 1 mm
 
 The catchment class is the set of variables satisfying this rule. This produces eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and imbalance in all three variables.
 
-Human-impacted catchments are annotated independently using the sectoral-withdrawal rule from Section S9. A gold boundary marks catchments where active human-water-use cells occupy at least 10% of catchment area. This boundary is contextual and does not modify the three-variable imbalance classification.
+Human-impacted catchments are annotated independently using WaterGAP 2.2d total-withdrawal activity. A gold boundary marks catchments where cells with recent mean `ptotww` of at least 0.1 mm day-1 occupy at least 10% of catchment area. This boundary is contextual and does not modify the three-variable imbalance classification.
 
 ## S11. Figure S1: Variable-level imbalance evidence
 
@@ -377,7 +385,7 @@ The figure demonstrates how the diagnostic framework handles both sparse and non
 
 ## S12. Literature support for human-activity interpretation
 
-The catchment-scale water-imbalance classification was designed to be consistent with prior process-based and attribution studies. These studies were not used to tune the thresholds directly; they provide physical interpretation for coupled changes in human water withdrawal and water storage.
+The catchment-scale water-imbalance classification was designed to be consistent with prior process-based and attribution studies. These studies were not used to tune the thresholds directly; they provide physical interpretation for coupled changes in local water-demand deficit and water storage.
 
 **Table S3. Selected studies supporting the human-activity interpretation.**
 

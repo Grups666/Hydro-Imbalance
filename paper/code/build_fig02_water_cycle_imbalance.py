@@ -1,11 +1,10 @@
 """
 Catchment-scale water-imbalance classification.
 
-The classification follows the basin time-series method used by the
-Spatial_Research_Operating_System Water Imbalance module. Each catchment is
-classified from the combination of imbalanced total-water-withdrawal,
-groundwater-storage, and glacier-storage variables. Human-impacted catchments
-retain the sectoral-withdrawal gold boundary used elsewhere in this project.
+Each catchment is classified from the combination of imbalanced net
+water-demand deficit, groundwater-storage, and glacier-storage variables.
+The net water-demand deficit is derived from WaterGAP 2.2d potential total
+withdrawal, naturalized runoff availability, and environmental-flow demand.
 """
 
 from __future__ import annotations
@@ -24,32 +23,32 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import LineCollection
 from matplotlib.patches import Patch, Polygon
+from netCDF4 import Dataset
 
 
 ROOT = Path(__file__).resolve().parents[2]
-WEB = ROOT / "projects" / "web"
+DATASET_DIR = ROOT / "projects" / "datasets"
 BASIN_DATA = ROOT / "projects" / "basin-data.js"
 TIMESERIES = ROOT / "projects" / "datasets" / "basin_time_series" / "basin_three_variable_timeseries_1962_2016.csv"
 CHARTS = ROOT / "paper" / "charts"
 REPORTS = ROOT / "paper" / "reports"
 BASEMAPS = ROOT / "paper" / "data" / "basemaps" / "natural_earth"
-WINDOW = "20"
-SECONDS_PER_DAY = 86400.0
 
 HISTORICAL_PERIOD = (1962, 1996)
 RECENT_PERIOD = (1997, 2016)
 ABSOLUTE_DIFFERENCE_MIN_MM = 1.0
 
-HUMAN_WITHDRAWAL_CODES = ["pirrww", "pelecww", "pmanww", "pdomww"]
+PTOTWW_FILE = "watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4"
+SECONDS_PER_DAY = 86400.0
 CELL_WITHDRAWAL_MIN_MM_DAY = 0.10
 HUMAN_CATCHMENT_ACTIVE_AREA_MIN = 0.10
 HUMAN_IMPACTED_EDGE = "#f0b82e"
 
 VARIABLES = [
     {
-        "id": "potential_total_water_withdrawal_mm_yr",
-        "key": "withdrawal",
-        "label": "Total water withdrawal",
+        "id": "net_water_demand_deficit_mm_yr",
+        "key": "deficit",
+        "label": "Water-demand deficit",
     },
     {
         "id": "groundwater_storage_mm",
@@ -65,13 +64,13 @@ VARIABLES = [
 
 CLASS_STYLES = {
     "none": {"label": "No detected imbalance", "color": "#eef2f7"},
-    "withdrawal": {"label": "Potential total water withdrawal", "color": "#e3b23c"},
+    "deficit": {"label": "Water-demand deficit", "color": "#e3b23c"},
     "groundwater": {"label": "Groundwater storage", "color": "#c767b1"},
     "glacier": {"label": "Glacier storage", "color": "#2fb7c8"},
-    "withdrawal+groundwater": {"label": "Withdrawal + groundwater", "color": "#d85f55"},
-    "withdrawal+glacier": {"label": "Withdrawal + glacier", "color": "#66b95a"},
+    "deficit+groundwater": {"label": "Deficit + groundwater", "color": "#d85f55"},
+    "deficit+glacier": {"label": "Deficit + glacier", "color": "#66b95a"},
     "groundwater+glacier": {"label": "Groundwater + glacier", "color": "#4f7fd5"},
-    "withdrawal+groundwater+glacier": {"label": "All three variables", "color": "#3f4652"},
+    "deficit+groundwater+glacier": {"label": "All three variables", "color": "#3f4652"},
 }
 
 
@@ -81,19 +80,44 @@ def read_assignment_json(path: Path) -> dict:
     return json.loads(payload)
 
 
-def read_variable(code: str) -> dict:
-    text = (WEB / "data" / f"{code}.js").read_text(encoding="utf-8")
-    payload = text.split("=", 2)[2].strip().rstrip(";")
-    return json.loads(payload)["windows"][WINDOW]
+def infer_year_range(file_path: Path, time_len: int) -> tuple[int, int]:
+    stem = file_path.name
+    for part in stem.split("_"):
+        if part.isdigit() and len(part) == 4:
+            start = int(part)
+            return start, start + time_len // 12 - 1
+    return 1901, 1901 + time_len // 12 - 1
 
 
-def water_use_grid(code: str, key: str = "recentMean") -> np.ndarray:
-    return np.asarray(read_variable(code)[key], dtype=np.float32) * SECONDS_PER_DAY
+def as_float_grid(values: np.ndarray) -> np.ndarray:
+    if np.ma.isMaskedArray(values):
+        values = values.filled(np.nan)
+    array = np.asarray(values, dtype=np.float32)
+    array = np.squeeze(array)
+    array[np.abs(array) > 1e20] = np.nan
+    return array
 
 
 def human_impacted_cell_mask() -> np.ndarray:
-    stack = np.stack([water_use_grid(code) for code in HUMAN_WITHDRAWAL_CODES])
-    return np.any(np.isfinite(stack) & (stack >= CELL_WITHDRAWAL_MIN_MM_DAY), axis=0)
+    file_path = DATASET_DIR / PTOTWW_FILE
+    with Dataset(str(file_path)) as dataset:
+        variable = dataset.variables["ptotww"]
+        source_start, source_end = infer_year_range(file_path, len(dataset.dimensions["time"]))
+        if RECENT_PERIOD[0] < source_start or RECENT_PERIOD[1] > source_end:
+            raise ValueError(f"Recent period is outside {source_start}-{source_end}")
+
+        total = np.zeros((360, 720), dtype=np.float64)
+        count = np.zeros((360, 720), dtype=np.float64)
+        for year in range(RECENT_PERIOD[0], RECENT_PERIOD[1] + 1):
+            offset = (year - source_start) * 12
+            values = as_float_grid(variable[offset : offset + 12])
+            valid = np.isfinite(values)
+            total += np.nansum(np.where(valid, values, 0.0), axis=0, dtype=np.float64)
+            count += np.sum(valid, axis=0, dtype=np.float64)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        mean_flux = total / count
+    mean_flux[count == 0] = np.nan
+    return np.isfinite(mean_flux) & (mean_flux * SECONDS_PER_DAY >= CELL_WITHDRAWAL_MIN_MM_DAY)
 
 
 def active_area_fraction(active_mask: np.ndarray, cells: np.ndarray, weights: np.ndarray) -> float:
@@ -343,8 +367,7 @@ def make_figure():
     REPORTS.mkdir(parents=True, exist_ok=True)
 
     basins = read_assignment_json(BASIN_DATA)["basins"]
-    manifest = read_assignment_json(WEB / "analysis-data.js")
-    lat = np.asarray(manifest["grid"]["lat"], dtype=float)
+    lat = np.asarray([89.75 - 0.5 * index for index in range(360)], dtype=float)
     weights = np.repeat(np.cos(np.deg2rad(lat))[:, None], 720, axis=1).ravel()
     human_cell_mask = human_impacted_cell_mask()
     classification = read_basin_classification()
@@ -447,8 +470,9 @@ def make_figure():
         f"- Historical period: {HISTORICAL_PERIOD[0]}-{HISTORICAL_PERIOD[1]}.",
         f"- Recent 20-year period: {RECENT_PERIOD[0]}-{RECENT_PERIOD[1]}.",
         f"- Variable imbalance rule: absolute recent-minus-historical mean difference exceeds both the historical standard deviation and {ABSOLUTE_DIFFERENCE_MIN_MM:g} mm.",
-        "- Catchment class: combination of imbalanced potential total water withdrawal, groundwater storage, and glacier storage variables.",
-        f"- Human-impacted boundary: cells with any sectoral withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
+        "- Catchment class: combination of imbalanced net water-demand deficit, groundwater storage, and glacier storage variables.",
+        f"- Net water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
+        f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
         f"- Human-impacted catchments outlined in gold: {human_count}.",
         "",
         "| Class | Catchment count | Color |",
