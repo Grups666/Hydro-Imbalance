@@ -27,6 +27,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.chartModal = null;
     this.literatureModal = null;
     this.activeChartSeries = null;
+    this.themeObserver = null;
     this.enhancedLayer = null;
     this.originalLayerState = null;
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
@@ -44,6 +45,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.indexGraph();
     const basinData = await this.loadBasinData();
     this.prepareBasins(basinData.basins || []);
+    this.ensureThemeStyles();
+    this.watchThemeChanges();
     this.enhanceFoundationBasinLayer();
     this.ensureLegend();
     this.ensureChartUI();
@@ -62,6 +65,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
     this.closeLiteratureModal();
+    this.themeObserver?.disconnect();
+    this.themeObserver = null;
     this.app.unregisterLegend?.(this.legendId);
   }
 
@@ -428,6 +433,107 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .catch((error) => console.error("Failed to load basin time series:", error));
   }
 
+  ensureThemeStyles() {
+    if (document.getElementById("wi-theme-styles")) return;
+    const style = document.createElement("style");
+    style.id = "wi-theme-styles";
+    style.textContent = `
+      :root{
+        --wi-surface:var(--modal-panel,rgba(7,16,18,.94));
+        --wi-surface-soft:var(--panel-raised,rgba(18,32,36,.9));
+        --wi-border:var(--panel-border,rgba(172,205,196,.16));
+        --wi-border-strong:var(--panel-border-strong,rgba(132,190,185,.28));
+        --wi-text:var(--text,#f4f3ec);
+        --wi-muted:var(--muted,#9db4ae);
+        --wi-subtle:#94a3b8;
+        --wi-button-bg:var(--panel-raised,rgba(18,32,36,.9));
+        --wi-button-hover:var(--card-bg,rgba(255,255,255,.07));
+        --wi-overlay:var(--modal-backdrop,rgba(3,8,10,.72));
+        --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.26));
+        --wi-danger:#fca5a5;
+        --wi-link:#93c5fd;
+        --wi-canvas-bg:var(--bg,#071012);
+        --wi-grid:rgba(172,205,196,.18);
+        --wi-grid-soft:rgba(172,205,196,.09);
+        --wi-hover-line:#cbd5e1;
+      }
+      :root[data-theme="dark"],[data-theme="dark"],body.dark,body.theme-dark,body.dark-mode{
+        --wi-surface:var(--modal-panel,rgba(7,16,18,.94));
+        --wi-surface-soft:var(--panel-raised,rgba(18,32,36,.9));
+        --wi-border:var(--panel-border,rgba(172,205,196,.16));
+        --wi-border-strong:var(--panel-border-strong,rgba(132,190,185,.28));
+        --wi-text:var(--text,#f4f3ec);
+        --wi-muted:var(--muted,#9db4ae);
+        --wi-subtle:#94a3b8;
+        --wi-button-bg:var(--panel-raised,rgba(18,32,36,.9));
+        --wi-button-hover:var(--card-bg,rgba(255,255,255,.07));
+        --wi-overlay:var(--modal-backdrop,rgba(3,8,10,.72));
+        --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.26));
+        --wi-danger:#fca5a5;
+        --wi-link:#93c5fd;
+        --wi-canvas-bg:var(--bg,#071012);
+        --wi-grid:rgba(172,205,196,.18);
+        --wi-grid-soft:rgba(172,205,196,.09);
+        --wi-hover-line:#cbd5e1;
+      }
+      :root[data-theme="light"],[data-theme="light"],body.light,body.theme-light,body.light-mode{
+        --wi-surface:var(--modal-panel,rgba(255,255,255,.95));
+        --wi-surface-soft:var(--panel-raised,rgba(255,255,255,.95));
+        --wi-border:var(--panel-border,rgba(100,130,140,.14));
+        --wi-border-strong:var(--panel-border-strong,rgba(80,120,130,.25));
+        --wi-text:var(--text,#1a2a2e);
+        --wi-muted:var(--muted,#5a7078);
+        --wi-subtle:#94a3b8;
+        --wi-button-bg:var(--panel-raised,rgba(255,255,255,.95));
+        --wi-button-hover:var(--card-bg,rgba(0,0,0,.03));
+        --wi-overlay:var(--modal-backdrop,rgba(200,210,220,.75));
+        --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.1));
+        --wi-danger:#b91c1c;
+        --wi-link:#3b82f6;
+        --wi-canvas-bg:#ffffff;
+        --wi-grid:#e2e8f0;
+        --wi-grid-soft:#edf2f7;
+        --wi-hover-line:#64748b;
+      }
+      .wi-inspector{color:var(--wi-text)}
+      .wi-muted{color:var(--wi-muted)}
+      .wi-section-title{font-size:12px;font-weight:600;margin:0 0 8px;color:var(--wi-muted);text-transform:uppercase}
+      .wi-stat-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);padding:12px;border-radius:6px}
+      .wi-stat-value{font-size:18px;font-weight:600;color:var(--wi-text)}
+      .wi-stat-label{font-size:11px;color:var(--wi-muted)}
+      .wi-button{border:1px solid var(--wi-border-strong);background:var(--wi-button-bg);border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--wi-text)}
+      .wi-button:hover{background:var(--wi-button-hover)}
+      .wi-preview{display:block;width:100%;height:132px;background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;cursor:pointer}
+      .wi-metric-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 10px;color:var(--wi-text)}
+      .wi-literature-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer;color:var(--wi-text)}
+      .wi-literature-card-title{font-weight:500;margin-bottom:3px;color:var(--wi-text)}
+    `;
+    document.head.appendChild(style);
+  }
+
+  watchThemeChanges() {
+    if (this.themeObserver || typeof MutationObserver === "undefined") return;
+    const repaintCharts = () => {
+      if (this.selectedBasin) {
+        const preview = document.querySelector(".wi-preview");
+        const series = this.timeSeriesByBasin.get(String(this.selectedBasin.basin.id)) || [];
+        if (preview && series.length) this.drawMiniPreview(preview, series);
+      }
+      if (this.activeChartSeries) this.drawExpandedCharts();
+    };
+    this.themeObserver = new MutationObserver(repaintCharts);
+    this.themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class"]
+    });
+    if (document.body) {
+      this.themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ["data-theme", "class"]
+      });
+    }
+  }
+
   showInspector(prep) {
     const { basin, region, classification } = prep;
     const references = this.getLiteratureFor(prep);
@@ -439,47 +545,49 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const metrics = classification?.metrics || {};
 
     const content = `
+      <div class="wi-inspector">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <span style="display:inline-block;width:12px;height:12px;border:1px solid #94a3b8;border-radius:3px;background:${this.escape(classification?.color || "#e3e6e9")}"></span>
-        <span style="font-size:11px;color:#64748b;text-transform:uppercase">${this.escape(classLabel)}</span>
+        <span class="wi-muted" style="font-size:11px;text-transform:uppercase">${this.escape(classLabel)}</span>
       </div>
       <h2 style="margin:0 0 6px;font-size:18px;font-weight:600">${this.escape(title)}</h2>
-      <p style="margin:0 0 14px;color:#64748b;font-size:12px;line-height:1.5">
+      <p class="wi-muted" style="margin:0 0 14px;font-size:12px;line-height:1.5">
         Recent period 1997-2016 compared with historical period 1962-1996. A variable is imbalanced when its mean shift exceeds two historical standard deviations and 1 mm.
       </p>
 
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
-        <div style="background:#f8fafc;padding:12px;border-radius:6px">
-          <div style="font-size:18px;font-weight:600">${Math.round(basin.areaKm2).toLocaleString()}</div>
-          <div style="font-size:11px;color:#64748b">Area km2</div>
+        <div class="wi-stat-card">
+          <div class="wi-stat-value">${Math.round(basin.areaKm2).toLocaleString()}</div>
+          <div class="wi-stat-label">Area km2</div>
         </div>
-        <div style="background:#f8fafc;padding:12px;border-radius:6px">
-          <div style="font-size:18px;font-weight:600">${this.escape(this.getRegionName(basin.region))}</div>
-          <div style="font-size:11px;color:#64748b">MRB region</div>
+        <div class="wi-stat-card">
+          <div class="wi-stat-value">${this.escape(this.getRegionName(basin.region))}</div>
+          <div class="wi-stat-label">MRB region</div>
         </div>
       </div>
 
       <section style="margin-bottom:16px">
-        <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Imbalance Assessment</h3>
+        <h3 class="wi-section-title">Imbalance Assessment</h3>
         ${this.renderMetricCards(metrics)}
       </section>
 
       <section style="margin-bottom:16px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <h3 style="font-size:12px;font-weight:600;margin:0;color:#64748b;text-transform:uppercase">1962-2016 Time Series</h3>
-          ${series.length ? `<button id="${expandId}" type="button" style="border:1px solid #cbd5e1;background:#fff;border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;color:#334155">Expand</button>` : ""}
+          <h3 class="wi-section-title" style="margin:0">1962-2016 Time Series</h3>
+          ${series.length ? `<button id="${expandId}" class="wi-button" type="button">Expand</button>` : ""}
         </div>
         ${series.length
-          ? `<canvas id="${previewId}" width="300" height="132" style="display:block;width:100%;height:132px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;cursor:pointer"></canvas>`
-          : `<p style="font-size:12px;color:#64748b;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
+          ? `<canvas id="${previewId}" class="wi-preview" width="300" height="132"></canvas>`
+          : `<p class="wi-muted" style="font-size:12px;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
 
       <section>
-        <h3 style="font-size:12px;font-weight:600;margin:0 0 8px;color:#64748b;text-transform:uppercase">Literature Evidence</h3>
+        <h3 class="wi-section-title">Literature Evidence</h3>
         <div style="display:flex;flex-direction:column;gap:6px">
-          ${references.slice(0, 10).map((item, index) => this.renderLiteratureCard(item, index)).join("") || "<p style=\"font-size:12px;color:#64748b\">No evidence linked by this module.</p>"}
+          ${references.slice(0, 10).map((item, index) => this.renderLiteratureCard(item, index)).join("") || "<p class=\"wi-muted\" style=\"font-size:12px\">No evidence linked by this module.</p>"}
         </div>
       </section>
+      </div>
     `;
 
     this.app.showInspector(title, content);
@@ -517,15 +625,15 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       const status = metric.status === "evaluated"
         ? (metric.imbalanced ? "Imbalanced" : "Within historical variability")
         : "Insufficient data";
-      const color = metric.imbalanced ? "#b91c1c" : "#64748b";
+      const color = metric.imbalanced ? "var(--wi-danger)" : "var(--wi-muted)";
       return `
-        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 10px">
+        <div class="wi-metric-card">
           <div style="display:flex;justify-content:space-between;gap:8px;font-size:12px">
             <strong>${this.escape(variable.label)}</strong>
             <span style="color:${color};white-space:nowrap">${this.escape(status)}</span>
           </div>
           ${metric.status === "evaluated" ? `
-            <div style="margin-top:4px;color:#64748b;font-size:11px">
+            <div class="wi-muted" style="margin-top:4px;font-size:11px">
               mean shift ${this.formatValue(metric.difference)} ${this.escape(variable.unit)} · historical SD ${this.formatValue(metric.historicalStdDev)}
             </div>` : ""}
         </div>`;
@@ -561,10 +669,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   renderLiteratureCard(item, index) {
     const ref = item.record;
     return `
-      <div data-wi-literature-index="${index}" tabindex="0" role="button" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer">
-        <div style="font-weight:500;margin-bottom:3px;color:#1e293b">${this.escape(ref.title)}</div>
-        <div style="font-size:11px;margin-bottom:4px;color:#64748b">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
-        ${item.relation.confidence != null ? `<div style="color:#64748b;font-size:11px">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
+      <div class="wi-literature-card" data-wi-literature-index="${index}" tabindex="0" role="button">
+        <div class="wi-literature-card-title">${this.escape(ref.title)}</div>
+        <div class="wi-muted" style="font-size:11px;margin-bottom:4px">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
+        ${item.relation.confidence != null ? `<div class="wi-muted" style="font-size:11px">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
       </div>
     `;
   }
@@ -604,28 +712,28 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     const style = document.createElement("style");
     style.textContent = `
-      .wi-literature-modal{position:fixed;inset:0;background:rgba(15,23,42,.34);z-index:310;display:none;align-items:center;justify-content:center;padding:28px}
+      .wi-literature-modal{position:fixed;inset:0;background:var(--wi-overlay);z-index:310;display:none;align-items:center;justify-content:center;padding:28px}
       .wi-literature-modal.visible{display:flex}
-      .wi-literature-dialog{width:min(820px,calc(100vw - 56px));max-height:min(820px,calc(100vh - 56px));background:#fff;border-radius:8px;box-shadow:0 18px 48px rgba(15,23,42,.28);display:flex;flex-direction:column;overflow:hidden}
-      .wi-literature-header{min-height:54px;padding:12px 18px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;gap:16px}
-      .wi-literature-heading{font-size:14px;font-weight:600;color:#1e293b}
-      .wi-literature-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:#64748b;flex:0 0 auto}
-      .wi-literature-close:hover{background:#f1f5f9}
-      .wi-literature-body{overflow:auto;padding:20px;color:#334155}
+      .wi-literature-dialog{width:min(820px,calc(100vw - 56px));max-height:min(820px,calc(100vh - 56px));background:var(--wi-surface);border:1px solid var(--wi-border);border-radius:8px;box-shadow:var(--wi-shadow);display:flex;flex-direction:column;overflow:hidden}
+      .wi-literature-header{min-height:54px;padding:12px 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:center;justify-content:space-between;gap:16px}
+      .wi-literature-heading{font-size:14px;font-weight:600;color:var(--wi-text)}
+      .wi-literature-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:var(--wi-muted);flex:0 0 auto}
+      .wi-literature-close:hover{background:var(--wi-button-hover)}
+      .wi-literature-body{overflow:auto;padding:20px;color:var(--wi-text)}
       .wi-literature-title{font-size:22px;line-height:1.3;margin:0 0 8px}
-      .wi-literature-title a{color:#1e293b;text-decoration:none}
+      .wi-literature-title a{color:var(--wi-text);text-decoration:none}
       .wi-literature-title a:hover{text-decoration:underline}
       .wi-literature-authors{font-size:13px;margin-bottom:14px}
       .wi-literature-author-list{display:flex;flex-wrap:wrap;gap:6px}
-      .wi-literature-author{display:inline-flex;align-items:center;border:1px solid #e2e8f0;background:#f8fafc;border-radius:999px;padding:3px 8px;color:#475569}
-      .wi-literature-authors a{color:#3b82f6;text-decoration:none}
+      .wi-literature-author{display:inline-flex;align-items:center;border:1px solid var(--wi-border);background:var(--wi-surface-soft);border-radius:999px;padding:3px 8px;color:var(--wi-muted)}
+      .wi-literature-authors a{color:var(--wi-link);text-decoration:none}
       .wi-literature-authors a:hover{text-decoration:underline}
       .wi-literature-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-      .wi-literature-chip{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;padding:4px 8px;font-size:11px;color:#64748b}
+      .wi-literature-chip{background:var(--wi-button-hover);border:1px solid var(--wi-border);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--wi-muted)}
       .wi-literature-section{margin-top:18px}
-      .wi-literature-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#64748b;margin:0 0 7px}
-      .wi-literature-section p{font-size:13px;line-height:1.65;margin:0;color:#334155}
-      .wi-literature-section a{color:#3b82f6;text-decoration:none}
+      .wi-literature-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--wi-muted);margin:0 0 7px}
+      .wi-literature-section p{font-size:13px;line-height:1.65;margin:0;color:var(--wi-text)}
+      .wi-literature-section a{color:var(--wi-link);text-decoration:none}
       .wi-literature-section a:hover{text-decoration:underline}
     `;
     document.head.appendChild(style);
@@ -718,16 +826,16 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
     const style = document.createElement("style");
     style.textContent = `
-      .wi-chart-modal{position:fixed;inset:0;background:rgba(15,23,42,.34);z-index:300;display:none;align-items:center;justify-content:center;padding:28px}
+      .wi-chart-modal{position:fixed;inset:0;background:var(--wi-overlay);z-index:300;display:none;align-items:center;justify-content:center;padding:28px}
       .wi-chart-modal.visible{display:flex}
-      .wi-chart-dialog{width:min(1040px,calc(100vw - 56px));height:min(820px,calc(100vh - 56px));background:#fff;border-radius:8px;box-shadow:0 18px 48px rgba(15,23,42,.28);display:flex;flex-direction:column;overflow:hidden}
-      .wi-chart-header{height:54px;padding:0 18px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between}
-      .wi-chart-title{font-size:14px;font-weight:600;color:#1e293b}
-      .wi-chart-subtitle{font-size:11px;color:#64748b;margin-top:2px}
-      .wi-chart-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:#64748b}
-      .wi-chart-close:hover{background:#f1f5f9}
+      .wi-chart-dialog{width:min(1040px,calc(100vw - 56px));height:min(820px,calc(100vh - 56px));background:var(--wi-surface);border:1px solid var(--wi-border);border-radius:8px;box-shadow:var(--wi-shadow);display:flex;flex-direction:column;overflow:hidden}
+      .wi-chart-header{height:54px;padding:0 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:center;justify-content:space-between}
+      .wi-chart-title{font-size:14px;font-weight:600;color:var(--wi-text)}
+      .wi-chart-subtitle{font-size:11px;color:var(--wi-muted);margin-top:2px}
+      .wi-chart-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:var(--wi-muted)}
+      .wi-chart-close:hover{background:var(--wi-button-hover)}
       .wi-chart-grid{flex:1;overflow:auto;padding:12px 18px 18px;display:grid;grid-template-rows:repeat(3,minmax(150px,1fr));gap:8px}
-      .wi-chart-row{position:relative;border-bottom:1px solid #e2e8f0;min-height:150px}
+      .wi-chart-row{position:relative;border-bottom:1px solid var(--wi-border);min-height:150px}
       .wi-chart-row:last-child{border-bottom:0}
       .wi-chart-row canvas{display:block;width:100%;height:100%;min-height:150px}
     `;
@@ -765,6 +873,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const rowHeight = (height - padding.top - padding.bottom) / variables.length;
 
     ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = this.cssVar("--wi-canvas-bg", "#071012");
+    ctx.fillRect(0, 0, width, height);
     for (let row = 0; row < variables.length; row++) {
       const variable = variables[row];
       const values = series.map((record) => record[variable.id]).filter(Number.isFinite);
@@ -850,6 +960,25 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     });
   }
 
+  cssVar(name, fallback) {
+    const value = getComputedStyle(document.body).getPropertyValue(name).trim()
+      || getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return value || fallback;
+  }
+
+  chartTheme() {
+    return {
+      background: this.cssVar("--wi-canvas-bg", "#ffffff"),
+      text: this.cssVar("--wi-text", "#334155"),
+      muted: this.cssVar("--wi-muted", "#64748b"),
+      subtle: this.cssVar("--wi-subtle", "#94a3b8"),
+      grid: this.cssVar("--wi-grid", "#e2e8f0"),
+      gridSoft: this.cssVar("--wi-grid-soft", "#edf2f7"),
+      hoverLine: this.cssVar("--wi-hover-line", "#64748b"),
+      danger: this.cssVar("--wi-danger", "#b91c1c")
+    };
+  }
+
   drawTimeSeriesChart(canvas, series, variable, metric, hoverIndex, showXAxis) {
     const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
@@ -862,27 +991,28 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const height = rect.height;
     const plot = this.getChartPlot(width, height, showXAxis);
     const finiteValues = series.map((record) => record[variable.id]).filter(Number.isFinite);
+    const theme = this.chartTheme();
 
     ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = theme.background;
     ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "#334155";
+    ctx.fillStyle = theme.text;
     ctx.font = "600 12px sans-serif";
     ctx.fillText(variable.label, plot.left, 16);
     if (metric?.imbalanced) {
       const labelWidth = ctx.measureText(variable.label).width;
-      ctx.fillStyle = "#b91c1c";
+      ctx.fillStyle = theme.danger;
       ctx.font = "600 12px sans-serif";
       ctx.fillText("Imbalanced", plot.left + labelWidth + 14, 16);
     }
-    ctx.fillStyle = "#94a3b8";
+    ctx.fillStyle = theme.subtle;
     ctx.font = "11px sans-serif";
     ctx.textAlign = "right";
     ctx.fillText(variable.unit, plot.right, 16);
     ctx.textAlign = "left";
 
     if (!finiteValues.length) {
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = theme.subtle;
       ctx.fillText("No valid values", plot.left, plot.top + 24);
       return;
     }
@@ -897,7 +1027,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const yAt = (value) => plot.bottom - ((value - min) / span) * (plot.bottom - plot.top);
 
     const yearTicks = this.getYearTicks(series[0].year, series[series.length - 1].year);
-    ctx.strokeStyle = "#edf2f7";
+    ctx.strokeStyle = theme.gridSoft;
     ctx.lineWidth = 1;
     for (const year of yearTicks) {
       const yearIndex = Math.max(0, Math.min(series.length - 1, year - series[0].year));
@@ -908,7 +1038,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       ctx.stroke();
     }
 
-    ctx.strokeStyle = "#e2e8f0";
+    ctx.strokeStyle = theme.grid;
     ctx.lineWidth = 1;
     for (let i = 0; i <= 3; i++) {
       const y = plot.top + (i / 3) * (plot.bottom - plot.top);
@@ -917,7 +1047,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       ctx.lineTo(plot.right, y);
       ctx.stroke();
       const value = max - (i / 3) * span;
-      ctx.fillStyle = "#94a3b8";
+      ctx.fillStyle = theme.subtle;
       ctx.font = "10px sans-serif";
       ctx.fillText(this.formatValue(value), 4, y + 3);
     }
@@ -944,7 +1074,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     ctx.stroke();
 
     if (showXAxis) {
-      ctx.fillStyle = "#64748b";
+      ctx.fillStyle = theme.muted;
       ctx.font = "10px sans-serif";
       for (const year of yearTicks) {
         const yearIndex = Math.max(0, Math.min(series.length - 1, year - series[0].year));
@@ -962,7 +1092,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       const value = record[variable.id];
       const x = xAt(hoverIndex);
       ctx.setLineDash([4, 4]);
-      ctx.strokeStyle = "#64748b";
+      ctx.strokeStyle = theme.hoverLine;
       ctx.beginPath();
       ctx.moveTo(x, plot.top);
       ctx.lineTo(x, plot.bottom);
@@ -979,12 +1109,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         ctx.beginPath();
         ctx.arc(x, y, 3.5, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = "#334155";
+        ctx.fillStyle = theme.text;
         ctx.font = "600 11px sans-serif";
         ctx.fillText(`${record.year}: ${this.formatValue(value)} ${variable.unit}`, plot.right + 10, Math.max(plot.top + 12, y + 4));
       } else {
         ctx.setLineDash([]);
-        ctx.fillStyle = "#64748b";
+        ctx.fillStyle = theme.muted;
         ctx.font = "600 11px sans-serif";
         ctx.fillText(`${record.year}: no data`, plot.right + 10, plot.top + 14);
       }
