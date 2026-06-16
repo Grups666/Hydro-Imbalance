@@ -1,6 +1,6 @@
 # Hydro-Imbalance
 
-Hydro-Imbalance is a Tereon domain module and research workspace for GRDC major-river-basin hydrological imbalance. It provides data, classification, time series, literature evidence, manuscript assets, and the module adapter consumed by Tereon.
+Hydro-Imbalance is a Tereon domain module and research workspace for basin-scale hydrological imbalance. It provides data, classification, time series, literature evidence, manuscript assets, and module adapters consumed by Tereon.
 
 The Foundation map and module loader live in:
 
@@ -12,7 +12,10 @@ Open the already-loaded Hydrological Imbalance viewer here:
 
 [https://grups666.github.io/Hydro-Imbalance/](https://grups666.github.io/Hydro-Imbalance/)
 
-This page launches Tereon with the Hydro-Imbalance module manifest preloaded, so users do not need to manually import the module URL.
+This page launches Tereon with two Hydro-Imbalance module manifests preloaded, so users can compare the same imbalance method on two basin boundary products:
+
+- `Water Imbalance - Major River Basins`: GRDC Major River Basins of the World, 2020.
+- `Water Imbalance - WMO Basins`: GRDC WMO Basins and Sub-Basins, 2020.
 
 ## Tereon Module
 
@@ -20,6 +23,12 @@ Direct module manifest:
 
 ```text
 https://grups666.github.io/Hydro-Imbalance/module.json
+```
+
+WMO basin comparison manifest:
+
+```text
+https://grups666.github.io/Hydro-Imbalance/module-wmo.json
 ```
 
 Repository URL import:
@@ -47,12 +56,22 @@ public/modules/water-imbalance/
     basin-three-variable-timeseries-1962-2016.csv
     basin-time-series-metadata.json
     basin-imbalance-classification.json
+
+public/modules/water-imbalance-wmo/
+  module.json
+  data/
+    runtime-graph.json
+    basin-data.json
+    basin-three-variable-timeseries-1962-2016.csv
+    basin-time-series-metadata.json
+    basin-imbalance-classification.json
 ```
 
 ## Data Products
 
 - Global GRDC Major River Basin hydrological imbalance classification.
-- Annual three-variable major-river-basin time series for 1962-2016.
+- Global GRDC WMO Basin/Sub-Basin hydrological imbalance classification for boundary-product comparison.
+- Annual three-variable basin time series for 1962-2016.
 - Per-variable recent-versus-historical imbalance assessment.
 - Literature evidence and author entities for named research regions.
 
@@ -104,7 +123,7 @@ python src/build_analysis.py
 python src/build_basins.py
 ```
 
-The core basin time-series classification and Figure 2 use GRDC Major River Basins, with WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
+The core basin time-series classification uses WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The default manuscript-facing unit remains GRDC Major River Basins; the WMO module uses GRDC WMO Basins and Sub-Basins as a parallel comparison product without changing the imbalance rule. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
 
 The local research viewer can be opened from `projects/web/index.html`, or served locally with:
 
@@ -134,6 +153,8 @@ npm run build:water-imbalance
 npm run build:runtime-graph
 npm test
 ```
+
+WMO comparison data are generated with the same scripts using `--source wmo`, `--basin-data`, `--glacier-storage`, and module build arguments. Large raw and intermediate CSV/ZIP/TIF/NetCDF files remain outside version control; browser-ready module data are kept under `public/modules/`.
 
 For the research workspace scripts:
 

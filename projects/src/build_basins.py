@@ -5,6 +5,7 @@ import math
 import struct
 import urllib.request
 import zipfile
+import argparse
 from pathlib import Path
 from typing import Iterable
 
@@ -15,6 +16,8 @@ RAW_DIR = BASIN_DIR / "raw"
 BASIN_DATA_PATH = ROOT / "basin-data.js"
 MRB_ARCHIVE_NAME = "GRDC_Major_River_Basins_shp.zip"
 MRB_URL = "https://grdc.bafg.de/downloads/GRDC_Major_River_Basins_shp.zip"
+WMO_ARCHIVE_NAME = "wmobb_shp.zip"
+WMO_URL = "https://grdc.bafg.de/downloads/wmobb_shp.zip"
 ROWS = 360
 COLS = 720
 LAT_VALUES = [89.75 - row * 0.5 for row in range(ROWS)]
@@ -28,6 +31,21 @@ CONTINENT_CODES = {
     "South America": "SA",
     "South-West Pacific": "AU",
 }
+WMO_REGION_CODES = {
+    1: "AF",
+    2: "AS",
+    3: "SA",
+    4: "NA",
+    5: "AU",
+    6: "EU",
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Prepare GRDC basin geometry and WaterGAP grid-cell membership.")
+    parser.add_argument("--source", choices=["mrb", "wmo"], default="mrb")
+    parser.add_argument("--output", type=Path, default=BASIN_DATA_PATH)
+    return parser.parse_args()
 
 
 def download_major_river_basins() -> Path:
@@ -40,6 +58,23 @@ def download_major_river_basins() -> Path:
             headers={
                 "User-Agent": "Mozilla/5.0",
                 "Referer": "https://mrb.grdc.bafg.de/",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=600) as response, target.open("wb") as handle:
+            handle.write(response.read())
+    return target
+
+
+def download_wmo_basins() -> Path:
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+    target = RAW_DIR / WMO_ARCHIVE_NAME
+    if not target.exists() or target.stat().st_size == 0:
+        print(f"Downloading {WMO_URL}")
+        request = urllib.request.Request(
+            WMO_URL,
+            headers={
+                "User-Agent": "Mozilla/5.0",
+                "Referer": "https://grdc.bafg.de/products/basin_layers/wmo_basins/",
             },
         )
         with urllib.request.urlopen(request, timeout=600) as response, target.open("wb") as handle:
@@ -126,7 +161,7 @@ def read_shp_polygons(path: Path) -> Iterable[dict[str, object]]:
         }
 
 
-def extract_archive(archive: Path) -> tuple[Path, Path]:
+def extract_archive(archive: Path, shp_name: str, dbf_name: str) -> tuple[Path, Path]:
     target_dir = archive.with_suffix("")
     marker = target_dir / ".extracted"
     if not marker.exists():
@@ -134,8 +169,8 @@ def extract_archive(archive: Path) -> tuple[Path, Path]:
         with zipfile.ZipFile(archive) as handle:
             handle.extractall(target_dir)
         marker.write_text("ok", encoding="utf-8")
-    shp_path = target_dir / "mrb_basins.shp"
-    dbf_path = target_dir / "mrb_basins.dbf"
+    shp_path = target_dir / shp_name
+    dbf_path = target_dir / dbf_name
     if not shp_path.exists() or not dbf_path.exists():
         raise FileNotFoundError(f"Missing .shp/.dbf in {archive}")
     return shp_path, dbf_path
@@ -213,10 +248,10 @@ def cell_indices_for_polygon(bbox: list[float], rings: list[list[tuple[float, fl
     return cells
 
 
-def build_basins() -> dict[str, object]:
+def build_mrb_basins() -> dict[str, object]:
     basins: list[dict[str, object]] = []
     archive = download_major_river_basins()
-    shp_path, dbf_path = extract_archive(archive)
+    shp_path, dbf_path = extract_archive(archive, "mrb_basins.shp", "mrb_basins.dbf")
     records = read_dbf(dbf_path)
     shapes = list(read_shp_polygons(shp_path))
     if len(records) != len(shapes):
@@ -260,13 +295,62 @@ def build_basins() -> dict[str, object]:
     }
 
 
+def build_wmo_basins() -> dict[str, object]:
+    basins: list[dict[str, object]] = []
+    archive = download_wmo_basins()
+    shp_path, dbf_path = extract_archive(archive, "wmobb_basins.shp", "wmobb_basins.dbf")
+    records = read_dbf(dbf_path)
+    shapes = list(read_shp_polygons(shp_path))
+    if len(records) != len(shapes):
+        raise ValueError(f"Record count mismatch in {archive.name}: {len(records)} dbf vs {len(shapes)} shp")
+    for record, shape in zip(records, shapes):
+        rings = shape["rings"]
+        cells = cell_indices_for_polygon(shape["bbox"], rings)  # type: ignore[arg-type]
+        basin_id = int(record.get("WMOBB") or shape["recordNumber"])
+        region_number = int(record.get("REGNUM") or record.get("REGNUMBER") or 0)
+        region = WMO_REGION_CODES.get(region_number, "OT")
+        basin_name = str(record.get("WMOBB_NAME") or record.get("WMOBB_BASIN") or record.get("WMOBB_BASI") or f"WMO-{basin_id}")
+        basins.append(
+            {
+                "id": basin_id,
+                "region": region,
+                "continent": str(record.get("REGNAME") or ""),
+                "name": basin_name.title(),
+                "sourceName": basin_name,
+                "sea": "",
+                "ocean": "",
+                "areaKm2": float(record.get("SUMSUBAREA") or record.get("SUM_SUB_AR") or 0),
+                "cellCount": len(cells),
+                "bbox": [round(float(value), 4) for value in shape["bbox"]],  # type: ignore[index]
+                "cells": cells,
+                "rings": [simplify_ring(ring, RENDER_TOLERANCE_DEGREES) for ring in rings],  # type: ignore[arg-type]
+            }
+        )
+    basins.sort(key=lambda item: int(item["id"]))
+    return {
+        "meta": {
+            "source": "GRDC WMO Basins and Sub-Basins",
+            "sourceUrl": "https://grdc.bafg.de/products/basin_layers/wmo_basins/",
+            "edition": "3rd revised and extended edition, 2020",
+            "grid": "0.5 degree WaterGAP grid",
+            "aggregation": "Basin value is the mean of all valid 0.5 degree grid cells whose centers fall inside the WMO basin polygon.",
+            "basinCount": len(basins),
+            "sourceBasinCount": len(records),
+            "basinsWithWaterGapCells": sum(1 for basin in basins if basin["cellCount"] > 0),
+        },
+        "basins": basins,
+    }
+
+
 def main() -> None:
-    data = build_basins()
-    BASIN_DATA_PATH.write_text(
+    args = parse_args()
+    data = build_mrb_basins() if args.source == "mrb" else build_wmo_basins()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
         "window.BASIN_DATA = " + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n",
         encoding="utf-8",
     )
-    print(f"Wrote {BASIN_DATA_PATH}")
+    print(f"Wrote {args.output}")
     print(f"Basins: {data['meta']['basinCount']}")
 
 

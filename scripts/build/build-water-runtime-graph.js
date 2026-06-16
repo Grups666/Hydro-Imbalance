@@ -7,8 +7,13 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.resolve(__dirname, "../..");
-const sourcePath = path.join(root, "public/modules/water-imbalance/data/knowledge-graph.json");
-const outputPath = path.join(root, "public/modules/water-imbalance/data/runtime-graph.json");
+const args = Object.fromEntries(process.argv.slice(2).map((arg) => {
+  const [key, ...rest] = arg.replace(/^--/, "").split("=");
+  return [key, rest.join("=") || "true"];
+}));
+const moduleDir = path.resolve(root, args.moduleDir || "public/modules/water-imbalance");
+const sourcePath = path.resolve(root, args.source || path.join(moduleDir, "data/knowledge-graph.json"));
+const outputPath = path.resolve(root, args.output || path.join(moduleDir, "data/runtime-graph.json"));
 const scholarRegistryPath = path.join(root, "catalog/authors/scholar-profiles.json");
 const graph = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const scholarRegistry = JSON.parse(fs.readFileSync(scholarRegistryPath, "utf8"));

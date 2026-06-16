@@ -33,6 +33,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.handleThemeChange = () => this.syncThemeMode(true);
     this.enhancedLayer = null;
     this.originalLayerState = null;
+    this.layerId = manifest.layerId || manifest.provides?.layers?.[0]?.id || `${manifest.id || "water-imbalance"}-basins`;
+    this.layerName = manifest.layerName || manifest.provides?.layers?.[0]?.name || "Water Imbalance Basins";
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
     this.legendId = `${this.manifest.id || "water-imbalance"}-legend`;
     this.handleFeatureClick = (payload) => {
@@ -50,7 +52,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.prepareBasins(basinData.basins || []);
     this.ensureThemeStyles();
     this.watchThemeChanges();
-    this.enhanceFoundationBasinLayer();
+    this.ensureModuleLayer();
     this.ensureLegend();
     this.ensureChartUI();
     this.ensureLiteratureUI();
@@ -59,6 +61,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   onUnload() {
     if (this.enhancedLayer && this.originalLayerState) {
       Object.assign(this.enhancedLayer, this.originalLayerState);
+      this.app.updateLayerList?.();
+    } else if (this.enhancedLayer) {
+      this.app.layerManager.removeLayer(this.layerId);
       this.app.updateLayerList?.();
     }
     this.enhancedLayer = null;
@@ -217,34 +222,29 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
   }
 
-  enhanceFoundationBasinLayer() {
-    const layerId = "outlines-basins";
-    const layer = this.app.layerManager.getLayer(layerId);
-    if (!layer) return;
+  ensureModuleLayer() {
+    const layer = this.app.layerManager.getLayer(this.layerId) || this.app.layerManager.addLayer({
+      id: this.layerId,
+      name: this.layerName,
+      type: "vector",
+      visible: true,
+      interactive: true,
+      moduleId: this.manifest.id,
+      source: "module.basins",
+      renderer: (ctx, _layer, viewport) => this.render(ctx, viewport),
+      hitTest: (lon, lat) => this.hitTest(lon, lat),
+      metadata: {
+        classification: this.timeSeriesMetadata?.imbalanceMethod,
+        graph: this.graph?.schema
+      }
+    });
 
     this.enhancedLayer = layer;
-    this.originalLayerState = {
-      name: layer.name,
-      visible: layer.visible,
-      interactive: layer.interactive,
-      moduleId: layer.moduleId,
-      renderer: layer.renderer,
-      hitTest: layer.hitTest,
-      metadata: layer.metadata
-    };
-
-    layer.name = "Basins";
-    layer.visible = true;
-    layer.interactive = true;
-    layer.moduleId = this.manifest.id;
-    layer.renderer = (ctx, _layer, viewport) => this.render(ctx, viewport);
-    layer.hitTest = (lon, lat) => this.hitTest(lon, lat);
-    layer.metadata = {
-      ...layer.metadata,
-      classification: this.timeSeriesMetadata?.imbalanceMethod,
-      graph: this.graph?.schema
-    };
     this.app.updateLayerList?.();
+  }
+
+  getLayerIds() {
+    return [this.layerId];
   }
 
   render(ctx, viewport) {
@@ -298,7 +298,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   renderHighlightLayer(ctx, viewport) {
     const highlighted = new Set();
-    const hovered = this.app.hoveredFeatureId ? this.preparedByBasinId.get(this.app.hoveredFeatureId) : null;
+    const hovered = this.app.hoveredLayer?.id === this.layerId && this.app.hoveredFeatureId
+      ? this.preparedByBasinId.get(this.app.hoveredFeatureId)
+      : null;
     const selected = this.selectedBasin || null;
     if (hovered) highlighted.add(hovered);
     if (selected) highlighted.add(selected);
@@ -325,7 +327,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
       for (const prep of candidates) {
         const isSelected = includeHighlights && this.selectedBasin?.basin.id === prep.basin.id;
-        const isHovered = includeHighlights && this.app.hoveredFeatureId === prep.basin.id;
+        const isHovered = includeHighlights && this.app.hoveredLayer?.id === this.layerId && this.app.hoveredFeatureId === prep.basin.id;
         const color = prep.classification?.color || "#e3e6e9";
 
         let fillAlpha = prep.classification ? 0.68 : 0.32;

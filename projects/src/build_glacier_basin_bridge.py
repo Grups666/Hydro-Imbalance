@@ -59,15 +59,16 @@ def parse_args() -> argparse.Namespace:
         default=sorted(RGI_FILES),
         help="RGI region numbers to process. Default: all 1-19.",
     )
+    parser.add_argument("--basin-data", type=Path, default=BASIN_DATA_PATH)
     parser.add_argument("--output", type=Path, default=BRIDGE_PATH)
     return parser.parse_args()
 
 
-def load_basin_data() -> list[dict]:
-    text = BASIN_DATA_PATH.read_text(encoding="utf-8")
+def load_basin_data(path: Path) -> list[dict]:
+    text = path.read_text(encoding="utf-8")
     match = re.search(r"window\.BASIN_DATA\s*=\s*(\{.*\})\s*;?\s*$", text, flags=re.S)
     if not match:
-        raise ValueError(f"Could not parse {BASIN_DATA_PATH}")
+        raise ValueError(f"Could not parse {path}")
     data = json.loads(match.group(1))
     basins = data["basins"]
     basins.sort(key=lambda basin: basin["id"])
@@ -98,10 +99,10 @@ def basin_geometry(basin: dict) -> Polygon | MultiPolygon | None:
     return geometry if not geometry.is_empty else None
 
 
-def load_basin_geometries() -> tuple[list[int], list[Polygon | MultiPolygon]]:
+def load_basin_geometries(path: Path) -> tuple[list[int], list[Polygon | MultiPolygon]]:
     basin_ids: list[int] = []
     geometries: list[Polygon | MultiPolygon] = []
-    for basin in load_basin_data():
+    for basin in load_basin_data(path):
         geometry = basin_geometry(basin)
         if geometry is None:
             continue
@@ -202,7 +203,7 @@ def write_bridge(output_path: Path, totals: dict[tuple[int, int], float]) -> Non
 
 def main() -> None:
     args = parse_args()
-    basin_ids, basin_geometries = load_basin_geometries()
+    basin_ids, basin_geometries = load_basin_geometries(args.basin_data)
     tree = STRtree(basin_geometries)
     print(f"Loaded {len(basin_geometries)} basin geometries")
 

@@ -1,13 +1,13 @@
 {
   "id": "basin-three-variable-timeseries-1962-2016",
-  "name": "Water Imbalance - Major River Basins Time Series",
+  "name": "Water Imbalance - WMO Basins Time Series",
   "type": "basin-time-series",
   "file": "./basin-three-variable-timeseries-1962-2016.csv",
   "classification": "./basin-imbalance-classification.json",
   "basinData": "./basin-data.json",
   "join": {
     "moduleField": "basin_id",
-    "spatialEntity": "GRDC Major River Basin",
+    "spatialEntity": "GRDC WMO Basin/Sub-Basin",
     "spatialField": "id",
     "method": "exact-string"
   },
@@ -18,10 +18,10 @@
     "resolution": "annual"
   },
   "coverage": {
-    "records": 28600,
-    "basins": 520,
-    "matchedBasins": 520,
-    "sourceBasins": 520,
+    "records": 28380,
+    "basins": 516,
+    "matchedBasins": 516,
+    "sourceBasins": 516,
     "basinCoveragePercent": 100
   },
   "variables": [
@@ -76,9 +76,9 @@
     "deficit+groundwater+glacier": "#3f4652"
   },
   "provenance": {
-    "basinSource": "GRDC Major River Basins of the World",
-    "basinSourceUrl": "https://grdc.bafg.de/products/basin_layers/major_rivers/",
-    "basinEdition": "2nd revised edition, 2020",
+    "basinSource": "GRDC WMO Basins and Sub-Basins",
+    "basinSourceUrl": "https://grdc.bafg.de/products/basin_layers/wmo_basins/",
+    "basinEdition": "3rd revised and extended edition, 2020",
     "waterGapVersion": "2.2d",
     "waterDemandVariable": "net_water_demand_deficit_mm_yr",
     "waterDemandSources": [

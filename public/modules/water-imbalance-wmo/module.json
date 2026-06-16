@@ -1,17 +1,17 @@
 {
-  "id": "water-imbalance",
-  "name": "Water Imbalance - Major River Basins",
+  "id": "water-imbalance-wmo",
+  "name": "Water Imbalance - WMO Basins",
   "version": "0.1.1",
   "assetVersion": "2026-06-17-dual-basin-modules",
-  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence for GRDC Major River Basin.",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence for GRDC WMO Basin/Sub-Basin.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "entry": "../water-imbalance/index.js",
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": true,
-  "layerId": "water-imbalance-mrb-basins",
-  "layerName": "Major River Basin Water Imbalance",
+  "layerId": "water-imbalance-wmo-basins",
+  "layerName": "WMO Basin Water Imbalance",
   "knowledgeGraph": "./data/runtime-graph.json",
   "datasets": [
     {
@@ -22,8 +22,8 @@
   "provides": {
     "layers": [
       {
-        "id": "water-imbalance-mrb-basins",
-        "name": "Major River Basin Water Imbalance",
+        "id": "water-imbalance-wmo-basins",
+        "name": "WMO Basin Water Imbalance",
         "type": "vector",
         "source": "module.basins",
         "interactive": true
@@ -31,17 +31,17 @@
     ],
     "panels": [
       {
-        "id": "water-imbalance-inspector",
-        "name": "Water Imbalance - Major River Basins Inspector",
+        "id": "water-imbalance-wmo-inspector",
+        "name": "Water Imbalance - WMO Basins Inspector",
         "position": "right",
         "trigger": "feature:click",
         "condition": {
-          "layer": "water-imbalance-mrb-basins",
-          "module": "water-imbalance"
+          "layer": "water-imbalance-wmo-basins",
+          "module": "water-imbalance-wmo"
         }
       },
       {
-        "id": "water-imbalance-literature-evidence",
+        "id": "water-imbalance-wmo-literature-evidence",
         "name": "Literature Evidence",
         "position": "right",
         "tab": true
@@ -56,7 +56,7 @@
       {
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
-        "description": "Three annual hydrological variables joined to GRDC Major River Basin by basin_id."
+        "description": "Three annual hydrological variables joined to GRDC WMO Basin/Sub-Basin by basin_id."
       },
       {
         "id": "literature-evidence",

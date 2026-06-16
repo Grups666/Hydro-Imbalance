@@ -4,14 +4,26 @@ const path = require("path");
 const vm = require("vm");
 
 const root = path.resolve(__dirname, "../..");
+const args = Object.fromEntries(process.argv.slice(2).map((arg) => {
+  const [key, ...rest] = arg.replace(/^--/, "").split("=");
+  return [key, rest.join("=") || "true"];
+}));
 const inputDir = path.resolve(root, "../Water_Circle_Imbalance/projects/datasets/basin_time_series");
-const inputCsv = path.join(inputDir, "basin_three_variable_timeseries_1962_2016.csv");
-const outputDir = path.join(root, "public/modules/water-imbalance/data");
+const inputCsv = path.resolve(root, args.inputCsv || path.join(inputDir, "basin_three_variable_timeseries_1962_2016.csv"));
+const moduleId = args.moduleId || "water-imbalance";
+const moduleName = args.moduleName || "Water Imbalance";
+const moduleDir = path.resolve(root, args.moduleDir || path.join("public/modules", moduleId));
+const outputDir = path.join(moduleDir, "data");
 const outputCsv = path.join(outputDir, "basin-three-variable-timeseries-1962-2016.csv");
 const outputClassification = path.join(outputDir, "basin-imbalance-classification.json");
 const outputMetadata = path.join(outputDir, "basin-time-series-metadata.json");
 const outputBasinData = path.join(outputDir, "basin-data.json");
 const graphFile = path.join(outputDir, "knowledge-graph.json");
+const sourceGraphFile = path.resolve(root, args.graphFile || "public/modules/water-imbalance/data/knowledge-graph.json");
+const basinDataSource = path.resolve(root, args.basinData || "projects/basin-data.js");
+const spatialEntity = args.spatialEntity || "GRDC Major River Basin";
+const basinLayerName = args.basinLayerName || `${spatialEntity} with Water Imbalance`;
+const layerId = args.layerId || `${moduleId}-basins`;
 const historicalStdMultiplier = 2;
 const absoluteDifferenceMinimumMm = 1;
 
@@ -94,10 +106,7 @@ function standardDeviation(values) {
 }
 
 function loadBasinData() {
-  const localBasinDataFile = path.join(root, "projects/basin-data.js");
-  const siblingBasinDataFile = path.resolve(root, "../Water_Circle_Imbalance/projects/basin-data.js");
-  const basinDataFile = fs.existsSync(localBasinDataFile) ? localBasinDataFile : siblingBasinDataFile;
-  const code = fs.readFileSync(basinDataFile, "utf8");
+  const code = fs.readFileSync(basinDataSource, "utf8");
   const context = { window: {} };
   vm.createContext(context);
   vm.runInContext(code, context);
@@ -181,18 +190,18 @@ const classificationDocument = {
   basins: classification
 };
 fs.writeFileSync(outputClassification, JSON.stringify(classificationDocument, null, 2) + "\n");
-fs.writeFileSync(outputBasinData, JSON.stringify(basinData, null, 2) + "\n");
+fs.writeFileSync(outputBasinData, JSON.stringify(basinData) + "\n");
 
 const metadata = {
   id: "basin-three-variable-timeseries-1962-2016",
-  name: "Unified Basin Hydrology Time Series",
+  name: `${moduleName} Time Series`,
   type: "basin-time-series",
   file: "./basin-three-variable-timeseries-1962-2016.csv",
   classification: "./basin-imbalance-classification.json",
   basinData: "./basin-data.json",
   join: {
     moduleField: "basin_id",
-    spatialEntity: "GRDC Major River Basin",
+    spatialEntity,
     spatialField: "id",
     method: "exact-string"
   },
@@ -220,7 +229,7 @@ const metadata = {
 };
 fs.writeFileSync(outputMetadata, JSON.stringify(metadata, null, 2) + "\n");
 
-const oldGraph = JSON.parse(fs.readFileSync(graphFile, "utf8"));
+const oldGraph = JSON.parse(fs.readFileSync(sourceGraphFile, "utf8"));
 const regions = (oldGraph.spatialContexts?.regions || []).map(({ mode, summary, ...region }) => region);
 const relations = [];
 for (const relation of oldGraph.relations || []) {
@@ -238,7 +247,7 @@ for (const relation of oldGraph.relations || []) {
 }
 const graph = {
   schema: "water-imbalance-literature/v1",
-  module: "water-imbalance",
+  module: moduleId,
   generatedFrom: oldGraph.generatedFrom,
   spatialContexts: { regions },
   literature: oldGraph.literature,
@@ -246,8 +255,77 @@ const graph = {
 };
 fs.writeFileSync(graphFile, JSON.stringify(graph, null, 2) + "\n");
 
+const manifest = {
+  id: moduleId,
+  name: moduleName,
+  version: "0.1.1",
+  assetVersion: "2026-06-17-dual-basin-modules",
+  description: `Basin-scale three-variable water imbalance classification, time series, and literature evidence for ${spatialEntity}.`,
+  author: "Spatial Research Team",
+  icon: "droplet",
+  entry: "../water-imbalance/index.js",
+  className: "WaterImbalanceModule",
+  importKind: "module-manifest",
+  defaultLoad: true,
+  layerId,
+  layerName: basinLayerName,
+  knowledgeGraph: "./data/runtime-graph.json",
+  datasets: [
+    {
+      id: "basin-three-variable-timeseries-1962-2016",
+      metadata: "./data/basin-time-series-metadata.json"
+    }
+  ],
+  provides: {
+    layers: [
+      {
+        id: layerId,
+        name: basinLayerName,
+        type: "vector",
+        source: "module.basins",
+        interactive: true
+      }
+    ],
+    panels: [
+      {
+        id: `${moduleId}-inspector`,
+        name: `${moduleName} Inspector`,
+        position: "right",
+        trigger: "feature:click",
+        condition: { layer: layerId, module: moduleId }
+      },
+      {
+        id: `${moduleId}-literature-evidence`,
+        name: "Literature Evidence",
+        position: "right",
+        tab: true
+      }
+    ],
+    dataProducts: [
+      {
+        id: "basin-imbalance-classification",
+        type: "derived-classification",
+        description: "Classifies each basin from recent-versus-historical shifts in water-demand deficit, groundwater storage, and glacier storage."
+      },
+      {
+        id: "basin-hydrology-time-series",
+        type: "basin-time-series",
+        description: `Three annual hydrological variables joined to ${spatialEntity} by basin_id.`
+      },
+      {
+        id: "literature-evidence",
+        type: "literature-catalog",
+        description: "Literature records retained independently from the numerical imbalance classification."
+      }
+    ]
+  }
+};
+fs.writeFileSync(path.join(moduleDir, "module.json"), JSON.stringify(manifest, null, 2) + "\n");
+
 console.log(JSON.stringify({
   inputCsv,
+  moduleId,
+  outputDir,
   records: lines.length - 1,
   sourceBasins: byBasin.size,
   matchedBasins,

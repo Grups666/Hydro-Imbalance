@@ -67,33 +67,39 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--start-year", type=int, default=1962)
     parser.add_argument("--end-year", type=int, default=2016)
+    parser.add_argument("--basin-data", type=Path, default=BASIN_DATA_PATH)
+    parser.add_argument("--glacier-storage", type=Path, default=GLACIER_STORAGE_PATH)
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
+    parser.add_argument("--output-name", default=None)
+    parser.add_argument("--spatial-label", default="GRDC major river basins")
     return parser.parse_args()
 
 
-def load_basins() -> list[dict]:
-    text = BASIN_DATA_PATH.read_text(encoding="utf-8")
+def load_basins(path: Path) -> list[dict]:
+    text = path.read_text(encoding="utf-8")
     match = re.search(r"window\.BASIN_DATA\s*=\s*(\{.*\})\s*;?\s*$", text, flags=re.S)
     if not match:
-        raise ValueError(f"Could not parse {BASIN_DATA_PATH}")
+        raise ValueError(f"Could not parse {path}")
     data = json.loads(match.group(1))
     basins = data["basins"]
     basins.sort(key=lambda basin: basin["id"])
     return basins
 
 
-def load_glacier_validation_summary() -> dict[str, float]:
+def load_glacier_validation_summary(results_dir: Path, glacier_storage_path: Path) -> dict[str, float]:
     summary: dict[str, float] = {}
-    if GLACIER_RESOLUTION_TOTALS.exists():
-        with GLACIER_RESOLUTION_TOTALS.open(newline="", encoding="utf-8") as handle:
+    resolution_totals = results_dir / "validation_farinotti_grid_resolution_totals.csv"
+    annual_validation_path = results_dir / "validation_annual_global_balance.csv"
+    if resolution_totals.exists():
+        with resolution_totals.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 resolution = row["resolution"]
                 if resolution in {"p05", "p50"}:
                     summary[f"{resolution}_volume_km3_ice"] = float(row["total_volume_km3_ice"])
                     summary[f"{resolution}_storage_km3_we"] = float(row["total_storage_km3_we"])
-    if GLACIER_ANNUAL_VALIDATION.exists():
+    if annual_validation_path.exists():
         annual_rows = []
-        with GLACIER_ANNUAL_VALIDATION.open(newline="", encoding="utf-8") as handle:
+        with annual_validation_path.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 annual_rows.append({key: float(value) for key, value in row.items()})
         for year in (1962, 2000, 2016):
@@ -106,9 +112,9 @@ def load_glacier_validation_summary() -> dict[str, float]:
         ratios = [row["annual_balance_capture_ratio_vs_zemp"] for row in period if math.isfinite(row["annual_balance_capture_ratio_vs_zemp"])]
         if ratios:
             summary["mean_ratio_2000_2016"] = sum(ratios) / len(ratios)
-    if GLACIER_STORAGE_PATH.exists():
+    if glacier_storage_path.exists():
         clipped = 0
-        with GLACIER_STORAGE_PATH.open(newline="", encoding="utf-8") as handle:
+        with glacier_storage_path.open(newline="", encoding="utf-8") as handle:
             for row in csv.DictReader(handle):
                 raw = str(row.get("storage_clipped_to_zero", "")).strip().lower()
                 clipped += int(raw in {"1", "true", "yes"})
@@ -282,23 +288,24 @@ def read_net_water_demand_deficit_series(years: np.ndarray, basin_cells: list[np
     return result
 
 
-def read_glacier_storage_series(basins: list[dict], years: np.ndarray) -> dict[int, list[float]]:
-    if not GLACIER_STORAGE_PATH.exists():
+def read_glacier_storage_series(basins: list[dict], years: np.ndarray, glacier_storage_path: Path) -> dict[int, list[float]]:
+    if not glacier_storage_path.exists():
         raise FileNotFoundError(
-            f"Absolute glacier storage reconstruction is missing: {GLACIER_STORAGE_PATH}"
+            f"Absolute glacier storage reconstruction is missing: {glacier_storage_path}"
         )
 
     basin_index = {int(basin["id"]): index for index, basin in enumerate(basins)}
     result = {int(year): [0.0] * len(basins) for year in years}
     seen: set[tuple[int, int]] = set()
-    with GLACIER_STORAGE_PATH.open("r", encoding="utf-8", newline="") as handle:
+    with glacier_storage_path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle)
         for row in reader:
             year = int(row["year"])
             basin_id = int(row["basin_id"])
             if year not in result or basin_id not in basin_index:
                 continue
-            result[year][basin_index[basin_id]] = float(row["glacier_storage_mm_we"])
+            raw_storage = str(row.get("glacier_storage_mm_we", "")).strip()
+            result[year][basin_index[basin_id]] = float(raw_storage) if raw_storage else 0.0
             seen.add((year, basin_id))
 
     expected = len(years) * len(basins)
@@ -317,10 +324,12 @@ def write_readme(
     total_basins: int,
     glacier_basins: int,
     watergap_basins: int,
+    spatial_label: str,
+    glacier_storage_path: Path,
 ) -> None:
     glacier_percent = glacier_basins / total_basins * 100.0 if total_basins else 0.0
     missing_watergap_basins = total_basins - watergap_basins
-    validation = load_glacier_validation_summary()
+    validation = load_glacier_validation_summary(glacier_storage_path.parent, glacier_storage_path)
     p05_volume = validation.get("p05_volume_km3_ice", math.nan)
     p50_volume = validation.get("p50_volume_km3_ice", math.nan)
     p50_difference_percent = (p50_volume - p05_volume) / p05_volume * 100.0 if p05_volume else math.nan
@@ -329,13 +338,13 @@ def write_readme(
     storage_capture_percent = storage_2000 / source_storage * 100.0 if source_storage else math.nan
     text = f"""# Unified Basin Hydrology Time Series
 
-This is the authoritative unified annual time-series dataset for the three selected major-river-basin hydrological variables. The common period is {start_year}-{end_year}, determined by the globally validated glacier-storage reconstruction.
+This is the authoritative unified annual time-series dataset for the three selected basin-scale hydrological variables. The spatial unit is {spatial_label}. The common period is {start_year}-{end_year}, determined by the globally validated glacier-storage reconstruction.
 
 Output file:
 - `{output_name}`
 
 Coverage:
-- Total GRDC major river basins: {total_basins}.
+- Total {spatial_label}: {total_basins}.
 - Basins with non-zero glacier storage in at least one year: {glacier_basins}, or {glacier_percent:.2f}%.
 - Basins without glaciers are retained with `glacier_storage_mm_we = 0`.
 - WaterGAP values are available for {watergap_basins} basins; {missing_watergap_basins} small basins contain no 0.5 degree WaterGAP grid-cell centers and remain `NaN` for water-demand deficit and groundwater storage.
@@ -375,12 +384,12 @@ The glacier variable is an absolute storage-state reconstruction, not raw glacie
 
 - Farinotti et al. (2019) global 0.05 degree glacier-volume grid, based on RGI 6.0.
 - Ice volume is converted to water-equivalent volume using `rho_ice / rho_water = 0.9`.
-- Grid-cell-center values are assigned to GRDC Major River Basins.
+- Grid-cell-center values are assigned to {spatial_label}.
 
 ### Annual Changes And Reconstruction
 
 - Zemp et al. (2019) regional annual `INT_mwe` supplies annual specific glacier mass balance.
-- RGI glacier outlines are intersected with GRDC major river basins to calculate glacier area by RGI region within each basin.
+- RGI glacier outlines are intersected with {spatial_label} to calculate glacier area by RGI region within each basin.
 
 `annual_balance_km3_we = 0.001 * sum(INT_mwe_region * glacier_area_km2_in_basin_region)`
 
@@ -395,7 +404,7 @@ Negative reconstructed storage is clipped to zero. Absolute water-equivalent sto
 - Farinotti 0.05 degree source-grid total: `{p05_volume:.2f} km3 ice`, consistent with the published approximately `158000 km3 ice`.
 - Farinotti 0.50 degree source-grid total: `{p50_volume:.2f} km3 ice`; difference from the 0.05 degree total is `{p50_difference_percent:.4f}%`.
 - Volume assigned to GRDC major river basins in the 2000 reference year: `{storage_2000:.2f} km3 water equivalent`.
-- GRDC major-river-basin assignment captures `{storage_capture_percent:.1f}%` of source-grid global glacier water-equivalent storage; the remainder primarily falls outside the current major-river-basin mask.
+- Basin assignment captures `{storage_capture_percent:.1f}%` of source-grid global glacier water-equivalent storage; the remainder primarily falls outside the current basin mask.
 - Reconstructed basin-summed annual balance in 2000: `{validation.get("balance_2000_km3_we", math.nan):.2f} km3 water equivalent`.
 - Zemp global `INT_Gt` in 2000: `{validation.get("zemp_balance_2000_km3_we", math.nan):.2f} Gt`, approximately the same numeric value in km3 water equivalent.
 - Mean annual-balance capture ratio relative to Zemp global values over 2000-2016: `{validation.get("mean_ratio_2000_2016", math.nan):.3f}`.
@@ -464,7 +473,7 @@ def write_csv(
 def main() -> None:
     args = parse_args()
     years = np.arange(args.start_year, args.end_year + 1, dtype=np.int16)
-    basins = load_basins()
+    basins = load_basins(args.basin_data)
     basin_cells = [np.asarray(basin.get("cells", []), dtype=np.int64) for basin in basins]
 
     watergap_values: dict[str, dict[int, list[float]]] = {}
@@ -474,9 +483,9 @@ def main() -> None:
         print(f"Aggregating {spec.code} from {spec.source_file}")
         watergap_values[spec.code] = read_watergap_series(spec, years, basin_cells)
 
-    glacier_values = read_glacier_storage_series(basins, years)
+    glacier_values = read_glacier_storage_series(basins, years, args.glacier_storage)
 
-    output_name = f"basin_three_variable_timeseries_{args.start_year}_{args.end_year}.csv"
+    output_name = args.output_name or f"basin_three_variable_timeseries_{args.start_year}_{args.end_year}.csv"
     output_path = write_csv(args.output_dir, output_name, basins, years, watergap_values, glacier_values)
     glacier_catchments = 0
     for basin_index in range(len(basins)):
@@ -490,6 +499,8 @@ def main() -> None:
         len(basins),
         glacier_catchments,
         sum(1 for basin in basins if int(basin.get("cellCount", 0)) > 0),
+        args.spatial_label,
+        args.glacier_storage,
     )
     print(f"Wrote {output_path}")
 

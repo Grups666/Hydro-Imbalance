@@ -1,9 +1,9 @@
 {
   "id": "water-imbalance",
-  "name": "Water Imbalance",
+  "name": "Water Imbalance - Major River Basins",
   "version": "0.1.1",
-  "assetVersion": "2026-06-07-stable-boundaries",
-  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
+  "assetVersion": "2026-06-17-dual-basin-modules",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence for GRDC Major River Basins.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "basePath": "https://grups666.github.io/Hydro-Imbalance/",
@@ -11,6 +11,8 @@
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": false,
+  "layerId": "water-imbalance-mrb-basins",
+  "layerName": "Major River Basin Water Imbalance",
   "knowledgeGraph": "./public/modules/water-imbalance/data/runtime-graph.json",
   "datasets": [
     {
@@ -21,23 +23,23 @@
   "provides": {
     "layers": [
       {
-        "id": "outlines-basins",
-        "name": "GRDC Major River Basins with Water Imbalance",
+        "id": "water-imbalance-mrb-basins",
+        "name": "Major River Basin Water Imbalance",
         "type": "vector",
-        "source": "foundation.basins",
+        "source": "module.basins",
         "interactive": true
       }
     ],
     "panels": [
       {
         "id": "water-imbalance-inspector",
-        "name": "Water Imbalance Inspector",
+        "name": "Water Imbalance - Major River Basins Inspector",
         "position": "right",
         "trigger": "feature:click",
-        "condition": { "layer": "outlines-basins", "module": "water-imbalance" }
+        "condition": { "layer": "water-imbalance-mrb-basins", "module": "water-imbalance" }
       },
       {
-        "id": "literature-evidence",
+        "id": "water-imbalance-literature-evidence",
         "name": "Literature Evidence",
         "position": "right",
         "tab": true

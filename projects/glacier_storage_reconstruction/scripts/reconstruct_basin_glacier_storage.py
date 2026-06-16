@@ -4,6 +4,7 @@ import csv
 import json
 import math
 import re
+import argparse
 from collections import defaultdict
 from pathlib import Path
 
@@ -39,6 +40,14 @@ def load_json_assignment(path: Path) -> dict:
     return json.loads(match.group(1))
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Reconstruct annual absolute glacier storage by basin.")
+    parser.add_argument("--basin-data", type=Path, default=BASIN_DATA)
+    parser.add_argument("--bridge", type=Path, default=BRIDGE_PATH)
+    parser.add_argument("--output-dir", type=Path, default=OUT_DIR)
+    return parser.parse_args()
+
+
 def basin_geometry(basin: dict) -> Polygon | MultiPolygon | None:
     polygons: list[Polygon] = []
     for ring in basin.get("rings", []):
@@ -63,8 +72,8 @@ def basin_geometry(basin: dict) -> Polygon | MultiPolygon | None:
     return geometry if not geometry.is_empty else None
 
 
-def load_basins() -> tuple[list[dict], list[int], list[Polygon | MultiPolygon]]:
-    basins = load_json_assignment(BASIN_DATA)["basins"]
+def load_basins(path: Path) -> tuple[list[dict], list[int], list[Polygon | MultiPolygon]]:
+    basins = load_json_assignment(path)["basins"]
     basins.sort(key=lambda basin: int(basin["id"]))
     basin_ids: list[int] = []
     geometries: list[Polygon | MultiPolygon] = []
@@ -234,10 +243,10 @@ def read_zemp_region_balance() -> tuple[dict[int, dict[int, float]], pd.DataFram
     return annual_by_region, pd.DataFrame(region_records), pd.DataFrame(global_records)
 
 
-def read_glacier_bridge() -> pd.DataFrame:
-    if not BRIDGE_PATH.exists():
-        raise FileNotFoundError(BRIDGE_PATH)
-    return pd.read_csv(BRIDGE_PATH)
+def read_glacier_bridge(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        raise FileNotFoundError(path)
+    return pd.read_csv(path)
 
 
 def build_annual_balance_by_basin(
@@ -427,32 +436,33 @@ This is a reconstructed annual absolute glacier-water-storage series, not a pure
 
 
 def main() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    args = parse_args()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    basins, basin_ids, geometries = load_basins()
+    basins, basin_ids, geometries = load_basins(args.basin_data)
     print("Aggregating Farinotti 0.05 degree volume grid to basins")
     resolution_totals = farinotti_resolution_totals()
-    resolution_totals.to_csv(OUT_DIR / "validation_farinotti_grid_resolution_totals.csv", index=False)
+    resolution_totals.to_csv(args.output_dir / "validation_farinotti_grid_resolution_totals.csv", index=False)
     reference_df, farinotti_summary = aggregate_farinotti_to_basins(basin_ids, geometries)
 
     print("Reading Zemp regional annual mass-balance data")
     annual_by_region, region_df, global_df = read_zemp_region_balance()
-    bridge = read_glacier_bridge()
+    bridge = read_glacier_bridge(args.bridge)
     complete_years = sorted(set(global_df["year"].dropna().astype(int)).intersection(annual_by_region))
     balance_df = build_annual_balance_by_basin(basins, bridge, annual_by_region, complete_years)
     start_year, end_year = complete_years[0], complete_years[-1]
 
     print("Reconstructing annual absolute glacier storage")
     storage_df = reconstruct_absolute_storage(basins, reference_df, balance_df)
-    storage_df.to_csv(OUT_DIR / f"basin_glacier_absolute_storage_{start_year}_{end_year}.csv", index=False)
+    storage_df.to_csv(args.output_dir / f"basin_glacier_absolute_storage_{start_year}_{end_year}.csv", index=False)
 
     print("Running validation checks")
     annual_validation, area_validation, _report = validate_outputs(
         storage_df, reference_df, farinotti_summary, resolution_totals, bridge, region_df, global_df
     )
-    annual_validation.to_csv(OUT_DIR / "validation_annual_global_balance.csv", index=False)
-    area_validation.to_csv(OUT_DIR / "validation_rgi_region_area_capture.csv", index=False)
-    print(f"Wrote results to {OUT_DIR}")
+    annual_validation.to_csv(args.output_dir / "validation_annual_global_balance.csv", index=False)
+    area_validation.to_csv(args.output_dir / "validation_rgi_region_area_capture.csv", index=False)
+    print(f"Wrote results to {args.output_dir}")
 
 
 if __name__ == "__main__":
