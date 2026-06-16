@@ -452,6 +452,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.26));
         --wi-danger:#fca5a5;
         --wi-link:#93c5fd;
+        --wi-focus:var(--accent,#9fd3c1);
+        --wi-focus-soft:rgba(159,211,193,.18);
         --wi-canvas-bg:var(--bg,#071012);
         --wi-grid:rgba(172,205,196,.18);
         --wi-grid-soft:rgba(172,205,196,.09);
@@ -471,6 +473,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.26));
         --wi-danger:#fca5a5;
         --wi-link:#93c5fd;
+        --wi-focus:var(--accent,#9fd3c1);
+        --wi-focus-soft:rgba(159,211,193,.18);
         --wi-canvas-bg:var(--bg,#071012);
         --wi-grid:rgba(172,205,196,.18);
         --wi-grid-soft:rgba(172,205,196,.09);
@@ -490,6 +494,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.1));
         --wi-danger:#b91c1c;
         --wi-link:#3b82f6;
+        --wi-focus:var(--accent,#3a9a8a);
+        --wi-focus-soft:rgba(58,154,138,.16);
         --wi-canvas-bg:#ffffff;
         --wi-grid:#e2e8f0;
         --wi-grid-soft:#edf2f7;
@@ -501,9 +507,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-stat-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);padding:12px;border-radius:6px}
       .wi-stat-value{font-size:18px;font-weight:600;color:var(--wi-text)}
       .wi-stat-label{font-size:11px;color:var(--wi-muted)}
-      .wi-button{border:1px solid var(--wi-border-strong);background:var(--wi-button-bg);border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--wi-text)}
-      .wi-button:hover{background:var(--wi-button-hover)}
-      .wi-preview{display:block;width:100%;height:132px;background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;cursor:pointer}
+      .wi-button{border:1px solid var(--wi-border-strong);background:var(--wi-button-bg);border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;color:var(--wi-text);transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease}
+      .wi-button:hover{background:var(--wi-button-hover);border-color:var(--wi-focus);box-shadow:0 0 0 2px var(--wi-focus-soft);transform:translateY(-1px)}
+      .wi-button:focus-visible{outline:0;border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft)}
+      .wi-preview{display:block;width:100%;height:132px;background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;cursor:pointer;transition:border-color .16s ease,box-shadow .16s ease,filter .16s ease,transform .16s ease}
+      .wi-preview:hover{border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft),0 10px 24px rgba(0,0,0,.18);filter:brightness(1.08);transform:translateY(-1px)}
+      .wi-preview:focus-visible{outline:0;border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft)}
       .wi-metric-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 10px;color:var(--wi-text)}
       .wi-literature-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer;color:var(--wi-text)}
       .wi-literature-card-title{font-weight:500;margin-bottom:3px;color:var(--wi-text)}
@@ -577,7 +586,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           ${series.length ? `<button id="${expandId}" class="wi-button" type="button">Expand</button>` : ""}
         </div>
         ${series.length
-          ? `<canvas id="${previewId}" class="wi-preview" width="300" height="132"></canvas>`
+          ? `<canvas id="${previewId}" class="wi-preview" width="300" height="132" tabindex="0" role="button" aria-label="Open basin time series"></canvas>`
           : `<p class="wi-muted" style="font-size:12px;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
 
@@ -599,6 +608,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         if (preview) {
           this.drawMiniPreview(preview, series);
           preview.onclick = () => this.openTimeSeriesModal(prep, series);
+          preview.onkeydown = (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              this.openTimeSeriesModal(prep, series);
+            }
+          };
         }
         if (expand) expand.onclick = () => this.openTimeSeriesModal(prep, series);
       }, 0);
