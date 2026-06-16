@@ -47,7 +47,6 @@ public/modules/water-imbalance/
 
 ```text
 public/modules/water-imbalance/
-  module.json
   index.js
   data/
     basin-data.json
@@ -56,7 +55,6 @@ public/modules/water-imbalance/
     basin-imbalance-classification.json
 
 public/modules/water-imbalance-wmo/
-  module.json
   data/
     basin-data.json
     basin-three-variable-timeseries-1962-2016.csv
@@ -138,7 +136,7 @@ npm run build:water-imbalance
 npm test
 ```
 
-WMO comparison data are generated with the same scripts using `--source wmo`, `--basin-data`, `--glacier-storage`, and module build arguments. Large raw and intermediate CSV/ZIP/TIF/NetCDF files remain outside version control; browser-ready module data are kept under `public/modules/`.
+WMO comparison data are generated with the same scripts using `--source wmo`, `--basin-data`, `--glacier-storage`, and module build arguments. Large raw and intermediate CSV/ZIP/TIF/NetCDF files remain outside version control. The only published module manifests are `module.json` and `module-wmo.json`; browser-ready JS and data assets are kept under `public/modules/`.
 
 For the research workspace scripts:
 

@@ -55,9 +55,10 @@ for (const dir of requiredDirs) {
 
 // 4. 检查关键文件
 const keyFiles = [
-  'public/index.html',
-  'public/app.js',
-  'src/server/server.js'
+  'index.html',
+  'module.json',
+  'module-wmo.json',
+  'public/modules/water-imbalance/index.js'
 ];
 
 console.log('\n关键文件检查:');

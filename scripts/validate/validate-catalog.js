@@ -16,14 +16,21 @@ function check(label, condition, detail) {
 
 console.log("=== Hydro-Imbalance validation ===");
 
-for (const moduleName of ["water-imbalance", "water-imbalance-wmo"]) {
+const modules = [
+  { moduleName: "water-imbalance", manifestFile: "module.json" },
+  { moduleName: "water-imbalance-wmo", manifestFile: "module-wmo.json" }
+];
+
+for (const { moduleName, manifestFile } of modules) {
   const moduleDir = path.join(root, "public/modules", moduleName);
-  const manifest = JSON.parse(fs.readFileSync(path.join(moduleDir, "module.json"), "utf8"));
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, manifestFile), "utf8"));
   const metadata = JSON.parse(fs.readFileSync(path.join(moduleDir, "data/basin-time-series-metadata.json"), "utf8"));
   const classification = JSON.parse(fs.readFileSync(path.join(moduleDir, "data/basin-imbalance-classification.json"), "utf8"));
   const prefix = moduleName;
 
   check(`${prefix} module version`, manifest.version === "0.1.1", manifest.version);
+  check(`${prefix} manifest file`, manifest.id === moduleName, `${manifestFile}: ${manifest.id}`);
+  check(`${prefix} entry`, manifest.entry === "./public/modules/water-imbalance/index.js", manifest.entry);
   check(`${prefix} no literature graph`, !manifest.knowledgeGraph, manifest.knowledgeGraph || "none");
   check(`${prefix} no literature panel`, !(manifest.provides?.panels || []).some((panel) => /literature/i.test(panel.id || panel.name || "")));
   check(`${prefix} three variables`, metadata.variables?.length === 3, metadata.variables?.map((item) => item.id).join(", "));

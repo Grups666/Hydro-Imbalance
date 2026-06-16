@@ -10,7 +10,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((arg) => {
 const inputDir = path.resolve(root, "../Water_Circle_Imbalance/projects/datasets/basin_time_series");
 const inputCsv = path.resolve(root, args.inputCsv || path.join(inputDir, "basin_three_variable_timeseries_1962_2016.csv"));
 const moduleId = args.moduleId || "water-imbalance";
-const moduleName = args.moduleName || "Water Imbalance";
+const moduleName = args.moduleName || (moduleId === "water-imbalance" ? "Water Imbalance - Major River Basins" : "Water Imbalance - WMO Basins");
 const moduleDir = path.resolve(root, args.moduleDir || path.join("public/modules", moduleId));
 const outputDir = path.join(moduleDir, "data");
 const outputCsv = path.join(outputDir, "basin-three-variable-timeseries-1962-2016.csv");
@@ -18,9 +18,15 @@ const outputClassification = path.join(outputDir, "basin-imbalance-classificatio
 const outputMetadata = path.join(outputDir, "basin-time-series-metadata.json");
 const outputBasinData = path.join(outputDir, "basin-data.json");
 const basinDataSource = path.resolve(root, args.basinData || "projects/basin-data.js");
-const spatialEntity = args.spatialEntity || "GRDC Major River Basin";
-const basinLayerName = args.basinLayerName || `${spatialEntity} with Water Imbalance`;
-const layerId = args.layerId || `${moduleId}-basins`;
+const spatialEntity = args.spatialEntity || (moduleId === "water-imbalance" ? "GRDC Major River Basins" : "GRDC WMO Basins and Sub-Basins");
+const basinLayerName = args.basinLayerName || (moduleId === "water-imbalance" ? "Major River Basin Water Imbalance" : "WMO Basin Water Imbalance");
+const layerId = args.layerId || (moduleId === "water-imbalance" ? "water-imbalance-mrb-basins" : `${moduleId}-basins`);
+const defaultManifest = moduleId === "water-imbalance" ? "module.json" : `module-${moduleId.replace(/^water-imbalance-/, "")}.json`;
+const manifestPath = path.resolve(root, args.manifest || defaultManifest);
+const manifestDir = path.dirname(manifestPath);
+const modulePath = `./${path.relative(manifestDir, moduleDir).replace(/\\/g, "/")}`;
+const entryPath = args.entry || "./public/modules/water-imbalance/index.js";
+const metadataPath = `${modulePath}/data/basin-time-series-metadata.json`;
 const historicalStdMultiplier = 2;
 const absoluteDifferenceMinimumMm = 1;
 
@@ -234,16 +240,17 @@ const manifest = {
   description: `Basin-scale three-variable water imbalance classification, time series, and basin ontology for ${spatialEntity}.`,
   author: "Spatial Research Team",
   icon: "droplet",
-  entry: "../water-imbalance/index.js",
+  basePath: args.basePath || "https://grups666.github.io/Hydro-Imbalance/",
+  entry: entryPath,
   className: "WaterImbalanceModule",
   importKind: "module-manifest",
-  defaultLoad: true,
+  defaultLoad: false,
   layerId,
   layerName: basinLayerName,
   datasets: [
     {
       id: "basin-three-variable-timeseries-1962-2016",
-      metadata: "./data/basin-time-series-metadata.json"
+      metadata: metadataPath
     }
   ],
   provides: {
@@ -279,12 +286,13 @@ const manifest = {
     ]
   }
 };
-fs.writeFileSync(path.join(moduleDir, "module.json"), JSON.stringify(manifest, null, 2) + "\n");
+fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + "\n");
 
 console.log(JSON.stringify({
   inputCsv,
   moduleId,
   outputDir,
+  manifest: manifestPath,
   records: lines.length - 1,
   sourceBasins: byBasin.size,
   matchedBasins,
