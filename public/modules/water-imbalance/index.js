@@ -3,29 +3,23 @@
  *
  * This module is intentionally isolated from Foundation domain logic. Foundation
  * supplies map rendering, basin geometry, module loading, and panel APIs. The
- * module supplies its own time series, imbalance classification, literature, and UI.
+ * module supplies its own basin ontology, time series, imbalance classification, and UI.
  */
 window.WaterImbalanceModule = class WaterImbalanceModule {
   constructor(app, manifest = {}) {
     this.app = app;
     this.manifest = manifest;
     this.basePath = manifest.basePath || `/modules/${manifest.id || "water-imbalance"}/`;
-    this.graph = null;
     this.timeSeriesMetadata = null;
     this.timeSeriesByBasin = new Map();
     this.timeSeriesLoadPromise = null;
     this.timeSeriesLoaded = false;
     this.classificationByBasin = new Map();
-    this.regions = [];
-    this.literature = new Map();
-    this.authors = new Map();
-    this.relationsByTarget = new Map();
     this.preparedBasins = [];
     this.preparedByBasinId = new Map();
     this.basinSpatialIndex = null;
     this.selectedBasin = null;
     this.chartModal = null;
-    this.literatureModal = null;
     this.activeChartSeries = null;
     this.themeObserver = null;
     this.themeMode = null;
@@ -45,9 +39,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   async onLoad() {
-    this.graph = await this.fetchJson(this.resolveModulePath(this.manifest.knowledgeGraph || "./data/knowledge-graph.json"));
     await this.loadDatasetMetadata();
-    this.indexGraph();
     const basinData = await this.loadBasinData();
     this.prepareBasins(basinData.basins || []);
     this.ensureThemeStyles();
@@ -55,7 +47,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.ensureModuleLayer();
     this.ensureLegend();
     this.ensureChartUI();
-    this.ensureLiteratureUI();
   }
 
   onUnload() {
@@ -72,7 +63,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
-    this.closeLiteratureModal();
     this.themeObserver?.disconnect();
     this.themeObserver = null;
     document.removeEventListener("change", this.handleThemeChange, true);
@@ -180,35 +170,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     return values;
   }
 
-  indexGraph() {
-    this.regions = this.graph?.spatialContexts?.regions || [];
-
-    for (const [id, record] of Object.entries(this.graph?.literature?.records || {})) {
-      this.literature.set(id, record);
-    }
-    for (const [id, author] of Object.entries(this.graph?.authors?.records || {})) {
-      this.authors.set(id, author);
-    }
-
-    for (const relation of this.graph?.relations || []) {
-      if (!relation.type.includes("literature") && !relation.type.startsWith("paper_studies_")) continue;
-      this.addRelationIndex(this.relationsByTarget, relation.target, relation);
-    }
-  }
-
-  addRelationIndex(index, key, relation) {
-    if (!key) return;
-    if (!index.has(key)) index.set(key, []);
-    index.get(key).push(relation);
-  }
-
   prepareBasins(basins) {
     this.preparedBasins = basins.map((basin) => {
-      const region = this.findRegion(basin);
       const classification = this.classificationByBasin.get(String(basin.id)) || null;
       return {
         basin,
-        region,
         classification,
         rings: (basin.rings || []).filter((ring) => ring.length >= 3)
       };
@@ -235,7 +201,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       hitTest: (lon, lat) => this.hitTest(lon, lat),
       metadata: {
         classification: this.timeSeriesMetadata?.imbalanceMethod,
-        graph: this.graph?.schema
+        ontology: "basin_id"
       }
     });
 
@@ -524,8 +490,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-preview:hover{border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft),0 10px 24px rgba(0,0,0,.18);filter:brightness(1.08);transform:translateY(-1px)}
       .wi-preview:focus-visible{outline:0;border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft)}
       .wi-metric-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 10px;color:var(--wi-text)}
-      .wi-literature-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 12px;font-size:12px;cursor:pointer;color:var(--wi-text)}
-      .wi-literature-card-title{font-weight:500;margin-bottom:3px;color:var(--wi-text)}
     `;
     document.head.appendChild(style);
   }
@@ -660,8 +624,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   showInspector(prep) {
-    const { basin, region, classification } = prep;
-    const references = this.getLiteratureFor(prep);
+    const { basin, classification } = prep;
     const title = basin.name;
     const series = this.timeSeriesByBasin.get(String(basin.id)) || [];
     const previewId = `wi-preview-${basin.id}`;
@@ -705,13 +668,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           ? `<canvas id="${previewId}" class="wi-preview" width="300" height="132" tabindex="0" role="button" aria-label="Open basin time series"></canvas>`
           : `<p class="wi-muted" style="font-size:12px;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
-
-      <section>
-        <h3 class="wi-section-title">Literature Evidence</h3>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          ${references.slice(0, 10).map((item, index) => this.renderLiteratureCard(item, index)).join("") || "<p class=\"wi-muted\" style=\"font-size:12px\">No evidence linked by this module.</p>"}
-        </div>
-      </section>
       </div>
     `;
 
@@ -734,19 +690,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         if (expand) expand.onclick = () => this.openTimeSeriesModal(prep, series);
       }, 0);
     }
-    setTimeout(() => {
-      document.querySelectorAll("[data-wi-literature-index]").forEach((card) => {
-        const item = references[Number(card.dataset.wiLiteratureIndex)];
-        if (!item) return;
-        card.onclick = () => this.openLiteratureModal(item);
-        card.onkeydown = (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            this.openLiteratureModal(item);
-          }
-        };
-      });
-    }, 0);
   }
 
   renderMetricCards(metrics) {
@@ -795,131 +738,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       SI: "Siberia"
     };
     return names[regionCode] || regionCode || "Unknown";
-  }
-
-  renderLiteratureCard(item, index) {
-    const ref = item.record;
-    return `
-      <div class="wi-literature-card" data-wi-literature-index="${index}" tabindex="0" role="button">
-        <div class="wi-literature-card-title">${this.escape(ref.title)}</div>
-        <div class="wi-muted" style="font-size:11px;margin-bottom:4px">${this.escape(ref.authors || "Unknown authors")}${ref.year ? ` · ${this.escape(ref.year)}` : ""}</div>
-        ${item.relation.confidence != null ? `<div class="wi-muted" style="font-size:11px">confidence ${this.escape(item.relation.confidence)}</div>` : ""}
-      </div>
-    `;
-  }
-
-  getArticleUrl(ref) {
-    if (ref.external_url) return ref.external_url;
-    if (ref.doi) return `https://doi.org/${ref.doi}`;
-    return this.getScholarUrl(ref.title);
-  }
-
-  getScholarUrl(query) {
-    return `https://scholar.google.com/scholar?q=${encodeURIComponent(query || "")}`;
-  }
-
-  getAuthors(ref) {
-    return (ref.authorIds || [])
-      .map((authorId) => this.authors.get(authorId))
-      .filter(Boolean);
-  }
-
-  renderAuthor(author) {
-    const label = this.escape(author.name);
-    if (!author.scholar_url) return `<span class="wi-literature-author">${label}</span>`;
-    return `<a class="wi-literature-author" href="${this.escape(author.scholar_url)}" target="_blank" rel="noopener">${label}</a>`;
-  }
-
-  ensureLiteratureUI() {
-    const existing = document.getElementById("wi-literature-modal");
-    if (existing) {
-      this.literatureModal = existing;
-      existing.onclick = (event) => {
-        if (event.target === existing) this.closeLiteratureModal();
-      };
-      existing.querySelector("#wi-literature-close").onclick = () => this.closeLiteratureModal();
-      return;
-    }
-
-    const style = document.createElement("style");
-    style.textContent = `
-      .wi-literature-modal{position:fixed;inset:0;background:var(--wi-overlay);z-index:310;display:none;align-items:center;justify-content:center;padding:28px}
-      .wi-literature-modal.visible{display:flex}
-      .wi-literature-dialog{width:min(820px,calc(100vw - 56px));max-height:min(820px,calc(100vh - 56px));background:var(--wi-surface);border:1px solid var(--wi-border);border-radius:8px;box-shadow:var(--wi-shadow);display:flex;flex-direction:column;overflow:hidden}
-      .wi-literature-header{min-height:54px;padding:12px 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:center;justify-content:space-between;gap:16px}
-      .wi-literature-heading{font-size:14px;font-weight:600;color:var(--wi-text)}
-      .wi-literature-close{width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:4px;cursor:pointer;color:var(--wi-muted);flex:0 0 auto;display:grid;place-items:center;font:400 22px/1 Arial,sans-serif}
-      .wi-literature-close:hover{background:var(--wi-button-hover)}
-      .wi-literature-body{overflow:auto;padding:20px;color:var(--wi-text)}
-      .wi-literature-title{font-size:22px;line-height:1.3;margin:0 0 8px}
-      .wi-literature-title a{color:var(--wi-text);text-decoration:none}
-      .wi-literature-title a:hover{text-decoration:underline}
-      .wi-literature-authors{font-size:13px;margin-bottom:14px}
-      .wi-literature-author-list{display:flex;flex-wrap:wrap;gap:6px}
-      .wi-literature-author{display:inline-flex;align-items:center;border:1px solid var(--wi-border);background:var(--wi-surface-soft);border-radius:999px;padding:3px 8px;color:var(--wi-muted)}
-      .wi-literature-authors a{color:var(--wi-link);text-decoration:none}
-      .wi-literature-authors a:hover{text-decoration:underline}
-      .wi-literature-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-      .wi-literature-chip{background:var(--wi-button-hover);border:1px solid var(--wi-border);border-radius:999px;padding:4px 8px;font-size:11px;color:var(--wi-muted)}
-      .wi-literature-section{margin-top:18px}
-      .wi-literature-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--wi-muted);margin:0 0 7px}
-      .wi-literature-section p{font-size:13px;line-height:1.65;margin:0;color:var(--wi-text)}
-      .wi-literature-section a{color:var(--wi-link);text-decoration:none}
-      .wi-literature-section a:hover{text-decoration:underline}
-    `;
-    document.head.appendChild(style);
-
-    const modal = document.createElement("div");
-    modal.id = "wi-literature-modal";
-    modal.className = "wi-literature-modal";
-    modal.innerHTML = `
-      <div class="wi-literature-dialog">
-        <div class="wi-literature-header">
-          <div class="wi-literature-heading">Literature Evidence</div>
-          <button class="wi-literature-close" id="wi-literature-close" type="button" aria-label="Close">×</button>
-        </div>
-        <div class="wi-literature-body" id="wi-literature-body"></div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-    modal.onclick = (event) => {
-      if (event.target === modal) this.closeLiteratureModal();
-    };
-    modal.querySelector("#wi-literature-close").onclick = () => this.closeLiteratureModal();
-    this.literatureModal = modal;
-  }
-
-  openLiteratureModal(item) {
-    this.ensureLiteratureUI();
-    const ref = item.record;
-    const relation = item.relation || {};
-    const articleUrl = this.getArticleUrl(ref);
-    const authors = this.getAuthors(ref);
-    const doiUrl = ref.doi ? `https://doi.org/${ref.doi}` : "";
-    const evidenceReason = relation.reason || ref.llm?.reason || "";
-    const chips = [
-      ref.year,
-      ref.venue,
-      relation.confidence != null ? `confidence ${relation.confidence}` : ""
-    ].filter(Boolean);
-
-    this.literatureModal.querySelector("#wi-literature-body").innerHTML = `
-      <h2 class="wi-literature-title"><a href="${this.escape(articleUrl)}" target="_blank" rel="noopener">${this.escape(ref.title)}</a></h2>
-      <div class="wi-literature-authors wi-literature-author-list">${authors.length
-        ? authors.map((author) => this.renderAuthor(author)).join("")
-        : "Unknown authors"}</div>
-      <div class="wi-literature-meta">${chips.map((chip) => `<span class="wi-literature-chip">${this.escape(chip)}</span>`).join("")}</div>
-      ${ref.abstract ? `<section class="wi-literature-section"><h3>Abstract</h3><p>${this.escape(ref.abstract)}</p></section>` : ""}
-      ${ref.affiliations ? `<section class="wi-literature-section"><h3>Affiliations</h3><p>${this.escape(ref.affiliations)}</p></section>` : ""}
-      ${evidenceReason ? `<section class="wi-literature-section"><h3>Evidence relationship</h3><p>${this.escape(evidenceReason)}</p></section>` : ""}
-      ${ref.keywords?.length ? `<section class="wi-literature-section"><h3>Keywords</h3><p>${ref.keywords.map((keyword) => this.escape(keyword)).join(" · ")}</p></section>` : ""}
-      ${doiUrl ? `<section class="wi-literature-section"><h3>DOI</h3><p><a href="${this.escape(doiUrl)}" target="_blank" rel="noopener">${this.escape(ref.doi)}</a></p></section>` : ""}
-    `;
-    this.literatureModal.classList.add("visible");
-  }
-
-  closeLiteratureModal() {
-    this.literatureModal?.classList.remove("visible");
   }
 
   ensureLegend() {
@@ -1278,66 +1096,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       top: 32,
       bottom: height - (showXAxis ? 30 : 12)
     };
-  }
-
-  getLiteratureFor(prep) {
-    const candidates = [];
-    const seen = new Set();
-    const targetIds = prep.region?.id ? [prep.region.id] : [];
-
-    for (const targetId of targetIds) {
-      for (const relation of this.relationsByTarget.get(targetId) || []) {
-        if (!relation.type.includes("literature") && !relation.type.startsWith("paper_")) continue;
-        const literatureId = relation.source;
-        const record = this.literature.get(literatureId);
-        if (!record || seen.has(literatureId)) continue;
-        if (record.llm?.status === "reject") continue;
-        seen.add(literatureId);
-        candidates.push({ record, relation });
-      }
-    }
-
-    return candidates.sort((a, b) => {
-      const ac = a.relation.confidence ?? 0;
-      const bc = b.relation.confidence ?? 0;
-      return bc - ac;
-    });
-  }
-
-  findRegion(basin) {
-    const lon = (basin.bbox[0] + basin.bbox[2]) / 2;
-    const lat = (basin.bbox[1] + basin.bbox[3]) / 2;
-    return this.regions.find((region) =>
-      lon >= region.match.lon[0] && lon <= region.match.lon[1] &&
-      lat >= region.match.lat[0] && lat <= region.match.lat[1] &&
-      this.basinMatchesCaseRegion(basin, region)
-    );
-  }
-
-  basinMatchesCaseRegion(basin, region) {
-    const basinName = this.normalizeName(basin.name || basin.sourceName || "");
-    const sourceName = this.normalizeName(basin.sourceName || "");
-    const basinText = `${basinName} ${sourceName}`.trim();
-    const regionName = this.normalizeName(region.name || "");
-    const regionBase = regionName
-      .replace(/\bbasin\b/g, "")
-      .replace(/\bplain\b/g, "")
-      .replace(/\bregion\b/g, "")
-      .trim();
-    const regionParts = regionBase.split(/\s*\/\s*|\s+-\s+|\s+and\s+/).map((part) => part.trim()).filter(Boolean);
-
-    return regionParts.some((part) =>
-      part.length >= 4 &&
-      (basinText.includes(part) || part.includes(basinName))
-    );
-  }
-
-  normalizeName(value) {
-    return String(value || "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
   }
 
   escape(value) {

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
-const vm = require("vm");
 
 const root = path.resolve(__dirname, "../..");
 const args = Object.fromEntries(process.argv.slice(2).map((arg) => {
@@ -18,8 +17,6 @@ const outputCsv = path.join(outputDir, "basin-three-variable-timeseries-1962-201
 const outputClassification = path.join(outputDir, "basin-imbalance-classification.json");
 const outputMetadata = path.join(outputDir, "basin-time-series-metadata.json");
 const outputBasinData = path.join(outputDir, "basin-data.json");
-const graphFile = path.join(outputDir, "knowledge-graph.json");
-const sourceGraphFile = path.resolve(root, args.graphFile || "public/modules/water-imbalance/data/knowledge-graph.json");
 const basinDataSource = path.resolve(root, args.basinData || "projects/basin-data.js");
 const spatialEntity = args.spatialEntity || "GRDC Major River Basin";
 const basinLayerName = args.basinLayerName || `${spatialEntity} with Water Imbalance`;
@@ -229,38 +226,12 @@ const metadata = {
 };
 fs.writeFileSync(outputMetadata, JSON.stringify(metadata, null, 2) + "\n");
 
-const oldGraph = JSON.parse(fs.readFileSync(sourceGraphFile, "utf8"));
-const regions = (oldGraph.spatialContexts?.regions || []).map(({ mode, summary, ...region }) => region);
-const relations = [];
-for (const relation of oldGraph.relations || []) {
-  if (relation.type === "region_has_seed_literature") {
-    relations.push({
-      type: "paper_studies_region",
-      source: relation.target,
-      target: relation.source,
-      method: relation.method || "curated-region-link",
-      confidence: relation.confidence
-    });
-  } else if (relation.type === "paper_studies_region") {
-    relations.push(relation);
-  }
-}
-const graph = {
-  schema: "water-imbalance-literature/v1",
-  module: moduleId,
-  generatedFrom: oldGraph.generatedFrom,
-  spatialContexts: { regions },
-  literature: oldGraph.literature,
-  relations
-};
-fs.writeFileSync(graphFile, JSON.stringify(graph, null, 2) + "\n");
-
 const manifest = {
   id: moduleId,
   name: moduleName,
   version: "0.1.1",
   assetVersion: "2026-06-17-dual-basin-modules",
-  description: `Basin-scale three-variable water imbalance classification, time series, and literature evidence for ${spatialEntity}.`,
+  description: `Basin-scale three-variable water imbalance classification, time series, and basin ontology for ${spatialEntity}.`,
   author: "Spatial Research Team",
   icon: "droplet",
   entry: "../water-imbalance/index.js",
@@ -269,7 +240,6 @@ const manifest = {
   defaultLoad: true,
   layerId,
   layerName: basinLayerName,
-  knowledgeGraph: "./data/runtime-graph.json",
   datasets: [
     {
       id: "basin-three-variable-timeseries-1962-2016",
@@ -293,12 +263,6 @@ const manifest = {
         position: "right",
         trigger: "feature:click",
         condition: { layer: layerId, module: moduleId }
-      },
-      {
-        id: `${moduleId}-literature-evidence`,
-        name: "Literature Evidence",
-        position: "right",
-        tab: true
       }
     ],
     dataProducts: [
@@ -311,11 +275,6 @@ const manifest = {
         id: "basin-hydrology-time-series",
         type: "basin-time-series",
         description: `Three annual hydrological variables joined to ${spatialEntity} by basin_id.`
-      },
-      {
-        id: "literature-evidence",
-        type: "literature-catalog",
-        description: "Literature records retained independently from the numerical imbalance classification."
       }
     ]
   }
@@ -330,7 +289,5 @@ console.log(JSON.stringify({
   sourceBasins: byBasin.size,
   matchedBasins,
   basinCoveragePercent: metadata.coverage.basinCoveragePercent,
-  classificationCounts: counts,
-  literatureRecords: Object.keys(graph.literature?.records || {}).length,
-  literatureRegionRelations: relations.length
+  classificationCounts: counts
 }, null, 2));

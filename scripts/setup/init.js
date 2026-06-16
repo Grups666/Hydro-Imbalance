@@ -35,8 +35,6 @@ if (!fs.existsSync(localConfig)) {
 
 // 3. 检查目录结构
 const requiredDirs = [
-  'catalog/literature',
-  'catalog/regions',
   'catalog/datasets',
   'catalog/models',
   'docs',
@@ -59,9 +57,7 @@ for (const dir of requiredDirs) {
 const keyFiles = [
   'public/index.html',
   'public/app.js',
-  'src/server/server.js',
-  'catalog/literature/reference-catalog.js',
-  'catalog/regions/basin-profiles.js'
+  'src/server/server.js'
 ];
 
 console.log('\n关键文件检查:');

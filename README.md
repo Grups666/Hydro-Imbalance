@@ -1,6 +1,6 @@
 # Hydro-Imbalance
 
-Hydro-Imbalance is a Tereon domain module and research workspace for basin-scale hydrological imbalance. It provides data, classification, time series, literature evidence, manuscript assets, and module adapters consumed by Tereon.
+Hydro-Imbalance is a Tereon domain module and research workspace for basin-scale hydrological imbalance. It provides data, classification, time series, basin ontology, manuscript assets, and module adapters consumed by Tereon.
 
 The Foundation map and module loader live in:
 
@@ -37,7 +37,7 @@ Repository URL import:
 https://github.com/Grups666/Hydro-Imbalance
 ```
 
-The manifest points Tereon to the module entry, runtime graph, classification, and time-series metadata under:
+The manifest points Tereon to the module entry, basin classification, and time-series metadata under:
 
 ```text
 public/modules/water-imbalance/
@@ -50,8 +50,6 @@ public/modules/water-imbalance/
   module.json
   index.js
   data/
-    runtime-graph.json
-    knowledge-graph.json
     basin-data.json
     basin-three-variable-timeseries-1962-2016.csv
     basin-time-series-metadata.json
@@ -60,7 +58,6 @@ public/modules/water-imbalance/
 public/modules/water-imbalance-wmo/
   module.json
   data/
-    runtime-graph.json
     basin-data.json
     basin-three-variable-timeseries-1962-2016.csv
     basin-time-series-metadata.json
@@ -73,7 +70,7 @@ public/modules/water-imbalance-wmo/
 - Global GRDC WMO Basin/Sub-Basin hydrological imbalance classification for boundary-product comparison.
 - Annual three-variable basin time series for 1962-2016.
 - Per-variable recent-versus-historical imbalance assessment.
-- Literature evidence and author entities for named research regions.
+- Basin ontology keyed by basin ID and basin name; future evidence links should attach directly to those basin identifiers, not to coordinate boxes.
 
 ## Imbalance Classification
 
@@ -134,23 +131,10 @@ python -m http.server 8000
 
 Then visit `http://localhost:8000/web/`.
 
-## Literature
-
-The repository retains curated foundational studies and OpenAlex discovery records. Browser runtime graph exports are reduced to the literature records and author entities needed by active region links.
-
-Verified Google Scholar profile links are stored separately:
-
-```text
-catalog/authors/scholar-profiles.json
-```
-
-Only verified `scholar.google.com/citations?user=...` URLs are rendered as author links.
-
 ## Build And Validate
 
 ```bash
 npm run build:water-imbalance
-npm run build:runtime-graph
 npm test
 ```
 

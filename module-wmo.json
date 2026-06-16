@@ -2,8 +2,8 @@
   "id": "water-imbalance-wmo",
   "name": "Water Imbalance - WMO Basins",
   "version": "0.1.1",
-  "assetVersion": "2026-06-17-boundary-defaults",
-  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence for GRDC WMO Basins and Sub-Basins.",
+  "assetVersion": "2026-06-17-basin-ontology",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and basin ontology for GRDC WMO Basins and Sub-Basins.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "basePath": "https://grups666.github.io/Hydro-Imbalance/",
@@ -13,7 +13,6 @@
   "defaultLoad": false,
   "layerId": "water-imbalance-wmo-basins",
   "layerName": "WMO Basin Water Imbalance",
-  "knowledgeGraph": "./public/modules/water-imbalance-wmo/data/runtime-graph.json",
   "datasets": [
     {
       "id": "basin-three-variable-timeseries-1962-2016",
@@ -37,12 +36,6 @@
         "position": "right",
         "trigger": "feature:click",
         "condition": { "layer": "water-imbalance-wmo-basins", "module": "water-imbalance-wmo" }
-      },
-      {
-        "id": "water-imbalance-wmo-literature-evidence",
-        "name": "Literature Evidence",
-        "position": "right",
-        "tab": true
       }
     ],
     "dataProducts": [
@@ -55,11 +48,6 @@
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
         "description": "Three annual hydrological variables joined to GRDC WMO Basins and Sub-Basins by basin_id."
-      },
-      {
-        "id": "literature-evidence",
-        "type": "literature-catalog",
-        "description": "Literature records retained independently from the numerical imbalance classification."
       }
     ]
   }

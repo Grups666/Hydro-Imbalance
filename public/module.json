@@ -2,8 +2,8 @@
   "id": "water-imbalance",
   "name": "Water Imbalance",
   "version": "0.1.1",
-  "assetVersion": "2026-06-17-remove-inland-water-overlay",
-  "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence.",
+  "assetVersion": "2026-06-17-basin-ontology",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and basin ontology.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "basePath": "https://grups666.github.io/Hydro-Imbalance/",
@@ -11,7 +11,6 @@
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": false,
-  "knowledgeGraph": "./modules/water-imbalance/data/runtime-graph.json",
   "datasets": [
     {
       "id": "basin-three-variable-timeseries-1962-2016",
@@ -35,12 +34,6 @@
         "position": "right",
         "trigger": "feature:click",
         "condition": { "layer": "outlines-basins", "module": "water-imbalance" }
-      },
-      {
-        "id": "literature-evidence",
-        "name": "Literature Evidence",
-        "position": "right",
-        "tab": true
       }
     ],
     "dataProducts": [
@@ -53,11 +46,6 @@
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
         "description": "Three annual hydrological variables joined to GRDC Major River Basins by basin_id."
-      },
-      {
-        "id": "literature-evidence",
-        "type": "literature-catalog",
-        "description": "Literature records retained independently from the numerical imbalance classification."
       }
     ]
   }
