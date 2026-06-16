@@ -662,7 +662,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   showInspector(prep) {
     const { basin, region, classification } = prep;
     const references = this.getLiteratureFor(prep);
-    const title = region?.name || basin.name;
+    const title = basin.name;
     const series = this.timeSeriesByBasin.get(String(basin.id)) || [];
     const previewId = `wi-preview-${basin.id}`;
     const expandId = `wi-expand-${basin.id}`;
@@ -1034,7 +1034,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   openTimeSeriesModal(prep, series) {
     this.ensureChartUI();
     this.activeChartSeries = { prep, series, hoverIndex: null };
-    this.chartModal.querySelector("#wi-chart-title").textContent = prep.region?.name || prep.basin.name;
+    this.chartModal.querySelector("#wi-chart-title").textContent = prep.basin.name;
     this.chartModal.querySelector("#wi-chart-subtitle").textContent =
       `${series[0].year}-${series[series.length - 1].year} · basin_id ${prep.basin.id} · exact ID join`;
 
@@ -1309,8 +1309,35 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const lat = (basin.bbox[1] + basin.bbox[3]) / 2;
     return this.regions.find((region) =>
       lon >= region.match.lon[0] && lon <= region.match.lon[1] &&
-      lat >= region.match.lat[0] && lat <= region.match.lat[1]
+      lat >= region.match.lat[0] && lat <= region.match.lat[1] &&
+      this.basinMatchesCaseRegion(basin, region)
     );
+  }
+
+  basinMatchesCaseRegion(basin, region) {
+    const basinName = this.normalizeName(basin.name || basin.sourceName || "");
+    const sourceName = this.normalizeName(basin.sourceName || "");
+    const basinText = `${basinName} ${sourceName}`.trim();
+    const regionName = this.normalizeName(region.name || "");
+    const regionBase = regionName
+      .replace(/\bbasin\b/g, "")
+      .replace(/\bplain\b/g, "")
+      .replace(/\bregion\b/g, "")
+      .trim();
+    const regionParts = regionBase.split(/\s*\/\s*|\s+-\s+|\s+and\s+/).map((part) => part.trim()).filter(Boolean);
+
+    return regionParts.some((part) =>
+      part.length >= 4 &&
+      (basinText.includes(part) || part.includes(basinName))
+    );
+  }
+
+  normalizeName(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   escape(value) {
