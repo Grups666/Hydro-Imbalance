@@ -62,6 +62,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.literatureModal = null;
     this.activeChartSeries = null;
     this.themeObserver = null;
+    this.themeMode = null;
+    this.themePoll = null;
+    this.handleThemeChange = () => this.syncThemeMode(true);
     this.enhancedLayer = null;
     this.originalLayerState = null;
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
@@ -101,6 +104,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.closeLiteratureModal();
     this.themeObserver?.disconnect();
     this.themeObserver = null;
+    document.removeEventListener("change", this.handleThemeChange, true);
+    if (this.themePoll) window.clearInterval(this.themePoll);
+    this.themePoll = null;
     this.app.unregisterLegend?.(this.legendId);
   }
 
@@ -385,10 +391,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   renderInlandWaterBodies(ctx, geometry) {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark"
-      || document.body?.classList.contains("dark")
-      || document.body?.classList.contains("theme-dark")
-      || document.body?.classList.contains("dark-mode");
+    const isDark = this.detectThemeMode() === "dark";
     ctx.save();
     ctx.fillStyle = isDark ? "rgba(20, 55, 66, 0.88)" : "rgba(232, 245, 249, 0.96)";
     ctx.strokeStyle = isDark ? "rgba(144, 180, 190, 0.28)" : "rgba(136, 154, 166, 0.58)";
@@ -508,6 +511,27 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     style.id = "wi-theme-styles";
     style.textContent = `
       :root{
+        --wi-surface:var(--modal-panel,rgba(255,255,255,.95));
+        --wi-surface-soft:var(--panel-raised,rgba(255,255,255,.95));
+        --wi-border:var(--panel-border,rgba(100,130,140,.14));
+        --wi-border-strong:var(--panel-border-strong,rgba(80,120,130,.25));
+        --wi-text:var(--text,#1a2a2e);
+        --wi-muted:var(--muted,#5a7078);
+        --wi-subtle:#94a3b8;
+        --wi-button-bg:var(--panel-raised,rgba(255,255,255,.95));
+        --wi-button-hover:var(--card-bg,rgba(0,0,0,.03));
+        --wi-overlay:var(--modal-backdrop,rgba(200,210,220,.75));
+        --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.1));
+        --wi-danger:#b91c1c;
+        --wi-link:#3b82f6;
+        --wi-focus:var(--accent,#3a9a8a);
+        --wi-focus-soft:rgba(58,154,138,.16);
+        --wi-canvas-bg:#ffffff;
+        --wi-grid:#e2e8f0;
+        --wi-grid-soft:#edf2f7;
+        --wi-hover-line:#64748b;
+      }
+      :root.wi-theme-dark,:root[data-theme="dark"],[data-theme="dark"],body.dark,body.theme-dark,body.dark-mode{
         --wi-surface:var(--modal-panel,rgba(7,16,18,.94));
         --wi-surface-soft:var(--panel-raised,rgba(18,32,36,.9));
         --wi-border:var(--panel-border,rgba(172,205,196,.16));
@@ -528,28 +552,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         --wi-grid-soft:rgba(172,205,196,.09);
         --wi-hover-line:#cbd5e1;
       }
-      :root[data-theme="dark"],[data-theme="dark"],body.dark,body.theme-dark,body.dark-mode{
-        --wi-surface:var(--modal-panel,rgba(7,16,18,.94));
-        --wi-surface-soft:var(--panel-raised,rgba(18,32,36,.9));
-        --wi-border:var(--panel-border,rgba(172,205,196,.16));
-        --wi-border-strong:var(--panel-border-strong,rgba(132,190,185,.28));
-        --wi-text:var(--text,#f4f3ec);
-        --wi-muted:var(--muted,#9db4ae);
-        --wi-subtle:#94a3b8;
-        --wi-button-bg:var(--panel-raised,rgba(18,32,36,.9));
-        --wi-button-hover:var(--card-bg,rgba(255,255,255,.07));
-        --wi-overlay:var(--modal-backdrop,rgba(3,8,10,.72));
-        --wi-shadow:var(--shadow,0 22px 46px rgba(0,0,0,.26));
-        --wi-danger:#fca5a5;
-        --wi-link:#93c5fd;
-        --wi-focus:var(--accent,#9fd3c1);
-        --wi-focus-soft:rgba(159,211,193,.18);
-        --wi-canvas-bg:var(--bg,#071012);
-        --wi-grid:rgba(172,205,196,.18);
-        --wi-grid-soft:rgba(172,205,196,.09);
-        --wi-hover-line:#cbd5e1;
-      }
-      :root[data-theme="light"],[data-theme="light"],body.light,body.theme-light,body.light-mode{
+      :root.wi-theme-light,:root[data-theme="light"],[data-theme="light"],body.light,body.theme-light,body.light-mode{
         --wi-surface:var(--modal-panel,rgba(255,255,255,.95));
         --wi-surface-soft:var(--panel-raised,rgba(255,255,255,.95));
         --wi-border:var(--panel-border,rgba(100,130,140,.14));
@@ -599,7 +602,13 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       }
       if (this.activeChartSeries) this.drawExpandedCharts();
     };
-    this.themeObserver = new MutationObserver(repaintCharts);
+    const syncAndRepaint = () => {
+      const changed = this.syncThemeMode();
+      if (changed) repaintCharts();
+    };
+    this.syncThemeMode();
+    document.addEventListener("change", this.handleThemeChange, true);
+    this.themeObserver = new MutationObserver(syncAndRepaint);
     this.themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["data-theme", "class"]
@@ -610,6 +619,106 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         attributeFilter: ["data-theme", "class"]
       });
     }
+    this.themePoll = window.setInterval(syncAndRepaint, 750);
+  }
+
+  syncThemeMode(forceRepaint = false) {
+    const mode = this.detectThemeMode();
+    const root = document.documentElement;
+    const changed = this.themeMode !== mode;
+    this.themeMode = mode;
+    root.classList.toggle("wi-theme-dark", mode === "dark");
+    root.classList.toggle("wi-theme-light", mode === "light");
+    if ((changed || forceRepaint) && this.selectedBasin) {
+      const preview = document.querySelector(".wi-preview");
+      const series = this.timeSeriesByBasin.get(String(this.selectedBasin.basin.id)) || [];
+      if (preview && series.length) this.drawMiniPreview(preview, series);
+      if (this.activeChartSeries) this.drawExpandedCharts();
+    }
+    return changed;
+  }
+
+  detectThemeMode() {
+    const explicit = this.explicitThemeMode();
+    if (explicit) return explicit;
+    const radioTheme = this.checkedThemeControlMode();
+    if (radioTheme) return radioTheme;
+    const computedTheme = this.computedThemeMode();
+    return computedTheme || "light";
+  }
+
+  explicitThemeMode() {
+    const root = document.documentElement;
+    const body = document.body;
+    const value = [
+      root.getAttribute("data-theme"),
+      body?.getAttribute("data-theme"),
+      root.dataset?.theme,
+      body?.dataset?.theme
+    ].find(Boolean);
+    if (/dark/i.test(value || "")) return "dark";
+    if (/light/i.test(value || "")) return "light";
+    const classText = `${root.className || ""} ${body?.className || ""}`.replace(/\bwi-theme-(dark|light)\b/g, "");
+    if (/\b(dark|theme-dark|dark-mode)\b/i.test(classText)) return "dark";
+    if (/\b(light|theme-light|light-mode)\b/i.test(classText)) return "light";
+    return null;
+  }
+
+  checkedThemeControlMode() {
+    const checkedControls = Array.from(document.querySelectorAll("input[type='radio']:checked,input[type='checkbox']:checked"));
+    for (const control of checkedControls) {
+      const text = [
+        control.value,
+        control.getAttribute("aria-label"),
+        this.controlLabelText(control),
+        control.closest("label")?.textContent,
+        control.parentElement?.textContent
+      ].filter(Boolean).join(" ").toLowerCase();
+      if (/\bdark\b|深色|暗色/.test(text)) return "dark";
+      if (/\blight\b|浅色|亮色/.test(text)) return "light";
+    }
+    return null;
+  }
+
+  controlLabelText(control) {
+    if (!control.id || typeof CSS === "undefined" || typeof CSS.escape !== "function") return "";
+    return document.querySelector(`label[for="${CSS.escape(control.id)}"]`)?.textContent || "";
+  }
+
+  computedThemeMode() {
+    const styles = getComputedStyle(document.documentElement);
+    const candidates = [
+      styles.getPropertyValue("--bg"),
+      styles.getPropertyValue("--modal-panel"),
+      getComputedStyle(document.body).backgroundColor,
+      styles.backgroundColor
+    ];
+    for (const color of candidates) {
+      const luminance = this.colorLuminance(color);
+      if (Number.isFinite(luminance)) return luminance < 0.5 ? "dark" : "light";
+    }
+    return null;
+  }
+
+  colorLuminance(color) {
+    const text = String(color || "").trim();
+    const hex = text.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (hex) {
+      const value = hex[1].length === 3
+        ? hex[1].split("").map((char) => char + char).join("")
+        : hex[1];
+      const r = Number.parseInt(value.slice(0, 2), 16) / 255;
+      const g = Number.parseInt(value.slice(2, 4), 16) / 255;
+      const b = Number.parseInt(value.slice(4, 6), 16) / 255;
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+    const match = text.match(/rgba?\(([^)]+)\)/i);
+    if (!match) return NaN;
+    const parts = match[1].split(",").map((value) => Number.parseFloat(value));
+    if (Number.isFinite(parts[3]) && parts[3] === 0) return NaN;
+    const [r, g, b] = parts.slice(0, 3).map((value) => value / 255);
+    if (![r, g, b].every(Number.isFinite)) return NaN;
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
   }
 
   showInspector(prep) {
