@@ -2,7 +2,7 @@
   "id": "water-imbalance",
   "name": "Water Imbalance - Major River Basins",
   "version": "0.1.1",
-  "assetVersion": "2026-06-17-dual-basin-modules",
+  "assetVersion": "2026-06-17-boundary-defaults",
   "description": "Basin-scale three-variable water imbalance classification, time series, and literature evidence for GRDC Major River Basin.",
   "author": "Spatial Research Team",
   "icon": "droplet",

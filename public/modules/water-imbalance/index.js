@@ -331,22 +331,23 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         const color = prep.classification?.color || "#e3e6e9";
 
         let fillAlpha = prep.classification ? 0.68 : 0.32;
-        let strokeColor = "rgba(71,85,105,0.16)";
-        let lineWidth = 0.28;
+        let strokeColor = "rgba(255,255,255,0.82)";
+        let lineWidth = 0.7;
 
         if (isSelected) {
           fillAlpha = 0.9;
-          strokeColor = "#111827";
-          lineWidth = 1.8;
+          strokeColor = "#ffffff";
+          lineWidth = 2;
         } else if (isHovered) {
           fillAlpha = 0.82;
-          strokeColor = "rgba(51,65,85,0.48)";
-          lineWidth = 1;
+          strokeColor = "#ffffff";
+          lineWidth = 1.3;
         }
 
         ctx.fillStyle = Foundation.UI.hexToRgba(color, fillAlpha);
         ctx.strokeStyle = strokeColor;
         ctx.lineWidth = lineWidth;
+        ctx.lineJoin = "round";
 
         for (const path of this.buildScreenPaths(prep, lonOffset, base, width, height, offsetX, offsetY)) {
           ctx.fill(path);
@@ -366,8 +367,9 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const isSelected = this.selectedBasin?.basin.id === prep.basin.id;
 
     ctx.fillStyle = Foundation.UI.hexToRgba(prep.classification?.color || "#e3e6e9", isSelected ? 0.9 : 0.82);
-    ctx.strokeStyle = isSelected ? "#111827" : "rgba(51,65,85,0.48)";
-    ctx.lineWidth = isSelected ? 1.8 : 1;
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = isSelected ? 2 : 1.3;
+    ctx.lineJoin = "round";
 
     for (let seg = firstSeg; seg <= lastSeg; seg++) {
       const lonOffset = seg * 360;
