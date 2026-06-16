@@ -4,10 +4,11 @@
   "type": "basin-time-series",
   "file": "./basin-three-variable-timeseries-1962-2016.csv",
   "classification": "./basin-imbalance-classification.json",
+  "basinData": "./basin-data.json",
   "join": {
     "moduleField": "basin_id",
-    "foundationEntity": "Basin",
-    "foundationField": "id",
+    "spatialEntity": "GRDC Major River Basin",
+    "spatialField": "id",
     "method": "exact-string"
   },
   "time": {
@@ -17,11 +18,11 @@
     "resolution": "annual"
   },
   "coverage": {
-    "records": 70125,
-    "basins": 1275,
-    "matchedFoundationBasins": 1275,
-    "foundationBasins": 1275,
-    "foundationCoveragePercent": 100
+    "records": 28600,
+    "basins": 520,
+    "matchedBasins": 520,
+    "sourceBasins": 520,
+    "basinCoveragePercent": 100
   },
   "variables": [
     {
@@ -75,6 +76,9 @@
     "deficit+groundwater+glacier": "#3f4652"
   },
   "provenance": {
+    "basinSource": "GRDC Major River Basins of the World",
+    "basinSourceUrl": "https://grdc.bafg.de/products/basin_layers/major_rivers/",
+    "basinEdition": "2nd revised edition, 2020",
     "waterGapVersion": "2.2d",
     "waterDemandVariable": "net_water_demand_deficit_mm_yr",
     "waterDemandSources": [

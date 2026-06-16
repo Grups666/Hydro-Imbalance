@@ -13,35 +13,38 @@ ROOT = Path(__file__).resolve().parent.parent
 BASIN_DIR = ROOT / "datasets" / "basins"
 RAW_DIR = BASIN_DIR / "raw"
 BASIN_DATA_PATH = ROOT / "basin-data.js"
-HYDROBASINS_LEVEL = 4
-REGIONS = ("af", "ar", "as", "au", "eu", "gr", "na", "sa", "si")
-BASE_URL = "https://data.hydrosheds.org/file/hydrobasins/standard/hybas_{region}_lev{level:02d}_v1c.zip"
+MRB_ARCHIVE_NAME = "GRDC_Major_River_Basins_shp.zip"
+MRB_URL = "https://grdc.bafg.de/downloads/GRDC_Major_River_Basins_shp.zip"
 ROWS = 360
 COLS = 720
 LAT_VALUES = [89.75 - row * 0.5 for row in range(ROWS)]
 LON_VALUES = [-179.75 + col * 0.5 for col in range(COLS)]
 RENDER_TOLERANCE_DEGREES = 0.05
+CONTINENT_CODES = {
+    "Africa": "AF",
+    "Asia": "AS",
+    "Europe": "EU",
+    "North America, Central America and the Caribbean": "NA",
+    "South America": "SA",
+    "South-West Pacific": "AU",
+}
 
 
-def download_hydrobasins() -> list[Path]:
+def download_major_river_basins() -> Path:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    archives: list[Path] = []
-    for region in REGIONS:
-        url = BASE_URL.format(region=region, level=HYDROBASINS_LEVEL)
-        target = RAW_DIR / Path(url).name
-        if not target.exists():
-            print(f"Downloading {url}")
-            request = urllib.request.Request(
-                url,
-                headers={
-                    "User-Agent": "Mozilla/5.0",
-                    "Referer": "https://www.hydrosheds.org/products/hydrobasins",
-                },
-            )
-            with urllib.request.urlopen(request) as response, target.open("wb") as handle:
-                handle.write(response.read())
-        archives.append(target)
-    return archives
+    target = RAW_DIR / MRB_ARCHIVE_NAME
+    if not target.exists() or target.stat().st_size == 0:
+        print(f"Downloading {MRB_URL}")
+        request = urllib.request.Request(
+            MRB_URL,
+            headers={
+                "User-Agent": "Mozilla/5.0",
+                "Referer": "https://mrb.grdc.bafg.de/",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=600) as response, target.open("wb") as handle:
+            handle.write(response.read())
+    return target
 
 
 def decode_dbf_value(raw: bytes) -> str | int | float | None:
@@ -131,11 +134,11 @@ def extract_archive(archive: Path) -> tuple[Path, Path]:
         with zipfile.ZipFile(archive) as handle:
             handle.extractall(target_dir)
         marker.write_text("ok", encoding="utf-8")
-    shp_files = list(target_dir.rglob("*.shp"))
-    dbf_files = list(target_dir.rglob("*.dbf"))
-    if not shp_files or not dbf_files:
+    shp_path = target_dir / "mrb_basins.shp"
+    dbf_path = target_dir / "mrb_basins.dbf"
+    if not shp_path.exists() or not dbf_path.exists():
         raise FileNotFoundError(f"Missing .shp/.dbf in {archive}")
-    return shp_files[0], dbf_files[0]
+    return shp_path, dbf_path
 
 
 def perpendicular_distance(point: tuple[float, float], start: tuple[float, float], end: tuple[float, float]) -> float:
@@ -212,40 +215,46 @@ def cell_indices_for_polygon(bbox: list[float], rings: list[list[tuple[float, fl
 
 def build_basins() -> dict[str, object]:
     basins: list[dict[str, object]] = []
-    for archive in download_hydrobasins():
-        shp_path, dbf_path = extract_archive(archive)
-        records = read_dbf(dbf_path)
-        shapes = list(read_shp_polygons(shp_path))
-        if len(records) != len(shapes):
-            raise ValueError(f"Record count mismatch in {archive.name}: {len(records)} dbf vs {len(shapes)} shp")
-        region = archive.name.split("_")[1].upper()
-        for record, shape in zip(records, shapes):
-            rings = shape["rings"]
-            cells = cell_indices_for_polygon(shape["bbox"], rings)  # type: ignore[arg-type]
-            if not cells:
-                continue
-            hybas_id = int(record.get("HYBAS_ID") or shape["recordNumber"])
-            basins.append(
-                {
-                    "id": hybas_id,
-                    "region": region,
-                    "name": f"{region}-{hybas_id}",
-                    "areaKm2": float(record.get("SUB_AREA") or 0),
-                    "cellCount": len(cells),
-                    "bbox": [round(float(value), 4) for value in shape["bbox"]],  # type: ignore[index]
-                    "cells": cells,
-                    "rings": [simplify_ring(ring, RENDER_TOLERANCE_DEGREES) for ring in rings],  # type: ignore[arg-type]
-                }
-            )
+    archive = download_major_river_basins()
+    shp_path, dbf_path = extract_archive(archive)
+    records = read_dbf(dbf_path)
+    shapes = list(read_shp_polygons(shp_path))
+    if len(records) != len(shapes):
+        raise ValueError(f"Record count mismatch in {archive.name}: {len(records)} dbf vs {len(shapes)} shp")
+    for record, shape in zip(records, shapes):
+        rings = shape["rings"]
+        cells = cell_indices_for_polygon(shape["bbox"], rings)  # type: ignore[arg-type]
+        basin_id = int(record.get("MRBID") or shape["recordNumber"])
+        continent = str(record.get("CONTINENT") or "")
+        region = CONTINENT_CODES.get(continent, "OT")
+        basin_name = str(record.get("RIVERBASIN") or f"MRB-{basin_id}")
+        basins.append(
+            {
+                "id": basin_id,
+                "region": region,
+                "continent": continent,
+                "name": basin_name.title(),
+                "sourceName": basin_name,
+                "sea": record.get("SEA") or "",
+                "ocean": record.get("OCEAN") or "",
+                "areaKm2": float(record.get("SUM_SUB_AR") or 0),
+                "cellCount": len(cells),
+                "bbox": [round(float(value), 4) for value in shape["bbox"]],  # type: ignore[index]
+                "cells": cells,
+                "rings": [simplify_ring(ring, RENDER_TOLERANCE_DEGREES) for ring in rings],  # type: ignore[arg-type]
+            }
+        )
     basins.sort(key=lambda item: int(item["id"]))
     return {
         "meta": {
-            "source": "HydroBASINS",
-            "sourceUrl": "https://www.hydrosheds.org/products/hydrobasins",
-            "level": HYDROBASINS_LEVEL,
+            "source": "GRDC Major River Basins of the World",
+            "sourceUrl": "https://grdc.bafg.de/products/basin_layers/major_rivers/",
+            "edition": "2nd revised edition, 2020",
             "grid": "0.5 degree WaterGAP grid",
-            "aggregation": "Basin score is the mean score of all valid 0.5 degree grid cells whose centers fall inside the basin polygon.",
+            "aggregation": "Basin value is the mean of all valid 0.5 degree grid cells whose centers fall inside the major river basin polygon.",
             "basinCount": len(basins),
+            "sourceBasinCount": len(records),
+            "basinsWithWaterGapCells": sum(1 for basin in basins if basin["cellCount"] > 0),
         },
         "basins": basins,
     }

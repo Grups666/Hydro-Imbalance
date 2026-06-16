@@ -35,17 +35,17 @@ The same effective-domain rule was applied to the human-water-use variables. Fig
 
 ![Figure S2. Human water-use variable groups used to define core activity regions.](figS01_human_activity_variables.png)
 
-To summarize human-water-use exposure at catchment scale, we classified HydroBASINS level-4 catchments from grid-cell composition rather than catchment-mean component shares. A grid cell is active when at least one of the four withdrawal variables has a recent 20-year mean of at least 0.1 mm day-1. Within active cells, the dominant withdrawal type is assigned when its share exceeds 50%; otherwise a two-type class is assigned when the second type exceeds 25%, and remaining cells are retained as top-led mixed withdrawals. A catchment is shown when active cells occupy at least 10% of catchment area. Catchment colors are then assigned from the active-cell type proportions using the same 50% and 25% thresholds. Diagonal hatching marks catchments with heterogeneous active-cell composition, measured by a consistency index across cell types.
+To summarize human-water-use exposure at basin scale, we classified GRDC Major River Basins from grid-cell composition rather than basin-mean component shares. A grid cell is active when at least one of the four withdrawal variables has a recent 20-year mean of at least 0.1 mm day-1. Within active cells, the dominant withdrawal type is assigned when its share exceeds 50%; otherwise a two-type class is assigned when the second type exceeds 25%, and remaining cells are retained as top-led mixed withdrawals. A basin is shown when active cells occupy at least 10% of basin area. Basin colors are then assigned from the active-cell type proportions using the same 50% and 25% thresholds. Diagonal hatching marks basins with heterogeneous active-cell composition, measured by a consistency index across cell types.
 
-![Figure S3. Catchment-scale classification of dominant human water-use influence.](fig01_human_water_use_catchment_classification.png)
+![Figure S3. Basin-scale classification of dominant human water-use influence.](fig01_human_water_use_catchment_classification.png)
 
-## Catchment-Scale Water Imbalance
+## Basin-Scale Water Imbalance
 
-Figure 2 classifies each catchment from annual time series of water-demand deficit, groundwater storage, and reconstructed absolute glacier storage. The deficit variable estimates the annual water demand that remains after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement. For each variable, the recent 20-year mean for 1997-2016 is compared with the historical period 1962-1996. A variable is classified as imbalanced when the absolute recent-minus-historical mean difference exceeds both two historical standard deviations and 1 mm.
+Figure 2 classifies each GRDC major river basin from annual time series of water-demand deficit, groundwater storage, and reconstructed absolute glacier storage. The deficit variable estimates the annual water demand that remains after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement. For each variable, the recent 20-year mean for 1997-2016 is compared with the historical period 1962-1996. A variable is classified as imbalanced when the absolute recent-minus-historical mean difference exceeds both two historical standard deviations and 1 mm.
 
-The map color represents the combination of variables satisfying this rule. The eight possible classes are no detected imbalance, the three single-variable classes, the three two-variable combinations, and imbalance in all three variables. Gold boundaries independently identify human-impacted catchments using recent total-withdrawal activity from WaterGAP2.2d; the boundary does not alter the water-imbalance class.
+The map color represents the combination of variables satisfying this rule. The eight possible classes are no detected imbalance, the three single-variable classes, the three two-variable combinations, and imbalance in all three variables. Slate-gray boundaries independently identify human-impacted basins using recent total-withdrawal activity from WaterGAP2.2d; the boundary does not alter the water-imbalance class.
 
-![Figure 2. Catchment-scale water imbalance classified from water-demand deficit, groundwater storage, and glacier storage.](fig02_water_cycle_imbalance.png)
+![Figure 2. Basin-scale water imbalance classified from water-demand deficit, groundwater storage, and glacier storage.](fig02_water_cycle_imbalance.png)
 
 ## Literature Basis for Human-Activity Interpretation
 

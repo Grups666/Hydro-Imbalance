@@ -10,6 +10,7 @@ const outputDir = path.join(root, "public/modules/water-imbalance/data");
 const outputCsv = path.join(outputDir, "basin-three-variable-timeseries-1962-2016.csv");
 const outputClassification = path.join(outputDir, "basin-imbalance-classification.json");
 const outputMetadata = path.join(outputDir, "basin-time-series-metadata.json");
+const outputBasinData = path.join(outputDir, "basin-data.json");
 const graphFile = path.join(outputDir, "knowledge-graph.json");
 const historicalStdMultiplier = 2;
 const absoluteDifferenceMinimumMm = 1;
@@ -58,6 +59,30 @@ function parseValue(raw) {
   return Number.isFinite(value) ? value : null;
 }
 
+function parseCsvLine(line) {
+  const values = [];
+  let value = "";
+  let quoted = false;
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    if (char === '"') {
+      if (quoted && line[index + 1] === '"') {
+        value += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (char === "," && !quoted) {
+      values.push(value);
+      value = "";
+    } else {
+      value += char;
+    }
+  }
+  values.push(value);
+  return values;
+}
+
 function mean(values) {
   return values.reduce((sum, value) => sum + value, 0) / values.length;
 }
@@ -68,7 +93,7 @@ function standardDeviation(values) {
   return Math.sqrt(values.reduce((sum, value) => sum + (value - average) ** 2, 0) / values.length);
 }
 
-function loadFoundationBasins() {
+function loadBasinData() {
   const localBasinDataFile = path.join(root, "projects/basin-data.js");
   const siblingBasinDataFile = path.resolve(root, "../Water_Circle_Imbalance/projects/basin-data.js");
   const basinDataFile = fs.existsSync(localBasinDataFile) ? localBasinDataFile : siblingBasinDataFile;
@@ -76,19 +101,19 @@ function loadFoundationBasins() {
   const context = { window: {} };
   vm.createContext(context);
   vm.runInContext(code, context);
-  return context.window.BASIN_DATA?.basins || [];
+  return context.window.BASIN_DATA || { meta: {}, basins: [] };
 }
 
 fs.mkdirSync(outputDir, { recursive: true });
 fs.copyFileSync(inputCsv, outputCsv);
 
 const lines = fs.readFileSync(inputCsv, "utf8").trim().split(/\r?\n/);
-const headers = lines[0].split(",");
+const headers = parseCsvLine(lines[0]);
 const indexes = Object.fromEntries(headers.map((header, index) => [header, index]));
 const byBasin = new Map();
 
 for (let index = 1; index < lines.length; index++) {
-  const values = lines[index].split(",");
+  const values = parseCsvLine(lines[index]);
   const basinId = String(values[indexes.basin_id]);
   if (!byBasin.has(basinId)) byBasin.set(basinId, []);
   const record = { year: Number(values[indexes.year]) };
@@ -137,8 +162,9 @@ for (const [basinId, records] of byBasin) {
   };
 }
 
-const foundationBasins = loadFoundationBasins();
-const matchedFoundationBasins = foundationBasins.filter((basin) => byBasin.has(String(basin.id))).length;
+const basinData = loadBasinData();
+const moduleBasins = basinData.basins || [];
+const matchedBasins = moduleBasins.filter((basin) => byBasin.has(String(basin.id))).length;
 const classificationDocument = {
   schema: "water-imbalance-classification/v1",
   method: {
@@ -155,6 +181,7 @@ const classificationDocument = {
   basins: classification
 };
 fs.writeFileSync(outputClassification, JSON.stringify(classificationDocument, null, 2) + "\n");
+fs.writeFileSync(outputBasinData, JSON.stringify(basinData, null, 2) + "\n");
 
 const metadata = {
   id: "basin-three-variable-timeseries-1962-2016",
@@ -162,24 +189,28 @@ const metadata = {
   type: "basin-time-series",
   file: "./basin-three-variable-timeseries-1962-2016.csv",
   classification: "./basin-imbalance-classification.json",
+  basinData: "./basin-data.json",
   join: {
     moduleField: "basin_id",
-    foundationEntity: "Basin",
-    foundationField: "id",
+    spatialEntity: "GRDC Major River Basin",
+    spatialField: "id",
     method: "exact-string"
   },
   time: { field: "year", start: 1962, end: 2016, resolution: "annual" },
   coverage: {
     records: lines.length - 1,
     basins: byBasin.size,
-    matchedFoundationBasins,
-    foundationBasins: foundationBasins.length,
-    foundationCoveragePercent: Number((matchedFoundationBasins / foundationBasins.length * 100).toFixed(2))
+    matchedBasins,
+    sourceBasins: moduleBasins.length,
+    basinCoveragePercent: Number((matchedBasins / moduleBasins.length * 100).toFixed(2))
   },
   variables,
   imbalanceMethod: classificationDocument.method,
   classColors,
   provenance: {
+    basinSource: basinData.meta?.source || "GRDC Major River Basins of the World",
+    basinSourceUrl: basinData.meta?.sourceUrl || "https://grdc.bafg.de/products/basin_layers/major_rivers/",
+    basinEdition: basinData.meta?.edition || "2nd revised edition, 2020",
     waterGapVersion: "2.2d",
     waterDemandVariable: "net_water_demand_deficit_mm_yr",
     waterDemandSources: ["ptotww", "ncrunnat", "environmental flow requirement from ncrunnat Q90 exceedance"],
@@ -219,8 +250,8 @@ console.log(JSON.stringify({
   inputCsv,
   records: lines.length - 1,
   sourceBasins: byBasin.size,
-  matchedFoundationBasins,
-  foundationCoveragePercent: metadata.coverage.foundationCoveragePercent,
+  matchedBasins,
+  basinCoveragePercent: metadata.coverage.basinCoveragePercent,
   classificationCounts: counts,
   literatureRecords: Object.keys(graph.literature?.records || {}).length,
   literatureRegionRelations: relations.length

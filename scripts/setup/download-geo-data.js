@@ -4,7 +4,7 @@
  * 下载水文领域 Demo 所需的核心地理数据
  *
  * 数据来源：
- * - HydroBASINS (HydroSHEDS)
+ * - GRDC Major River Basins
  * - Natural Earth
  *
  * 使用方法：
@@ -24,10 +24,10 @@ const ASSETS_DIR = path.join(__dirname, '../../public/assets');
 // 数据源定义
 const DATA_SOURCES = [
   {
-    name: 'HydroBASINS Level 4',
+    name: 'GRDC Major River Basins',
     description: '全球流域边界 (约 2000 个流域)',
-    url: 'https://data.hydrosheds.org/file/HydroBASINS/standard/HydroBASINS_v1c_level4.zip',
-    filename: 'HydroBASINS_v1c_level4.zip',
+    url: 'https://grdc.bafg.de/downloads/GRDC_Major_River_Basins_shp.zip',
+    filename: 'GRDC_Major_River_Basins_shp.zip',
     priority: 'P0',
     required: true
   },

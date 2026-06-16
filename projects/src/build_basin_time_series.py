@@ -25,6 +25,9 @@ GLACIER_STORAGE_PATH = (
     / "results"
     / "basin_glacier_absolute_storage_1962_2016.csv"
 )
+GLACIER_RESULTS_DIR = PROJECTS_DIR / "glacier_storage_reconstruction" / "results"
+GLACIER_RESOLUTION_TOTALS = GLACIER_RESULTS_DIR / "validation_farinotti_grid_resolution_totals.csv"
+GLACIER_ANNUAL_VALIDATION = GLACIER_RESULTS_DIR / "validation_annual_global_balance.csv"
 
 SECONDS_PER_DAY = 86400.0
 
@@ -77,6 +80,40 @@ def load_basins() -> list[dict]:
     basins = data["basins"]
     basins.sort(key=lambda basin: basin["id"])
     return basins
+
+
+def load_glacier_validation_summary() -> dict[str, float]:
+    summary: dict[str, float] = {}
+    if GLACIER_RESOLUTION_TOTALS.exists():
+        with GLACIER_RESOLUTION_TOTALS.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                resolution = row["resolution"]
+                if resolution in {"p05", "p50"}:
+                    summary[f"{resolution}_volume_km3_ice"] = float(row["total_volume_km3_ice"])
+                    summary[f"{resolution}_storage_km3_we"] = float(row["total_storage_km3_we"])
+    if GLACIER_ANNUAL_VALIDATION.exists():
+        annual_rows = []
+        with GLACIER_ANNUAL_VALIDATION.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                annual_rows.append({key: float(value) for key, value in row.items()})
+        for year in (1962, 2000, 2016):
+            match = next((row for row in annual_rows if int(row["year"]) == year), None)
+            if match:
+                summary[f"storage_{year}_km3_we"] = match["reconstructed_global_storage_km3_we"]
+                summary[f"balance_{year}_km3_we"] = match["reconstructed_global_annual_balance_km3_we"]
+                summary[f"zemp_balance_{year}_km3_we"] = match["zemp_global_annual_balance_km3_we"]
+        period = [row for row in annual_rows if 2000 <= int(row["year"]) <= 2016]
+        ratios = [row["annual_balance_capture_ratio_vs_zemp"] for row in period if math.isfinite(row["annual_balance_capture_ratio_vs_zemp"])]
+        if ratios:
+            summary["mean_ratio_2000_2016"] = sum(ratios) / len(ratios)
+    if GLACIER_STORAGE_PATH.exists():
+        clipped = 0
+        with GLACIER_STORAGE_PATH.open(newline="", encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                raw = str(row.get("storage_clipped_to_zero", "")).strip().lower()
+                clipped += int(raw in {"1", "true", "yes"})
+        summary["clipped_records"] = clipped
+    return summary
 
 
 def infer_year_range(file_path: Path, time_len: int) -> tuple[int, int]:
@@ -277,29 +314,38 @@ def write_readme(
     output_name: str,
     start_year: int,
     end_year: int,
-    total_catchments: int,
-    glacier_catchments: int,
+    total_basins: int,
+    glacier_basins: int,
+    watergap_basins: int,
 ) -> None:
-    glacier_percent = glacier_catchments / total_catchments * 100.0 if total_catchments else 0.0
+    glacier_percent = glacier_basins / total_basins * 100.0 if total_basins else 0.0
+    missing_watergap_basins = total_basins - watergap_basins
+    validation = load_glacier_validation_summary()
+    p05_volume = validation.get("p05_volume_km3_ice", math.nan)
+    p50_volume = validation.get("p50_volume_km3_ice", math.nan)
+    p50_difference_percent = (p50_volume - p05_volume) / p05_volume * 100.0 if p05_volume else math.nan
+    storage_2000 = validation.get("storage_2000_km3_we", math.nan)
+    source_storage = validation.get("p05_storage_km3_we", math.nan)
+    storage_capture_percent = storage_2000 / source_storage * 100.0 if source_storage else math.nan
     text = f"""# Unified Basin Hydrology Time Series
 
-This is the authoritative unified annual time-series dataset for the three selected catchment-scale hydrological variables. The common period is {start_year}-{end_year}, determined by the globally validated glacier-storage reconstruction.
+This is the authoritative unified annual time-series dataset for the three selected major-river-basin hydrological variables. The common period is {start_year}-{end_year}, determined by the globally validated glacier-storage reconstruction.
 
 Output file:
 - `{output_name}`
 
 Coverage:
-- Total catchments: {total_catchments}.
-- Catchments with non-zero glacier storage in at least one year: {glacier_catchments}, or {glacier_percent:.2f}%.
-- Catchments without glaciers are retained with `glacier_storage_mm_we = 0`.
-- WaterGAP values are available for 1273 catchments; two catchments contain no valid WaterGAP grid values and remain `NaN` for water-demand deficit and groundwater storage.
-- Rows: {total_catchments * (end_year - start_year + 1)} catchment-year records.
+- Total GRDC major river basins: {total_basins}.
+- Basins with non-zero glacier storage in at least one year: {glacier_basins}, or {glacier_percent:.2f}%.
+- Basins without glaciers are retained with `glacier_storage_mm_we = 0`.
+- WaterGAP values are available for {watergap_basins} basins; {missing_watergap_basins} small basins contain no 0.5 degree WaterGAP grid-cell centers and remain `NaN` for water-demand deficit and groundwater storage.
+- Rows: {total_basins * (end_year - start_year + 1)} basin-year records.
 
 ## Output Variables
 
 - `net_water_demand_deficit_mm_yr`: annual water-demand deficit after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement.
 - `groundwater_storage_mm`: annual mean groundwater storage from WaterGAP `groundwstor`.
-- `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the full catchment area.
+- `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the full basin area.
 
 All three outputs are area-normalized water depths. Water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
 
@@ -315,11 +361,11 @@ For each month:
 
 `monthly_deficit_mm = deficit_flux * days_in_month * 86400`
 
-Monthly deficits are summed to annual depth and averaged across WaterGAP grid cells assigned to each catchment. The resulting variable is a local supply-adjusted demand deficit, not raw total withdrawal.
+Monthly deficits are summed to annual depth and averaged across WaterGAP grid cells assigned to each basin. The resulting variable is a local supply-adjusted demand deficit, not raw total withdrawal.
 
 ### Groundwater Storage
 
-Monthly WaterGAP 2.2d `groundwstor` in `kg m-2` is directly equivalent to `mm` water. A day-weighted annual mean is computed and averaged across catchment grid cells.
+Monthly WaterGAP 2.2d `groundwstor` in `kg m-2` is directly equivalent to `mm` water. A day-weighted annual mean is computed and averaged across basin grid cells.
 
 ## Glacier Absolute-Storage Reconstruction
 
@@ -329,32 +375,32 @@ The glacier variable is an absolute storage-state reconstruction, not raw glacie
 
 - Farinotti et al. (2019) global 0.05 degree glacier-volume grid, based on RGI 6.0.
 - Ice volume is converted to water-equivalent volume using `rho_ice / rho_water = 0.9`.
-- Grid-cell-center values are assigned to HydroBASINS catchments.
+- Grid-cell-center values are assigned to GRDC Major River Basins.
 
 ### Annual Changes And Reconstruction
 
 - Zemp et al. (2019) regional annual `INT_mwe` supplies annual specific glacier mass balance.
-- RGI glacier outlines are intersected with catchments to calculate glacier area by RGI region within each catchment.
+- RGI glacier outlines are intersected with GRDC major river basins to calculate glacier area by RGI region within each basin.
 
-`annual_balance_km3_we = 0.001 * sum(INT_mwe_region * glacier_area_km2_in_catchment_region)`
+`annual_balance_km3_we = 0.001 * sum(INT_mwe_region * glacier_area_km2_in_basin_region)`
 
 `storage(t) = storage(around 2000) + cumulative annual mass balance from 2000 to t`
 
 Negative reconstructed storage is clipped to zero. Absolute water-equivalent storage volume is converted to the unified depth variable:
 
-`glacier_storage_mm_we = glacier_storage_km3_we / catchment_area_km2 * 1,000,000`
+`glacier_storage_mm_we = glacier_storage_km3_we / basin_area_km2 * 1,000,000`
 
 ## Glacier Cross Validation
 
-- Farinotti 0.05 degree source-grid total: `158237.04 km3 ice`, consistent with the published approximately `158000 km3 ice`.
-- Farinotti 0.50 degree source-grid total: `158165.89 km3 ice`; difference from the 0.05 degree total is only `-0.0450%`.
-- Volume assigned to HydroBASINS catchments: `109764.12 km3 ice`, or `98787.71 km3 water equivalent`.
-- HydroBASINS assignment captures `69.4%` of source-grid global glacier volume; the remainder primarily falls outside the current catchment mask.
-- Reconstructed basin-summed annual balance in 2000: `-139.46 km3 water equivalent`.
-- Zemp global `INT_Gt` in 2000: `-147.00 Gt`, approximately `-147.00 km3 water equivalent`.
-- Mean annual-balance capture ratio relative to Zemp global values over 2000-2016: `1.043`.
-- Reconstructed catchment-assigned storage totals: `103193.57 km3 we` in 1962, `98787.71 km3 we` in 2000, and `93561.67 km3 we` in 2016.
-- `153` catchment-year records were clipped to zero because reconstructed storage became negative.
+- Farinotti 0.05 degree source-grid total: `{p05_volume:.2f} km3 ice`, consistent with the published approximately `158000 km3 ice`.
+- Farinotti 0.50 degree source-grid total: `{p50_volume:.2f} km3 ice`; difference from the 0.05 degree total is `{p50_difference_percent:.4f}%`.
+- Volume assigned to GRDC major river basins in the 2000 reference year: `{storage_2000:.2f} km3 water equivalent`.
+- GRDC major-river-basin assignment captures `{storage_capture_percent:.1f}%` of source-grid global glacier water-equivalent storage; the remainder primarily falls outside the current major-river-basin mask.
+- Reconstructed basin-summed annual balance in 2000: `{validation.get("balance_2000_km3_we", math.nan):.2f} km3 water equivalent`.
+- Zemp global `INT_Gt` in 2000: `{validation.get("zemp_balance_2000_km3_we", math.nan):.2f} Gt`, approximately the same numeric value in km3 water equivalent.
+- Mean annual-balance capture ratio relative to Zemp global values over 2000-2016: `{validation.get("mean_ratio_2000_2016", math.nan):.3f}`.
+- Reconstructed basin-assigned storage totals: `{validation.get("storage_1962_km3_we", math.nan):.2f} km3 we` in 1962, `{storage_2000:.2f} km3 we` in 2000, and `{validation.get("storage_2016_km3_we", math.nan):.2f} km3 we` in 2016.
+- `{int(validation.get("clipped_records", 0))}` basin-year records were clipped to zero because reconstructed storage became negative.
 
 ## Reproducibility
 
@@ -443,6 +489,7 @@ def main() -> None:
         args.end_year,
         len(basins),
         glacier_catchments,
+        sum(1 for basin in basins if int(basin.get("cellCount", 0)) > 0),
     )
     print(f"Wrote {output_path}")
 

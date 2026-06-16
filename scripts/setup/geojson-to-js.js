@@ -7,7 +7,7 @@
  * node scripts/setup/geojson-to-js.js <input.geojson> <output-name>
  *
  * 示例：
- * node scripts/setup/geojson-to-js.js data/hydrobasins.geojson HYDROBASINS_LEVEL4
+ * node scripts/setup/geojson-to-js.js data/major-river-basins.geojson GRDC_MAJOR_RIVER_BASINS
  */
 
 const fs = require('fs');

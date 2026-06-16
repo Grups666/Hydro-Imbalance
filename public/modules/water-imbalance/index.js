@@ -42,7 +42,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.graph = await this.fetchJson(this.resolveModulePath(this.manifest.knowledgeGraph || "./data/knowledge-graph.json"));
     await this.loadDatasetMetadata();
     this.indexGraph();
-    this.prepareBasins(window.BASIN_DATA?.basins || []);
+    const basinData = await this.loadBasinData();
+    this.prepareBasins(basinData.basins || []);
     this.enhanceFoundationBasinLayer();
     this.ensureLegend();
     this.ensureChartUI();
@@ -88,6 +89,14 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     }
   }
 
+  async loadBasinData() {
+    const basinDataPath = this.timeSeriesMetadata?.basinData;
+    if (!basinDataPath) return { meta: {}, basins: window.BASIN_DATA?.basins || [] };
+    const dataset = this.manifest.datasets?.find((item) => item.id === "basin-three-variable-timeseries-1962-2016");
+    const url = this.resolveModulePath(dataset.metadata.replace(/[^/]+$/, "") + basinDataPath.replace(/^\.\//, ""));
+    return this.fetchJson(url);
+  }
+
   ensureTimeSeriesLoaded() {
     if (this.timeSeriesLoaded) return Promise.resolve();
     if (this.timeSeriesLoadPromise) return this.timeSeriesLoadPromise;
@@ -113,12 +122,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
 
   indexTimeSeries(csvText) {
     const lines = csvText.trim().split(/\r?\n/);
-    const headers = lines[0].split(",");
+    const headers = this.parseCsvLine(lines[0]);
     const indexes = Object.fromEntries(headers.map((header, index) => [header, index]));
     const variables = this.timeSeriesMetadata?.variables || [];
 
     for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(",");
+      const values = this.parseCsvLine(lines[i]);
       const basinId = String(values[indexes.basin_id]);
       if (!this.timeSeriesByBasin.has(basinId)) this.timeSeriesByBasin.set(basinId, []);
 
@@ -129,6 +138,30 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       }
       this.timeSeriesByBasin.get(basinId).push(record);
     }
+  }
+
+  parseCsvLine(line) {
+    const values = [];
+    let value = "";
+    let quoted = false;
+    for (let index = 0; index < line.length; index++) {
+      const char = line[index];
+      if (char === "\"") {
+        if (quoted && line[index + 1] === "\"") {
+          value += "\"";
+          index += 1;
+        } else {
+          quoted = !quoted;
+        }
+      } else if (char === "," && !quoted) {
+        values.push(value);
+        value = "";
+      } else {
+        value += char;
+      }
+    }
+    values.push(value);
+    return values;
   }
 
   indexGraph() {
@@ -422,7 +455,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         </div>
         <div style="background:#f8fafc;padding:12px;border-radius:6px">
           <div style="font-size:18px;font-weight:600">${this.escape(this.getRegionName(basin.region))}</div>
-          <div style="font-size:11px;color:#64748b">HydroBASINS region</div>
+          <div style="font-size:11px;color:#64748b">MRB region</div>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generate continent outline from HydroBASINS data
+ * Generate continent outline from GRDC Major River Basins data
  * Creates a merged polygon that perfectly matches basin boundaries
  */
 
@@ -47,7 +47,7 @@ console.log(`Collected ${continentRings.length} rings`);
 // Write the continent outline data
 const outputPath = path.join(PUBLIC_ASSETS, 'continent-outline.js');
 const jsContent = `/**
- * Continent outline derived from HydroBASINS
+ * Continent outline derived from GRDC Major River Basins
  * Rings: ${continentRings.length}
  * Generated: ${new Date().toISOString()}
  */

@@ -1,4 +1,4 @@
-# Supplementary Methods
+﻿# Supplementary Methods
 
 ## S1. Variable overlap between flux and extremity dimensions
 
@@ -211,29 +211,29 @@ S* = (1.5 / 3) × 100 = 50
 
 The threshold is used for summary quantities such as significant-area fraction. It does not replace the continuous score field used in the maps.
 
-## S7. Catchment aggregation
+## S7. Basin aggregation
 
-For a catchment `c`, let `I(c)` be the set of valid grid cells whose centers fall inside the catchment polygon. The catchment-level score is:
+For a GRDC major river basin `b`, let `I(b)` be the set of valid grid cells whose centers fall inside the basin polygon. The basin-level score is:
 
 ```
-S(c) = mean(S(i)), for i ∈ I(c)
+S(b) = mean(S(i)), for i ∈ I(b)
 ```
 
 where `S(i)` can represent the integrated imbalance score or one of the four dimension scores.
 
-For variable evidence within a catchment:
+For variable evidence within a basin:
 
 ```
-S(v,c) = mean(S(v,i)), for i ∈ I(c)
+S(v,b) = mean(S(v,i)), for i ∈ I(b)
 ```
 
-**Example**: If a catchment contains five grid cells with integrated scores of 70, 60, 80, invalid, and 50:
+**Example**: If a basin contains five grid cells with integrated scores of 70, 60, 80, invalid, and 50:
 
 ```
-S(c) = (70 + 60 + 80 + 50) / 4 = 65
+S(b) = (70 + 60 + 80 + 50) / 4 = 65
 ```
 
-Under a 1.5-sigma threshold (score ≥ 50), this catchment is classified as significantly imbalanced because `65 ≥ 50`.
+Under a 1.5-sigma threshold (score ≥ 50), this basin is classified as significantly imbalanced because `65 ≥ 50`.
 
 ## S8. Methodological safeguards
 
@@ -245,7 +245,7 @@ The method includes three safeguards against over-interpretation:
 
 3. **Z-score clipping**: Z-score magnitudes are clipped at 3 sigma before conversion to 0-100 scores.
 
-Together, these safeguards reduce false imbalance signals caused by near-zero values, unstable variance, or isolated extreme z-scores, while preserving interpretable evidence at both grid-cell and catchment scales.
+Together, these safeguards reduce false imbalance signals caused by near-zero values, unstable variance, or isolated extreme z-scores, while preserving interpretable evidence at both grid-cell and basin scales.
 
 ## S9. Human-water-use activity groups and aggregation
 
@@ -282,7 +282,7 @@ M_recent_v(i) = |mu_recent(v, i)|
 
 `M_recent_v` is converted to mm day-1 in the figure colorbar. This map is used for visual context only. It shows where each retained human-water-use variable has meaningful recent activity.
 
-Human-water-use regions were defined from recent activity magnitude rather than standardized anomaly. For catchment classification, each sectoral withdrawal variable was screened directly at grid-cell scale:
+Human-water-use regions were defined from recent activity magnitude rather than standardized anomaly. For basin classification, each sectoral withdrawal variable was screened directly at grid-cell scale:
 
 ```
 M_recent_v(i) >= 0.1 mm day-1
@@ -290,9 +290,9 @@ M_recent_v(i) >= 0.1 mm day-1
 
 This fixed magnitude threshold was used to avoid assigning human-water-use composition to cells where all sectoral withdrawals are negligible in absolute terms.
 
-## S9.1 Catchment-scale human-water-use classification
+## S9.1 Basin-scale human-water-use classification
 
-A separate global map classifies HydroBASINS level-4 catchments by dominant human-water-use influence. The catchment screening uses recent 20-year mean withdrawals from four sectoral withdrawal variables to decide whether each grid cell and catchment are sufficiently affected by human water use to be shown. The activity-type class is then assigned from grid-cell composition inside the catchment rather than from catchment-mean component shares.
+A separate global map classifies GRDC Major River Basins by dominant human-water-use influence. The basin screening uses recent 20-year mean withdrawals from four sectoral withdrawal variables to decide whether each grid cell and basin are sufficiently affected by human water use to be shown. The activity-type class is then assigned from grid-cell composition inside the basin rather than from basin-mean component shares.
 
 For grid cell `i`, each sectoral withdrawal variable is first converted to mm day-1 and screened independently:
 
@@ -308,31 +308,31 @@ p_v(i) = W_v(i) / sum_v W_v(i)
 
 The cell-level withdrawal type is assigned by the following rules. If the largest sectoral share is at least 0.50, the cell is assigned to that single sector. If the largest share is below 0.50 and the second-largest share is at least 0.25, the cell is assigned to the two-sector combination. Remaining active cells are assigned to a top-led mixed class, retaining the leading sector in the label.
 
-For catchment `c`, the active-area fraction is the area-weighted share of catchment cells satisfying the active-cell rule. A catchment is plotted when:
+For basin `b`, the active-area fraction is the area-weighted share of basin cells satisfying the active-cell rule. A basin is plotted when:
 
 ```
-active_area_fraction(c) >= 0.10
+active_area_fraction(b) >= 0.10
 ```
 
-This second threshold removes catchments where human withdrawals occur in only a very small part of the catchment. For retained catchments, inactive cells are removed before classifying catchment water-use composition. The area share of each active-cell withdrawal type is:
+This second threshold removes basins where human withdrawals occur in only a very small part of the basin. For retained basins, inactive cells are removed before classifying basin water-use composition. The area share of each active-cell withdrawal type is:
 
 ```
-P_k(c) = area(type k active cells in c) / area(all active cells in c)
+P_k(b) = area(type k active cells in b) / area(all active cells in b)
 ```
 
-The catchment consistency index is:
+The basin consistency index is:
 
 ```
-C(c) = sqrt(sum_k P_k(c)^2)
+C(b) = sqrt(sum_k P_k(b)^2)
 ```
 
-High values indicate that one active-cell withdrawal type dominates the catchment; lower values indicate more heterogeneous within-catchment composition. Diagonal hatching marks catchments with `C(c) < 0.95`.
+High values indicate that one active-cell withdrawal type dominates the basin; lower values indicate more heterogeneous within-basin composition. Diagonal hatching marks basins with `C(b) < 0.95`.
 
-The catchment water-use class is assigned from the active-cell type proportions using the same 0.50 and 0.25 thresholds. If the largest active-cell type share is at least 0.50, the catchment is assigned to that dominant type. If the largest share is below 0.50 and the second-largest share is at least 0.25, the catchment is assigned to the top-two combination. Remaining catchments are assigned to a top-led mixed class.
+The basin water-use class is assigned from the active-cell type proportions using the same 0.50 and 0.25 thresholds. If the largest active-cell type share is at least 0.50, the basin is assigned to that dominant type. If the largest share is below 0.50 and the second-largest share is at least 0.25, the basin is assigned to the top-two combination. Remaining basins are assigned to a top-led mixed class.
 
-## S10. Catchment-scale water-imbalance classification
+## S10. Basin-scale water-imbalance classification
 
-Figure 2 uses the unified annual catchment time-series dataset for 1962-2016. Three variables are assessed:
+Figure 2 uses the unified annual GRDC major-river-basin time-series dataset for 1962-2016. Three variables are assessed:
 
 - Water-demand deficit (`net_water_demand_deficit_mm_yr`), in mm yr-1.
 - Groundwater storage (`groundwater_storage_mm`), in mm.
@@ -344,28 +344,28 @@ Water-demand deficit is calculated from WaterGAP 2.2d monthly `ptotww` and natur
 deficit_flux = max(ptotww + EFR - ncrunnat, 0)
 ```
 
-Monthly fluxes are converted to depth using calendar month length and summed to annual catchment means.
+Monthly fluxes are converted to depth using calendar month length and summed to annual basin means.
 
-For each final variable `v` and catchment `c`, the historical mean and population standard deviation are calculated over 1962-1996, and the recent mean is calculated over the recent 20-year period 1997-2016:
+For each final variable `v` and basin `b`, the historical mean and population standard deviation are calculated over 1962-1996, and the recent mean is calculated over the recent 20-year period 1997-2016:
 
 ```
-mu_historical(v,c) = mean(x(v,c,t)), 1962 <= t <= 1996
-sigma_historical(v,c) = sd_population(x(v,c,t)), 1962 <= t <= 1996
-mu_recent(v,c) = mean(x(v,c,t)), 1997 <= t <= 2016
-delta(v,c) = mu_recent(v,c) - mu_historical(v,c)
+mu_historical(v,b) = mean(x(v,b,t)), 1962 <= t <= 1996
+sigma_historical(v,b) = sd_population(x(v,b,t)), 1962 <= t <= 1996
+mu_recent(v,b) = mean(x(v,b,t)), 1997 <= t <= 2016
+delta(v,b) = mu_recent(v,b) - mu_historical(v,b)
 ```
 
 A variable is classified as imbalanced when:
 
 ```
-abs(delta(v,c)) > 2 sigma_historical(v,c)
+abs(delta(v,b)) > 2 sigma_historical(v,b)
 AND
-abs(delta(v,c)) > 1 mm
+abs(delta(v,b)) > 1 mm
 ```
 
-The catchment class is the set of variables satisfying this rule. This produces eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and imbalance in all three variables.
+The basin class is the set of variables satisfying this rule. This produces eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and imbalance in all three variables.
 
-Human-impacted catchments are annotated independently using WaterGAP 2.2d total-withdrawal activity. A slate-gray boundary marks catchments where cells with recent mean `ptotww` of at least 0.1 mm day-1 occupy at least 10% of catchment area. This boundary is contextual and does not modify the three-variable imbalance classification.
+Human-impacted basins are annotated independently using WaterGAP 2.2d total-withdrawal activity. A slate-gray boundary marks basins where cells with recent mean `ptotww` of at least 0.1 mm day-1 occupy at least 10% of basin area. This boundary is contextual and does not modify the three-variable imbalance classification.
 
 ## S11. Figure S1: Variable-level imbalance evidence
 
@@ -385,7 +385,7 @@ The figure demonstrates how the diagnostic framework handles both sparse and non
 
 ## S12. Literature support for human-activity interpretation
 
-The catchment-scale water-imbalance classification was designed to be consistent with prior process-based and attribution studies. These studies were not used to tune the thresholds directly; they provide physical interpretation for coupled changes in local water-demand deficit and water storage.
+The basin-scale water-imbalance classification was designed to be consistent with prior process-based and attribution studies. These studies were not used to tune the thresholds directly; they provide physical interpretation for coupled changes in local water-demand deficit and water storage.
 
 **Table S3. Selected studies supporting the human-activity interpretation.**
 
@@ -399,4 +399,4 @@ The catchment-scale water-imbalance classification was designed to be consistent
 | Yang et al. (2021), Geography and Sustainability, DOI: 10.1016/j.geosus.2021.05.003 | Review of climate and human impacts on hydrological cycle and water resources, supporting the framing of water-cycle imbalance as coupled climate-human redistribution rather than a single-variable trend. |
 | Tang and Chen (2025), Science China Earth Sciences / Bulletin summary, DOI: 10.1360/SSTe-2025-0078 | Review framing global change as intensifying water-cycle imbalance and water-resource risk; used as conceptual support for interpreting multi-variable departures from historical conditions. |
 
-These studies also motivate a key interpretive safeguard in the present analysis: a human-water-use affected catchment is not automatically labeled as groundwater or glacier imbalance. Instead, the label depends on which annual catchment time series satisfy the same recent-versus-historical rule.
+These studies also motivate a key interpretive safeguard in the present analysis: a human-water-use affected basin is not automatically labeled as groundwater or glacier imbalance. Instead, the label depends on which annual basin time series satisfy the same recent-versus-historical rule.

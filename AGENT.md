@@ -17,8 +17,8 @@ Do not treat "current imbalance" as a single-year value. It is a recent-window d
 
 - `projects/`: WaterGAP processing, basin preparation, local web viewer, and local datasets.
 - `projects/src/build_analysis.py`: scans WaterGAP NetCDF files, aggregates monthly data to annual means, builds recent-window diagnostics, and writes `projects/web/data/*.js` plus `projects/web/analysis-data.js`.
-- `projects/src/build_basins.py`: prepares HydroBASINS level-4 catchment geometry and WaterGAP cell membership in `projects/basin-data.js`.
-- `projects/src/build_basin_time_series.py`: builds annual catchment-level time series for selected variables.
+- `projects/src/build_basins.py`: prepares GRDC Major River Basins geometry and WaterGAP cell membership in `projects/basin-data.js`.
+- `projects/src/build_basin_time_series.py`: builds annual major-river-basin time series for selected variables.
 - `projects/src/build_glacier_basin_bridge.py`: builds the RGI glacier-area bridge used only as an internal spatial weighting table for glacier calculations.
 - `projects/glacier_storage_reconstruction/`: reconstructs annual catchment glacier water storage from a static Farinotti et al. absolute volume reference and Zemp et al. annual mass-change data.
 - `projects/web/`: local static viewer for exploratory diagnostics.
@@ -113,10 +113,10 @@ Grid-cell activity rule:
 active if any selected withdrawal >= 0.10 mm day-1
 ```
 
-Catchment activity rule:
+Basin activity rule:
 
 ```text
-human-impacted if active cells occupy >= 10% of catchment area
+human-impacted if active cells occupy >= 10% of basin area
 ```
 
 Cell-level composition is assigned from screened recent-mean shares:
@@ -125,15 +125,15 @@ Cell-level composition is assigned from screened recent-mean shares:
 - Two-sector combination if top share < 50% and second share >= 25%.
 - Otherwise keep a top-led mixed class.
 
-Catchment-level composition removes inactive cells first, then applies the same 50% and 25% rules to active-cell type proportions.
+Basin-level composition removes inactive cells first, then applies the same 50% and 25% rules to active-cell type proportions.
 
-Hatching in the human-water-use classification indicates heterogeneous within-catchment withdrawal composition, based on the consistency index:
+Hatching in the human-water-use classification indicates heterogeneous within-basin withdrawal composition, based on the consistency index:
 
 ```text
 C = sqrt(sum_k P_k^2)
 ```
 
-Catchments with `C < 0.95` are hatched.
+Basins with `C < 0.95` are hatched.
 
 ## Water-Cycle Imbalance Classification
 
@@ -151,19 +151,19 @@ AND
 abs(recent_mean - historical_mean) > 1 mm
 ```
 
-The catchment class is the combination of variables that satisfy the rule, producing eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and an all-three-variable class.
+The basin class is the combination of variables that satisfy the rule, producing eight classes: no detected imbalance, three single-variable classes, three two-variable combinations, and an all-three-variable class.
 
-Water-demand deficit is computed from WaterGAP 2.2d as `max(0, ptotww + EFR - ncrunnat)`, where EFR is the environmental-flow requirement estimated from naturalized runoff Q90 exceedance for each calendar month. Monthly deficits are aggregated to annual catchment means.
+Water-demand deficit is computed from WaterGAP 2.2d as `max(0, ptotww + EFR - ncrunnat)`, where EFR is the environmental-flow requirement estimated from naturalized runoff Q90 exceedance for each calendar month. Monthly deficits are aggregated to annual basin means.
 
-The slate-gray boundary remains an independent human-impact annotation. It marks catchments where WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal above `0.1 mm/day` occupy at least 10% of catchment area. It does not change the three-variable imbalance class.
+The slate-gray boundary remains an independent human-impact annotation. It marks basins where WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal above `0.1 mm/day` occupy at least 10% of basin area. It does not change the three-variable imbalance class.
 
 ## Figure Guidelines
 
 - Do not place large descriptive titles or subtitles inside figure panels.
 - Keep figure titles and detailed captions in the manuscript text, immediately near the figure reference.
 - Global map figures must include a visible Robinson projection frame so the map boundary is consistent with regional and variable maps.
-- Legends for global classification maps should sit outside the mapped land/catchment area and must not overlap the data.
-- Use "catchment" for HydroBASINS spatial units in figure-facing text, captions, reports, and legends.
+- Legends for global classification maps should sit outside the mapped land/basin area and must not overlap the data.
+- Use "basin" or "major river basin" for GRDC Major River Basins spatial units in figure-facing text, captions, reports, and legends.
 - In figure legends, hatching should indicate heterogeneity or pattern explicitly, not a separate physical variable class.
 
 ## Coding And Data Rules

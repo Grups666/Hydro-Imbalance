@@ -394,7 +394,7 @@ def validate_outputs(
 
 - Farinotti 0.05 degree source-grid total: {farinotti_summary['source_grid_total_volume_km3_ice']:.2f} km3 ice = {source_total_km3_we:.2f} km3 water equivalent.
 - Farinotti 0.50 degree source-grid total: {p50_total:.2f} km3 ice; relative difference from 0.05 degree total: {(p50_total - p05_total) / p05_total:.4%}.
-- Assigned to HydroBASINS catchments by 0.05 degree cell centers: {farinotti_summary['assigned_volume_km3_ice']:.2f} km3 ice = {assigned_total_km3_we:.2f} km3 water equivalent.
+- Assigned to GRDC Major River Basins by 0.05 degree cell centers: {farinotti_summary['assigned_volume_km3_ice']:.2f} km3 ice = {assigned_total_km3_we:.2f} km3 water equivalent.
 - Unassigned source-grid volume: {farinotti_summary['unassigned_volume_km3_ice']:.2f} km3 ice.
 - Assignment capture ratio: {assigned_total_km3_we / source_total_km3_we:.3f}.
 - Basin reference-storage total in output: {reference_total_km3_we:.2f} km3 water equivalent.
@@ -408,7 +408,7 @@ The published Farinotti et al. global glacier ice-volume estimate is about 158,0
 - Difference in {REFERENCE_YEAR}: {year_2000['annual_balance_difference_vs_zemp_km3_we']:.2f} km3 water equivalent.
 - Mean capture ratio versus Zemp global annual balance over 2000-2016: {period_2000_2016['annual_balance_capture_ratio_vs_zemp'].mean():.3f}.
 
-The annual-change comparison is not expected to be exactly 1.0 because the basin product excludes source-grid or RGI glacier areas that are not assigned to the HydroBASINS polygons by the current catchment mask.
+The annual-change comparison is not expected to be exactly 1.0 because the basin product excludes source-grid or RGI glacier areas that are not assigned to the GRDC major-river-basin polygons by the current basin mask.
 
 ## Storage Range
 

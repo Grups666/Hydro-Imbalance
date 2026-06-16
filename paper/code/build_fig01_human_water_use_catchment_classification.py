@@ -1,7 +1,7 @@
 """
-Global catchment classification of human water-use influence.
+Global basin classification of human water-use influence.
 
-The map classifies HydroBASINS level-4 catchments by dominant recent
+The map classifies GRDC Major River Basins by dominant recent
 human-water-use type. Intensities are converted from kg m-2 s-1 to mm day-1.
 """
 
@@ -216,6 +216,8 @@ def type_components(type_key: str) -> list[str]:
         for item in type_key.split("|"):
             parts.extend(type_components(item))
         return parts
+    if type_key.startswith("basin_mixed_"):
+        return [type_key.removeprefix("basin_mixed_")]
     if type_key.startswith("catchment_mixed_"):
         return [type_key.removeprefix("catchment_mixed_")]
     if type_key.startswith("mixed_"):
@@ -278,6 +280,8 @@ def cell_withdrawal_type_grid(withdrawal_arrays: dict[str, np.ndarray]) -> np.nd
 def type_color(type_key: str) -> str:
     if "|" in type_key:
         return mix_colors(*(type_color(part) for part in type_key.split("|")))
+    if type_key.startswith("basin_mixed_"):
+        return type_color(type_key.removeprefix("basin_"))
     if type_key.startswith("catchment_mixed_"):
         return type_color(type_key.removeprefix("catchment_"))
     if type_key.startswith("mixed_"):
@@ -290,9 +294,12 @@ def type_color(type_key: str) -> str:
 def type_label(type_key: str) -> str:
     if "|" in type_key:
         return " + ".join(type_label(part) for part in type_key.split("|"))
+    if type_key.startswith("basin_mixed_"):
+        top = type_key.removeprefix("basin_mixed_")
+        return f"{COMPONENTS[top]['label']}-led mixed basin"
     if type_key.startswith("catchment_mixed_"):
         top = type_key.removeprefix("catchment_mixed_")
-        return f"{COMPONENTS[top]['label']}-led mixed catchment"
+        return f"{COMPONENTS[top]['label']}-led mixed basin"
     if type_key.startswith("mixed_"):
         top = type_key.removeprefix("mixed_")
         return f"{COMPONENTS[top]['label']}-led mixed cells"
@@ -326,7 +333,7 @@ def catchment_withdrawal_class(cell_types: np.ndarray, cells: np.ndarray, weight
     if second is not None and shares[second] >= CATCHMENT_SECOND_SHARE:
         return canonical_combo_key([top, second]), shares, consistency
     lead = top.removeprefix("mixed_").split("+", 1)[0]
-    return f"catchment_mixed_{lead}", shares, consistency
+    return f"basin_mixed_{lead}", shares, consistency
 
 
 def polygon_from_ring(ring, *, facecolor, edgecolor, linewidth, alpha=1.0, hatch=None, zorder=3):
@@ -470,7 +477,7 @@ def make_figure():
         edgecolor="#4c463f",
         hatch="////////",
         linewidth=0.0,
-        label=f"Spatially heterogeneous catchment ({heterogeneous_count})",
+        label=f"Spatially heterogeneous basin ({heterogeneous_count})",
     ))
     legend = ax.legend(
         handles=handles,
@@ -514,26 +521,26 @@ def make_figure():
     consistency = np.asarray(consistency_values, dtype=float)
     if consistency.size:
         consistency_line = (
-            f"- Consistency-index distribution among affected catchments: "
+            f"- Consistency-index distribution among affected basins: "
             f"P10={np.percentile(consistency, 10):.3f}, P25={np.percentile(consistency, 25):.3f}, "
             f"median={np.percentile(consistency, 50):.3f}, P75={np.percentile(consistency, 75):.3f}, "
             f"P90={np.percentile(consistency, 90):.3f}."
         )
     else:
-        consistency_line = "- Consistency-index distribution among affected catchments: no selected catchments."
+        consistency_line = "- Consistency-index distribution among affected basins: no selected basins."
     lines = [
-        "# Human Water-Use Catchment Classification",
+        "# Human Water-Use Basin Classification",
         "",
         f"- Active cell rule: a grid cell is active when at least one of {', '.join(HUMAN_WITHDRAWAL_CODES)} has recent 20-year mean withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day.",
-        f"- Affected catchment rule: active-cell area fraction >= {CATCHMENT_ACTIVE_AREA_MIN:.0%}.",
+        f"- Affected basin rule: active-cell area fraction >= {CATCHMENT_ACTIVE_AREA_MIN:.0%}.",
         f"- Cell-level class rule: after values below {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day are set to zero, the top withdrawal type is single-dominant if its share is >= {CELL_SINGLE_SHARE:.0%}; otherwise the top two types are combined when the second type share is >= {CELL_SECOND_SHARE:.0%}; remaining cells are recorded as top-led mixed.",
-        "- Catchment consistency index: sqrt(sum(p_k^2)), where p_k is the active-cell area share of cell withdrawal type k.",
-        f"- Hatching rule: catchments with consistency index < {CONSISTENCY_THRESHOLD:.2f} are hatched as heterogeneous withdrawal-composition catchments.",
-        f"- Catchment class rule: inactive cells are removed, then the dominant active-cell type is used when its share is >= {CATCHMENT_SINGLE_SHARE:.0%}; otherwise the top two cell types are combined when the second share is >= {CATCHMENT_SECOND_SHARE:.0%}; remaining catchments are recorded as top-led mixed.",
+        "- Basin consistency index: sqrt(sum(p_k^2)), where p_k is the active-cell area share of cell withdrawal type k.",
+        f"- Hatching rule: basins with consistency index < {CONSISTENCY_THRESHOLD:.2f} are hatched as heterogeneous withdrawal-composition basins.",
+        f"- Basin class rule: inactive cells are removed, then the dominant active-cell type is used when its share is >= {CATCHMENT_SINGLE_SHARE:.0%}; otherwise the top two cell types are combined when the second share is >= {CATCHMENT_SECOND_SHARE:.0%}; remaining basins are recorded as top-led mixed.",
         consistency_line,
         f"- Composition counts: coherent = {coherent_count}, heterogeneous = {heterogeneous_count}.",
         "",
-        "| Class | Label | Catchment count |",
+        "| Class | Label | Basin count |",
         "|---|---|---:|",
     ]
     for key, count in sorted(class_counts.items(), key=lambda item: (-item[1], item[0])):

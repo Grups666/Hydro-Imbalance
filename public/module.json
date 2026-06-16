@@ -22,7 +22,7 @@
     "layers": [
       {
         "id": "outlines-basins",
-        "name": "Foundation Basins with Water Imbalance",
+        "name": "GRDC Major River Basins with Water Imbalance",
         "type": "vector",
         "source": "foundation.basins",
         "interactive": true
@@ -52,7 +52,7 @@
       {
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
-        "description": "Three annual hydrological variables joined to Foundation basins by basin_id."
+        "description": "Three annual hydrological variables joined to GRDC Major River Basins by basin_id."
       },
       {
         "id": "literature-evidence",

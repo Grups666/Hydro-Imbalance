@@ -1,6 +1,6 @@
 # Hydro-Imbalance
 
-Hydro-Imbalance is a Tereon domain module and research workspace for basin-scale hydrological imbalance. It provides data, classification, time series, literature evidence, manuscript assets, and the module adapter consumed by Tereon.
+Hydro-Imbalance is a Tereon domain module and research workspace for GRDC major-river-basin hydrological imbalance. It provides data, classification, time series, literature evidence, manuscript assets, and the module adapter consumed by Tereon.
 
 The Foundation map and module loader live in:
 
@@ -43,6 +43,7 @@ public/modules/water-imbalance/
   data/
     runtime-graph.json
     knowledge-graph.json
+    basin-data.json
     basin-three-variable-timeseries-1962-2016.csv
     basin-time-series-metadata.json
     basin-imbalance-classification.json
@@ -50,8 +51,8 @@ public/modules/water-imbalance/
 
 ## Data Products
 
-- Global basin hydrological imbalance classification.
-- Annual three-variable basin time series for 1962-2016.
+- Global GRDC Major River Basin hydrological imbalance classification.
+- Annual three-variable major-river-basin time series for 1962-2016.
 - Per-variable recent-versus-historical imbalance assessment.
 - Literature evidence and author entities for named research regions.
 
@@ -103,7 +104,7 @@ python src/build_analysis.py
 python src/build_basins.py
 ```
 
-The core basin time-series classification and Figure 2 use WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
+The core basin time-series classification and Figure 2 use GRDC Major River Basins, with WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
 
 The local research viewer can be opened from `projects/web/index.html`, or served locally with:
 

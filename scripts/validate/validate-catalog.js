@@ -36,7 +36,7 @@ const graph = JSON.parse(fs.readFileSync(path.join(moduleDir, "data/knowledge-gr
 check("module version", manifest.version === "0.1.1", manifest.version);
 check("three variables", metadata.variables?.length === 3, metadata.variables?.map((item) => item.id).join(", "));
 check("classification coverage", Object.keys(classification.basins || {}).length === metadata.coverage.basins, `${Object.keys(classification.basins || {}).length} basins`);
-check("Tereon basin matches", metadata.coverage.matchedFoundationBasins > 0 && metadata.coverage.matchedFoundationBasins <= metadata.coverage.basins, `${metadata.coverage.matchedFoundationBasins}/${metadata.coverage.basins}`);
+check("GRDC basin matches", metadata.coverage.matchedBasins > 0 && metadata.coverage.matchedBasins <= metadata.coverage.basins, `${metadata.coverage.matchedBasins}/${metadata.coverage.basins}`);
 check("classification colors", Object.keys(classification.colors || {}).length === 8, `${Object.keys(classification.colors || {}).length} classes`);
 check("literature retained", Object.keys(graph.literature?.records || {}).length === Object.keys(literature || {}).length, `${Object.keys(graph.literature?.records || {}).length} records`);
 check("old mode concepts removed", !graph.concepts && !(graph.relations || []).some((relation) => String(relation.type).includes("mode")));

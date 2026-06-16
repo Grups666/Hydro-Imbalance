@@ -1,7 +1,7 @@
 """
-Catchment-scale water-imbalance classification.
+Major-river-basin water-imbalance classification.
 
-Each catchment is classified from the combination of imbalanced
+Each GRDC major river basin is classified from the combination of imbalanced
 water-demand deficit, groundwater-storage, and glacier-storage variables.
 Water-demand deficit is derived from WaterGAP 2.2d potential total
 withdrawal, naturalized runoff availability, and environmental-flow demand.
@@ -42,7 +42,7 @@ ABSOLUTE_DIFFERENCE_MIN_MM = 1.0
 PTOTWW_FILE = "watergap_22d_WFDEI-GPCC_histsoc_ptotww_monthly_1901_2016.nc4"
 SECONDS_PER_DAY = 86400.0
 CELL_WITHDRAWAL_MIN_MM_DAY = 0.10
-HUMAN_CATCHMENT_ACTIVE_AREA_MIN = 0.10
+HUMAN_BASIN_ACTIVE_AREA_MIN = 0.10
 HUMAN_IMPACTED_EDGE = "#475569"
 
 VARIABLES = [
@@ -391,7 +391,7 @@ def make_figure():
 
         cells = np.asarray(basin["cells"], dtype=np.int64)
         human_fraction = active_area_fraction(human_cell_mask, cells, weights)
-        human_impacted = human_fraction >= HUMAN_CATCHMENT_ACTIVE_AREA_MIN
+        human_impacted = human_fraction >= HUMAN_BASIN_ACTIVE_AREA_MIN
         human_domains[basin["id"]] = human_impacted
         human_count += int(human_impacted)
 
@@ -433,7 +433,7 @@ def make_figure():
             facecolor="#f8f6f2",
             edgecolor=HUMAN_IMPACTED_EDGE,
             linewidth=1.4,
-            label=f"Human-impacted catchment ({human_count})",
+            label=f"Human-impacted basin ({human_count})",
         )
     )
     legend = ax.legend(
@@ -471,12 +471,12 @@ def make_figure():
         f"- Historical period: {HISTORICAL_PERIOD[0]}-{HISTORICAL_PERIOD[1]}.",
         f"- Recent 20-year period: {RECENT_PERIOD[0]}-{RECENT_PERIOD[1]}.",
         f"- Variable imbalance rule: absolute recent-minus-historical mean difference exceeds both {HISTORICAL_STD_MULTIPLIER:g} historical standard deviations and {ABSOLUTE_DIFFERENCE_MIN_MM:g} mm.",
-        "- Catchment class: combination of imbalanced water-demand deficit, groundwater storage, and glacier storage variables.",
+        "- Basin class: combination of imbalanced water-demand deficit, groundwater storage, and glacier storage variables.",
         f"- Water-demand deficit: max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means.",
-        f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_CATCHMENT_ACTIVE_AREA_MIN:.0%} of catchment area.",
-        f"- Human-impacted catchments outlined in slate gray: {human_count}.",
+        f"- Human-impacted boundary: WaterGAP 2.2d `ptotww` cells with recent mean total withdrawal >= {CELL_WITHDRAWAL_MIN_MM_DAY:.2f} mm/day occupy >= {HUMAN_BASIN_ACTIVE_AREA_MIN:.0%} of basin area.",
+        f"- Human-impacted basins outlined in slate gray: {human_count}.",
         "",
-        "| Class | Catchment count | Color |",
+        "| Class | Basin count | Color |",
         "|---|---:|---|",
     ]
     for key, style in CLASS_STYLES.items():
@@ -487,7 +487,7 @@ def make_figure():
     print(f"Saved: {csv_path}")
     print(f"Saved: {report_path}")
     print(f"Class counts: {class_counts}")
-    print(f"Human-impacted catchments: {human_count}")
+    print(f"Human-impacted basins: {human_count}")
     return output
 
 
