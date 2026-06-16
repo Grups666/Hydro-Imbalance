@@ -1,9 +1,9 @@
 {
-  "id": "water-imbalance",
-  "name": "Water Imbalance - Major River Basins",
+  "id": "water-imbalance-wmo",
+  "name": "Water Imbalance - WMO Basins",
   "version": "0.1.1",
   "assetVersion": "2026-06-17-basin-ontology",
-  "description": "Basin-scale three-variable water imbalance classification, time series, and basin ontology for GRDC Major River Basins.",
+  "description": "Basin-scale three-variable water imbalance classification, time series, and basin ontology for GRDC WMO Basins and Sub-Basins.",
   "author": "Spatial Research Team",
   "icon": "droplet",
   "basePath": "https://grups666.github.io/Hydro-Imbalance/",
@@ -11,19 +11,19 @@
   "className": "WaterImbalanceModule",
   "importKind": "module-manifest",
   "defaultLoad": false,
-  "layerId": "water-imbalance-mrb-basins",
-  "layerName": "Major River Basin Water Imbalance",
+  "layerId": "water-imbalance-wmo-basins",
+  "layerName": "WMO Basin Water Imbalance",
   "datasets": [
     {
       "id": "basin-three-variable-timeseries-1962-2016",
-      "metadata": "./modules/water-imbalance/data/basin-time-series-metadata.json"
+      "metadata": "./modules/water-imbalance-wmo/data/basin-time-series-metadata.json"
     }
   ],
   "provides": {
     "layers": [
       {
-        "id": "water-imbalance-mrb-basins",
-        "name": "Major River Basin Water Imbalance",
+        "id": "water-imbalance-wmo-basins",
+        "name": "WMO Basin Water Imbalance",
         "type": "vector",
         "source": "module.basins",
         "interactive": true
@@ -31,11 +31,11 @@
     ],
     "panels": [
       {
-        "id": "water-imbalance-inspector",
-        "name": "Water Imbalance - Major River Basins Inspector",
+        "id": "water-imbalance-wmo-inspector",
+        "name": "Water Imbalance - WMO Basins Inspector",
         "position": "right",
         "trigger": "feature:click",
-        "condition": { "layer": "water-imbalance-mrb-basins", "module": "water-imbalance" }
+        "condition": { "layer": "water-imbalance-wmo-basins", "module": "water-imbalance-wmo" }
       }
     ],
     "dataProducts": [
@@ -47,7 +47,7 @@
       {
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
-        "description": "Three annual hydrological variables joined to GRDC Major River Basins by basin_id."
+        "description": "Three annual hydrological variables joined to GRDC WMO Basins and Sub-Basins by basin_id."
       }
     ]
   }
