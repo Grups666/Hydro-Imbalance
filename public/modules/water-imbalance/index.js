@@ -732,7 +732,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-literature-dialog{width:min(820px,calc(100vw - 56px));max-height:min(820px,calc(100vh - 56px));background:var(--wi-surface);border:1px solid var(--wi-border);border-radius:8px;box-shadow:var(--wi-shadow);display:flex;flex-direction:column;overflow:hidden}
       .wi-literature-header{min-height:54px;padding:12px 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:center;justify-content:space-between;gap:16px}
       .wi-literature-heading{font-size:14px;font-weight:600;color:var(--wi-text)}
-      .wi-literature-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:var(--wi-muted);flex:0 0 auto}
+      .wi-literature-close{width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:4px;cursor:pointer;color:var(--wi-muted);flex:0 0 auto;display:grid;place-items:center;font:400 22px/1 Arial,sans-serif}
       .wi-literature-close:hover{background:var(--wi-button-hover)}
       .wi-literature-body{overflow:auto;padding:20px;color:var(--wi-text)}
       .wi-literature-title{font-size:22px;line-height:1.3;margin:0 0 8px}
@@ -760,7 +760,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       <div class="wi-literature-dialog">
         <div class="wi-literature-header">
           <div class="wi-literature-heading">Literature Evidence</div>
-          <button class="wi-literature-close" id="wi-literature-close" type="button" aria-label="Close">x</button>
+          <button class="wi-literature-close" id="wi-literature-close" type="button" aria-label="Close">×</button>
         </div>
         <div class="wi-literature-body" id="wi-literature-body"></div>
       </div>
@@ -847,7 +847,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-chart-header{height:54px;padding:0 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:center;justify-content:space-between}
       .wi-chart-title{font-size:14px;font-weight:600;color:var(--wi-text)}
       .wi-chart-subtitle{font-size:11px;color:var(--wi-muted);margin-top:2px}
-      .wi-chart-close{width:28px;height:28px;border:0;background:transparent;border-radius:4px;cursor:pointer;font-size:20px;color:var(--wi-muted)}
+      .wi-chart-close{width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:4px;cursor:pointer;color:var(--wi-muted);display:grid;place-items:center;font:400 22px/1 Arial,sans-serif}
       .wi-chart-close:hover{background:var(--wi-button-hover)}
       .wi-chart-grid{flex:1;overflow:auto;padding:12px 18px 18px;display:grid;grid-template-rows:repeat(3,minmax(150px,1fr));gap:8px}
       .wi-chart-row{position:relative;border-bottom:1px solid var(--wi-border);min-height:150px}
@@ -866,7 +866,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
             <div class="wi-chart-title" id="wi-chart-title">Basin Time Series</div>
             <div class="wi-chart-subtitle" id="wi-chart-subtitle">Shared annual cursor across three variables</div>
           </div>
-          <button class="wi-chart-close" id="wi-chart-close" type="button" aria-label="Close">x</button>
+          <button class="wi-chart-close" id="wi-chart-close" type="button" aria-label="Close">×</button>
         </div>
         <div class="wi-chart-grid" id="wi-chart-grid"></div>
       </div>
