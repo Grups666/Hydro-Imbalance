@@ -64,7 +64,7 @@ VARIABLES = [
 ]
 
 CLASS_STYLES = {
-    "none": {"label": "No detected imbalance", "color": "#eef2f7"},
+    "none": {"label": "No detected imbalance", "color": "#e2e2dc"},
     "deficit": {"label": "Water-demand deficit", "color": "#e3b23c"},
     "groundwater": {"label": "Groundwater storage", "color": "#c767b1"},
     "glacier": {"label": "Glacier storage", "color": "#2fb7c8"},

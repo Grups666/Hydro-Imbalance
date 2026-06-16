@@ -10,7 +10,7 @@
 
 | Class | Basin count | Color |
 |---|---:|---|
-| No detected imbalance | 335 | `#eef2f7` |
+| No detected imbalance | 335 | `#e2e2dc` |
 | Water-demand deficit | 52 | `#e3b23c` |
 | Groundwater storage | 28 | `#c767b1` |
 | Glacier storage | 64 | `#2fb7c8` |

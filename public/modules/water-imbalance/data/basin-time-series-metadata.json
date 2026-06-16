@@ -66,7 +66,7 @@
     "demandDeficitDefinition": "max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), aggregated monthly to annual basin means"
   },
   "classColors": {
-    "none": "#eef2f7",
+    "none": "#e2e2dc",
     "deficit": "#e3b23c",
     "groundwater": "#c767b1",
     "glacier": "#2fb7c8",

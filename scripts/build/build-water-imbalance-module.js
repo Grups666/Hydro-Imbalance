@@ -43,7 +43,7 @@ const variables = [
 ];
 
 const classColors = {
-  none: "#eef2f7",
+  none: "#e2e2dc",
   deficit: "#e3b23c",
   groundwater: "#c767b1",
   glacier: "#2fb7c8",

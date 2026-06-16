@@ -686,7 +686,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   ensureLegend() {
     const colors = this.timeSeriesMetadata?.classColors || {};
     const items = [
-      [colors.none || "#eef2f7", "No detected imbalance"],
+      [colors.none || "#e2e2dc", "No detected imbalance"],
       [colors.deficit || "#e3b23c", "Water-demand deficit"],
       [colors.groundwater || "#c767b1", "Groundwater storage"],
       [colors.glacier || "#2fb7c8", "Glacier storage"],
