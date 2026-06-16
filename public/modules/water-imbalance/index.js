@@ -348,8 +348,6 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const firstSeg = Math.floor(leftLon / 360);
     const lastSeg = Math.ceil(rightLon / 360);
 
-    this.renderInlandWaterBodies(ctx, { firstSeg, lastSeg, base, width, height, offsetX, offsetY, scale: viewport.scale });
-
     for (let seg = firstSeg; seg <= lastSeg; seg++) {
       const candidates = this.basinSpatialIndex.queryBounds(
         Math.max(-180, leftLon - seg * 360),
@@ -388,6 +386,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         }
       }
     }
+
+    this.renderInlandWaterBodies(ctx, { firstSeg, lastSeg, base, width, height, offsetX, offsetY, scale: viewport.scale });
   }
 
   renderInlandWaterBodies(ctx, geometry) {
