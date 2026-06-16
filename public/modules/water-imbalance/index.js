@@ -1,3 +1,37 @@
+const INLAND_WATER_BODIES = [
+  {
+    name: "Caspian Sea",
+    points: [
+      [47.2, 46.8], [48.3, 47.4], [49.8, 47.2], [51.0, 46.6],
+      [51.9, 45.3], [52.9, 43.8], [53.2, 42.4], [52.3, 41.1],
+      [52.7, 39.7], [51.5, 38.6], [50.3, 37.5], [49.0, 37.2],
+      [48.3, 38.0], [48.7, 39.4], [49.5, 40.4], [49.1, 41.5],
+      [48.3, 42.3], [47.8, 43.4], [47.6, 44.6], [47.1, 45.6]
+    ]
+  },
+  {
+    name: "Aral Sea",
+    points: [
+      [58.3, 46.4], [59.4, 46.7], [60.8, 46.4], [61.6, 45.7],
+      [61.3, 44.9], [60.1, 44.5], [58.8, 44.7], [58.1, 45.4]
+    ]
+  },
+  {
+    name: "Lake Urmia",
+    points: [
+      [45.1, 38.2], [45.5, 38.4], [46.0, 38.2], [46.2, 37.6],
+      [45.9, 37.1], [45.3, 37.0], [45.0, 37.5]
+    ]
+  },
+  {
+    name: "Lake Balkhash",
+    points: [
+      [73.1, 46.5], [74.5, 46.9], [76.3, 46.6], [78.3, 46.0],
+      [79.0, 45.4], [77.4, 45.2], [75.4, 45.5], [73.7, 45.8]
+    ]
+  }
+];
+
 /**
  * Water Imbalance Module
  *
@@ -308,6 +342,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const firstSeg = Math.floor(leftLon / 360);
     const lastSeg = Math.ceil(rightLon / 360);
 
+    this.renderInlandWaterBodies(ctx, { firstSeg, lastSeg, base, width, height, offsetX, offsetY, scale: viewport.scale });
+
     for (let seg = firstSeg; seg <= lastSeg; seg++) {
       const candidates = this.basinSpatialIndex.queryBounds(
         Math.max(-180, leftLon - seg * 360),
@@ -346,6 +382,39 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         }
       }
     }
+  }
+
+  renderInlandWaterBodies(ctx, geometry) {
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark"
+      || document.body?.classList.contains("dark")
+      || document.body?.classList.contains("theme-dark")
+      || document.body?.classList.contains("dark-mode");
+    ctx.save();
+    ctx.fillStyle = isDark ? "rgba(20, 55, 66, 0.88)" : "rgba(232, 245, 249, 0.96)";
+    ctx.strokeStyle = isDark ? "rgba(144, 180, 190, 0.28)" : "rgba(136, 154, 166, 0.58)";
+    ctx.lineWidth = 0.8 / geometry.scale;
+    for (let seg = geometry.firstSeg; seg <= geometry.lastSeg; seg++) {
+      const lonOffset = seg * 360;
+      for (const body of INLAND_WATER_BODIES) {
+        const path = this.buildWaterBodyPath(body.points, lonOffset, geometry);
+        ctx.fill(path);
+        ctx.stroke(path);
+      }
+    }
+    ctx.restore();
+  }
+
+  buildWaterBodyPath(points, lonOffset, geometry) {
+    const { base, width, height, offsetX, offsetY } = geometry;
+    const path = new Path2D();
+    points.forEach(([lon, lat], index) => {
+      const x = width / 2 + (lon + lonOffset) * base + offsetX;
+      const y = height / 2 - lat * base + offsetY;
+      if (index === 0) path.moveTo(x, y);
+      else path.lineTo(x, y);
+    });
+    path.closePath();
+    return path;
   }
 
   renderPreparedBasin(ctx, viewport, prep, options = {}) {
