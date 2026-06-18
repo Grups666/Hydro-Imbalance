@@ -7,7 +7,7 @@
   "basinData": "./basin-data.json",
   "join": {
     "moduleField": "basin_id",
-    "spatialEntity": "GRDC Major River Basin",
+    "spatialEntity": "GRDC Major River Basins",
     "spatialField": "id",
     "method": "exact-string"
   },
@@ -75,6 +75,11 @@
     "groundwater+glacier": "#4f7fd5",
     "deficit+groundwater+glacier": "#3f4652"
   },
+  "effectiveGridCellRule": {
+    "netWaterDemandDeficit": "Only WaterGAP cells with 1962-2016 mean net water-demand deficit >= 1 mm yr-1 are included in basin means.",
+    "groundwaterStorage": "Only WaterGAP cells with absolute 1962-2016 mean groundwater storage >= 1 mm are included in basin means."
+  },
+  "glacierDepthNormalization": "glacier_storage_mm_we is normalized by glacier-covered area within each basin, not by total basin area.",
   "provenance": {
     "basinSource": "GRDC Major River Basins of the World",
     "basinSourceUrl": "https://grdc.bafg.de/products/basin_layers/major_rivers/",

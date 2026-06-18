@@ -2,7 +2,7 @@
   "id": "water-imbalance-wmo",
   "name": "Water Imbalance - WMO Basins",
   "version": "0.1.1",
-  "assetVersion": "2026-06-17-basin-ontology",
+  "assetVersion": "2026-06-18-effective-cells-glacier-area",
   "description": "Basin-scale three-variable water imbalance classification, time series, and basin ontology for GRDC WMO Basins and Sub-Basins.",
   "author": "Spatial Research Team",
   "icon": "droplet",
@@ -35,7 +35,10 @@
         "name": "Water Imbalance - WMO Basins Inspector",
         "position": "right",
         "trigger": "feature:click",
-        "condition": { "layer": "water-imbalance-wmo-basins", "module": "water-imbalance-wmo" }
+        "condition": {
+          "layer": "water-imbalance-wmo-basins",
+          "module": "water-imbalance-wmo"
+        }
       }
     ],
     "dataProducts": [

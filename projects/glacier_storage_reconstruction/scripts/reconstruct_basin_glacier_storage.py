@@ -34,6 +34,8 @@ ICE_TO_WATER_DENSITY_RATIO = 0.9
 
 def load_json_assignment(path: Path) -> dict:
     text = path.read_text(encoding="utf-8")
+    if path.suffix.lower() == ".json":
+        return json.loads(text)
     match = re.search(r"window\.BASIN_DATA\s*=\s*(\{.*\})\s*;?\s*$", text, flags=re.S)
     if not match:
         raise ValueError(f"Could not parse {path}")
@@ -255,7 +257,6 @@ def build_annual_balance_by_basin(
     annual_by_region: dict[int, dict[int, float]],
     years: list[int],
 ) -> pd.DataFrame:
-    basin_area = {int(basin["id"]): float(basin["areaKm2"]) for basin in basins}
     bridge_rows = defaultdict(list)
     for row in bridge.itertuples(index=False):
         bridge_rows[int(row.basin_id)].append((int(row.rgi_region), float(row.glacier_area_km2)))
@@ -263,7 +264,6 @@ def build_annual_balance_by_basin(
     records = []
     for basin in basins:
         basin_id = int(basin["id"])
-        area_km2 = basin_area[basin_id]
         rows = bridge_rows.get(basin_id, [])
         for year in years:
             weighted_balance = 0.0
@@ -275,14 +275,14 @@ def build_annual_balance_by_basin(
                 weighted_balance += value * glacier_area
                 matched_area += glacier_area
             annual_km3_we = weighted_balance * 0.001 if matched_area > 0 else 0.0
-            annual_mm_we = annual_km3_we / area_km2 * 1_000_000.0 if area_km2 > 0 else 0.0
+            annual_mm_we = annual_km3_we / matched_area * 1_000_000.0 if matched_area > 0 else 0.0
             records.append(
                 {
                     "basin_id": basin_id,
                     "year": year,
                     "annual_glacier_mass_balance_km3_we": annual_km3_we,
                     "annual_glacier_mass_balance_mm_we": annual_mm_we,
-                    "zemp_bridge_glacier_area_km2": matched_area,
+                    "annual_balance_glacier_area_km2": matched_area,
                 }
             )
     return pd.DataFrame(records)
@@ -292,6 +292,7 @@ def reconstruct_absolute_storage(
     basins: list[dict],
     reference_df: pd.DataFrame,
     annual_balance_df: pd.DataFrame,
+    bridge: pd.DataFrame,
 ) -> pd.DataFrame:
     basin_info = pd.DataFrame(
         {
@@ -302,7 +303,20 @@ def reconstruct_absolute_storage(
             "cell_count": [int(basin.get("cellCount", 0)) for basin in basins],
         }
     )
+    bridge_area = (
+        bridge.groupby("basin_id", as_index=False)["glacier_area_km2"]
+        .sum()
+        .rename(columns={"glacier_area_km2": "zemp_bridge_glacier_area_km2"})
+    )
     base = basin_info.merge(reference_df, on="basin_id", how="left")
+    base = base.merge(bridge_area, on="basin_id", how="left")
+    base["farinotti_glacier_area_km2_internal"] = base["farinotti_glacier_area_km2_internal"].fillna(0.0)
+    base["zemp_bridge_glacier_area_km2"] = base["zemp_bridge_glacier_area_km2"].fillna(0.0)
+    base["glacier_area_km2"] = np.where(
+        base["farinotti_glacier_area_km2_internal"] > 0,
+        base["farinotti_glacier_area_km2_internal"],
+        base["zemp_bridge_glacier_area_km2"],
+    )
     annual = basin_info[["basin_id"]].merge(annual_balance_df, on="basin_id", how="left")
     annual = annual.sort_values(["basin_id", "year"])
     annual["cumulative_from_start_km3_we"] = annual.groupby("basin_id")["annual_glacier_mass_balance_km3_we"].cumsum()
@@ -322,15 +336,24 @@ def reconstruct_absolute_storage(
     )
     out["glacier_storage_km3_we"] = out["glacier_storage_km3_we_raw"].clip(lower=0.0)
     out["storage_clipped_to_zero"] = out["glacier_storage_km3_we_raw"] < 0
-    out["glacier_storage_mm_we"] = out["glacier_storage_km3_we"] / out["basin_area_km2"] * 1_000_000.0
-    out["reference_storage_mm_we_around_2000"] = (
-        out["reference_storage_km3_we_around_2000"] / out["basin_area_km2"] * 1_000_000.0
+    out["glacier_storage_mm_we"] = np.where(
+        out["glacier_area_km2"] > 0,
+        out["glacier_storage_km3_we"] / out["glacier_area_km2"] * 1_000_000.0,
+        0.0,
+    )
+    out["reference_storage_mm_we_around_2000"] = np.where(
+        out["glacier_area_km2"] > 0,
+        out["reference_storage_km3_we_around_2000"] / out["glacier_area_km2"] * 1_000_000.0,
+        0.0,
     )
     columns = [
         "basin_id",
         "basin_name",
         "region",
         "basin_area_km2",
+        "glacier_area_km2",
+        "farinotti_glacier_area_km2_internal",
+        "zemp_bridge_glacier_area_km2",
         "cell_count",
         "year",
         "glacier_storage_km3_we",
@@ -397,6 +420,7 @@ def validate_outputs(
 - Output period: {int(storage_df['year'].min())}-{int(storage_df['year'].max())}.
 - Reference absolute storage: Farinotti et al. (2019) 0.05 degree glacier volume grid, treated as an around-2000 absolute ice-volume reference.
 - Annual change source: Zemp et al. (2019) regional `INT_mwe`; the globally validated product period is {int(storage_df['year'].min())}-{int(storage_df['year'].max())}.
+- Millimetre water-equivalent glacier variables are normalized by glacier-covered area in each basin, not by total basin area.
 - Density conversion: ice volume is converted to water equivalent with `rho_ice / rho_water = {ICE_TO_WATER_DENSITY_RATIO}`.
 
 ## Static Volume Check
@@ -453,7 +477,7 @@ def main() -> None:
     start_year, end_year = complete_years[0], complete_years[-1]
 
     print("Reconstructing annual absolute glacier storage")
-    storage_df = reconstruct_absolute_storage(basins, reference_df, balance_df)
+    storage_df = reconstruct_absolute_storage(basins, reference_df, balance_df, bridge)
     storage_df.to_csv(args.output_dir / f"basin_glacier_absolute_storage_{start_year}_{end_year}.csv", index=False)
 
     print("Running validation checks")

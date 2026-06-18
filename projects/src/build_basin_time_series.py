@@ -30,6 +30,8 @@ GLACIER_RESOLUTION_TOTALS = GLACIER_RESULTS_DIR / "validation_farinotti_grid_res
 GLACIER_ANNUAL_VALIDATION = GLACIER_RESULTS_DIR / "validation_annual_global_balance.csv"
 
 SECONDS_PER_DAY = 86400.0
+DEFAULT_MIN_DEMAND_DEFICIT_MEAN_MM_YR = 1.0
+DEFAULT_MIN_GROUNDWATER_MEAN_ABS_MM = 1.0
 
 
 @dataclass(frozen=True)
@@ -72,11 +74,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
     parser.add_argument("--output-name", default=None)
     parser.add_argument("--spatial-label", default="GRDC major river basins")
+    parser.add_argument("--min-demand-deficit-mean-mm-yr", type=float, default=DEFAULT_MIN_DEMAND_DEFICIT_MEAN_MM_YR)
+    parser.add_argument("--min-groundwater-mean-abs-mm", type=float, default=DEFAULT_MIN_GROUNDWATER_MEAN_ABS_MM)
     return parser.parse_args()
 
 
 def load_basins(path: Path) -> list[dict]:
     text = path.read_text(encoding="utf-8")
+    if path.suffix.lower() == ".json":
+        data = json.loads(text)
+        basins = data["basins"]
+        basins.sort(key=lambda basin: basin["id"])
+        return basins
     match = re.search(r"window\.BASIN_DATA\s*=\s*(\{.*\})\s*;?\s*$", text, flags=re.S)
     if not match:
         raise ValueError(f"Could not parse {path}")
@@ -220,10 +229,27 @@ def annual_net_water_demand_deficit_grid(
     return annual
 
 
-def aggregate_grid_by_basin(grid: np.ndarray, basin_cells: list[np.ndarray]) -> list[float]:
+def effective_cell_mask(annual_grids: dict[int, np.ndarray], threshold: float, *, use_abs: bool = False) -> np.ndarray:
+    stack = np.stack([grid for _, grid in sorted(annual_grids.items())])
+    with warnings.catch_warnings(), np.errstate(invalid="ignore"):
+        warnings.simplefilter("ignore", category=RuntimeWarning)
+        long_term_mean = np.nanmean(stack, axis=0)
+    if use_abs:
+        long_term_mean = np.abs(long_term_mean)
+    return np.isfinite(long_term_mean) & (long_term_mean >= threshold)
+
+
+def aggregate_grid_by_basin(
+    grid: np.ndarray,
+    basin_cells: list[np.ndarray],
+    include_mask: np.ndarray | None = None,
+) -> list[float]:
     flat = grid.reshape(-1)
+    mask_flat = include_mask.reshape(-1) if include_mask is not None else None
     values: list[float] = []
     for cells in basin_cells:
+        if mask_flat is not None and len(cells):
+            cells = cells[mask_flat[cells]]
         with warnings.catch_warnings(), np.errstate(invalid="ignore"):
             warnings.simplefilter("ignore", category=RuntimeWarning)
             value = np.nanmean(flat[cells], dtype=np.float64) if len(cells) else np.nan
@@ -231,12 +257,18 @@ def aggregate_grid_by_basin(grid: np.ndarray, basin_cells: list[np.ndarray]) -> 
     return values
 
 
-def read_watergap_series(spec: SeriesSpec, years: np.ndarray, basin_cells: list[np.ndarray]) -> dict[int, list[float]]:
+def read_watergap_series(
+    spec: SeriesSpec,
+    years: np.ndarray,
+    basin_cells: list[np.ndarray],
+    *,
+    min_long_term_abs_mean: float | None = None,
+) -> dict[int, list[float]]:
     file_path = DATASET_DIR / spec.source_file
     if not file_path.exists():
         raise FileNotFoundError(file_path)
 
-    result: dict[int, list[float]] = {}
+    annual_grids: dict[int, np.ndarray] = {}
     with Dataset(str(file_path)) as dataset:
         variable = dataset.variables[spec.variable_name]
         time_len = len(dataset.dimensions["time"])
@@ -246,16 +278,26 @@ def read_watergap_series(spec: SeriesSpec, years: np.ndarray, basin_cells: list[
 
         for year in years:
             if year < source_start or year > source_end:
-                result[int(year)] = [math.nan] * len(basin_cells)
+                annual_grids[int(year)] = np.full(variable.shape[-2:], np.nan, dtype=np.float32)
                 continue
             offset = (int(year) - source_start) * 12
-            grid = annual_grid(variable[offset : offset + 12], int(year), spec.aggregation)
-            result[int(year)] = aggregate_grid_by_basin(grid, basin_cells)
+            annual_grids[int(year)] = annual_grid(variable[offset : offset + 12], int(year), spec.aggregation)
 
-    return result
+    include_mask = None
+    if min_long_term_abs_mean is not None and min_long_term_abs_mean > 0:
+        include_mask = effective_cell_mask(annual_grids, min_long_term_abs_mean, use_abs=True)
+    return {
+        int(year): aggregate_grid_by_basin(annual_grids[int(year)], basin_cells, include_mask)
+        for year in years
+    }
 
 
-def read_net_water_demand_deficit_series(years: np.ndarray, basin_cells: list[np.ndarray]) -> dict[int, list[float]]:
+def read_net_water_demand_deficit_series(
+    years: np.ndarray,
+    basin_cells: list[np.ndarray],
+    *,
+    min_long_term_mean: float = DEFAULT_MIN_DEMAND_DEFICIT_MEAN_MM_YR,
+) -> dict[int, list[float]]:
     demand_path = DATASET_DIR / PTOTWW_FILE
     runoff_path = DATASET_DIR / NATURAL_RUNOFF_FILE
     if not demand_path.exists():
@@ -264,7 +306,7 @@ def read_net_water_demand_deficit_series(years: np.ndarray, basin_cells: list[np
         raise FileNotFoundError(runoff_path)
 
     efr_flux = compute_monthly_efr_flux()
-    result: dict[int, list[float]] = {}
+    annual_grids: dict[int, np.ndarray] = {}
     with Dataset(str(demand_path)) as demand_dataset, Dataset(str(runoff_path)) as runoff_dataset:
         demand = demand_dataset.variables["ptotww"]
         runoff = runoff_dataset.variables["ncrunnat"]
@@ -274,18 +316,21 @@ def read_net_water_demand_deficit_series(years: np.ndarray, basin_cells: list[np
         for year in years:
             year = int(year)
             if year < demand_start or year > demand_end or year < runoff_start or year > runoff_end:
-                result[year] = [math.nan] * len(basin_cells)
+                annual_grids[year] = np.full(demand.shape[-2:], np.nan, dtype=np.float32)
                 continue
             demand_offset = (year - demand_start) * 12
             runoff_offset = (year - runoff_start) * 12
-            grid = annual_net_water_demand_deficit_grid(
+            annual_grids[year] = annual_net_water_demand_deficit_grid(
                 demand[demand_offset : demand_offset + 12],
                 runoff[runoff_offset : runoff_offset + 12],
                 efr_flux,
                 year,
             )
-            result[year] = aggregate_grid_by_basin(grid, basin_cells)
-    return result
+    include_mask = effective_cell_mask(annual_grids, min_long_term_mean, use_abs=False) if min_long_term_mean > 0 else None
+    return {
+        int(year): aggregate_grid_by_basin(annual_grids[int(year)], basin_cells, include_mask)
+        for year in years
+    }
 
 
 def read_glacier_storage_series(basins: list[dict], years: np.ndarray, glacier_storage_path: Path) -> dict[int, list[float]]:
@@ -326,6 +371,8 @@ def write_readme(
     watergap_basins: int,
     spatial_label: str,
     glacier_storage_path: Path,
+    min_demand_deficit_mean_mm_yr: float,
+    min_groundwater_mean_abs_mm: float,
 ) -> None:
     glacier_percent = glacier_basins / total_basins * 100.0 if total_basins else 0.0
     missing_watergap_basins = total_basins - watergap_basins
@@ -354,9 +401,9 @@ Coverage:
 
 - `net_water_demand_deficit_mm_yr`: annual water-demand deficit after local naturalized runoff availability is used to satisfy potential total withdrawal and environmental-flow requirement.
 - `groundwater_storage_mm`: annual mean groundwater storage from WaterGAP `groundwstor`.
-- `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the full basin area.
+- `glacier_storage_mm_we`: reconstructed annual absolute glacier water storage, expressed as water-equivalent depth over the glacier-covered area in the basin.
 
-All three outputs are area-normalized water depths. Water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
+All three outputs are normalized water depths. Water-demand deficit is an annual flux amount (`mm yr-1`); groundwater and glacier storage are annual storage states (`mm`).
 
 ## WaterGAP Processing
 
@@ -370,11 +417,11 @@ For each month:
 
 `monthly_deficit_mm = deficit_flux * days_in_month * 86400`
 
-Monthly deficits are summed to annual depth and averaged across WaterGAP grid cells assigned to each basin. The resulting variable is a local supply-adjusted demand deficit, not raw total withdrawal.
+Monthly deficits are summed to annual depth and averaged across effective WaterGAP grid cells assigned to each basin. A WaterGAP cell is effective for this variable only when its {start_year}-{end_year} mean deficit is at least `{min_demand_deficit_mean_mm_yr:g} mm yr-1`. This removes numerically tiny demand-deficit traces that should not define basin-scale conditions. The resulting variable is a local supply-adjusted demand deficit, not raw total withdrawal.
 
 ### Groundwater Storage
 
-Monthly WaterGAP 2.2d `groundwstor` in `kg m-2` is directly equivalent to `mm` water. A day-weighted annual mean is computed and averaged across basin grid cells.
+Monthly WaterGAP 2.2d `groundwstor` in `kg m-2` is directly equivalent to `mm` water. A day-weighted annual mean is computed and averaged across effective basin grid cells. A WaterGAP cell is effective for this variable only when the absolute value of its {start_year}-{end_year} mean groundwater storage is at least `{min_groundwater_mean_abs_mm:g} mm`.
 
 ## Glacier Absolute-Storage Reconstruction
 
@@ -397,13 +444,13 @@ The glacier variable is an absolute storage-state reconstruction, not raw glacie
 
 Negative reconstructed storage is clipped to zero. Absolute water-equivalent storage volume is converted to the unified depth variable:
 
-`glacier_storage_mm_we = glacier_storage_km3_we / basin_area_km2 * 1,000,000`
+`glacier_storage_mm_we = glacier_storage_km3_we / glacier_area_km2 * 1,000,000`
 
 ## Glacier Cross Validation
 
 - Farinotti 0.05 degree source-grid total: `{p05_volume:.2f} km3 ice`, consistent with the published approximately `158000 km3 ice`.
 - Farinotti 0.50 degree source-grid total: `{p50_volume:.2f} km3 ice`; difference from the 0.05 degree total is `{p50_difference_percent:.4f}%`.
-- Volume assigned to GRDC major river basins in the 2000 reference year: `{storage_2000:.2f} km3 water equivalent`.
+- Volume assigned to {spatial_label} in the 2000 reference year: `{storage_2000:.2f} km3 water equivalent`.
 - Basin assignment captures `{storage_capture_percent:.1f}%` of source-grid global glacier water-equivalent storage; the remainder primarily falls outside the current basin mask.
 - Reconstructed basin-summed annual balance in 2000: `{validation.get("balance_2000_km3_we", math.nan):.2f} km3 water equivalent`.
 - Zemp global `INT_Gt` in 2000: `{validation.get("zemp_balance_2000_km3_we", math.nan):.2f} Gt`, approximately the same numeric value in km3 water equivalent.
@@ -478,10 +525,19 @@ def main() -> None:
 
     watergap_values: dict[str, dict[int, list[float]]] = {}
     print(f"Aggregating net_water_demand_deficit from {PTOTWW_FILE} and {NATURAL_RUNOFF_FILE}")
-    watergap_values["net_water_demand_deficit"] = read_net_water_demand_deficit_series(years, basin_cells)
+    watergap_values["net_water_demand_deficit"] = read_net_water_demand_deficit_series(
+        years,
+        basin_cells,
+        min_long_term_mean=args.min_demand_deficit_mean_mm_yr,
+    )
     for spec in WATERGAP_SPECS:
         print(f"Aggregating {spec.code} from {spec.source_file}")
-        watergap_values[spec.code] = read_watergap_series(spec, years, basin_cells)
+        watergap_values[spec.code] = read_watergap_series(
+            spec,
+            years,
+            basin_cells,
+            min_long_term_abs_mean=args.min_groundwater_mean_abs_mm,
+        )
 
     glacier_values = read_glacier_storage_series(basins, years, args.glacier_storage)
 
@@ -501,6 +557,8 @@ def main() -> None:
         sum(1 for basin in basins if int(basin.get("cellCount", 0)) > 0),
         args.spatial_label,
         args.glacier_storage,
+        args.min_demand_deficit_mean_mm_yr,
+        args.min_groundwater_mean_abs_mm,
     )
     print(f"Wrote {output_path}")
 

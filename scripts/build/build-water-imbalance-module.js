@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
+const vm = require("vm");
 
 const root = path.resolve(__dirname, "../..");
 const args = Object.fromEntries(process.argv.slice(2).map((arg) => {
@@ -110,6 +111,7 @@ function standardDeviation(values) {
 
 function loadBasinData() {
   const code = fs.readFileSync(basinDataSource, "utf8");
+  if (basinDataSource.endsWith(".json")) return JSON.parse(code);
   const context = { window: {} };
   vm.createContext(context);
   vm.runInContext(code, context);
@@ -193,7 +195,9 @@ const classificationDocument = {
   basins: classification
 };
 fs.writeFileSync(outputClassification, JSON.stringify(classificationDocument, null, 2) + "\n");
-fs.writeFileSync(outputBasinData, JSON.stringify(basinData) + "\n");
+if (path.resolve(basinDataSource) !== path.resolve(outputBasinData)) {
+  fs.writeFileSync(outputBasinData, JSON.stringify(basinData, null, 2) + "\n");
+}
 
 const metadata = {
   id: "basin-three-variable-timeseries-1962-2016",
@@ -219,6 +223,11 @@ const metadata = {
   variables,
   imbalanceMethod: classificationDocument.method,
   classColors,
+  effectiveGridCellRule: {
+    netWaterDemandDeficit: "Only WaterGAP cells with 1962-2016 mean net water-demand deficit >= 1 mm yr-1 are included in basin means.",
+    groundwaterStorage: "Only WaterGAP cells with absolute 1962-2016 mean groundwater storage >= 1 mm are included in basin means."
+  },
+  glacierDepthNormalization: "glacier_storage_mm_we is normalized by glacier-covered area within each basin, not by total basin area.",
   provenance: {
     basinSource: basinData.meta?.source || "GRDC Major River Basins of the World",
     basinSourceUrl: basinData.meta?.sourceUrl || "https://grdc.bafg.de/products/basin_layers/major_rivers/",
@@ -236,7 +245,7 @@ const manifest = {
   id: moduleId,
   name: moduleName,
   version: "0.1.1",
-  assetVersion: "2026-06-17-dual-basin-modules",
+  assetVersion: "2026-06-18-effective-cells-glacier-area",
   description: `Basin-scale three-variable water imbalance classification, time series, and basin ontology for ${spatialEntity}.`,
   author: "Spatial Research Team",
   icon: "droplet",
