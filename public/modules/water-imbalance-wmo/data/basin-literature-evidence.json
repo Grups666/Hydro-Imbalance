@@ -1,0 +1,1284 @@
+{
+  "schema": "basin-literature-evidence/v1",
+  "generated": "2026-06-18",
+  "moduleId": "water-imbalance-wmo",
+  "variableCoverage": [
+    "glacier"
+  ],
+  "method": {
+    "attachment": "Evidence is attached to basin ontology identifiers, not map coordinates.",
+    "comparison": "The project glacier value is a storage-state window shift in mm water equivalent. For comparison with m w.e. yr-1 literature rates, the shift is divided by 27.5 years, the distance between the centers of 1962-1996 and 1997-2016.",
+    "limitation": "Most references are regional rather than basin-specific; they validate order of magnitude and direction, not exact basin equality."
+  },
+  "entries": [
+    {
+      "id": "zemp2019-global",
+      "variableKey": "glacier",
+      "scope": "Global glaciers outside the Greenland and Antarctic ice sheets",
+      "title": "Global glacier mass changes and their contributions to sea-level rise from 1961 to 2016",
+      "authors": "Zemp et al.",
+      "year": 2019,
+      "venue": "Nature",
+      "doi": "10.1038/s41586-019-1071-0",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30962533/",
+      "abstract": "Global extrapolation of glaciological and geodetic observations for 1961-2016, including regional specific mass-change rates and sea-level contribution.",
+      "reportedQuantity": {
+        "label": "Glacier mass change",
+        "valueText": "2006-2016 regional rates from -0.1 to -1.2 m w.e. yr-1; global loss 335 +/- 144 Gt yr-1",
+        "period": "1961-2016, with 2006-2016 regional rates"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "matchedBasinCount": 131,
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
+        "ourEquivalentRateMweYrRange": [
+          -2.038,
+          -0.067
+        ],
+        "ourEquivalentRateMweYrMedian": -0.405,
+        "exampleBasins": [
+          {
+            "basinId": "356",
+            "name": "Zapaleri",
+            "region": "SA",
+            "storageShiftMm": -56041.3,
+            "equivalentRateMweYr": -2.038
+          },
+          {
+            "basinId": "383",
+            "name": "Azopardo And Fagnano Lake",
+            "region": "SA",
+            "storageShiftMm": -35686.8,
+            "equivalentRateMweYr": -1.298
+          },
+          {
+            "basinId": "344",
+            "name": "South Pacific (Ex 348, 378, 379, 380)",
+            "region": "SA",
+            "storageShiftMm": -34399.6,
+            "equivalentRateMweYr": -1.251
+          },
+          {
+            "basinId": "455",
+            "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
+            "region": "NA",
+            "storageShiftMm": -33938,
+            "equivalentRateMweYr": -1.234
+          },
+          {
+            "basinId": "619",
+            "name": "Bay Of Biscay (Ex 610)",
+            "region": "EU",
+            "storageShiftMm": -33904.2,
+            "equivalentRateMweYr": -1.233
+          },
+          {
+            "basinId": "418",
+            "name": "Great Basin",
+            "region": "NA",
+            "storageShiftMm": -33299.6,
+            "equivalentRateMweYr": -1.211
+          }
+        ],
+        "assessment": "Broad global benchmark. Basin-scale values should fall within the same order of magnitude as the regional m w.e. yr-1 rates, not match exactly."
+      },
+      "basinIds": [
+        "168",
+        "189",
+        "201",
+        "202",
+        "203",
+        "207",
+        "208",
+        "209",
+        "210",
+        "211",
+        "212",
+        "214",
+        "215",
+        "216",
+        "217",
+        "220",
+        "221",
+        "223",
+        "228",
+        "243",
+        "244",
+        "245",
+        "246",
+        "247",
+        "248",
+        "249",
+        "250",
+        "251",
+        "260",
+        "262",
+        "269",
+        "280",
+        "281",
+        "284",
+        "292",
+        "295",
+        "297",
+        "298",
+        "299",
+        "303",
+        "305",
+        "306",
+        "307",
+        "315",
+        "316",
+        "319",
+        "344",
+        "348",
+        "354",
+        "356",
+        "357",
+        "372",
+        "373",
+        "374",
+        "375",
+        "376",
+        "378",
+        "379",
+        "380",
+        "381",
+        "383",
+        "384",
+        "385",
+        "386",
+        "387",
+        "388",
+        "389",
+        "390",
+        "391",
+        "392",
+        "393",
+        "394",
+        "401",
+        "402",
+        "403",
+        "404",
+        "405",
+        "406",
+        "407",
+        "408",
+        "411",
+        "412",
+        "413",
+        "415",
+        "416",
+        "418",
+        "420",
+        "422",
+        "425",
+        "444",
+        "445",
+        "446",
+        "452",
+        "455",
+        "458",
+        "552",
+        "565",
+        "566",
+        "567",
+        "568",
+        "569",
+        "570",
+        "601",
+        "619",
+        "625",
+        "626",
+        "628",
+        "629",
+        "630",
+        "631",
+        "632",
+        "633",
+        "635",
+        "639",
+        "642",
+        "643",
+        "645",
+        "646",
+        "648",
+        "649",
+        "652",
+        "659",
+        "670",
+        "671",
+        "683",
+        "684",
+        "687",
+        "688",
+        "690",
+        "695",
+        "698"
+      ]
+    },
+    {
+      "id": "brun2017-hma",
+      "variableKey": "glacier",
+      "scope": "High Mountain Asia",
+      "title": "A spatially resolved estimate of High Mountain Asia glacier mass balances, 2000-2016",
+      "authors": "Brun et al.",
+      "year": 2017,
+      "venue": "Nature Geoscience",
+      "doi": "10.1038/NGEO2999",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28890734/",
+      "abstract": "Satellite stereo-imagery DEM time series were used to estimate spatially resolved glacier mass balances for about 92% of the glacierized area of High Mountain Asia.",
+      "reportedQuantity": {
+        "label": "High Mountain Asia glacier mass balance",
+        "valueText": "-16.3 +/- 3.5 Gt yr-1 (-0.18 +/- 0.04 m w.e. yr-1), with strong subregional variability",
+        "period": "2000-2016"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "matchedBasinCount": 14,
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
+        "ourEquivalentRateMweYrRange": [
+          -0.228,
+          -0.067
+        ],
+        "ourEquivalentRateMweYrMedian": -0.105,
+        "exampleBasins": [
+          {
+            "basinId": "209",
+            "name": "Yenisey",
+            "region": "AS",
+            "storageShiftMm": -6257.3,
+            "equivalentRateMweYr": -0.228
+          },
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "storageShiftMm": -4324.5,
+            "equivalentRateMweYr": -0.157
+          },
+          {
+            "basinId": "260",
+            "name": "Irrawaddy",
+            "region": "AS",
+            "storageShiftMm": -4012.5,
+            "equivalentRateMweYr": -0.146
+          },
+          {
+            "basinId": "247",
+            "name": "Yamuna",
+            "region": "AS",
+            "storageShiftMm": -3866.5,
+            "equivalentRateMweYr": -0.141
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "storageShiftMm": -3468.9,
+            "equivalentRateMweYr": -0.126
+          },
+          {
+            "basinId": "262",
+            "name": "Salween",
+            "region": "AS",
+            "storageShiftMm": -3352.7,
+            "equivalentRateMweYr": -0.122
+          }
+        ],
+        "assessment": "Useful regional check for Asian mountain basins; our basin-normalized storage-shift equivalents should be negative for losing glacierized basins, with local deviations expected."
+      },
+      "basinIds": [
+        "209",
+        "214",
+        "215",
+        "216",
+        "217",
+        "220",
+        "246",
+        "247",
+        "251",
+        "260",
+        "262",
+        "269",
+        "280",
+        "281"
+      ]
+    },
+    {
+      "id": "farinotti2015-tienshan",
+      "variableKey": "glacier",
+      "scope": "Tien Shan",
+      "title": "Substantial glacier mass loss in the Tien Shan over the past 50 years",
+      "authors": "Farinotti et al.",
+      "year": 2015,
+      "venue": "Nature Geoscience",
+      "doi": "10.1038/ngeo2513",
+      "url": "https://www.nature.com/articles/ngeo2513",
+      "abstract": "Regional reconstruction of Tien Shan glacier mass change over roughly five decades, used here as a focused benchmark for Central Asian glacierized basins.",
+      "reportedQuantity": {
+        "label": "Tien Shan glacier mass loss",
+        "valueText": "About 27 +/- 15% of total glacier mass lost over 1961-2012, commonly reported as about 5.4 +/- 2.8 Gt yr-1",
+        "period": "1961-2012"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "matchedBasinCount": 6,
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
+        "ourEquivalentRateMweYrRange": [
+          -0.134,
+          -0.067
+        ],
+        "ourEquivalentRateMweYrMedian": -0.088,
+        "exampleBasins": [
+          {
+            "basinId": "211",
+            "name": "Irtysh (Also Ertis)",
+            "region": "AS",
+            "storageShiftMm": -3680,
+            "equivalentRateMweYr": -0.134
+          },
+          {
+            "basinId": "215",
+            "name": "Ysyk-Kol (Also Issyk-Kul), Chuy (Also Shu), Talas And Sarysu",
+            "region": "AS",
+            "storageShiftMm": -2664.8,
+            "equivalentRateMweYr": -0.097
+          },
+          {
+            "basinId": "214",
+            "name": "Balkhash And Alakol",
+            "region": "AS",
+            "storageShiftMm": -2490.5,
+            "equivalentRateMweYr": -0.091
+          },
+          {
+            "basinId": "216",
+            "name": "Aral Sea (North) And Syr Darya",
+            "region": "AS",
+            "storageShiftMm": -2324,
+            "equivalentRateMweYr": -0.085
+          },
+          {
+            "basinId": "217",
+            "name": "Aral Sea (South) And Amu Darya",
+            "region": "AS",
+            "storageShiftMm": -1905.5,
+            "equivalentRateMweYr": -0.069
+          },
+          {
+            "basinId": "220",
+            "name": "Tarim He (Also Talimu He) And Tibetan Plateau",
+            "region": "AS",
+            "storageShiftMm": -1855.1,
+            "equivalentRateMweYr": -0.067
+          }
+        ],
+        "assessment": "Focused Central Asia check. Direct matching is not expected because our values are basin means over glacier area and use a 1962-2016 window comparison."
+      },
+      "basinIds": [
+        "211",
+        "214",
+        "215",
+        "216",
+        "217",
+        "220"
+      ]
+    },
+    {
+      "id": "dussaillant2019-andes",
+      "variableKey": "glacier",
+      "scope": "South American Andes",
+      "title": "Two decades of glacier mass loss along the Andes",
+      "authors": "Dussaillant et al.",
+      "year": 2019,
+      "venue": "Nature Geoscience",
+      "doi": "10.1038/s41561-019-0432-5",
+      "url": "https://www.nature.com/articles/s41561-019-0432-5",
+      "abstract": "ASTER DEM time series were used to estimate Andean glacier mass changes from 10 degrees N to 56 degrees S.",
+      "reportedQuantity": {
+        "label": "Andean glacier mass loss",
+        "valueText": "-22.9 +/- 5.9 Gt yr-1 (-0.72 +/- 0.22 m w.e. yr-1), with strongest losses in Patagonia and the Tropical Andes",
+        "period": "2000-2018"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "matchedBasinCount": 33,
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
+        "ourEquivalentRateMweYrRange": [
+          -2.038,
+          -0.306
+        ],
+        "ourEquivalentRateMweYrMedian": -0.741,
+        "exampleBasins": [
+          {
+            "basinId": "356",
+            "name": "Zapaleri",
+            "region": "SA",
+            "storageShiftMm": -56041.3,
+            "equivalentRateMweYr": -2.038
+          },
+          {
+            "basinId": "383",
+            "name": "Azopardo And Fagnano Lake",
+            "region": "SA",
+            "storageShiftMm": -35686.8,
+            "equivalentRateMweYr": -1.298
+          },
+          {
+            "basinId": "344",
+            "name": "South Pacific (Ex 348, 378, 379, 380)",
+            "region": "SA",
+            "storageShiftMm": -34399.6,
+            "equivalentRateMweYr": -1.251
+          },
+          {
+            "basinId": "392",
+            "name": "Manso",
+            "region": "SA",
+            "storageShiftMm": -29846.8,
+            "equivalentRateMweYr": -1.085
+          },
+          {
+            "basinId": "306",
+            "name": "Orinoco (Ex 307)",
+            "region": "SA",
+            "storageShiftMm": -26398.2,
+            "equivalentRateMweYr": -0.96
+          },
+          {
+            "basinId": "374",
+            "name": "Mar Chiquita, Salinas Grandes And Pampa De Las Salinas",
+            "region": "SA",
+            "storageShiftMm": -24165.5,
+            "equivalentRateMweYr": -0.879
+          }
+        ],
+        "assessment": "Regional benchmark for South American basins. Our strongest Andean basin shifts should be negative and often near the same m w.e. yr-1 order after window-center conversion."
+      },
+      "basinIds": [
+        "303",
+        "305",
+        "306",
+        "307",
+        "315",
+        "316",
+        "319",
+        "344",
+        "348",
+        "354",
+        "356",
+        "357",
+        "372",
+        "373",
+        "374",
+        "375",
+        "376",
+        "378",
+        "379",
+        "380",
+        "381",
+        "383",
+        "384",
+        "385",
+        "386",
+        "387",
+        "388",
+        "389",
+        "390",
+        "391",
+        "392",
+        "393",
+        "394"
+      ]
+    },
+    {
+      "id": "farinotti2019-storage",
+      "variableKey": "glacier",
+      "scope": "Global glacier storage baseline",
+      "title": "A consensus estimate for the ice thickness distribution of all glaciers on Earth",
+      "authors": "Farinotti et al.",
+      "year": 2019,
+      "venue": "Nature Geoscience",
+      "doi": "10.1038/s41561-019-0300-3",
+      "url": "https://www.nature.com/articles/s41561-019-0300-3",
+      "abstract": "Consensus global ice-thickness and volume estimate for individual glaciers, used by this project as the absolute storage anchor before applying annual mass-balance reconstruction.",
+      "reportedQuantity": {
+        "label": "Global glacier ice volume",
+        "valueText": "Consensus global ice-volume baseline, about 158,000 km3 of ice outside the main ice sheets",
+        "period": "Inventory-era baseline around 2000"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "matchedBasinCount": 131,
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
+        "ourEquivalentRateMweYrRange": [
+          -2.038,
+          -0.067
+        ],
+        "ourEquivalentRateMweYrMedian": -0.405,
+        "exampleBasins": [
+          {
+            "basinId": "356",
+            "name": "Zapaleri",
+            "region": "SA",
+            "storageShiftMm": -56041.3,
+            "equivalentRateMweYr": -2.038
+          },
+          {
+            "basinId": "383",
+            "name": "Azopardo And Fagnano Lake",
+            "region": "SA",
+            "storageShiftMm": -35686.8,
+            "equivalentRateMweYr": -1.298
+          },
+          {
+            "basinId": "344",
+            "name": "South Pacific (Ex 348, 378, 379, 380)",
+            "region": "SA",
+            "storageShiftMm": -34399.6,
+            "equivalentRateMweYr": -1.251
+          },
+          {
+            "basinId": "455",
+            "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
+            "region": "NA",
+            "storageShiftMm": -33938,
+            "equivalentRateMweYr": -1.234
+          },
+          {
+            "basinId": "619",
+            "name": "Bay Of Biscay (Ex 610)",
+            "region": "EU",
+            "storageShiftMm": -33904.2,
+            "equivalentRateMweYr": -1.233
+          },
+          {
+            "basinId": "418",
+            "name": "Great Basin",
+            "region": "NA",
+            "storageShiftMm": -33299.6,
+            "equivalentRateMweYr": -1.211
+          }
+        ],
+        "assessment": "Methodological validation for the absolute storage baseline. This source constrains storage magnitude, while Zemp-style mass balance controls the temporal evolution."
+      },
+      "basinIds": [
+        "168",
+        "189",
+        "201",
+        "202",
+        "203",
+        "207",
+        "208",
+        "209",
+        "210",
+        "211",
+        "212",
+        "214",
+        "215",
+        "216",
+        "217",
+        "220",
+        "221",
+        "223",
+        "228",
+        "243",
+        "244",
+        "245",
+        "246",
+        "247",
+        "248",
+        "249",
+        "250",
+        "251",
+        "260",
+        "262",
+        "269",
+        "280",
+        "281",
+        "284",
+        "292",
+        "295",
+        "297",
+        "298",
+        "299",
+        "303",
+        "305",
+        "306",
+        "307",
+        "315",
+        "316",
+        "319",
+        "344",
+        "348",
+        "354",
+        "356",
+        "357",
+        "372",
+        "373",
+        "374",
+        "375",
+        "376",
+        "378",
+        "379",
+        "380",
+        "381",
+        "383",
+        "384",
+        "385",
+        "386",
+        "387",
+        "388",
+        "389",
+        "390",
+        "391",
+        "392",
+        "393",
+        "394",
+        "401",
+        "402",
+        "403",
+        "404",
+        "405",
+        "406",
+        "407",
+        "408",
+        "411",
+        "412",
+        "413",
+        "415",
+        "416",
+        "418",
+        "420",
+        "422",
+        "425",
+        "444",
+        "445",
+        "446",
+        "452",
+        "455",
+        "458",
+        "552",
+        "565",
+        "566",
+        "567",
+        "568",
+        "569",
+        "570",
+        "601",
+        "619",
+        "625",
+        "626",
+        "628",
+        "629",
+        "630",
+        "631",
+        "632",
+        "633",
+        "635",
+        "639",
+        "642",
+        "643",
+        "645",
+        "646",
+        "648",
+        "649",
+        "652",
+        "659",
+        "670",
+        "671",
+        "683",
+        "684",
+        "687",
+        "688",
+        "690",
+        "695",
+        "698"
+      ]
+    }
+  ],
+  "byBasin": {
+    "168": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "189": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "201": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "202": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "203": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "207": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "208": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "209": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "210": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "211": [
+      "zemp2019-global",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "212": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "214": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "215": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "216": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "217": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "220": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2015-tienshan",
+      "farinotti2019-storage"
+    ],
+    "221": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "223": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "228": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "243": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "244": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "245": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "246": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "247": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "248": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "249": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "250": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "251": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "260": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "262": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "269": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "280": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "281": [
+      "zemp2019-global",
+      "brun2017-hma",
+      "farinotti2019-storage"
+    ],
+    "284": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "292": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "295": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "297": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "298": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "299": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "303": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "305": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "306": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "307": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "315": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "316": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "319": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "344": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "348": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "354": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "356": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "357": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "372": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "373": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "374": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "375": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "376": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "378": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "379": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "380": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "381": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "383": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "384": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "385": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "386": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "387": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "388": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "389": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "390": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "391": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "392": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "393": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "394": [
+      "zemp2019-global",
+      "dussaillant2019-andes",
+      "farinotti2019-storage"
+    ],
+    "401": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "402": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "403": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "404": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "405": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "406": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "407": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "408": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "411": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "412": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "413": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "415": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "416": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "418": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "420": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "422": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "425": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "444": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "445": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "446": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "452": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "455": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "458": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "552": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "565": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "566": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "567": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "568": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "569": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "570": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "601": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "619": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "625": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "626": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "628": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "629": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "630": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "631": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "632": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "633": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "635": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "639": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "642": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "643": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "645": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "646": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "648": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "649": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "652": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "659": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "670": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "671": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "683": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "684": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "687": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "688": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "690": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "695": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ],
+    "698": [
+      "zemp2019-global",
+      "farinotti2019-storage"
+    ]
+  }
+}

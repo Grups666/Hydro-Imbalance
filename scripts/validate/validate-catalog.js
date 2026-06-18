@@ -31,15 +31,22 @@ for (const { moduleName, manifestFile } of modules) {
   check(`${prefix} module version`, manifest.version === "0.1.1", manifest.version);
   check(`${prefix} manifest file`, manifest.id === moduleName, `${manifestFile}: ${manifest.id}`);
   check(`${prefix} entry`, manifest.entry === "./public/modules/water-imbalance/index.js", manifest.entry);
-  check(`${prefix} no literature graph`, !manifest.knowledgeGraph, manifest.knowledgeGraph || "none");
-  check(`${prefix} no literature panel`, !(manifest.provides?.panels || []).some((panel) => /literature/i.test(panel.id || panel.name || "")));
+  check(`${prefix} no legacy knowledge graph`, !manifest.knowledgeGraph, manifest.knowledgeGraph || "none");
   check(`${prefix} three variables`, metadata.variables?.length === 3, metadata.variables?.map((item) => item.id).join(", "));
+  check(`${prefix} literature evidence metadata`, metadata.literatureEvidence === "./basin-literature-evidence.json", metadata.literatureEvidence || "missing");
   check(`${prefix} classification coverage`, Object.keys(classification.basins || {}).length === metadata.coverage.basins, `${Object.keys(classification.basins || {}).length} basins`);
   check(`${prefix} basin matches`, metadata.coverage.matchedBasins > 0 && metadata.coverage.matchedBasins <= metadata.coverage.basins, `${metadata.coverage.matchedBasins}/${metadata.coverage.basins}`);
   check(`${prefix} classification colors`, Object.keys(classification.colors || {}).length === 8, `${Object.keys(classification.colors || {}).length} classes`);
 
   const classTotal = Object.values(classification.counts || {}).reduce((sum, count) => sum + count, 0);
   check(`${prefix} classification count total`, classTotal === metadata.coverage.basins, `${classTotal}`);
+
+  const evidencePath = path.join(moduleDir, "data/basin-literature-evidence.json");
+  const evidence = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
+  const glacierEntries = (evidence.entries || []).filter((entry) => entry.variableKey === "glacier");
+  check(`${prefix} literature evidence entries`, glacierEntries.length >= 3, `${glacierEntries.length} glacier entries`);
+  check(`${prefix} literature evidence basin links`, Object.keys(evidence.byBasin || {}).length > 0, `${Object.keys(evidence.byBasin || {}).length} basins`);
+  check(`${prefix} literature evidence DOI links`, glacierEntries.every((entry) => entry.doi && entry.url), "doi/url present");
 }
 
 console.log("=== Validation complete ===");

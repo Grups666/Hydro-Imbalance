@@ -11,7 +11,7 @@
   "scripts": {
     "validate": "node scripts/validate/validate-catalog.js",
     "build:water-imbalance": "node scripts/build/build-water-imbalance-module.js",
-    "check": "node --check public/modules/water-imbalance/index.js && node --check scripts/build/build-water-imbalance-module.js",
+    "check": "node --check public/modules/water-imbalance/index.js && node --check scripts/build/build-water-imbalance-module.js && node --check scripts/build/build-literature-evidence.js",
     "test": "npm run check && npm run validate"
   },
   "keywords": [

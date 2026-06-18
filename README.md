@@ -120,6 +120,8 @@ python src/build_basins.py
 
 The core basin time-series classification uses WaterGAP 2.2d clipped to 1962-2016 to match the glacier reconstruction. The default manuscript-facing unit remains GRDC Major River Basins; the WMO module uses GRDC WMO Basins and Sub-Basins as a parallel comparison product without changing the imbalance rule. The local exploratory grid viewer uses WaterGAP2.2e ISIMIP3a GSWP3-W5E5 obsclim/histsoc/default monthly output for 1901-2019, stored under `projects/datasets/watergap_22e_2019/`. The downloader is resumable and skips files that already match the official byte size.
 
+Literature evidence for basin validation is stored in each public module as `data/basin-literature-evidence.json`. The evidence is linked by basin identifier and variable key, not by map coordinates. The current evidence set focuses on glacier-storage benchmarks and reports both the literature quantity and the project comparison statistic: the 1997-2016 minus 1962-1996 storage shift converted to an approximate m w.e. yr-1 equivalent by dividing by the 27.5-year distance between the two window centers.
+
 The local research viewer can be opened from `projects/web/index.html`, or served locally with:
 
 ```bash
@@ -133,6 +135,7 @@ Then visit `http://localhost:8000/web/`.
 
 ```bash
 npm run build:water-imbalance
+node scripts/build/build-literature-evidence.js
 npm test
 ```
 

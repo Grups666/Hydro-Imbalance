@@ -4,6 +4,7 @@
   "type": "basin-time-series",
   "file": "./basin-three-variable-timeseries-1962-2016.csv",
   "classification": "./basin-imbalance-classification.json",
+  "literatureEvidence": "./basin-literature-evidence.json",
   "basinData": "./basin-data.json",
   "join": {
     "moduleField": "basin_id",

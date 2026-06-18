@@ -51,6 +51,11 @@
         "id": "basin-hydrology-time-series",
         "type": "basin-time-series",
         "description": "Three annual hydrological variables joined to GRDC WMO Basins and Sub-Basins by basin_id."
+      },
+      {
+        "id": "basin-literature-evidence",
+        "type": "literature-evidence",
+        "description": "Curated literature benchmarks attached to basin ontology IDs and variable keys for order-of-magnitude validation."
       }
     ]
   }

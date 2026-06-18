@@ -11,6 +11,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.manifest = manifest;
     this.basePath = manifest.basePath || `/modules/${manifest.id || "water-imbalance"}/`;
     this.timeSeriesMetadata = null;
+    this.literatureEvidence = { entries: [], byBasin: {} };
+    this.literatureById = new Map();
     this.timeSeriesByBasin = new Map();
     this.timeSeriesLoadPromise = null;
     this.timeSeriesLoaded = false;
@@ -20,6 +22,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.basinSpatialIndex = null;
     this.selectedBasin = null;
     this.chartModal = null;
+    this.evidenceModal = null;
     this.activeChartSeries = null;
     this.themeObserver = null;
     this.themeMode = null;
@@ -63,6 +66,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.staticLayerCache = { key: null, canvas: null, ctx: null };
     Foundation.eventBus.off(Foundation.Events.FEATURE_CLICK, this.handleFeatureClick);
     this.closeTimeSeriesModal();
+    this.closeEvidenceModal();
     this.themeObserver?.disconnect();
     this.themeObserver = null;
     document.removeEventListener("change", this.handleThemeChange, true);
@@ -92,6 +96,12 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     ));
     for (const [basinId, result] of Object.entries(classification.basins || {})) {
       this.classificationByBasin.set(String(basinId), result);
+    }
+    if (this.timeSeriesMetadata.literatureEvidence) {
+      this.literatureEvidence = await this.fetchJson(this.resolveModulePath(
+        dataset.metadata.replace(/[^/]+$/, "") + this.timeSeriesMetadata.literatureEvidence.replace(/^\.\//, "")
+      ));
+      this.literatureById = new Map((this.literatureEvidence.entries || []).map((entry) => [entry.id, entry]));
     }
   }
 
@@ -490,6 +500,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-preview:hover{border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft),0 10px 24px rgba(0,0,0,.18);filter:brightness(1.08);transform:translateY(-1px)}
       .wi-preview:focus-visible{outline:0;border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft)}
       .wi-metric-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:8px 10px;color:var(--wi-text)}
+      .wi-evidence-card{display:flex;flex-direction:column;gap:4px;width:100%;text-align:left;background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:4px;padding:9px 10px;color:var(--wi-text);cursor:pointer;transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}
+      .wi-evidence-card:hover{border-color:var(--wi-focus);box-shadow:0 0 0 2px var(--wi-focus-soft);transform:translateY(-1px)}
+      .wi-evidence-card:focus-visible{outline:0;border-color:var(--wi-focus);box-shadow:0 0 0 3px var(--wi-focus-soft)}
+      .wi-evidence-title{font-size:12px;font-weight:600;line-height:1.35;color:var(--wi-text)}
+      .wi-evidence-value{font-size:11px;line-height:1.45;color:var(--wi-muted)}
     `;
     document.head.appendChild(style);
   }
@@ -629,8 +644,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     const series = this.timeSeriesByBasin.get(String(basin.id)) || [];
     const previewId = `wi-preview-${basin.id}`;
     const expandId = `wi-expand-${basin.id}`;
+    const evidenceListId = `wi-evidence-${basin.id}`;
     const classLabel = this.getClassLabel(classification);
     const metrics = classification?.metrics || {};
+    const evidence = this.getEvidenceForBasin(basin.id, classification);
 
     const content = `
       <div class="wi-inspector">
@@ -668,6 +685,11 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
           ? `<canvas id="${previewId}" class="wi-preview" width="300" height="132" tabindex="0" role="button" aria-label="Open basin time series"></canvas>`
           : `<p class="wi-muted" style="font-size:12px;margin:0">${this.timeSeriesLoaded ? "No basin_id match in the module time-series dataset." : "Loading time series on demand..."}</p>`}
       </section>
+
+      <section id="${evidenceListId}" style="margin-bottom:4px">
+        <h3 class="wi-section-title">Literature Evidence</h3>
+        ${this.renderLiteratureEvidence(evidence)}
+      </section>
       </div>
     `;
 
@@ -677,6 +699,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       setTimeout(() => {
         const preview = document.getElementById(previewId);
         const expand = document.getElementById(expandId);
+        this.bindEvidenceButtons(evidenceListId, evidence);
         if (preview) {
           this.drawMiniPreview(preview, series);
           preview.onclick = () => this.openTimeSeriesModal(prep, series);
@@ -689,6 +712,42 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         }
         if (expand) expand.onclick = () => this.openTimeSeriesModal(prep, series);
       }, 0);
+    } else {
+      setTimeout(() => this.bindEvidenceButtons(evidenceListId, evidence), 0);
+    }
+  }
+
+  getEvidenceForBasin(basinId, classification) {
+    const ids = this.literatureEvidence?.byBasin?.[String(basinId)] || [];
+    const imbalanced = new Set(classification?.imbalancedVariables || []);
+    return ids
+      .map((id) => this.literatureById.get(id))
+      .filter(Boolean)
+      .filter((entry) => !imbalanced.size || imbalanced.has(entry.variableKey))
+      .sort((a, b) => (a.variableKey || "").localeCompare(b.variableKey || "") || (a.year || 0) - (b.year || 0));
+  }
+
+  renderLiteratureEvidence(evidence) {
+    if (!evidence.length) {
+      return `<p class="wi-muted" style="font-size:12px;margin:0">No literature benchmark linked to this basin yet.</p>`;
+    }
+    return `<div style="display:flex;flex-direction:column;gap:8px">${evidence.map((entry) => `
+      <button class="wi-evidence-card" type="button" data-evidence-id="${this.escape(entry.id)}">
+        <span class="wi-evidence-title">${this.escape(entry.title)}</span>
+        <span class="wi-muted" style="font-size:11px">${this.escape(entry.authors)} ${this.escape(entry.year)} · ${this.escape(entry.scope)}</span>
+        <span class="wi-evidence-value">${this.escape(entry.reportedQuantity?.valueText || "")}</span>
+      </button>
+    `).join("")}</div>`;
+  }
+
+  bindEvidenceButtons(containerId, evidence) {
+    const container = document.getElementById(containerId);
+    if (!container || !evidence.length) return;
+    for (const button of container.querySelectorAll("[data-evidence-id]")) {
+      button.onclick = () => {
+        const entry = this.literatureById.get(button.getAttribute("data-evidence-id"));
+        if (entry) this.openEvidenceModal(entry);
+      };
     }
   }
 
@@ -787,6 +846,19 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
       .wi-chart-row{position:relative;border-bottom:1px solid var(--wi-border);min-height:150px}
       .wi-chart-row:last-child{border-bottom:0}
       .wi-chart-row canvas{display:block;width:100%;height:100%;min-height:150px}
+      .wi-evidence-modal{position:fixed;inset:0;background:var(--wi-overlay);z-index:310;display:none;align-items:center;justify-content:center;padding:28px}
+      .wi-evidence-modal.visible{display:flex}
+      .wi-evidence-dialog{width:min(760px,calc(100vw - 56px));max-height:min(740px,calc(100vh - 56px));background:var(--wi-surface);border:1px solid var(--wi-border);border-radius:8px;box-shadow:var(--wi-shadow);display:flex;flex-direction:column;overflow:hidden;color:var(--wi-text)}
+      .wi-evidence-header{min-height:54px;padding:14px 18px;border-bottom:1px solid var(--wi-border);display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+      .wi-evidence-body{padding:16px 18px 18px;overflow:auto}
+      .wi-evidence-link{color:var(--wi-link);text-decoration:none}
+      .wi-evidence-link:hover{text-decoration:underline}
+      .wi-evidence-close{width:28px;height:28px;padding:0;border:0;background:transparent;border-radius:4px;cursor:pointer;color:var(--wi-muted);display:grid;place-items:center;font:400 22px/1 Arial,sans-serif;flex:0 0 auto}
+      .wi-evidence-close:hover{background:var(--wi-button-hover)}
+      .wi-evidence-detail-grid{display:grid;grid-template-columns:1fr;gap:12px}
+      .wi-evidence-detail-card{background:var(--wi-surface-soft);border:1px solid var(--wi-border);border-radius:6px;padding:12px}
+      .wi-evidence-detail-card h4{font-size:12px;margin:0 0 6px;color:var(--wi-muted);text-transform:uppercase}
+      .wi-evidence-detail-card p{margin:0;color:var(--wi-text);font-size:13px;line-height:1.55}
     `;
     document.head.appendChild(style);
 
@@ -811,6 +883,93 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     };
     modal.querySelector("#wi-chart-close").onclick = () => this.closeTimeSeriesModal();
     this.chartModal = modal;
+  }
+
+  ensureEvidenceUI() {
+    const existing = document.getElementById("wi-evidence-modal");
+    if (existing) {
+      this.evidenceModal = existing;
+      existing.onclick = (event) => {
+        if (event.target === existing) this.closeEvidenceModal();
+      };
+      existing.querySelector("#wi-evidence-close").onclick = () => this.closeEvidenceModal();
+      return;
+    }
+
+    const modal = document.createElement("div");
+    modal.id = "wi-evidence-modal";
+    modal.className = "wi-evidence-modal";
+    modal.innerHTML = `
+      <div class="wi-evidence-dialog">
+        <div class="wi-evidence-header">
+          <div>
+            <div class="wi-chart-title" id="wi-evidence-title">Literature Evidence</div>
+            <div class="wi-chart-subtitle" id="wi-evidence-subtitle">Basin-linked benchmark</div>
+          </div>
+          <button class="wi-evidence-close" id="wi-evidence-close" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="wi-evidence-body" id="wi-evidence-body"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.onclick = (event) => {
+      if (event.target === modal) this.closeEvidenceModal();
+    };
+    modal.querySelector("#wi-evidence-close").onclick = () => this.closeEvidenceModal();
+    this.evidenceModal = modal;
+  }
+
+  openEvidenceModal(entry) {
+    this.ensureEvidenceUI();
+    const comparison = entry.comparison || {};
+    const examples = comparison.exampleBasins || [];
+    this.evidenceModal.querySelector("#wi-evidence-title").innerHTML =
+      `<a class="wi-evidence-link" href="${this.escape(entry.url || "#")}" target="_blank" rel="noopener noreferrer">${this.escape(entry.title)}</a>`;
+    this.evidenceModal.querySelector("#wi-evidence-subtitle").textContent =
+      `${entry.authors || ""} ${entry.year || ""} · ${entry.venue || ""} · DOI ${entry.doi || ""}`;
+    this.evidenceModal.querySelector("#wi-evidence-body").innerHTML = `
+      <div class="wi-evidence-detail-grid">
+        <div class="wi-evidence-detail-card">
+          <h4>Reported Quantity</h4>
+          <p><strong>${this.escape(entry.reportedQuantity?.label || "Literature value")}:</strong> ${this.escape(entry.reportedQuantity?.valueText || "")}</p>
+          <p class="wi-muted" style="margin-top:4px;font-size:12px">Period: ${this.escape(entry.reportedQuantity?.period || "not specified")}</p>
+        </div>
+        <div class="wi-evidence-detail-card">
+          <h4>Our Comparison</h4>
+          <p>${this.escape(comparison.assessment || "")}</p>
+          <p class="wi-muted" style="margin-top:6px;font-size:12px">
+            ${this.escape(comparison.matchedBasinCount || 0)} linked basins · equivalent-rate median ${this.formatEvidenceRate(comparison.ourEquivalentRateMweYrMedian)} · range ${this.formatEvidenceRateRange(comparison.ourEquivalentRateMweYrRange)}
+          </p>
+        </div>
+        <div class="wi-evidence-detail-card">
+          <h4>Basis</h4>
+          <p>${this.escape(comparison.basis || "")}</p>
+          <p class="wi-muted" style="margin-top:6px;font-size:12px">${this.escape(comparison.ourMetric || "")}</p>
+        </div>
+        ${examples.length ? `<div class="wi-evidence-detail-card">
+          <h4>Example Linked Basins</h4>
+          <p>${examples.map((item) => `${this.escape(item.name)} (${this.escape(item.basinId)}: ${this.formatValue(item.storageShiftMm)} mm, ${this.formatEvidenceRate(item.equivalentRateMweYr)})`).join("<br>")}</p>
+        </div>` : ""}
+        <div class="wi-evidence-detail-card">
+          <h4>Abstract Note</h4>
+          <p>${this.escape(entry.abstract || "")}</p>
+        </div>
+      </div>
+    `;
+    this.evidenceModal.classList.add("visible");
+  }
+
+  closeEvidenceModal() {
+    this.evidenceModal?.classList.remove("visible");
+  }
+
+  formatEvidenceRate(value) {
+    return Number.isFinite(value) ? `${value.toFixed(3)} m w.e. yr-1` : "n/a";
+  }
+
+  formatEvidenceRateRange(range) {
+    if (!Array.isArray(range) || range.length !== 2) return "n/a";
+    return `${this.formatEvidenceRate(range[0])} to ${this.formatEvidenceRate(range[1])}`;
   }
 
   drawMiniPreview(canvas, series) {

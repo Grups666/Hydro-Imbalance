@@ -205,6 +205,7 @@ const metadata = {
   type: "basin-time-series",
   file: "./basin-three-variable-timeseries-1962-2016.csv",
   classification: "./basin-imbalance-classification.json",
+  literatureEvidence: "./basin-literature-evidence.json",
   basinData: "./basin-data.json",
   join: {
     moduleField: "basin_id",
@@ -291,6 +292,11 @@ const manifest = {
         id: "basin-hydrology-time-series",
         type: "basin-time-series",
         description: `Three annual hydrological variables joined to ${spatialEntity} by basin_id.`
+      },
+      {
+        id: "basin-literature-evidence",
+        type: "literature-evidence",
+        description: "Curated literature benchmarks attached to basin ontology IDs and variable keys for order-of-magnitude validation."
       }
     ]
   }
