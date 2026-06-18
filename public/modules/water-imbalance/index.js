@@ -1090,9 +1090,10 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
   }
 
   getChartPlot(width, height, showXAxis) {
+    const rightInset = Math.min(250, Math.max(150, width * 0.24));
     return {
       left: 58,
-      right: width - 178,
+      right: width - rightInset,
       top: 32,
       bottom: height - (showXAxis ? 30 : 12)
     };
