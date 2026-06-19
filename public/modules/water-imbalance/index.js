@@ -937,9 +937,8 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         <div class="wi-evidence-detail-card">
           <h4>Our Comparison</h4>
           <p>${this.escape(comparison.assessment || "")}</p>
-          <p class="wi-muted" style="margin-top:6px;font-size:12px">
-            ${this.escape(comparison.matchedBasinCount || 0)} linked basins · equivalent-rate median ${this.formatEvidenceRate(comparison.ourEquivalentRateMweYrMedian)} · range ${this.formatEvidenceRateRange(comparison.ourEquivalentRateMweYrRange)}
-          </p>
+          ${this.renderEvidenceStats(comparison.displayStats)}
+          ${comparison.riskNote ? `<p class="wi-muted" style="margin-top:8px;font-size:12px"><strong>Risk note:</strong> ${this.escape(comparison.riskNote)}</p>` : ""}
         </div>
         <div class="wi-evidence-detail-card">
           <h4>Basis</h4>
@@ -948,7 +947,7 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
         </div>
         ${examples.length ? `<div class="wi-evidence-detail-card">
           <h4>Example Linked Basins</h4>
-          <p>${examples.map((item) => `${this.escape(item.name)} (${this.escape(item.basinId)}: ${this.formatValue(item.storageShiftMm)} mm, ${this.formatEvidenceRate(item.equivalentRateMweYr)})`).join("<br>")}</p>
+          <p>${examples.map((item) => `${this.escape(item.name)} (${this.escape(item.basinId)}): ${this.escape(item.summary || "")}`).join("<br>")}</p>
         </div>` : ""}
         <div class="wi-evidence-detail-card">
           <h4>Abstract Note</h4>
@@ -959,17 +958,22 @@ window.WaterImbalanceModule = class WaterImbalanceModule {
     this.evidenceModal.classList.add("visible");
   }
 
+  renderEvidenceStats(stats) {
+    if (!Array.isArray(stats) || !stats.length) return "";
+    return `
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:10px">
+        ${stats.map((item) => `
+          <div style="border:1px solid var(--wi-border);border-radius:4px;padding:7px 8px;background:var(--wi-surface)">
+            <div class="wi-muted" style="font-size:10px;text-transform:uppercase">${this.escape(item.label || "")}</div>
+            <div style="font-size:12px;font-weight:600;color:var(--wi-text);margin-top:2px">${this.escape(item.value || "")}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
   closeEvidenceModal() {
     this.evidenceModal?.classList.remove("visible");
-  }
-
-  formatEvidenceRate(value) {
-    return Number.isFinite(value) ? `${value.toFixed(3)} m w.e. yr-1` : "n/a";
-  }
-
-  formatEvidenceRateRange(range) {
-    if (!Array.isArray(range) || range.length !== 2) return "n/a";
-    return `${this.formatEvidenceRate(range[0])} to ${this.formatEvidenceRate(range[1])}`;
   }
 
   drawMiniPreview(canvas, series) {

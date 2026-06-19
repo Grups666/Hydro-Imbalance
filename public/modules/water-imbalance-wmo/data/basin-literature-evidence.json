@@ -1,87 +1,130 @@
 {
-  "schema": "basin-literature-evidence/v1",
-  "generated": "2026-06-18",
+  "schema": "basin-literature-evidence/v2",
+  "generated": "2026-06-19",
   "moduleId": "water-imbalance-wmo",
   "variableCoverage": [
-    "glacier"
+    "glacier",
+    "groundwater",
+    "deficit"
   ],
   "method": {
-    "attachment": "Evidence is attached to basin ontology identifiers, not map coordinates.",
-    "comparison": "The project glacier value is a storage-state window shift in mm water equivalent. For comparison with m w.e. yr-1 literature rates, the shift is divided by 27.5 years, the distance between the centers of 1962-1996 and 1997-2016.",
-    "limitation": "Most references are regional rather than basin-specific; they validate order of magnitude and direction, not exact basin equality."
+    "attachment": "Evidence is attached to basin ontology identifiers and variable keys, not map coordinates.",
+    "comparison": "Each evidence entry stores the reported literature quantity, the project metric used for comparison, linked-basin summary statistics, and a risk note when definitions or denominators differ.",
+    "denominatorWarning": "Project water-demand deficit and groundwater values use effective WaterGAP grid cells after small-value masking; glacier storage is normalized by glacier-covered area. Literature values using total basin area or total regional volume must be interpreted through these denominators.",
+    "limitation": "Most references are regional rather than basin-specific. They validate order of magnitude, sign, and spatial ranking; they do not imply exact equality."
   },
   "entries": [
     {
-      "id": "zemp2019-global",
+      "id": "zemp2019-global-glacier",
       "variableKey": "glacier",
-      "scope": "Global glaciers outside the Greenland and Antarctic ice sheets",
+      "scope": "Global glacier mass change",
       "title": "Global glacier mass changes and their contributions to sea-level rise from 1961 to 2016",
       "authors": "Zemp et al.",
       "year": 2019,
       "venue": "Nature",
       "doi": "10.1038/s41586-019-1071-0",
       "url": "https://pubmed.ncbi.nlm.nih.gov/30962533/",
-      "abstract": "Global extrapolation of glaciological and geodetic observations for 1961-2016, including regional specific mass-change rates and sea-level contribution.",
+      "abstract": "Global extrapolation of glaciological and geodetic observations for 1961-2016, including regional specific mass-change rates.",
       "reportedQuantity": {
         "label": "Glacier mass change",
-        "valueText": "2006-2016 regional rates from -0.1 to -1.2 m w.e. yr-1; global loss 335 +/- 144 Gt yr-1",
+        "valueText": "1961-2016 sea-level contribution 27 +/- 22 mm; 2006-2016 regional rates -0.1 to -1.2 m w.e. yr-1; global loss 335 +/- 144 Gt yr-1",
         "period": "1961-2016, with 2006-2016 regional rates"
       },
       "comparison": {
-        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
         "matchedBasinCount": 131,
+        "variableLabel": "Glacier Storage",
+        "validationType": "direct-rate-order",
         "windowCenterDeltaYears": 27.5,
-        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
-        "ourEquivalentRateMweYrRange": [
-          -2.038,
-          -0.067
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "131"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "37070.3 mm water equivalent"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "3355.3 to 302268.0 mm water equivalent"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-11139.8 mm water equivalent"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-56041.3 to -1855.1 mm water equivalent"
+          },
+          {
+            "label": "Equivalent-rate median",
+            "value": "-0.405 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-2.038 to -0.067 m w.e. yr-1"
+          }
         ],
-        "ourEquivalentRateMweYrMedian": -0.405,
         "exampleBasins": [
           {
             "basinId": "356",
             "name": "Zapaleri",
             "region": "SA",
-            "storageShiftMm": -56041.3,
-            "equivalentRateMweYr": -2.038
+            "recentMean": 4195.6,
+            "historicalMean": 60236.9,
+            "windowShift": -56041.3,
+            "summary": "recent 4195.6 mm w.e.; shift -56041.3 mm; equivalent -2.038 m w.e. yr-1"
           },
           {
             "basinId": "383",
             "name": "Azopardo And Fagnano Lake",
             "region": "SA",
-            "storageShiftMm": -35686.8,
-            "equivalentRateMweYr": -1.298
+            "recentMean": 21214.2,
+            "historicalMean": 56901,
+            "windowShift": -35686.8,
+            "summary": "recent 21214.2 mm w.e.; shift -35686.8 mm; equivalent -1.298 m w.e. yr-1"
           },
           {
             "basinId": "344",
             "name": "South Pacific (Ex 348, 378, 379, 380)",
             "region": "SA",
-            "storageShiftMm": -34399.6,
-            "equivalentRateMweYr": -1.251
+            "recentMean": 31209.7,
+            "historicalMean": 65609.3,
+            "windowShift": -34399.6,
+            "summary": "recent 31209.7 mm w.e.; shift -34399.6 mm; equivalent -1.251 m w.e. yr-1"
           },
           {
             "basinId": "455",
             "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
             "region": "NA",
-            "storageShiftMm": -33938,
-            "equivalentRateMweYr": -1.234
+            "recentMean": 12117.9,
+            "historicalMean": 46055.9,
+            "windowShift": -33938,
+            "summary": "recent 12117.9 mm w.e.; shift -33938.0 mm; equivalent -1.234 m w.e. yr-1"
           },
           {
             "basinId": "619",
             "name": "Bay Of Biscay (Ex 610)",
             "region": "EU",
-            "storageShiftMm": -33904.2,
-            "equivalentRateMweYr": -1.233
+            "recentMean": 4801.5,
+            "historicalMean": 38705.8,
+            "windowShift": -33904.2,
+            "summary": "recent 4801.5 mm w.e.; shift -33904.2 mm; equivalent -1.233 m w.e. yr-1"
           },
           {
             "basinId": "418",
             "name": "Great Basin",
             "region": "NA",
-            "storageShiftMm": -33299.6,
-            "equivalentRateMweYr": -1.211
+            "recentMean": 4366.1,
+            "historicalMean": 37665.7,
+            "windowShift": -33299.6,
+            "summary": "recent 4366.1 mm w.e.; shift -33299.6 mm; equivalent -1.211 m w.e. yr-1"
           }
         ],
-        "assessment": "Broad global benchmark. Basin-scale values should fall within the same order of magnitude as the regional m w.e. yr-1 rates, not match exactly."
+        "assessment": "Good global benchmark for sign and order of magnitude. Basin values should be compared as window-shift equivalent rates, not exact annual mass-balance observations.",
+        "riskNote": "If a basin equivalent rate is much below -1.3 m w.e. yr-1, inspect glacier-area normalization and very small glacierized area."
       },
       "basinIds": [
         "168",
@@ -218,177 +261,499 @@
       ]
     },
     {
-      "id": "brun2017-hma",
+      "id": "glambie2025-regional-glacier",
       "variableKey": "glacier",
-      "scope": "High Mountain Asia",
-      "title": "A spatially resolved estimate of High Mountain Asia glacier mass balances, 2000-2016",
-      "authors": "Brun et al.",
-      "year": 2017,
-      "venue": "Nature Geoscience",
-      "doi": "10.1038/NGEO2999",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/28890734/",
-      "abstract": "Satellite stereo-imagery DEM time series were used to estimate spatially resolved glacier mass balances for about 92% of the glacierized area of High Mountain Asia.",
+      "scope": "Regional glacier assessments",
+      "title": "Community estimate of global glacier mass changes from 2000 to 2023",
+      "authors": "GlaMBIE Team",
+      "year": 2025,
+      "venue": "Nature",
+      "doi": "10.1038/s41586-024-08545-z",
+      "url": "https://www.nature.com/articles/s41586-024-08545-z",
+      "abstract": "Multi-method regional glacier mass-change assessment for 2000-2023, useful for regional order-of-magnitude validation.",
       "reportedQuantity": {
-        "label": "High Mountain Asia glacier mass balance",
-        "valueText": "-16.3 +/- 3.5 Gt yr-1 (-0.18 +/- 0.04 m w.e. yr-1), with strong subregional variability",
-        "period": "2000-2016"
+        "label": "Regional glacier mass balance",
+        "valueText": "Alaska -0.72, W Canada/USA -0.68, Central Europe -1.06, Central Asia -0.22, South Asia east -0.52, Southern Andes -0.93, New Zealand -0.96 m w.e. yr-1",
+        "period": "2000-2023"
       },
       "comparison": {
-        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
-        "matchedBasinCount": 14,
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 131,
+        "variableLabel": "Glacier Storage",
+        "validationType": "direct-rate-order",
         "windowCenterDeltaYears": 27.5,
-        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
-        "ourEquivalentRateMweYrRange": [
-          -0.228,
-          -0.067
-        ],
-        "ourEquivalentRateMweYrMedian": -0.105,
-        "exampleBasins": [
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
           {
-            "basinId": "209",
-            "name": "Yenisey",
-            "region": "AS",
-            "storageShiftMm": -6257.3,
-            "equivalentRateMweYr": -0.228
+            "label": "Matched basins",
+            "value": "131"
           },
           {
-            "basinId": "246",
-            "name": "Ganges (Ex 247, 248, 249, 250)",
-            "region": "AS",
-            "storageShiftMm": -4324.5,
-            "equivalentRateMweYr": -0.157
+            "label": "Recent mean median",
+            "value": "37070.3 mm water equivalent"
           },
           {
-            "basinId": "260",
-            "name": "Irrawaddy",
-            "region": "AS",
-            "storageShiftMm": -4012.5,
-            "equivalentRateMweYr": -0.146
+            "label": "Recent mean range",
+            "value": "3355.3 to 302268.0 mm water equivalent"
           },
           {
-            "basinId": "247",
-            "name": "Yamuna",
-            "region": "AS",
-            "storageShiftMm": -3866.5,
-            "equivalentRateMweYr": -0.141
+            "label": "Window shift median",
+            "value": "-11139.8 mm water equivalent"
           },
           {
-            "basinId": "251",
-            "name": "Brahmaputra",
-            "region": "AS",
-            "storageShiftMm": -3468.9,
-            "equivalentRateMweYr": -0.126
+            "label": "Window shift range",
+            "value": "-56041.3 to -1855.1 mm water equivalent"
           },
           {
-            "basinId": "262",
-            "name": "Salween",
-            "region": "AS",
-            "storageShiftMm": -3352.7,
-            "equivalentRateMweYr": -0.122
+            "label": "Equivalent-rate median",
+            "value": "-0.405 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-2.038 to -0.067 m w.e. yr-1"
           }
         ],
-        "assessment": "Useful regional check for Asian mountain basins; our basin-normalized storage-shift equivalents should be negative for losing glacierized basins, with local deviations expected."
+        "exampleBasins": [
+          {
+            "basinId": "356",
+            "name": "Zapaleri",
+            "region": "SA",
+            "recentMean": 4195.6,
+            "historicalMean": 60236.9,
+            "windowShift": -56041.3,
+            "summary": "recent 4195.6 mm w.e.; shift -56041.3 mm; equivalent -2.038 m w.e. yr-1"
+          },
+          {
+            "basinId": "383",
+            "name": "Azopardo And Fagnano Lake",
+            "region": "SA",
+            "recentMean": 21214.2,
+            "historicalMean": 56901,
+            "windowShift": -35686.8,
+            "summary": "recent 21214.2 mm w.e.; shift -35686.8 mm; equivalent -1.298 m w.e. yr-1"
+          },
+          {
+            "basinId": "344",
+            "name": "South Pacific (Ex 348, 378, 379, 380)",
+            "region": "SA",
+            "recentMean": 31209.7,
+            "historicalMean": 65609.3,
+            "windowShift": -34399.6,
+            "summary": "recent 31209.7 mm w.e.; shift -34399.6 mm; equivalent -1.251 m w.e. yr-1"
+          },
+          {
+            "basinId": "455",
+            "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
+            "region": "NA",
+            "recentMean": 12117.9,
+            "historicalMean": 46055.9,
+            "windowShift": -33938,
+            "summary": "recent 12117.9 mm w.e.; shift -33938.0 mm; equivalent -1.234 m w.e. yr-1"
+          },
+          {
+            "basinId": "619",
+            "name": "Bay Of Biscay (Ex 610)",
+            "region": "EU",
+            "recentMean": 4801.5,
+            "historicalMean": 38705.8,
+            "windowShift": -33904.2,
+            "summary": "recent 4801.5 mm w.e.; shift -33904.2 mm; equivalent -1.233 m w.e. yr-1"
+          },
+          {
+            "basinId": "418",
+            "name": "Great Basin",
+            "region": "NA",
+            "recentMean": 4366.1,
+            "historicalMean": 37665.7,
+            "windowShift": -33299.6,
+            "summary": "recent 4366.1 mm w.e.; shift -33299.6 mm; equivalent -1.211 m w.e. yr-1"
+          }
+        ],
+        "assessment": "Strong regional benchmark. Because it emphasizes the accelerated 2000-2023 period, project values can be lower where the 1962-2016 window includes earlier slower losses.",
+        "riskNote": "New Zealand and some Alps/Himalaya basins are expected to look lower than this recent benchmark; that is a window effect unless the manuscript claims a 2000s-only rate."
       },
       "basinIds": [
+        "168",
+        "189",
+        "201",
+        "202",
+        "203",
+        "207",
+        "208",
         "209",
+        "210",
+        "211",
+        "212",
         "214",
         "215",
         "216",
         "217",
         "220",
+        "221",
+        "223",
+        "228",
+        "243",
+        "244",
+        "245",
         "246",
         "247",
+        "248",
+        "249",
+        "250",
         "251",
         "260",
         "262",
         "269",
         "280",
-        "281"
+        "281",
+        "284",
+        "292",
+        "295",
+        "297",
+        "298",
+        "299",
+        "303",
+        "305",
+        "306",
+        "307",
+        "315",
+        "316",
+        "319",
+        "344",
+        "348",
+        "354",
+        "356",
+        "357",
+        "372",
+        "373",
+        "374",
+        "375",
+        "376",
+        "378",
+        "379",
+        "380",
+        "381",
+        "383",
+        "384",
+        "385",
+        "386",
+        "387",
+        "388",
+        "389",
+        "390",
+        "391",
+        "392",
+        "393",
+        "394",
+        "401",
+        "402",
+        "403",
+        "404",
+        "405",
+        "406",
+        "407",
+        "408",
+        "411",
+        "412",
+        "413",
+        "415",
+        "416",
+        "418",
+        "420",
+        "422",
+        "425",
+        "444",
+        "445",
+        "446",
+        "452",
+        "455",
+        "458",
+        "552",
+        "565",
+        "566",
+        "567",
+        "568",
+        "569",
+        "570",
+        "601",
+        "619",
+        "625",
+        "626",
+        "628",
+        "629",
+        "630",
+        "631",
+        "632",
+        "633",
+        "635",
+        "639",
+        "642",
+        "643",
+        "645",
+        "646",
+        "648",
+        "649",
+        "652",
+        "659",
+        "670",
+        "671",
+        "683",
+        "684",
+        "687",
+        "688",
+        "690",
+        "695",
+        "698"
       ]
     },
     {
-      "id": "farinotti2015-tienshan",
+      "id": "hugonnet2021-global-glacier",
       "variableKey": "glacier",
-      "scope": "Tien Shan",
-      "title": "Substantial glacier mass loss in the Tien Shan over the past 50 years",
-      "authors": "Farinotti et al.",
-      "year": 2015,
-      "venue": "Nature Geoscience",
-      "doi": "10.1038/ngeo2513",
-      "url": "https://www.nature.com/articles/ngeo2513",
-      "abstract": "Regional reconstruction of Tien Shan glacier mass change over roughly five decades, used here as a focused benchmark for Central Asian glacierized basins.",
+      "scope": "ASTER 2000-2019 glacier elevation change regions",
+      "title": "Accelerated global glacier mass loss in the early twenty-first century",
+      "authors": "Hugonnet et al.",
+      "year": 2021,
+      "venue": "Nature",
+      "doi": "10.1038/s41586-021-03436-z",
+      "url": "https://www.nature.com/articles/s41586-021-03436-z",
+      "abstract": "ASTER digital elevation model analysis of global glacier mass changes over 2000-2019.",
       "reportedQuantity": {
-        "label": "Tien Shan glacier mass loss",
-        "valueText": "About 27 +/- 15% of total glacier mass lost over 1961-2012, commonly reported as about 5.4 +/- 2.8 Gt yr-1",
-        "period": "1961-2012"
+        "label": "Regional glacier mass balance",
+        "valueText": "Alaska -0.780, W Canada/USA -0.530, High Mountain Asia -0.220, Central Europe -0.860, Southern Andes -0.720, New Zealand -0.720 m w.e. yr-1",
+        "period": "2000-2019"
       },
       "comparison": {
-        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
-        "matchedBasinCount": 6,
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 131,
+        "variableLabel": "Glacier Storage",
+        "validationType": "direct-rate-order",
         "windowCenterDeltaYears": 27.5,
-        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
-        "ourEquivalentRateMweYrRange": [
-          -0.134,
-          -0.067
-        ],
-        "ourEquivalentRateMweYrMedian": -0.088,
-        "exampleBasins": [
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
           {
-            "basinId": "211",
-            "name": "Irtysh (Also Ertis)",
-            "region": "AS",
-            "storageShiftMm": -3680,
-            "equivalentRateMweYr": -0.134
+            "label": "Matched basins",
+            "value": "131"
           },
           {
-            "basinId": "215",
-            "name": "Ysyk-Kol (Also Issyk-Kul), Chuy (Also Shu), Talas And Sarysu",
-            "region": "AS",
-            "storageShiftMm": -2664.8,
-            "equivalentRateMweYr": -0.097
+            "label": "Recent mean median",
+            "value": "37070.3 mm water equivalent"
           },
           {
-            "basinId": "214",
-            "name": "Balkhash And Alakol",
-            "region": "AS",
-            "storageShiftMm": -2490.5,
-            "equivalentRateMweYr": -0.091
+            "label": "Recent mean range",
+            "value": "3355.3 to 302268.0 mm water equivalent"
           },
           {
-            "basinId": "216",
-            "name": "Aral Sea (North) And Syr Darya",
-            "region": "AS",
-            "storageShiftMm": -2324,
-            "equivalentRateMweYr": -0.085
+            "label": "Window shift median",
+            "value": "-11139.8 mm water equivalent"
           },
           {
-            "basinId": "217",
-            "name": "Aral Sea (South) And Amu Darya",
-            "region": "AS",
-            "storageShiftMm": -1905.5,
-            "equivalentRateMweYr": -0.069
+            "label": "Window shift range",
+            "value": "-56041.3 to -1855.1 mm water equivalent"
           },
           {
-            "basinId": "220",
-            "name": "Tarim He (Also Talimu He) And Tibetan Plateau",
-            "region": "AS",
-            "storageShiftMm": -1855.1,
-            "equivalentRateMweYr": -0.067
+            "label": "Equivalent-rate median",
+            "value": "-0.405 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-2.038 to -0.067 m w.e. yr-1"
           }
         ],
-        "assessment": "Focused Central Asia check. Direct matching is not expected because our values are basin means over glacier area and use a 1962-2016 window comparison."
+        "exampleBasins": [
+          {
+            "basinId": "356",
+            "name": "Zapaleri",
+            "region": "SA",
+            "recentMean": 4195.6,
+            "historicalMean": 60236.9,
+            "windowShift": -56041.3,
+            "summary": "recent 4195.6 mm w.e.; shift -56041.3 mm; equivalent -2.038 m w.e. yr-1"
+          },
+          {
+            "basinId": "383",
+            "name": "Azopardo And Fagnano Lake",
+            "region": "SA",
+            "recentMean": 21214.2,
+            "historicalMean": 56901,
+            "windowShift": -35686.8,
+            "summary": "recent 21214.2 mm w.e.; shift -35686.8 mm; equivalent -1.298 m w.e. yr-1"
+          },
+          {
+            "basinId": "344",
+            "name": "South Pacific (Ex 348, 378, 379, 380)",
+            "region": "SA",
+            "recentMean": 31209.7,
+            "historicalMean": 65609.3,
+            "windowShift": -34399.6,
+            "summary": "recent 31209.7 mm w.e.; shift -34399.6 mm; equivalent -1.251 m w.e. yr-1"
+          },
+          {
+            "basinId": "455",
+            "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
+            "region": "NA",
+            "recentMean": 12117.9,
+            "historicalMean": 46055.9,
+            "windowShift": -33938,
+            "summary": "recent 12117.9 mm w.e.; shift -33938.0 mm; equivalent -1.234 m w.e. yr-1"
+          },
+          {
+            "basinId": "619",
+            "name": "Bay Of Biscay (Ex 610)",
+            "region": "EU",
+            "recentMean": 4801.5,
+            "historicalMean": 38705.8,
+            "windowShift": -33904.2,
+            "summary": "recent 4801.5 mm w.e.; shift -33904.2 mm; equivalent -1.233 m w.e. yr-1"
+          },
+          {
+            "basinId": "418",
+            "name": "Great Basin",
+            "region": "NA",
+            "recentMean": 4366.1,
+            "historicalMean": 37665.7,
+            "windowShift": -33299.6,
+            "summary": "recent 4366.1 mm w.e.; shift -33299.6 mm; equivalent -1.211 m w.e. yr-1"
+          }
+        ],
+        "assessment": "Very useful direct m w.e. yr-1 benchmark after converting project storage shifts by the 27.5-year window-center separation.",
+        "riskNote": "Project values far outside these regional ranges should be checked first for basin-region mismatch and glacierized-area denominator effects."
       },
       "basinIds": [
+        "168",
+        "189",
+        "201",
+        "202",
+        "203",
+        "207",
+        "208",
+        "209",
+        "210",
         "211",
+        "212",
         "214",
         "215",
         "216",
         "217",
-        "220"
+        "220",
+        "221",
+        "223",
+        "228",
+        "243",
+        "244",
+        "245",
+        "246",
+        "247",
+        "248",
+        "249",
+        "250",
+        "251",
+        "260",
+        "262",
+        "269",
+        "280",
+        "281",
+        "284",
+        "292",
+        "295",
+        "297",
+        "298",
+        "299",
+        "303",
+        "305",
+        "306",
+        "307",
+        "315",
+        "316",
+        "319",
+        "344",
+        "348",
+        "354",
+        "356",
+        "357",
+        "372",
+        "373",
+        "374",
+        "375",
+        "376",
+        "378",
+        "379",
+        "380",
+        "381",
+        "383",
+        "384",
+        "385",
+        "386",
+        "387",
+        "388",
+        "389",
+        "390",
+        "391",
+        "392",
+        "393",
+        "394",
+        "401",
+        "402",
+        "403",
+        "404",
+        "405",
+        "406",
+        "407",
+        "408",
+        "411",
+        "412",
+        "413",
+        "415",
+        "416",
+        "418",
+        "420",
+        "422",
+        "425",
+        "444",
+        "445",
+        "446",
+        "452",
+        "455",
+        "458",
+        "552",
+        "565",
+        "566",
+        "567",
+        "568",
+        "569",
+        "570",
+        "601",
+        "619",
+        "625",
+        "626",
+        "628",
+        "629",
+        "630",
+        "631",
+        "632",
+        "633",
+        "635",
+        "639",
+        "642",
+        "643",
+        "645",
+        "646",
+        "648",
+        "649",
+        "652",
+        "659",
+        "670",
+        "671",
+        "683",
+        "684",
+        "687",
+        "688",
+        "690",
+        "695",
+        "698"
       ]
     },
     {
-      "id": "dussaillant2019-andes",
+      "id": "dussaillant2019-andes-glacier",
       "variableKey": "glacier",
       "scope": "South American Andes",
       "title": "Two decades of glacier mass loss along the Andes",
@@ -397,67 +762,107 @@
       "venue": "Nature Geoscience",
       "doi": "10.1038/s41561-019-0432-5",
       "url": "https://www.nature.com/articles/s41561-019-0432-5",
-      "abstract": "ASTER DEM time series were used to estimate Andean glacier mass changes from 10 degrees N to 56 degrees S.",
+      "abstract": "ASTER DEM time series estimate Andean glacier mass changes from 10 degrees N to 56 degrees S.",
       "reportedQuantity": {
         "label": "Andean glacier mass loss",
-        "valueText": "-22.9 +/- 5.9 Gt yr-1 (-0.72 +/- 0.22 m w.e. yr-1), with strongest losses in Patagonia and the Tropical Andes",
+        "valueText": "-22.9 +/- 5.9 Gt yr-1 (-0.72 +/- 0.22 m w.e. yr-1); Patagonian Andes -0.78 +/- 0.25; Tropical Andes -0.42 +/- 0.24",
         "period": "2000-2018"
       },
       "comparison": {
-        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
         "matchedBasinCount": 33,
+        "variableLabel": "Glacier Storage",
+        "validationType": "direct-rate-order",
         "windowCenterDeltaYears": 27.5,
-        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
-        "ourEquivalentRateMweYrRange": [
-          -2.038,
-          -0.306
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "33"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "32716.3 mm water equivalent"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "4195.6 to 245874.7 mm water equivalent"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-20367.8 mm water equivalent"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-56041.3 to -8421.2 mm water equivalent"
+          },
+          {
+            "label": "Equivalent-rate median",
+            "value": "-0.741 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-2.038 to -0.306 m w.e. yr-1"
+          }
         ],
-        "ourEquivalentRateMweYrMedian": -0.741,
         "exampleBasins": [
           {
             "basinId": "356",
             "name": "Zapaleri",
             "region": "SA",
-            "storageShiftMm": -56041.3,
-            "equivalentRateMweYr": -2.038
+            "recentMean": 4195.6,
+            "historicalMean": 60236.9,
+            "windowShift": -56041.3,
+            "summary": "recent 4195.6 mm w.e.; shift -56041.3 mm; equivalent -2.038 m w.e. yr-1"
           },
           {
             "basinId": "383",
             "name": "Azopardo And Fagnano Lake",
             "region": "SA",
-            "storageShiftMm": -35686.8,
-            "equivalentRateMweYr": -1.298
+            "recentMean": 21214.2,
+            "historicalMean": 56901,
+            "windowShift": -35686.8,
+            "summary": "recent 21214.2 mm w.e.; shift -35686.8 mm; equivalent -1.298 m w.e. yr-1"
           },
           {
             "basinId": "344",
             "name": "South Pacific (Ex 348, 378, 379, 380)",
             "region": "SA",
-            "storageShiftMm": -34399.6,
-            "equivalentRateMweYr": -1.251
+            "recentMean": 31209.7,
+            "historicalMean": 65609.3,
+            "windowShift": -34399.6,
+            "summary": "recent 31209.7 mm w.e.; shift -34399.6 mm; equivalent -1.251 m w.e. yr-1"
           },
           {
             "basinId": "392",
             "name": "Manso",
             "region": "SA",
-            "storageShiftMm": -29846.8,
-            "equivalentRateMweYr": -1.085
+            "recentMean": 44793,
+            "historicalMean": 74639.8,
+            "windowShift": -29846.8,
+            "summary": "recent 44793.0 mm w.e.; shift -29846.8 mm; equivalent -1.085 m w.e. yr-1"
           },
           {
             "basinId": "306",
             "name": "Orinoco (Ex 307)",
             "region": "SA",
-            "storageShiftMm": -26398.2,
-            "equivalentRateMweYr": -0.96
+            "recentMean": 21314.5,
+            "historicalMean": 47712.7,
+            "windowShift": -26398.2,
+            "summary": "recent 21314.5 mm w.e.; shift -26398.2 mm; equivalent -0.960 m w.e. yr-1"
           },
           {
             "basinId": "374",
             "name": "Mar Chiquita, Salinas Grandes And Pampa De Las Salinas",
             "region": "SA",
-            "storageShiftMm": -24165.5,
-            "equivalentRateMweYr": -0.879
+            "recentMean": 29705.5,
+            "historicalMean": 53871.1,
+            "windowShift": -24165.5,
+            "summary": "recent 29705.5 mm w.e.; shift -24165.5 mm; equivalent -0.879 m w.e. yr-1"
           }
         ],
-        "assessment": "Regional benchmark for South American basins. Our strongest Andean basin shifts should be negative and often near the same m w.e. yr-1 order after window-center conversion."
+        "assessment": "South American median project values are expected to cluster near -0.7 m w.e. yr-1 after equivalent-rate conversion.",
+        "riskNote": "Very small basins with tiny glacierized area can exceed the regional rate; flag values below about -1.3 m w.e. yr-1 for inspection."
       },
       "basinIds": [
         "303",
@@ -496,789 +901,1800 @@
       ]
     },
     {
-      "id": "farinotti2019-storage",
+      "id": "brun2017-hma-glacier",
       "variableKey": "glacier",
-      "scope": "Global glacier storage baseline",
-      "title": "A consensus estimate for the ice thickness distribution of all glaciers on Earth",
-      "authors": "Farinotti et al.",
-      "year": 2019,
+      "scope": "High Mountain Asia",
+      "title": "A spatially resolved estimate of High Mountain Asia glacier mass balances, 2000-2016",
+      "authors": "Brun et al.",
+      "year": 2017,
       "venue": "Nature Geoscience",
-      "doi": "10.1038/s41561-019-0300-3",
-      "url": "https://www.nature.com/articles/s41561-019-0300-3",
-      "abstract": "Consensus global ice-thickness and volume estimate for individual glaciers, used by this project as the absolute storage anchor before applying annual mass-balance reconstruction.",
+      "doi": "10.1038/NGEO2999",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28890734/",
+      "abstract": "Satellite stereo-imagery DEM time series were used to estimate glacier mass balance for about 92% of High Mountain Asia glacierized area.",
       "reportedQuantity": {
-        "label": "Global glacier ice volume",
-        "valueText": "Consensus global ice-volume baseline, about 158,000 km3 of ice outside the main ice sheets",
-        "period": "Inventory-era baseline around 2000"
+        "label": "High Mountain Asia glacier mass balance",
+        "valueText": "-16.3 +/- 3.5 Gt yr-1 (-0.18 +/- 0.04 m w.e. yr-1), with strong subregional variability",
+        "period": "2000-2016"
       },
       "comparison": {
-        "basis": "GRDC WMO Basins and Sub-Basins; basin evidence attached by basin_id after filtering glacier-imbalanced basins in the source region.",
-        "matchedBasinCount": 131,
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 14,
+        "variableLabel": "Glacier Storage",
+        "validationType": "direct-rate-order",
         "windowCenterDeltaYears": 27.5,
-        "ourMetric": "recent_mean_1997_2016 minus historical_mean_1962_1996 for glacier_storage_mm_we, normalized by glacier-covered area",
-        "ourEquivalentRateMweYrRange": [
-          -2.038,
-          -0.067
-        ],
-        "ourEquivalentRateMweYrMedian": -0.405,
-        "exampleBasins": [
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
           {
-            "basinId": "356",
-            "name": "Zapaleri",
-            "region": "SA",
-            "storageShiftMm": -56041.3,
-            "equivalentRateMweYr": -2.038
+            "label": "Matched basins",
+            "value": "14"
           },
           {
-            "basinId": "383",
-            "name": "Azopardo And Fagnano Lake",
-            "region": "SA",
-            "storageShiftMm": -35686.8,
-            "equivalentRateMweYr": -1.298
+            "label": "Recent mean median",
+            "value": "44302.7 mm water equivalent"
           },
           {
-            "basinId": "344",
-            "name": "South Pacific (Ex 348, 378, 379, 380)",
-            "region": "SA",
-            "storageShiftMm": -34399.6,
-            "equivalentRateMweYr": -1.251
+            "label": "Recent mean range",
+            "value": "13962.5 to 64771.1 mm water equivalent"
           },
           {
-            "basinId": "455",
-            "name": "North Pacific (Ex 341, 405, 406, 445, 446, 456, 457, 471, 474, 477)",
-            "region": "NA",
-            "storageShiftMm": -33938,
-            "equivalentRateMweYr": -1.234
+            "label": "Window shift median",
+            "value": "-2880.5 mm water equivalent"
           },
           {
-            "basinId": "619",
-            "name": "Bay Of Biscay (Ex 610)",
-            "region": "EU",
-            "storageShiftMm": -33904.2,
-            "equivalentRateMweYr": -1.233
+            "label": "Window shift range",
+            "value": "-6257.3 to -1855.1 mm water equivalent"
           },
           {
-            "basinId": "418",
-            "name": "Great Basin",
-            "region": "NA",
-            "storageShiftMm": -33299.6,
-            "equivalentRateMweYr": -1.211
+            "label": "Equivalent-rate median",
+            "value": "-0.105 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-0.228 to -0.067 m w.e. yr-1"
           }
         ],
-        "assessment": "Methodological validation for the absolute storage baseline. This source constrains storage magnitude, while Zemp-style mass balance controls the temporal evolution."
+        "exampleBasins": [
+          {
+            "basinId": "209",
+            "name": "Yenisey",
+            "region": "AS",
+            "recentMean": 13962.5,
+            "historicalMean": 20219.8,
+            "windowShift": -6257.3,
+            "summary": "recent 13962.5 mm w.e.; shift -6257.3 mm; equivalent -0.228 m w.e. yr-1"
+          },
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": 61026.3,
+            "historicalMean": 65350.8,
+            "windowShift": -4324.5,
+            "summary": "recent 61026.3 mm w.e.; shift -4324.5 mm; equivalent -0.157 m w.e. yr-1"
+          },
+          {
+            "basinId": "260",
+            "name": "Irrawaddy",
+            "region": "AS",
+            "recentMean": 24543.3,
+            "historicalMean": 28555.8,
+            "windowShift": -4012.5,
+            "summary": "recent 24543.3 mm w.e.; shift -4012.5 mm; equivalent -0.146 m w.e. yr-1"
+          },
+          {
+            "basinId": "247",
+            "name": "Yamuna",
+            "region": "AS",
+            "recentMean": 54130.8,
+            "historicalMean": 57997.3,
+            "windowShift": -3866.5,
+            "summary": "recent 54130.8 mm w.e.; shift -3866.5 mm; equivalent -0.141 m w.e. yr-1"
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "recentMean": 50603.6,
+            "historicalMean": 54072.5,
+            "windowShift": -3468.9,
+            "summary": "recent 50603.6 mm w.e.; shift -3468.9 mm; equivalent -0.126 m w.e. yr-1"
+          },
+          {
+            "basinId": "262",
+            "name": "Salween",
+            "region": "AS",
+            "recentMean": 43214.5,
+            "historicalMean": 46567.2,
+            "windowShift": -3352.7,
+            "summary": "recent 43214.5 mm w.e.; shift -3352.7 mm; equivalent -0.122 m w.e. yr-1"
+          }
+        ],
+        "assessment": "The project should generally show negative but smaller rates than Alaska/Andes. South Asia east and some Himalaya basins can be more negative than the HMA average.",
+        "riskNote": "If Himalaya-linked basins remain near zero despite glacier imbalance classification, check regional balance allocation."
       },
       "basinIds": [
-        "168",
-        "189",
-        "201",
-        "202",
-        "203",
-        "207",
-        "208",
         "209",
-        "210",
-        "211",
-        "212",
         "214",
         "215",
         "216",
         "217",
         "220",
-        "221",
-        "223",
-        "228",
-        "243",
-        "244",
-        "245",
         "246",
         "247",
-        "248",
-        "249",
-        "250",
         "251",
         "260",
         "262",
         "269",
         "280",
-        "281",
-        "284",
-        "292",
+        "281"
+      ]
+    },
+    {
+      "id": "farinotti2015-tienshan-glacier",
+      "variableKey": "glacier",
+      "scope": "Tien Shan",
+      "title": "Substantial glacier mass loss in the Tien Shan over the past 50 years",
+      "authors": "Farinotti et al.",
+      "year": 2015,
+      "venue": "Nature Geoscience",
+      "doi": "10.1038/ngeo2513",
+      "url": "https://www.nature.com/articles/ngeo2513",
+      "abstract": "Regional reconstruction of Tien Shan glacier mass change over roughly five decades.",
+      "reportedQuantity": {
+        "label": "Tien Shan glacier mass loss",
+        "valueText": "Mass loss 27 +/- 15% over 1961-2012; average loss about 5.4 +/- 2.8 Gt yr-1, roughly -0.3 m w.e. yr-1 by area scaling",
+        "period": "1961-2012"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Glacier Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 6,
+        "variableLabel": "Glacier Storage",
+        "validationType": "derived-rate-order",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "glacier_storage_mm_we is an absolute storage state normalized by glacier-covered area; comparison with literature rates uses (recent_mean - historical_mean) / 27.5 years / 1000.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "6"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "46449.3 mm water equivalent"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "33357.4 to 64771.1 mm water equivalent"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-2407.2 mm water equivalent"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-3680.0 to -1855.1 mm water equivalent"
+          },
+          {
+            "label": "Equivalent-rate median",
+            "value": "-0.088 m w.e. yr-1"
+          },
+          {
+            "label": "Equivalent-rate range",
+            "value": "-0.134 to -0.067 m w.e. yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "211",
+            "name": "Irtysh (Also Ertis)",
+            "region": "AS",
+            "recentMean": 47507.8,
+            "historicalMean": 51187.8,
+            "windowShift": -3680,
+            "summary": "recent 47507.8 mm w.e.; shift -3680.0 mm; equivalent -0.134 m w.e. yr-1"
+          },
+          {
+            "basinId": "215",
+            "name": "Ysyk-Kol (Also Issyk-Kul), Chuy (Also Shu), Talas And Sarysu",
+            "region": "AS",
+            "recentMean": 33357.4,
+            "historicalMean": 36022.2,
+            "windowShift": -2664.8,
+            "summary": "recent 33357.4 mm w.e.; shift -2664.8 mm; equivalent -0.097 m w.e. yr-1"
+          },
+          {
+            "basinId": "214",
+            "name": "Balkhash And Alakol",
+            "region": "AS",
+            "recentMean": 45390.8,
+            "historicalMean": 47881.3,
+            "windowShift": -2490.5,
+            "summary": "recent 45390.8 mm w.e.; shift -2490.5 mm; equivalent -0.091 m w.e. yr-1"
+          },
+          {
+            "basinId": "216",
+            "name": "Aral Sea (North) And Syr Darya",
+            "region": "AS",
+            "recentMean": 40261,
+            "historicalMean": 42585,
+            "windowShift": -2324,
+            "summary": "recent 40261.0 mm w.e.; shift -2324.0 mm; equivalent -0.085 m w.e. yr-1"
+          },
+          {
+            "basinId": "217",
+            "name": "Aral Sea (South) And Amu Darya",
+            "region": "AS",
+            "recentMean": 61169.3,
+            "historicalMean": 63074.7,
+            "windowShift": -1905.5,
+            "summary": "recent 61169.3 mm w.e.; shift -1905.5 mm; equivalent -0.069 m w.e. yr-1"
+          },
+          {
+            "basinId": "220",
+            "name": "Tarim He (Also Talimu He) And Tibetan Plateau",
+            "region": "AS",
+            "recentMean": 64771.1,
+            "historicalMean": 66626.2,
+            "windowShift": -1855.1,
+            "summary": "recent 64771.1 mm w.e.; shift -1855.1 mm; equivalent -0.067 m w.e. yr-1"
+          }
+        ],
+        "assessment": "Useful Central Asia benchmark; project values around -0.1 to -0.3 m w.e. yr-1 are plausible.",
+        "riskNote": "The m w.e. conversion depends on the glacier-area denominator, so this should be treated as order-of-magnitude evidence."
+      },
+      "basinIds": [
+        "211",
+        "214",
+        "215",
+        "216",
+        "217",
+        "220"
+      ]
+    },
+    {
+      "id": "rodell2009-north-india-groundwater",
+      "variableKey": "groundwater",
+      "scope": "North India groundwater depletion",
+      "title": "Satellite-based estimates of groundwater depletion in India",
+      "authors": "Rodell et al.",
+      "year": 2009,
+      "venue": "Nature",
+      "doi": "10.1038/nature08238",
+      "url": "https://www.nature.com/articles/nature08238",
+      "abstract": "GRACE-based groundwater depletion estimate for Rajasthan, Punjab, Haryana and Delhi.",
+      "reportedQuantity": {
+        "label": "Groundwater depletion",
+        "valueText": "4.0 +/- 1.0 cm yr-1 equivalent water height, or 17.7 +/- 4.5 km3 yr-1 over about 438,000 km2",
+        "period": "2002.8-2008.10"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Groundwater Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 4,
+        "variableLabel": "Groundwater Storage",
+        "validationType": "trend-to-window-shift",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "groundwater_storage_mm is annual mean WaterGAP groundwater storage over effective cells; literature trends are compared to (recent_mean - historical_mean) / 27.5 years.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "4"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "-339.3 mm"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "-1370.1 to -10.1 mm"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-224.8 mm"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-597.7 to -23.3 mm"
+          },
+          {
+            "label": "Linearized shift median",
+            "value": "-8.17 mm yr-1"
+          },
+          {
+            "label": "Linearized shift range",
+            "value": "-21.73 to -0.85 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "239",
+            "name": "Sutlej",
+            "region": "AS",
+            "recentMean": -1370.1,
+            "historicalMean": -772.4,
+            "windowShift": -597.7,
+            "summary": "recent -1370.1 mm; shift -597.7 mm; linearized -21.73 mm yr-1"
+          },
+          {
+            "basinId": "247",
+            "name": "Yamuna",
+            "region": "AS",
+            "recentMean": -667.6,
+            "historicalMean": -248.5,
+            "windowShift": -419.1,
+            "summary": "recent -667.6 mm; shift -419.1 mm; linearized -15.24 mm yr-1"
+          },
+          {
+            "basinId": "235",
+            "name": "Indus",
+            "region": "AS",
+            "recentMean": -10.9,
+            "historicalMean": 19.6,
+            "windowShift": -30.5,
+            "summary": "recent -10.9 mm; shift -30.5 mm; linearized -1.11 mm yr-1"
+          },
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": -10.1,
+            "historicalMean": 13.2,
+            "windowShift": -23.3,
+            "summary": "recent -10.1 mm; shift -23.3 mm; linearized -0.85 mm yr-1"
+          }
+        ],
+        "assessment": "A linear extension of -40 mm yr-1 over the 27.5-year window-center separation implies about -1100 mm. Basin means of a few hundred negative mm are plausible for irrigation hotspots.",
+        "riskNote": "This is a hotspot, not full-basin coverage; full Ganges/Indus basin means should usually be less negative than the hotspot trend."
+      },
+      "basinIds": [
+        "235",
+        "239",
+        "246",
+        "247"
+      ]
+    },
+    {
+      "id": "mukherjee2018-ganges-groundwater",
+      "variableKey": "groundwater",
+      "scope": "Ganges basin groundwater",
+      "title": "Groundwater depletion causing reduction of baseflow triggering Ganges river summer drying",
+      "authors": "Mukherjee et al.",
+      "year": 2018,
+      "venue": "Scientific Reports",
+      "doi": "10.1038/s41598-018-30246-7",
+      "url": "https://www.nature.com/articles/s41598-018-30246-7",
+      "abstract": "Long-term Ganges groundwater decline analysis using in situ and satellite evidence.",
+      "reportedQuantity": {
+        "label": "Ganges groundwater trend",
+        "valueText": "Long-term Ganges basin groundwater decline about -0.30 +/- 0.07 cm yr-1; satellite-era pre-monsoon decline can reach about -1.93 cm yr-1",
+        "period": "1978-2015 and 2003-2015"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Groundwater Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 1,
+        "variableLabel": "Groundwater Storage",
+        "validationType": "trend-to-window-shift",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "groundwater_storage_mm is annual mean WaterGAP groundwater storage over effective cells; literature trends are compared to (recent_mean - historical_mean) / 27.5 years.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "1"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "-10.1 mm"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "-10.1 to -10.1 mm"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-23.3 mm"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-23.3 to -23.3 mm"
+          },
+          {
+            "label": "Linearized shift median",
+            "value": "-0.85 mm yr-1"
+          },
+          {
+            "label": "Linearized shift range",
+            "value": "-0.85 to -0.85 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": -10.1,
+            "historicalMean": 13.2,
+            "windowShift": -23.3,
+            "summary": "recent -10.1 mm; shift -23.3 mm; linearized -0.85 mm yr-1"
+          }
+        ],
+        "assessment": "Long-term trend implies about -80 mm across 27.5 years, while satellite-era seasonal estimates imply several hundred mm. Project Ganges negative values in this bracket are plausible.",
+        "riskNote": "Seasonal pre-monsoon and annual mean storage are not identical; avoid direct one-to-one equality."
+      },
+      "basinIds": [
+        "246"
+      ]
+    },
+    {
+      "id": "feng2013-north-china-groundwater",
+      "variableKey": "groundwater",
+      "scope": "North China groundwater depletion",
+      "title": "Evaluation of groundwater depletion in North China using GRACE",
+      "authors": "Feng et al.",
+      "year": 2013,
+      "venue": "Water Resources Research",
+      "doi": "10.1002/wrcr.20192",
+      "url": "https://agupubs.onlinelibrary.wiley.com/doi/abs/10.1002/wrcr.20192",
+      "abstract": "GRACE-based groundwater depletion estimate for North China.",
+      "reportedQuantity": {
+        "label": "North China groundwater depletion",
+        "valueText": "2.2 +/- 0.3 cm yr-1 equivalent water height, or 8.3 +/- 1.1 km3 yr-1 over about 370,000 km2",
+        "period": "2003-2010"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Groundwater Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 1,
+        "variableLabel": "Groundwater Storage",
+        "validationType": "trend-to-window-shift",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "groundwater_storage_mm is annual mean WaterGAP groundwater storage over effective cells; literature trends are compared to (recent_mean - historical_mean) / 27.5 years.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "1"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "-11.9 mm"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "-11.9 to -11.9 mm"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-19.2 mm"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-19.2 to -19.2 mm"
+          },
+          {
+            "label": "Linearized shift median",
+            "value": "-0.70 mm yr-1"
+          },
+          {
+            "label": "Linearized shift range",
+            "value": "-0.70 to -0.70 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "280",
+            "name": "Yellow River",
+            "region": "AS",
+            "recentMean": -11.9,
+            "historicalMean": 7.3,
+            "windowShift": -19.2,
+            "summary": "recent -11.9 mm; shift -19.2 mm; linearized -0.70 mm yr-1"
+          }
+        ],
+        "assessment": "A -22 mm yr-1 trend implies roughly -600 mm over 27.5 years. Hai He and North China Plain linked values can therefore be several hundred negative mm.",
+        "riskNote": "The GRACE study area is not exactly the full Yellow River or Hai He basin; use as hotspot validation."
+      },
+      "basinIds": [
+        "280"
+      ]
+    },
+    {
+      "id": "castle2014-colorado-groundwater",
+      "variableKey": "groundwater",
+      "scope": "Colorado River Basin",
+      "title": "Groundwater depletion during drought threatens future water security of the Colorado River Basin",
+      "authors": "Castle et al.",
+      "year": 2014,
+      "venue": "Geophysical Research Letters",
+      "doi": "10.1002/2014GL061055",
+      "url": "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1002/2014GL061055",
+      "abstract": "GRACE-based Colorado River Basin water storage and groundwater depletion during drought.",
+      "reportedQuantity": {
+        "label": "Colorado groundwater depletion",
+        "valueText": "Groundwater depletion about 5.6 +/- 0.4 km3 yr-1; roughly -9 mm yr-1 over the full Colorado River Basin",
+        "period": "2004.12-2013.11"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Groundwater Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 1,
+        "variableLabel": "Groundwater Storage",
+        "validationType": "trend-to-window-shift",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "groundwater_storage_mm is annual mean WaterGAP groundwater storage over effective cells; literature trends are compared to (recent_mean - historical_mean) / 27.5 years.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "1"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "-86.6 mm"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "-86.6 to -86.6 mm"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-37.9 mm"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-37.9 to -37.9 mm"
+          },
+          {
+            "label": "Linearized shift median",
+            "value": "-1.38 mm yr-1"
+          },
+          {
+            "label": "Linearized shift range",
+            "value": "-1.38 to -1.38 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "452",
+            "name": "Colorado (Also Colorado River)",
+            "region": "NA",
+            "recentMean": -86.6,
+            "historicalMean": -48.8,
+            "windowShift": -37.9,
+            "summary": "recent -86.6 mm; shift -37.9 mm; linearized -1.38 mm yr-1"
+          }
+        ],
+        "assessment": "A -9 mm yr-1 drought-era rate implies about -250 mm over 27.5 years. Project Colorado values around this order are plausible.",
+        "riskNote": "This is a drought-period trend, so it should not be mechanically equated with the full 1962-2016 window."
+      },
+      "basinIds": [
+        "452"
+      ]
+    },
+    {
+      "id": "voss2013-tigris-groundwater",
+      "variableKey": "groundwater",
+      "scope": "Tigris-Euphrates-Western Iran",
+      "title": "Groundwater depletion in the Middle East from GRACE with implications for transboundary water management",
+      "authors": "Voss et al.",
+      "year": 2013,
+      "venue": "Water Resources Research",
+      "doi": "10.1002/wrcr.20078",
+      "url": "https://escholarship.org/content/qt9w39k18q/qt9w39k18q.pdf",
+      "abstract": "GRACE-based Tigris-Euphrates-Western Iran terrestrial water and groundwater depletion estimate.",
+      "reportedQuantity": {
+        "label": "Groundwater residual depletion",
+        "valueText": "Groundwater depletion -17.3 +/- 2.1 mm yr-1, equivalent to -13.0 +/- 1.6 km3 yr-1",
+        "period": "2003-2009"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Groundwater Storage-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 3,
+        "variableLabel": "Groundwater Storage",
+        "validationType": "trend-to-window-shift",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "groundwater_storage_mm is annual mean WaterGAP groundwater storage over effective cells; literature trends are compared to (recent_mean - historical_mean) / 27.5 years.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "3"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "-128.9 mm"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "-457.8 to 21.5 mm"
+          },
+          {
+            "label": "Window shift median",
+            "value": "-99.6 mm"
+          },
+          {
+            "label": "Window shift range",
+            "value": "-230.4 to -10.2 mm"
+          },
+          {
+            "label": "Linearized shift median",
+            "value": "-3.62 mm yr-1"
+          },
+          {
+            "label": "Linearized shift range",
+            "value": "-8.38 to -0.37 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "228",
+            "name": "Iranian Plateau (Ex 229, 230, 231, 234)",
+            "region": "AS",
+            "recentMean": -457.8,
+            "historicalMean": -227.3,
+            "windowShift": -230.4,
+            "summary": "recent -457.8 mm; shift -230.4 mm; linearized -8.38 mm yr-1"
+          },
+          {
+            "basinId": "695",
+            "name": "Euphrates And Tigris In Europe",
+            "region": "EU",
+            "recentMean": -128.9,
+            "historicalMean": -29.4,
+            "windowShift": -99.6,
+            "summary": "recent -128.9 mm; shift -99.6 mm; linearized -3.62 mm yr-1"
+          },
+          {
+            "basinId": "223",
+            "name": "Karun",
+            "region": "AS",
+            "recentMean": 21.5,
+            "historicalMean": 31.7,
+            "windowShift": -10.2,
+            "summary": "recent 21.5 mm; shift -10.2 mm; linearized -0.37 mm yr-1"
+          }
+        ],
+        "assessment": "The trend implies about -475 mm over 27.5 years. Basin values of tens to a few hundred negative mm are plausible; values far below -500 mm need checking.",
+        "riskNote": "The study is a regional GRACE residual during a dry period; it is not a direct WaterGAP groundwater-storage state."
+      },
+      "basinIds": [
+        "223",
+        "228",
+        "695"
+      ]
+    },
+    {
+      "id": "immerzeel2019-water-demand-towers",
+      "variableKey": "deficit",
+      "scope": "Mountain water tower demand index",
+      "title": "Importance and vulnerability of the world's water towers",
+      "authors": "Immerzeel et al.",
+      "year": 2019,
+      "venue": "Nature",
+      "doi": "10.1038/s41586-019-1822-y",
+      "url": "https://www.nature.com/articles/s41586-019-1822-y",
+      "abstract": "Defines a demand index from net human water demand and natural demand relative to downstream water availability.",
+      "reportedQuantity": {
+        "label": "Demand Index ranking",
+        "valueText": "Indus DI 0.758; Ganges-Brahmaputra 0.598; Yellow River 0.536; Tigris-Euphrates 0.575; North America Colorado 0.599; Yangtze 0.340",
+        "period": "2001-2014 average monthly demands"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Water-demand deficit-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 5,
+        "variableLabel": "Water-demand deficit",
+        "validationType": "relative-pressure-check",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "net_water_demand_deficit_mm_yr is annual max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), averaged over effective demand-deficit cells.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "5"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "77.8 mm yr-1"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "56.1 to 155.9 mm yr-1"
+          },
+          {
+            "label": "Window shift median",
+            "value": "48.4 mm yr-1"
+          },
+          {
+            "label": "Window shift range",
+            "value": "32.4 to 74.3 mm yr-1"
+          },
+          {
+            "label": "Historical mean median",
+            "value": "37.6 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": 155.9,
+            "historicalMean": 81.6,
+            "windowShift": 74.3,
+            "summary": "recent 155.9 mm yr-1; historical 81.6; shift 74.3 mm yr-1"
+          },
+          {
+            "basinId": "295",
+            "name": "Euphrates And Tigris In Asia",
+            "region": "AS",
+            "recentMean": 152.1,
+            "historicalMean": 85.9,
+            "windowShift": 66.2,
+            "summary": "recent 152.1 mm yr-1; historical 85.9; shift 66.2 mm yr-1"
+          },
+          {
+            "basinId": "695",
+            "name": "Euphrates And Tigris In Europe",
+            "region": "EU",
+            "recentMean": 77.8,
+            "historicalMean": 29.4,
+            "windowShift": 48.4,
+            "summary": "recent 77.8 mm yr-1; historical 29.4; shift 48.4 mm yr-1"
+          },
+          {
+            "basinId": "280",
+            "name": "Yellow River",
+            "region": "AS",
+            "recentMean": 69.9,
+            "historicalMean": 37.6,
+            "windowShift": 32.4,
+            "summary": "recent 69.9 mm yr-1; historical 37.6; shift 32.4 mm yr-1"
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "recentMean": 56.1,
+            "historicalMean": 23.3,
+            "windowShift": 32.7,
+            "summary": "recent 56.1 mm yr-1; historical 23.3; shift 32.7 mm yr-1"
+          }
+        ],
+        "assessment": "This is not a mm quantity, but it validates the expected spatial ranking: Indus/Ganges/Yellow/Tigris-Euphrates/Colorado should be higher pressure than Yangtze/Brahmaputra.",
+        "riskNote": "Do not compare DI numerically to project mm. Use it only as a pressure-pattern check."
+      },
+      "basinIds": [
+        "246",
+        "251",
+        "280",
         "295",
-        "297",
-        "298",
-        "299",
-        "303",
-        "305",
-        "306",
-        "307",
-        "315",
-        "316",
-        "319",
-        "344",
-        "348",
-        "354",
-        "356",
-        "357",
-        "372",
-        "373",
-        "374",
-        "375",
-        "376",
-        "378",
-        "379",
-        "380",
-        "381",
-        "383",
-        "384",
-        "385",
-        "386",
-        "387",
-        "388",
-        "389",
-        "390",
-        "391",
-        "392",
-        "393",
-        "394",
-        "401",
-        "402",
-        "403",
-        "404",
-        "405",
-        "406",
-        "407",
-        "408",
-        "411",
-        "412",
-        "413",
-        "415",
-        "416",
-        "418",
-        "420",
-        "422",
-        "425",
-        "444",
-        "445",
-        "446",
-        "452",
-        "455",
-        "458",
-        "552",
-        "565",
-        "566",
-        "567",
-        "568",
-        "569",
-        "570",
-        "601",
-        "619",
-        "625",
-        "626",
-        "628",
-        "629",
-        "630",
-        "631",
-        "632",
-        "633",
-        "635",
-        "639",
-        "642",
-        "643",
-        "645",
-        "646",
-        "648",
-        "649",
-        "652",
-        "659",
-        "670",
-        "671",
-        "683",
-        "684",
-        "687",
-        "688",
-        "690",
-        "695",
-        "698"
+        "695"
+      ]
+    },
+    {
+      "id": "hoekstra2012-blue-water-scarcity",
+      "variableKey": "deficit",
+      "scope": "Blue water scarcity with environmental flow requirement",
+      "title": "The monthly blue water footprint compared to blue water availability for the world's major river basins",
+      "authors": "Hoekstra et al.",
+      "year": 2012,
+      "venue": "PLOS ONE",
+      "doi": "10.1371/journal.pone.0032688",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0032688",
+      "abstract": "Monthly blue water footprint compared with natural-runoff-based availability after environmental flow requirements.",
+      "reportedQuantity": {
+        "label": "Annualized scarcity-derived deficit",
+        "valueText": "Approximate annual deficits from supporting tables: Indus 69.6 km3 yr-1 (~61 mm yr-1), Ganges 7.3 (~7), Yellow 8.9 (~9), Tigris-Euphrates 6.9 (~8), Yangtze/Brahmaputra near 0",
+        "period": "1996-2005"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Water-demand deficit-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 5,
+        "variableLabel": "Water-demand deficit",
+        "validationType": "derived-deficit-order",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "net_water_demand_deficit_mm_yr is annual max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), averaged over effective demand-deficit cells.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "5"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "77.8 mm yr-1"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "56.1 to 155.9 mm yr-1"
+          },
+          {
+            "label": "Window shift median",
+            "value": "48.4 mm yr-1"
+          },
+          {
+            "label": "Window shift range",
+            "value": "32.4 to 74.3 mm yr-1"
+          },
+          {
+            "label": "Historical mean median",
+            "value": "37.6 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": 155.9,
+            "historicalMean": 81.6,
+            "windowShift": 74.3,
+            "summary": "recent 155.9 mm yr-1; historical 81.6; shift 74.3 mm yr-1"
+          },
+          {
+            "basinId": "295",
+            "name": "Euphrates And Tigris In Asia",
+            "region": "AS",
+            "recentMean": 152.1,
+            "historicalMean": 85.9,
+            "windowShift": 66.2,
+            "summary": "recent 152.1 mm yr-1; historical 85.9; shift 66.2 mm yr-1"
+          },
+          {
+            "basinId": "695",
+            "name": "Euphrates And Tigris In Europe",
+            "region": "EU",
+            "recentMean": 77.8,
+            "historicalMean": 29.4,
+            "windowShift": 48.4,
+            "summary": "recent 77.8 mm yr-1; historical 29.4; shift 48.4 mm yr-1"
+          },
+          {
+            "basinId": "280",
+            "name": "Yellow River",
+            "region": "AS",
+            "recentMean": 69.9,
+            "historicalMean": 37.6,
+            "windowShift": 32.4,
+            "summary": "recent 69.9 mm yr-1; historical 37.6; shift 32.4 mm yr-1"
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "recentMean": 56.1,
+            "historicalMean": 23.3,
+            "windowShift": 32.7,
+            "summary": "recent 56.1 mm yr-1; historical 23.3; shift 32.7 mm yr-1"
+          }
+        ],
+        "assessment": "Good definition check because it includes environmental flow. It uses consumption footprint rather than withdrawals, so project values based on withdrawals can be higher.",
+        "riskNote": "Annual aggregation can hide monthly scarcity; do not interpret near-zero annual deficit as no seasonal stress."
+      },
+      "basinIds": [
+        "246",
+        "251",
+        "280",
+        "295",
+        "695"
+      ]
+    },
+    {
+      "id": "wijngaard2018-igb-water-gap",
+      "variableKey": "deficit",
+      "scope": "Indus-Ganges-Brahmaputra water gap",
+      "title": "Future changes in hydro-climatic extremes in the Indus, Ganges and Brahmaputra river basins",
+      "authors": "Wijngaard et al.",
+      "year": 2018,
+      "venue": "Hydrology and Earth System Sciences",
+      "doi": "10.5194/hess-22-6297-2018",
+      "url": "https://hess.copernicus.org/articles/22/6297/2018/",
+      "abstract": "Regional IGB model assessment reporting water demand and water gap/unmet demand.",
+      "reportedQuantity": {
+        "label": "IGB water gap",
+        "valueText": "Indus water gap 83 km3 yr-1 (~73 mm yr-1); Ganges 35 km3 yr-1 (~34 mm yr-1); Brahmaputra no blue water gap",
+        "period": "Current baseline in study"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Water-demand deficit-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 2,
+        "variableLabel": "Water-demand deficit",
+        "validationType": "direct-gap-order",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "net_water_demand_deficit_mm_yr is annual max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), averaged over effective demand-deficit cells.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "2"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "106.0 mm yr-1"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "56.1 to 155.9 mm yr-1"
+          },
+          {
+            "label": "Window shift median",
+            "value": "53.5 mm yr-1"
+          },
+          {
+            "label": "Window shift range",
+            "value": "32.7 to 74.3 mm yr-1"
+          },
+          {
+            "label": "Historical mean median",
+            "value": "52.5 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": 155.9,
+            "historicalMean": 81.6,
+            "windowShift": 74.3,
+            "summary": "recent 155.9 mm yr-1; historical 81.6; shift 74.3 mm yr-1"
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "recentMean": 56.1,
+            "historicalMean": 23.3,
+            "windowShift": 32.7,
+            "summary": "recent 56.1 mm yr-1; historical 23.3; shift 32.7 mm yr-1"
+          }
+        ],
+        "assessment": "Strong regional comparison for IGB. Project recent means around tens to low hundreds mm yr-1 are plausible for Ganges/Indus; Brahmaputra should be much lower.",
+        "riskNote": "The study's water gap is unmet demand often supplied by non-sustainable groundwater, not exactly withdrawal + EFR - naturalized runoff."
+      },
+      "basinIds": [
+        "246",
+        "251"
+      ]
+    },
+    {
+      "id": "qin2025-global-water-gap",
+      "variableKey": "deficit",
+      "scope": "Global water gap under environmental flow constraints",
+      "title": "Global water gap under safe and just Earth system boundaries",
+      "authors": "Qin et al.",
+      "year": 2025,
+      "venue": "Nature Communications",
+      "doi": "10.1038/s41467-025-56517-2",
+      "url": "https://www.nature.com/articles/s41467-025-56517-2",
+      "abstract": "Global water gap defined from renewable water availability and consumption while maintaining environmental flows.",
+      "reportedQuantity": {
+        "label": "Regional water gap",
+        "valueText": "Baseline 2001-2010: global 457.9 km3 yr-1; Ganges-Brahmaputra 56.1, Tigris-Euphrates 34.1, Indus 28.7, Nile 22.2 km3 yr-1; Central Valley 12.8; Colorado River Basin 3.8",
+        "period": "2001-2010 baseline"
+      },
+      "comparison": {
+        "basis": "GRDC WMO Basins and Sub-Basins; evidence attached by basin_id after filtering Water-demand deficit-imbalanced basins matching the source region or topic.",
+        "matchedBasinCount": 5,
+        "variableLabel": "Water-demand deficit",
+        "validationType": "direct-gap-order",
+        "windowCenterDeltaYears": 27.5,
+        "ourMetric": "net_water_demand_deficit_mm_yr is annual max(0, potential total withdrawal + environmental-flow requirement - naturalized runoff availability), averaged over effective demand-deficit cells.",
+        "displayStats": [
+          {
+            "label": "Matched basins",
+            "value": "5"
+          },
+          {
+            "label": "Recent mean median",
+            "value": "152.1 mm yr-1"
+          },
+          {
+            "label": "Recent mean range",
+            "value": "56.1 to 649.2 mm yr-1"
+          },
+          {
+            "label": "Window shift median",
+            "value": "66.2 mm yr-1"
+          },
+          {
+            "label": "Window shift range",
+            "value": "32.7 to 143.9 mm yr-1"
+          },
+          {
+            "label": "Historical mean median",
+            "value": "81.6 mm yr-1"
+          }
+        ],
+        "exampleBasins": [
+          {
+            "basinId": "162",
+            "name": "Nile (Ex 163, 164 ,173)",
+            "region": "AF",
+            "recentMean": 649.2,
+            "historicalMean": 505.3,
+            "windowShift": 143.9,
+            "summary": "recent 649.2 mm yr-1; historical 505.3; shift 143.9 mm yr-1"
+          },
+          {
+            "basinId": "246",
+            "name": "Ganges (Ex 247, 248, 249, 250)",
+            "region": "AS",
+            "recentMean": 155.9,
+            "historicalMean": 81.6,
+            "windowShift": 74.3,
+            "summary": "recent 155.9 mm yr-1; historical 81.6; shift 74.3 mm yr-1"
+          },
+          {
+            "basinId": "295",
+            "name": "Euphrates And Tigris In Asia",
+            "region": "AS",
+            "recentMean": 152.1,
+            "historicalMean": 85.9,
+            "windowShift": 66.2,
+            "summary": "recent 152.1 mm yr-1; historical 85.9; shift 66.2 mm yr-1"
+          },
+          {
+            "basinId": "695",
+            "name": "Euphrates And Tigris In Europe",
+            "region": "EU",
+            "recentMean": 77.8,
+            "historicalMean": 29.4,
+            "windowShift": 48.4,
+            "summary": "recent 77.8 mm yr-1; historical 29.4; shift 48.4 mm yr-1"
+          },
+          {
+            "basinId": "251",
+            "name": "Brahmaputra",
+            "region": "AS",
+            "recentMean": 56.1,
+            "historicalMean": 23.3,
+            "windowShift": 32.7,
+            "summary": "recent 56.1 mm yr-1; historical 23.3; shift 32.7 mm yr-1"
+          }
+        ],
+        "assessment": "Useful basin/global order check. Because it uses consumption while the project uses potential withdrawals, the project can be higher in irrigated basins.",
+        "riskNote": "If project values are far above literature by more than an order of magnitude after using comparable area, inspect runoff availability or EFR calculation."
+      },
+      "basinIds": [
+        "162",
+        "246",
+        "251",
+        "295",
+        "695"
       ]
     }
   ],
   "byBasin": {
+    "162": [
+      "qin2025-global-water-gap"
+    ],
     "168": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "189": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "201": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "202": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "203": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "207": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "208": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "209": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier"
     ],
     "210": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "211": [
-      "zemp2019-global",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "212": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "214": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "215": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "216": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "217": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "220": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2015-tienshan",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "farinotti2015-tienshan-glacier"
     ],
     "221": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "223": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "voss2013-tigris-groundwater"
     ],
     "228": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "voss2013-tigris-groundwater"
+    ],
+    "235": [
+      "rodell2009-north-india-groundwater"
+    ],
+    "239": [
+      "rodell2009-north-india-groundwater"
     ],
     "243": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "244": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "245": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "246": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "rodell2009-north-india-groundwater",
+      "mukherjee2018-ganges-groundwater",
+      "immerzeel2019-water-demand-towers",
+      "hoekstra2012-blue-water-scarcity",
+      "wijngaard2018-igb-water-gap",
+      "qin2025-global-water-gap"
     ],
     "247": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "rodell2009-north-india-groundwater"
     ],
     "248": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "249": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "250": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "251": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "immerzeel2019-water-demand-towers",
+      "hoekstra2012-blue-water-scarcity",
+      "wijngaard2018-igb-water-gap",
+      "qin2025-global-water-gap"
     ],
     "260": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier"
     ],
     "262": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier"
     ],
     "269": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier"
     ],
     "280": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier",
+      "feng2013-north-china-groundwater",
+      "immerzeel2019-water-demand-towers",
+      "hoekstra2012-blue-water-scarcity"
     ],
     "281": [
-      "zemp2019-global",
-      "brun2017-hma",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "brun2017-hma-glacier"
     ],
     "284": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "292": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "295": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "immerzeel2019-water-demand-towers",
+      "hoekstra2012-blue-water-scarcity",
+      "qin2025-global-water-gap"
     ],
     "297": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "298": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "299": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "303": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "305": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "306": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "307": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "315": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "316": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "319": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "344": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "348": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "354": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "356": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "357": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "372": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "373": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "374": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "375": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "376": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "378": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "379": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "380": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "381": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "383": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "384": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "385": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "386": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "387": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "388": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "389": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "390": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "391": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "392": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "393": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "394": [
-      "zemp2019-global",
-      "dussaillant2019-andes",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "dussaillant2019-andes-glacier"
     ],
     "401": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "402": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "403": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "404": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "405": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "406": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "407": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "408": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "411": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "412": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "413": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "415": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "416": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "418": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "420": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "422": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "425": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "444": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "445": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "446": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "452": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "castle2014-colorado-groundwater"
     ],
     "455": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "458": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "552": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "565": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "566": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "567": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "568": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "569": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "570": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "601": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "619": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "625": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "626": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "628": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "629": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "630": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "631": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "632": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "633": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "635": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "639": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "642": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "643": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "645": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "646": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "648": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "649": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "652": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "659": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "670": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "671": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "683": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "684": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "687": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "688": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "690": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ],
     "695": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier",
+      "voss2013-tigris-groundwater",
+      "immerzeel2019-water-demand-towers",
+      "hoekstra2012-blue-water-scarcity",
+      "qin2025-global-water-gap"
     ],
     "698": [
-      "zemp2019-global",
-      "farinotti2019-storage"
+      "zemp2019-global-glacier",
+      "glambie2025-regional-glacier",
+      "hugonnet2021-global-glacier"
     ]
   }
 }

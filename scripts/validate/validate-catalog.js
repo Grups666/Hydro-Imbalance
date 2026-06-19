@@ -44,9 +44,15 @@ for (const { moduleName, manifestFile } of modules) {
   const evidencePath = path.join(moduleDir, "data/basin-literature-evidence.json");
   const evidence = JSON.parse(fs.readFileSync(evidencePath, "utf8"));
   const glacierEntries = (evidence.entries || []).filter((entry) => entry.variableKey === "glacier");
+  const groundwaterEntries = (evidence.entries || []).filter((entry) => entry.variableKey === "groundwater");
+  const deficitEntries = (evidence.entries || []).filter((entry) => entry.variableKey === "deficit");
   check(`${prefix} literature evidence entries`, glacierEntries.length >= 3, `${glacierEntries.length} glacier entries`);
+  check(`${prefix} groundwater evidence entries`, groundwaterEntries.length >= 3, `${groundwaterEntries.length} groundwater entries`);
+  check(`${prefix} deficit evidence entries`, deficitEntries.length >= 3, `${deficitEntries.length} deficit entries`);
+  check(`${prefix} literature evidence schema`, evidence.schema === "basin-literature-evidence/v2", evidence.schema);
+  check(`${prefix} literature variable coverage`, ["glacier", "groundwater", "deficit"].every((key) => (evidence.variableCoverage || []).includes(key)), (evidence.variableCoverage || []).join(", "));
   check(`${prefix} literature evidence basin links`, Object.keys(evidence.byBasin || {}).length > 0, `${Object.keys(evidence.byBasin || {}).length} basins`);
-  check(`${prefix} literature evidence DOI links`, glacierEntries.every((entry) => entry.doi && entry.url), "doi/url present");
+  check(`${prefix} literature evidence DOI links`, (evidence.entries || []).every((entry) => entry.doi && entry.url), "doi/url present");
 }
 
 console.log("=== Validation complete ===");

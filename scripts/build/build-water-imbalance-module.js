@@ -246,7 +246,7 @@ const manifest = {
   id: moduleId,
   name: moduleName,
   version: "0.1.1",
-  assetVersion: "2026-06-18-effective-cells-glacier-area",
+  assetVersion: "2026-06-19-literature-validation",
   description: `Basin-scale three-variable water imbalance classification, time series, and basin ontology for ${spatialEntity}.`,
   author: "Spatial Research Team",
   icon: "droplet",
